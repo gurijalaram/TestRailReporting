@@ -17,41 +17,29 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class BulkAnalysisToolbar extends MainNavBar {
 
-    @FindBy(css = "[id='qa-worksheet-create-new'] button")
-    private WebElement newButton;
-
-    @FindBy(css = "[id='qa-bcm-sub-header-info-button'] button")
-    private WebElement infoButton;
-
-    @FindBy(css = "[id='qa-bcm-sub-header-delete-button'] button")
-    private WebElement deleteButton;
-
-    @FindBy(css = "[id='qa-sub-header-import-button'] button")
-    private WebElement importButton;
-
-    @FindBy(css = "[id='qa-bcm-sub-header-add-button'] button")
-    private WebElement addScenariosButton;
-
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
     @FindBy(css = "[id='qa-input-row-set-inputs'] button")
     protected WebElement setInputsButton;
-
+    @FindBy(css = "[id='qa-worksheet-create-new'] button")
+    private WebElement newButton;
+    @FindBy(css = "[id='qa-bcm-sub-header-info-button'] button")
+    private WebElement infoButton;
+    @FindBy(css = "[id='qa-bcm-sub-header-delete-button'] button")
+    private WebElement deleteButton;
+    @FindBy(css = "[id='qa-sub-header-import-button'] button")
+    private WebElement importButton;
+    @FindBy(css = "[id='qa-bcm-sub-header-add-button'] button")
+    private WebElement addScenariosButton;
     @FindBy(css = "[id='qa-input-row-delete-new'] button")
     private WebElement removeButton;
-
     @FindBy(css = "[id='qa-bcm-evaluate-page-btn-cost'] button")
     private WebElement costButton;
-
     @FindBy(css = "[id='qa-bcm-evaluate-page-btn-refresh'] button")
     private WebElement refreshButton;
-
     @FindBy(css = "[data-testid='bulk-analysis-evaluate'] h3")
     private WebElement bulkAnalysisName;
-
     @FindBy(css = "[data-testid='bulk-analysis-evaluate'] .secondary-nav-bar-back-text")
     private WebElement allBulkAnalysesButton;
-
-    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -98,9 +86,18 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public void clickRemove() {
+    public DeletePage clickRemove() {
         pageUtils.waitForElementAndClick(removeButton);
-        // FIXME: 28/06/2024 should return some new page object
+        return new DeletePage(driver);
+    }
+
+    /**
+     * Checks if the remove button is enable
+     *
+     * @return true/false
+     */
+    public boolean isRemoveButtonEnabled() {
+        return pageUtils.isElementEnabled(removeButton);
     }
 
     /**

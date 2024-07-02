@@ -110,6 +110,30 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @return current page object
+     */
+    public WorksheetsExplorePage clickScenarioCheckbox(String componentName) {
+        findScenarioCheckbox(componentName).click();
+        return this;
+    }
+
+    /**
+     * Find scenario checkbox
+     *
+     * @param componentName - component name
+     * @return webelement
+     */
+    private WebElement findScenarioCheckbox(String componentName) {
+        By scenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='sticky-columns']//div//span[@data-testid='checkbox']",
+            componentName.toUpperCase().trim()));
+        pageUtils.waitForElementToAppear(scenario);
+        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+    }
+
+    /**
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component

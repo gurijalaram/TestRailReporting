@@ -9,6 +9,7 @@ import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.WorksheetsExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -33,6 +34,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private BulkAnalysisPage bulkAnalysisPage;
     private EvaluatePage evaluatePage;
     private WorksheetsExplorePage worksheetsExplorePage;
+    private DeletePage deletePage;
     private String worksheetIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials userCredentials = UserUtil.getUser();
@@ -90,35 +92,34 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
-    /*@Test
+    @Test
     @TestRail(id = {30679, 30680, 30681, 30682, 30684})
     @Description("delete input row for the worksheet")
     public void testDeleteInputRow() {
-        SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
             .login(userCredentials)
             .clickBulkAnalysis();
 
-        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
-        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
-            .contains(List.of("Cannot perform a remove action with no scenarios selected"));
+        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        String inputRowName = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
 
-        bulkCostingPage.selectFirstPartInWorkSheet();
-        soft.assertThat(bulkCostingPage.getRemoveButtonState("Remove"))
-            .isEqualTo("Remove");
-        soft.assertThat(bulkCostingPage.clickOnRemoveButtonAngGetConfirmationText())
-            .contains(Arrays.asList("You are attempting to remove", "from the bulk analysis. This action cannot be undone."));
+        worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
+        soft.assertThat(worksheetsExplorePage.isRemoveButtonEnabled()).isFalse();
 
-        bulkCostingPage.clickOnRemoveScenarioButtonOnConfirmationScreen();
-        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage(inputRowName));
+        deletePage = worksheetsExplorePage.clickScenarioCheckbox(worksheetResponse.getName())
+            .clickRemove();
+
+        soft.assertThat(deletePage.getDeleteText()).contains("You are attempting to remove", "from the bulk analysis. This action cannot be undone.");
+
+        deletePage.removeScenarios(WorksheetsExplorePage.class);
+        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName)).isGreaterThan(0);
         soft.assertAll();
     }
 
-    @Test
+    /*@Test
     @TestRail(id = {30675, 30676, 30674})
     @Description("update inputs")
     public void testUpdateInputs() {
