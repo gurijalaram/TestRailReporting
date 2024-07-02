@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisInfoPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisModal;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -21,26 +22,37 @@ public class BulkAnalysisToolbar extends MainNavBar {
     private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
     @FindBy(css = "[id='qa-input-row-set-inputs'] button")
     protected WebElement setInputsButton;
+
     @FindBy(css = "[id='qa-worksheet-create-new'] button")
     private WebElement newButton;
+
     @FindBy(css = "[id='qa-bcm-sub-header-info-button'] button")
     private WebElement infoButton;
+
     @FindBy(css = "[id='qa-bcm-sub-header-delete-button'] button")
     private WebElement deleteButton;
+
     @FindBy(css = "[id='qa-sub-header-import-button'] button")
     private WebElement importButton;
+
     @FindBy(css = "[id='qa-bcm-sub-header-add-button'] button")
     private WebElement addScenariosButton;
+
     @FindBy(css = "[id='qa-input-row-delete-new'] button")
     private WebElement removeButton;
+
     @FindBy(css = "[id='qa-bcm-evaluate-page-btn-cost'] button")
     private WebElement costButton;
+
     @FindBy(css = "[id='qa-bcm-evaluate-page-btn-refresh'] button")
     private WebElement refreshButton;
+
     @FindBy(css = "[data-testid='bulk-analysis-evaluate'] h3")
     private WebElement bulkAnalysisName;
+
     @FindBy(css = "[data-testid='bulk-analysis-evaluate'] .secondary-nav-bar-back-text")
     private WebElement allBulkAnalysesButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -67,9 +79,18 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public InfoPage clickInfo() {
+    public BulkAnalysisInfoPage clickInfo() {
         pageUtils.waitForElementAndClick(infoButton);
-        return new InfoPage(driver);
+        return new BulkAnalysisInfoPage(driver);
+    }
+
+    /**
+     * Checks if the info button is enable
+     *
+     * @return true/false
+     */
+    public boolean isInfoButtonEnabled() {
+        return pageUtils.isElementEnabled(infoButton);
     }
 
     /**
@@ -133,6 +154,7 @@ public class BulkAnalysisToolbar extends MainNavBar {
 
     /**
      * Checks set inputs button is enabled
+     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {

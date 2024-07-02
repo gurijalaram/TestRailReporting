@@ -5,6 +5,7 @@ import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisInfoPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.WorksheetsExplorePage;
@@ -39,6 +40,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private WorksheetsExplorePage worksheetsExplorePage;
     private DeletePage deletePage;
     private SetInputsModalPage setInputsModalPage;
+    private BulkAnalysisInfoPage bulkAnalysisInfoPage;
     private String worksheetIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials userCredentials = UserUtil.getUser();
@@ -157,40 +159,38 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
-    /*@Test
+    @Test
     @TestRail(id = {29876, 29875, 29877, 29878, 29924})
-    @Description("edit Bulk Analysis name and later on search on it")
+    @Description("Edit Bulk Analysis name and search")
     public void editBulkAnalysisNameAndSearch() {
-        SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
             .login(userCredentials)
             .clickBulkAnalysis();
 
-        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse, 5);
-        soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
-            .isEqualTo("Cannot show worksheet info with no worksheet selected.");
+        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
 
-        bulkCostingPage.selectBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.getInfoButtonState("Worksheet Info")).isEqualTo("Worksheet Info");
+        bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
+        soft.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
 
-        bulkCostingPage.clickOnTheInfoButton();
-        soft.assertThat(bulkCostingPage.isBulkAnalysisInfoWindowIsDisplayed()).isTrue();
-        String worksheetName = worksheetResponse.getResponseEntity().getName().concat("_updated");
-        bulkCostingPage.changeTheNaneOfBulkAnalysisName(worksheetName)
-            .clickOnSaveButtonOnBulkAnalysisInfo();
-        soft.assertThat(bulkCostingPage.isWorksheetPresent(worksheetName)).isTrue();
+        bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
+            .clickInfo();
 
-        bulkCostingPage.typeIntoSearchWorkSheetInput(worksheetName)
-            .clickOnSubmitOnSearchBulkAnalysis();
+        String updatedWorksheetName = worksheetResponse.getName().concat("_updated");
 
-        soft.assertThat(bulkCostingPage.checkExpectedNumbersOfRows(1)).isTrue();
-        soft.assertThat(bulkCostingPage.getTextFromTheFirstRow()).contains(Arrays.asList(worksheetName));
+        bulkAnalysisInfoPage.enterBulkAnalysisName(updatedWorksheetName)
+            .clickSave();
+
+        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
+
+        bulkAnalysisPage.enterKeySearch(updatedWorksheetName);
+
+        soft.assertThat(bulkAnalysisPage.getListOfWorksheets()).isEqualTo(1);
+        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
         soft.assertAll();
-    }*/
-
+    }
 
     private ResponseWrapper<WorkSheetResponse> createWorksheet(UserCredentials userCredentials) {
         String name = new GenerateStringUtil().saltString("name");

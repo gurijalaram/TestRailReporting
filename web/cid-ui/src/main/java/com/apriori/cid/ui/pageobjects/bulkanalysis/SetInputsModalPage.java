@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.cid.ui.pageobjects.common.InputsController;
 import com.apriori.cid.ui.pageobjects.common.ModalDialogController;
 import com.apriori.cid.ui.pageobjects.evaluate.MaterialSelectorPage;
@@ -19,6 +21,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class SetInputsModalPage extends LoadableComponent<SetInputsModalPage> {
+
+    @FindBy(css = "[role='dialog'] h2")
+    private WebElement headerText;
 
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Advanced']")
     private WebElement advancedTab;
@@ -78,7 +83,7 @@ public class SetInputsModalPage extends LoadableComponent<SetInputsModalPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        assertEquals("Set Inputs", pageUtils.waitForElementToAppear(headerText).getAttribute("textContent"), "Set inputs modal was not displayed");
     }
 
     /**

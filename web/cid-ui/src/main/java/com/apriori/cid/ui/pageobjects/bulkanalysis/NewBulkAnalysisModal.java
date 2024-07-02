@@ -47,12 +47,20 @@ public class NewBulkAnalysisModal extends LoadableComponent<NewBulkAnalysisModal
         assertEquals("Import CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"), "Import CAD File page was not displayed");
     }
 
-    public ImportCadFilePage importCadFiles() {
+    /**
+     * Opens import cad file page
+     * @return new page object
+     */
+    public ImportCadFilePage clickImportCadFiles() {
         pageUtils.waitForElementAndClick(importCadFileButton);
         return new ImportCadFilePage(driver);
     }
 
-    public BulkAnalysisExplorePage existingScenario() {
+    /**
+     * Opens bulk analysis explore page
+     * @return new page object
+     */
+    public BulkAnalysisExplorePage clickExistingScenario() {
         pageUtils.waitForElementAndClick(existingScenarioButton);
         return new BulkAnalysisExplorePage(driver);
     }
