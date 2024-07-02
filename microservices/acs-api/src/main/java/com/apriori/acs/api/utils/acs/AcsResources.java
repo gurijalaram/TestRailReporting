@@ -154,6 +154,27 @@ public class AcsResources {
     }
 
     /**
+     * Gets All Material Metadata Info
+     *
+     * @param vpeName      - String
+     * @param processGroup - String
+     * @return instance of AllMaterialSocksInfoResponse
+     */
+    public <T> ResponseWrapper<T> getMaterialMetadata(String vpeName, String processGroup, Class<T> klass) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.MATERIAL_METADATA, klass)
+            .headers(headers)
+            .inlineVariables(
+                vpeName,
+                processGroup)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
      * Gets All Material Stocks Info
      *
      * @param scenarioIterationKey      - scenario to get Design Guidance for
