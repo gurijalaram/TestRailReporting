@@ -8,7 +8,6 @@ import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -28,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    private AtsTestUtil atsTestUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -40,6 +39,7 @@ public class AtsAuthenticationTests extends TestUtil {
     private String customerName;
     private String userIdentity;
     private String idpIdentity;
+    private UserCredentials userCreds;
 
     @BeforeEach
     public void init() {
@@ -47,6 +47,8 @@ public class AtsAuthenticationTests extends TestUtil {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        userCreds = requestEntityUtil.getEmbeddedUser();
     }
 
     @AfterEach
@@ -67,9 +69,8 @@ public class AtsAuthenticationTests extends TestUtil {
     @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
-        UserCredentials userCredentials = UserUtil.getUser();
-        String userEmail = userCredentials.getEmail();
-        String userPassword = userCredentials.getPassword();
+        String userEmail = userCreds.getEmail();
+        String userPassword = userCreds.getPassword();
         ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);

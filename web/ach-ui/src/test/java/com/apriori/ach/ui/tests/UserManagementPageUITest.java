@@ -12,16 +12,16 @@ import com.apriori.qa.ach.ui.utils.enums.AdditionalProperties;
 import com.apriori.qa.ach.ui.utils.enums.Roles;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.login.LoginService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     private CloudHomePage cloudHomePage;
     private UserManagementPage userManagementPage;
     private LoginService aprioriLoginService;
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    private AtsTestUtil atsTestUtil;
 
 
     @Test
@@ -170,7 +170,9 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     }
 
     private void deleteCreatedUser(String email) {
-        CdsTestUtil cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
 
         String customerIdentity = response.getResponseEntity().getCustomerIdentity();
