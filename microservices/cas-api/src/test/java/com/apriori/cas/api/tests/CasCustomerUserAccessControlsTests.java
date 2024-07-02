@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerUserAccessControlsTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private final SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil;
     private CustomerInfrastructure customerInfrastructure;
@@ -42,8 +42,10 @@ public class CasCustomerUserAccessControlsTests {
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 

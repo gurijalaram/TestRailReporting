@@ -106,14 +106,16 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .clickExplore()
             .uploadComponent(componentB)
             .selectFilter("Private")
-            .enterKeySearch(component.getComponentName())
+            .enterKeySearch(componentB.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(component.getComponentName(), component.getScenarioName())
+            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
             .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Closed Die Forging")
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .override()
-            .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Band Saw / Preheat / Hammer / Trim");

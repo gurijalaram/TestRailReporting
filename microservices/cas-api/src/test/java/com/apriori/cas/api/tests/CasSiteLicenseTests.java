@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
@@ -12,12 +10,11 @@ import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -46,16 +43,18 @@ public class CasSiteLicenseTests {
     private String siteName;
     private String siteID;
     private String siteIdentity;
-    private CasTestUtil casTestUtil = new CasTestUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CasTestUtil casTestUtil;
+    private CdsTestUtil cdsTestUtil;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
     private String casLicense;
 
     @SneakyThrows
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         email = customerName.toLowerCase();
@@ -64,10 +63,10 @@ public class CasSiteLicenseTests {
         siteID = generateStringUtil.generateSiteID();
         casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
+        ResponseWrapper<Site> site = casTestUtil.addSite(customerIdentity, siteID, siteName);
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 

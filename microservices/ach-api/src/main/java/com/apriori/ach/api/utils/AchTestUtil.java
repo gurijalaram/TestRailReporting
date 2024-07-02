@@ -149,6 +149,20 @@ public class AchTestUtil extends TestUtil {
     }
 
     /**
+     * Creates a new user
+     *
+     * @param klass                - class
+     * @param customerIdentity     - the customer identity
+     * @param userName             - user name
+     * @param domain               - domain
+     * @param expectedResponseCode - response code
+     * @return ResponseWrapper T
+     */
+    public <T> ResponseWrapper<T> createNewUser(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode) {
+        return createNewUser(klass, customerIdentity, userName, domain, expectedResponseCode, requestEntityUtil);
+    }
+
+    /**
      * Creates a new user AP_STAFF_USER
      *
      * @param klass                - class
@@ -169,10 +183,6 @@ public class AchTestUtil extends TestUtil {
             .body("user", requestBody);
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    public <T> ResponseWrapper<T> createNewUser(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode) {
-        return createNewUser(klass, customerIdentity, userName, domain, expectedResponseCode, requestEntityUtil);
     }
 
     /**
