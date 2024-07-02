@@ -189,19 +189,6 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }*/
 
-//    private String searchCreateInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
-//        CssComponent cssComponent = new CssComponent();
-//        BcmUtil bcmUtil = new BcmUtil();
-//
-//        ScenarioItem scenarioItem =
-//            cssComponent.postSearchRequest(userCredentials, "PART")
-//                .getResponseEntity().getItems().get(itemNumber);
-//
-//        bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
-//            scenarioItem.getScenarioIdentity(), worksheetResponse.getResponseEntity().getIdentity());
-//
-//        return scenarioItem.getComponentDisplayName();
-//    }
 
     private ResponseWrapper<WorkSheetResponse> createWorksheet(UserCredentials userCredentials) {
         String name = new GenerateStringUtil().saltString("name");
