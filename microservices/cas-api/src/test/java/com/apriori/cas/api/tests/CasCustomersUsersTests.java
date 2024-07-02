@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersUsersTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
@@ -54,8 +54,10 @@ public class CasCustomersUsersTests {
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 
@@ -104,7 +106,7 @@ public class CasCustomersUsersTests {
         User user = userResponse.getResponseEntity();
         userIdentity = user.getIdentity();
 
-        ResponseWrapper<User> updatedUser = CasTestUtil.updateUser(user);
+        ResponseWrapper<User> updatedUser = casTestUtil.updateUser(user);
 
         soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
             .isEqualTo("QA");
@@ -119,7 +121,7 @@ public class CasCustomersUsersTests {
         ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         userIdentity = user.getResponseEntity().getIdentity();
 
-        CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
+        casTestUtil.resetUserMfa(customerIdentity, userIdentity);
     }
 
     private List<String[]> getFileContent(InputStream response, String filename) {
