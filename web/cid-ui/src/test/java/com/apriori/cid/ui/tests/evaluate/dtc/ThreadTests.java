@@ -141,10 +141,10 @@ public class ThreadTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .goToAdvancedTab()
             .openRoutingSelection()
-            .selectRoutingPreferenceByName("[CTL]/Fiber Laser/[Bend]")
+            .selectRoutingPreferenceByName("Injection Mold")
             .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()

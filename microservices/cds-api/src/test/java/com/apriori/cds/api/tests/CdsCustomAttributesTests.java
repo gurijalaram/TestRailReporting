@@ -6,6 +6,7 @@ import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.CustomAttributesResponse;
 import com.apriori.cds.api.utils.AttributeUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -35,6 +36,7 @@ public class CdsCustomAttributesTests {
     private String customerIdentity;
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void init() {
@@ -42,6 +44,7 @@ public class CdsCustomAttributesTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         attributeUtil = new AttributeUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -121,7 +124,7 @@ public class CdsCustomAttributesTests {
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

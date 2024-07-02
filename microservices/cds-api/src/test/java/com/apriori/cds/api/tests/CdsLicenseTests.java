@@ -13,6 +13,7 @@ import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.SubLicenses;
 import com.apriori.cds.api.models.response.UsersLicensing;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
@@ -43,6 +44,7 @@ public class CdsLicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private ResponseWrapper<LicenseResponse> license;
     private String customerIdentity;
     private String customerName;
@@ -61,6 +63,7 @@ public class CdsLicenseTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
     }
 
@@ -202,7 +205,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.SUB_LICENSES,
@@ -224,7 +227,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_SUB_LICENSE,
@@ -247,7 +250,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -282,7 +285,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -326,7 +329,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -368,7 +371,7 @@ public class CdsLicenseTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
