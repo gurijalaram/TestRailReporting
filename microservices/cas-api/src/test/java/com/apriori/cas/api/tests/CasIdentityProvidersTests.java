@@ -31,7 +31,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasIdentityProvidersTests extends TestUtil {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
@@ -42,8 +42,10 @@ public class CasIdentityProvidersTests extends TestUtil {
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 

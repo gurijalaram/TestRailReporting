@@ -14,6 +14,7 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;

@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Site;
@@ -10,11 +8,10 @@ import com.apriori.cas.api.models.response.ValidateSite;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -30,16 +27,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasSitesTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -93,7 +92,7 @@ public class CasSitesTests {
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(aprioriIdentity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(aPrioriIdentity, siteId);
 
         soft.assertThat(siteResponse.getResponseEntity().getStatus())
             .isEqualTo("EXISTS");
@@ -111,14 +110,14 @@ public class CasSitesTests {
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         soft.assertThat(response.getResponseEntity().getName())
             .isEqualTo(customerName);
 
         customerIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
+        ResponseWrapper<Site> site = casTestUtil.addSite(customerIdentity, siteID, siteName);
 
         soft.assertThat(site.getResponseEntity().getSiteId())
             .isEqualTo(siteID);
