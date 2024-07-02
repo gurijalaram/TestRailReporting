@@ -6,11 +6,14 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.WorksheetsExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
 import com.apriori.shared.util.SharedCustomerUtil;
+import com.apriori.shared.util.enums.DigitalFactoryEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -35,6 +38,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private WorksheetsExplorePage worksheetsExplorePage;
     private DeletePage deletePage;
+    private SetInputsModalPage setInputsModalPage;
     private String worksheetIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials userCredentials = UserUtil.getUser();
@@ -94,7 +98,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     @Test
     @TestRail(id = {30679, 30680, 30681, 30682, 30684})
-    @Description("delete input row for the worksheet")
+    @Description("Delete input row for the worksheet")
     public void testDeleteInputRow() {
         setBulkCostingFlag(true);
 
@@ -119,47 +123,44 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
-    /*@Test
+    @Test
     @TestRail(id = {30675, 30676, 30674})
-    @Description("update inputs")
+    @Description("Update inputs")
     public void testUpdateInputs() {
-        SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
             .login(userCredentials)
             .clickBulkAnalysis();
 
-        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse, 5);
-        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
+        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
 
-        soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
-            .isEqualTo("Cannot set inputs with no scenarios selected.");
+        worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
 
-        bulkCostingPage.selectFirstPartInWorkSheet();
+        soft.assertThat(worksheetsExplorePage.isSetInputsEnabled()).isFalse();
 
-        soft.assertThat(bulkCostingPage.getSetInputButtonState("Set Inputs"))
-            .isEqualTo("Set Inputs");
+        setInputsModalPage = worksheetsExplorePage.clickScenarioCheckbox(worksheetResponse.getName())
+            .clickSetInputs();
 
-        bulkCostingPage.clickSetInputsButton();
-        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage()).isTrue();
-        bulkCostingPage.selectDropdownProcessGroup("2-Model Machining")
-            .selectDropdownDigitalFactory("AGCO Assumption")
-            .typeIntoAnnualVolume("100")
-            .typeIntoYears("5")
-            .clickOnSaveButtonOnSetInputs()
-            .clickOnCloseButtonOnSetInputs();
+        setInputsModalPage.selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
+            // FIXME: 02/07/2024 cn - this was AGCO Assumption (which should match the assertion) but it doesn't seem to exist in aPD
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .enterAnnualVolume("100")
+            .enterAnnualYears("5")
+            .save()
+            .clickClose();
 
-        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("2-Model Machining")).isTrue();
-        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("AGCO Assumption")).isTrue();
+        soft.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("2-Model Machining");
+        soft.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("AGCO Assumption");
         soft.assertAll();
     }
 
-    @Test
+    /*@Test
     @TestRail(id = {29876, 29875, 29877, 29878, 29924})
     @Description("edit Bulk Analysis name and later on search on it")
-    public void editBulkAnalysisNameAndSearchOnIt() {
+    public void editBulkAnalysisNameAndSearch() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);

@@ -127,10 +127,21 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName) {
-        By scenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='sticky-columns']//div//span[@data-testid='checkbox']",
+        By byScenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='sticky-columns']//div//span[@data-testid='checkbox']",
             componentName.toUpperCase().trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementToAppear(byScenario);
+        return pageUtils.scrollWithJavaScript(driver.findElement(byScenario), true);
+    }
+
+    /**
+     * Gets all text from the row
+     *
+     * @param componentName - name of the part
+     * @return list of string
+     */
+    public String getRowDetails(String componentName) {
+        By byScenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']", componentName.toUpperCase().trim()));
+        return pageUtils.waitForElementToAppear(byScenario).getAttribute("textContent");
     }
 
     /**
@@ -292,17 +303,6 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
     public WorksheetsExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
         return this;
-    }
-
-    /**
-     * Gets the icon in the row
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return list of string
-     */
-    public List<String> getRowDetails(String componentName, String scenarioName) {
-        return scenarioTableController.getRowDetails(componentName, scenarioName);
     }
 
     /**

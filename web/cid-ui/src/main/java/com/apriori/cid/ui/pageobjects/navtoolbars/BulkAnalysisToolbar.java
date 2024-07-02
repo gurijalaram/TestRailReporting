@@ -2,6 +2,7 @@ package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisModal;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
@@ -125,9 +126,17 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public void setInputs() {
+    public SetInputsModalPage clickSetInputs() {
         pageUtils.waitForElementAndClick(setInputsButton);
-        // FIXME: 28/06/2024 should return some new page object
+        return new SetInputsModalPage(driver);
+    }
+
+    /**
+     * Checks set inputs button is enabled
+     * @return true/false
+     */
+    public boolean isSetInputsEnabled() {
+        return pageUtils.waitForElementAppear(setInputsButton).isDisplayed();
     }
 
     /**
