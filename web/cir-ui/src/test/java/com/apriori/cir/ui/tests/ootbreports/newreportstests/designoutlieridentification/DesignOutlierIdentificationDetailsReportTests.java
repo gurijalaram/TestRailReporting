@@ -5,6 +5,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
+import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
@@ -339,6 +340,57 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31189")
+    @TestRail(id = 31189)
+    @Description("Input controls - Export Date - Details Report - Fully Burdened Cost")
+    public void testInputControlCostMetricMainReportFullyBurdenedCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31192")
+    @TestRail(id = 31192)
+    @Description("Input controls - Export Date - Details Report - Piece Part Cost")
+    public void testInputControlCostMetricMainReportPiecePartCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31220")
+    @TestRail(id = 31220)
+    @Description("Input controls - Minimum and Maximum aPriori Cost - Details Report")
+    public void testInputControlsMinMaxAprioriCost() {
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency()
+        );
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MIN.getInputControlId(),
+            "1.26"
+        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MAX.getInputControlId(),
+            "10429.18"
+        );
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("CASE_07")).isEqualTo(false);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("PLASTIC_MOULDED_CAP_THICKPART"))
+            .isEqualTo(false);
+
+        softAssertions.assertThat(
+                jasperReportSummary.getReportHtmlPart().getElementsContainingText("Minimum aPriori Cost:").get(6).siblingElements().get(5).text())
+            .isEqualTo("1.26");
+        softAssertions.assertThat(
+                jasperReportSummary.getReportHtmlPart().getElementsContainingText("Maximum aPriori Cost:").get(6).siblingElements().get(1).text())
+            .isEqualTo("10,429.18");
+
+        softAssertions.assertAll();
+    }
+
     private void genericMassMetricTest(String massMetricToUse) {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.MASS_METRIC.getInputControlId(),
@@ -359,24 +411,6 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
         }
 
         softAssertions.assertAll();
-    }
-
-    @Test
-    @Tag(JASPER_API)
-    @TmsLink("31189")
-    @TestRail(id = 31189)
-    @Description("Input controls - Export Date - Main Report - Fully Burdened Cost")
-    public void testInputControlCostMetricMainReportFullyBurdenedCost() {
-        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
-    }
-
-    @Test
-    @Tag(JASPER_API)
-    @TmsLink("31192")
-    @TestRail(id = 31192)
-    @Description("Input controls - Export Date - Main Report - Piece Part Cost")
-    public void testInputControlCostMetricMainReportPiecePartCost() {
-        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
     }
 
     private void genericCostMetricDesignOutlierDetailsTest(String costMetricToUse) {

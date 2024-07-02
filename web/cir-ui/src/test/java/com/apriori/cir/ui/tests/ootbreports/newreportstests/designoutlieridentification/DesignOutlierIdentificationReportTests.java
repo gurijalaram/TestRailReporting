@@ -294,4 +294,40 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("28470")
+    @TestRail(id = 28470)
+    @Description("Input controls - Minimum and Maximum aPriori Cost - Main Report")
+    public void testInputControlsMinMaxAprioriCost() {
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency()
+        );
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MIN.getInputControlId(),
+            "1.26"
+        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MAX.getInputControlId(),
+            "10429.18"
+        );
+
+        List<ChartDataPoint> chartDataPoints = jasperReportSummary.getFirstChartData().getChartDataPoints();
+        softAssertions.assertThat(chartDataPoints.size()).isEqualTo(4);
+        for (ChartDataPoint chartDataPoint : chartDataPoints) {
+            softAssertions.assertThat(chartDataPoint.getPartName()).isNotEqualTo("CASE_07");
+            softAssertions.assertThat(chartDataPoint.getPartName()).isNotEqualTo("PLASTIC_MOULDED_CAP_THICKPART");
+        }
+
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("aPriori Cost Min:").get(6).siblingElements().get(3).text())
+            .isEqualTo("1.26");
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("aPriori Cost Max:").get(6).siblingElements().get(3).text())
+            .isEqualTo("10,429.18");
+
+        softAssertions.assertAll();
+    }
 }
