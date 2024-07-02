@@ -16,7 +16,7 @@ production:
 
 sandbox:
   name: Sandbox
-  url_part: sandbox.${customer}.${env}
+  ui_url_part: sandbox.${customer}.${env}
   api_url_part: sandbox.${env}
 #==========================================================
 
