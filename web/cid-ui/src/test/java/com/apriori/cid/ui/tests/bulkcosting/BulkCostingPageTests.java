@@ -6,9 +6,9 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.WorksheetsExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -18,7 +18,6 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Deployments;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -32,14 +31,16 @@ import org.junit.jupiter.api.Test;
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private BulkAnalysisPage bulkAnalysisPage;
+    private EvaluatePage evaluatePage;
+    private WorksheetsExplorePage worksheetsExplorePage;
     private String worksheetIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials userCredentials = UserUtil.getUser();
+    private BcmUtil bcmUtil = new BcmUtil();
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            BcmUtil bcmUtil = new BcmUtil();
             bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, UserCredentials.init(userCredentials.getEmail(), null));
             worksheetIdentity = null;
         }
@@ -48,7 +49,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Test
     @TestRail(id = {29187, 29874, 29942})
     @Description("Test bulk costing page visibility, add and delete worksheet")
-    public void bulkCostingAddAndDeleteWorksheet() {
+    public void testAddAndDeleteWorksheet() {
         setBulkCostingFlag(true);
 
         loginPage = new CidAppLoginPage(driver);
@@ -65,30 +66,31 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
-    /*@Test
+    @Test
     @TestRail(id = {30730, 29964, 31068})
-    @Description("create inputRow for the worksheet and go to evaluate page")
-    public void testCreateInputAndGoToEvaluatePageRow() {
-        SoftAssertions soft = new SoftAssertions();
+    @Description("Create input row for the worksheet and go to evaluate page")
+    public void testCreateInputAndGoToEvaluatePage() {
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
             .login(userCredentials)
             .clickBulkAnalysis();
 
-        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
-        String inputRowName2 = createInputRow(userCredentials, worksheetResponse, 6);
-        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
-        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
+        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        String inputRowName1 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
+        String inputRowName2 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 6);
 
-        EvaluatePage evaluatePage = bulkCostingPage.selectComponentByRow(1);
+        worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
+        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName1)).isGreaterThan(0);
+        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName2)).isGreaterThan(0);
+
+        evaluatePage = worksheetsExplorePage.openComponentByRow(1);
         soft.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
         soft.assertAll();
     }
 
-    @Test
+    /*@Test
     @TestRail(id = {30679, 30680, 30681, 30682, 30684})
     @Description("delete input row for the worksheet")
     public void testDeleteInputRow() {
@@ -187,16 +189,19 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }*/
 
-    private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
-        CssComponent cssComponent = new CssComponent();
-        BcmUtil bcmUtil = new BcmUtil();
-        ScenarioItem scenarioItem =
-            cssComponent.postSearchRequest(userCredentials, "PART")
-                .getResponseEntity().getItems().get(itemNumber);
-        bcmUtil.createWorkSheetInputRowWithEmail(scenarioItem.getComponentIdentity(),
-            scenarioItem.getScenarioIdentity(), worksheetResponse.getResponseEntity().getIdentity(), userCredentials);
-        return scenarioItem.getComponentDisplayName();
-    }
+//    private String searchCreateInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
+//        CssComponent cssComponent = new CssComponent();
+//        BcmUtil bcmUtil = new BcmUtil();
+//
+//        ScenarioItem scenarioItem =
+//            cssComponent.postSearchRequest(userCredentials, "PART")
+//                .getResponseEntity().getItems().get(itemNumber);
+//
+//        bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+//            scenarioItem.getScenarioIdentity(), worksheetResponse.getResponseEntity().getIdentity());
+//
+//        return scenarioItem.getComponentDisplayName();
+//    }
 
     private ResponseWrapper<WorkSheetResponse> createWorksheet(UserCredentials userCredentials) {
         String name = new GenerateStringUtil().saltString("name");

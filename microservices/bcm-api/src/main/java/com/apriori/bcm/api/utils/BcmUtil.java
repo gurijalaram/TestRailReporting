@@ -16,6 +16,7 @@ import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
+import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -27,6 +28,7 @@ import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -153,11 +155,13 @@ public class BcmUtil {
                 .scenarioIdentity(scenarioIdentity)
                 .build())
             .build();
+
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, InputRowPostResponse.class)
                 .body(body)
                 .inlineVariables(worksheetIdentity)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
+
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -437,5 +441,23 @@ public class BcmUtil {
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use(param, value));
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Search Css and input row
+     * @param userCredentials
+     * @param worksheetResponse
+     * @param itemNumber
+     * @return
+     */
+    public String searchCreateInputRow(UserCredentials userCredentials, WorkSheetResponse worksheetResponse, int itemNumber) {
+        ScenarioItem scenarioItem =
+            new CssComponent().postSearchRequest(userCredentials, "PART")
+                .getResponseEntity().getItems().get(itemNumber);
+
+        createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(), worksheetResponse.getIdentity());
+
+        return scenarioItem.getComponentDisplayName();
     }
 }

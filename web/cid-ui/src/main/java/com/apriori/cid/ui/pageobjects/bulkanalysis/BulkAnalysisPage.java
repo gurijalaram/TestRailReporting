@@ -2,7 +2,6 @@ package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
-import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.BulkAnalysisToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
@@ -58,6 +57,18 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     }
 
     /**
+     * Opens the scenario
+     *
+     * @param worksheetName - the name of the worksheet
+     * @return a new page object
+     */
+    public WorksheetsExplorePage openWorksheet(String worksheetName) {
+        By byWorksheet = By.xpath(String.format("//div[contains(.,'%s')][@data-testid = 'text-overflow']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
+        return new WorksheetsExplorePage(driver);
+    }
+
+    /**
      * Checks scenario count is displayed
      *
      * @return visibility of button
@@ -103,18 +114,6 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
      */
     public boolean isFilterTablePresent() {
         return pageUtils.isElementPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']"));
-    }
-
-    /**
-     * Opens the scenario
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return a new page object
-     */
-    public EvaluatePage openWorksheet(String componentName, String scenarioName) {
-        scenarioTableController.openScenario(componentName, scenarioName);
-        return new EvaluatePage(driver);
     }
 
     /**

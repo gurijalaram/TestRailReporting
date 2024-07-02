@@ -57,6 +57,9 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
+    @FindBy(css = ".table-body div[data-header-id='componentDisplayName']")
+    private List<WebElement> listOfComponents;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -74,6 +77,16 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
     }
 
     /**
+     * Check if inputRow is displayed
+     *
+     * @return boolean
+     */
+    public int isInputRowDisplayed(String inputRowName) {
+        By byInputRow = By.xpath(String.format("//span[contains(.,'%s')]", inputRowName));
+        return pageUtils.waitForElementsToAppear(byInputRow).size();
+    }
+
+    /**
      * Uses type ahead to input the filter
      *
      * @param filter - the filter
@@ -83,6 +96,17 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return new ExplorePage(driver);
+    }
+
+    /**
+     * Open the component by row
+     *
+     * @param row - the row to be selected
+     * @return new page object
+     */
+    public EvaluatePage openComponentByRow(int row) {
+        pageUtils.waitForElementsToAppear(listOfComponents).get(row).click();
+        return new EvaluatePage(driver);
     }
 
     /**
