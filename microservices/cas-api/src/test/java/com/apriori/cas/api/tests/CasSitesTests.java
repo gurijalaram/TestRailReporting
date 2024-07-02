@@ -92,7 +92,7 @@ public class CasSitesTests {
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(aPrioriIdentity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(aprioriIdentity, siteId);
 
         soft.assertThat(siteResponse.getResponseEntity().getStatus())
             .isEqualTo("EXISTS");
