@@ -114,7 +114,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRowWithEmail(String componentIdentity, String scenarioIdentity, String worksheetIdentity,UserCredentials userCred) {
+    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRowWithEmail(String componentIdentity, String scenarioIdentity, String worksheetIdentity, UserCredentials userCred) {
         WorksheetInputRowsRequest body = WorksheetInputRowsRequest
             .builder()
             .inputRow(Inputrow
@@ -319,7 +319,7 @@ public class BcmUtil extends TestUtil {
      * @param expectedResponseCode - expected response code
      * @return response object
      */
-    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode,UserCredentials userCred) {
+    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode, UserCredentials userCred) {
         requestEntityUtil = RequestEntityUtilBuilder
             .useCustomUser(userCred)
             .useApUserContextInRequests();
@@ -369,10 +369,10 @@ public class BcmUtil extends TestUtil {
     /**
      * Adds multiple input rows to a worksheet
      *
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
+     * @param klass                             - class
+     * @param worksheetIdentity                 - worksheet identity
      * @param componentIdentityScenarioIdentity - list of component and scenario identities
-     * @param expectedResponseCode - expected response code
+     * @param expectedResponseCode              - expected response code
      * @return response object
      */
     public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, List<String> componentIdentityScenarioIdentity, Integer expectedResponseCode) {
@@ -382,9 +382,9 @@ public class BcmUtil extends TestUtil {
             .inlineVariables(worksheetIdentity)
             .body(AddInputsRequest.builder()
                 .groupItems(componentIdScenarioId.stream().map(o -> Inputrow.builder()
-                    .componentIdentity(o[0])
-                    .scenarioIdentity(o[1])
-                    .build())
+                        .componentIdentity(o[0])
+                        .scenarioIdentity(o[1])
+                        .build())
                     .collect(Collectors.toList()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
@@ -394,9 +394,9 @@ public class BcmUtil extends TestUtil {
     /**
      * Deletes multiple worksheets at once
      *
-     * @param klass - class
+     * @param klass                - class
      * @param expectedResponseCode - expected response code
-     * @param worksheetIdentity - worksheet identity
+     * @param worksheetIdentity    - worksheet identity
      * @return response object
      */
     public <T> ResponseWrapper<T> deleteMultipleWorksheets(Class<T> klass, Integer expectedResponseCode, String... worksheetIdentity) {
@@ -428,8 +428,8 @@ public class BcmUtil extends TestUtil {
      * Returns filtered/sorted list of scenario iteration candidates
      *
      * @param worksheetIdentity - worksheet identity
-     * @param param - name of parameter
-     * @param value - value of parameter
+     * @param param             - name of parameter
+     * @param value             - value of parameter
      * @return response object
      */
     public ResponseWrapper<ComponentResponse> getCandidatesWithParams(String worksheetIdentity, String param, String value) {

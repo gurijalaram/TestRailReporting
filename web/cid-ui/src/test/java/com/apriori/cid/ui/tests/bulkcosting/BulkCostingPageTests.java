@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+// TODO: 01/07/2024 cn - all these tests need to be updated and fixed
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private BulkCostingPage bulkCostingPage;
@@ -54,7 +55,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
             .login(userCredentials)
-            .clickBulkCostingButton();
+            .clickBulkAnalysis();
 
         soft.assertThat(bulkCostingPage.isListOfWorksheetsPresent()).isTrue();
 
@@ -74,7 +75,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
             .login(userCredentials)
-            .clickBulkCostingButton();
+            .clickBulkAnalysis();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
         String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
@@ -97,7 +98,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
             .login(userCredentials)
-            .clickBulkCostingButton();
+            .clickBulkAnalysis();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
         String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
@@ -125,7 +126,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
             .login(userCredentials)
-            .clickBulkCostingButton();
+            .clickBulkAnalysis();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
         createInputRow(userCredentials, worksheetResponse, 5);
@@ -162,7 +163,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
             .login(userCredentials)
-            .clickBulkCostingButton();
+            .clickBulkAnalysis();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
         createInputRow(userCredentials, worksheetResponse, 5);
@@ -186,7 +187,6 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertThat(bulkCostingPage.getTextFromTheFirstRow()).contains(Arrays.asList(worksheetName));
         soft.assertAll();
     }
-
 
     private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
         CssComponent cssComponent = new CssComponent();
