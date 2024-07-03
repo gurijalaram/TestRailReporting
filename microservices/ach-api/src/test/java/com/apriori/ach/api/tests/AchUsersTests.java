@@ -51,7 +51,7 @@ public class AchUsersTests extends AchTestUtil {
     private static Customer serviceCustomer;
     private static String customerIdentity;
     private RequestEntityUtil requestEntityUtilNoAdmin;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private String domain;
     private String userIdentity;
@@ -69,6 +69,8 @@ public class AchUsersTests extends AchTestUtil {
         requestEntityUtilNoAdmin = RequestEntityUtilBuilder
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
             .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
 
         Customer customer = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = customer.getEmailRegexPatterns().stream().findFirst().orElseThrow();
@@ -139,8 +141,7 @@ public class AchUsersTests extends AchTestUtil {
         ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
         String userIdentity = newUser.getResponseEntity().getIdentity();
 
-        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .token(getWidgetsUserToken(USER_ADMIN))
+        RequestEntity deleteRequest = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, null)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
             .inlineVariables(customerIdentity, userIdentity);
         HTTPRequest.build(deleteRequest).delete();
@@ -158,9 +159,7 @@ public class AchUsersTests extends AchTestUtil {
     public void tryDeleteAprioriCIGenerateUser() {
         String apGenerateIdentity = getUser("aPrioriCIGenerateUser", customerIdentity).getIdentity();
 
-        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .returnType(AchErrorResponse.class)
-            .token(getWidgetsUserToken(USER_ADMIN))
+        RequestEntity deleteRequest = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
             .expectedResponseCode(HttpStatus.SC_CONFLICT)
             .inlineVariables(customerIdentity, apGenerateIdentity);
 
@@ -177,9 +176,7 @@ public class AchUsersTests extends AchTestUtil {
     public void tryDeleteServiceAccount() {
         String serviceAccountIdentity = getUser("widgets.service-account.1", customerIdentity).getIdentity();
 
-        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .returnType(AchErrorResponse.class)
-            .token(getWidgetsUserToken(USER_ADMIN))
+        RequestEntity deleteRequest = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
             .expectedResponseCode(HttpStatus.SC_CONFLICT)
             .inlineVariables(customerIdentity, serviceAccountIdentity);
 
@@ -229,9 +226,7 @@ public class AchUsersTests extends AchTestUtil {
 
         soft.assertThat(updateUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
 
-        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .returnType(AchErrorResponse.class)
-            .token(getWidgetsUserToken(NOT_ADMIN_USER))
+        RequestEntity deleteRequest = requestEntityUtilNoAdmin.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
             .inlineVariables(customerIdentity, userIdentity);
 
@@ -247,9 +242,7 @@ public class AchUsersTests extends AchTestUtil {
     @Description("User admin cannot update own enablements")
     public void updateOwnEnablements() {
         User current = getUser(USER_ADMIN, customerIdentity);
-        RequestEntity updateEnablements = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .returnType(AchErrorResponse.class)
-            .token(getWidgetsUserToken(USER_ADMIN))
+        RequestEntity updateEnablements = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
             .inlineVariables(customerIdentity, current.getIdentity())
             .body("user",
@@ -270,9 +263,7 @@ public class AchUsersTests extends AchTestUtil {
     @Description("User admin cannot delete themself")
     public void tryDeleteThemself() {
         User current = getUser(USER_ADMIN, customerIdentity);
-        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
-            .returnType(AchErrorResponse.class)
-            .token(getWidgetsUserToken(USER_ADMIN))
+        RequestEntity deleteRequest = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
             .inlineVariables(customerIdentity, current.getIdentity());
 
