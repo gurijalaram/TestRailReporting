@@ -32,7 +32,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-// TODO: 01/07/2024 cn - all these tests need to be updated and fixed
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private BulkAnalysisPage bulkAnalysisPage;
