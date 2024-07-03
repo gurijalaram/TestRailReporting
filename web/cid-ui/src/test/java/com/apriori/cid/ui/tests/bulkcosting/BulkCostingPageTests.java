@@ -16,7 +16,6 @@ import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -30,9 +29,15 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
+// TODO: 01/07/2024 cn - all these tests need to be updated and fixed
 public class BulkCostingPageTests extends TestBaseUI {
+    private final String saltName = new GenerateStringUtil().saltString("name");
     private CidAppLoginPage loginPage;
     private BulkAnalysisPage bulkAnalysisPage;
     private EvaluatePage evaluatePage;
@@ -41,14 +46,19 @@ public class BulkCostingPageTests extends TestBaseUI {
     private SetInputsModalPage setInputsModalPage;
     private BulkAnalysisInfoPage bulkAnalysisInfoPage;
     private String worksheetIdentity;
-    private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials userCredentials;
-    private BcmUtil bcmUtil = new BcmUtil();
+    private BcmUtil bcmUtil;
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        bcmUtil = new BcmUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, UserCredentials.init(userCredentials.getEmail(), null));
+            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
             worksheetIdentity = null;
         }
     }
@@ -58,19 +68,18 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Test bulk costing page visibility, add and delete worksheet")
     public void testAddAndDeleteWorksheet() {
         setBulkCostingFlag(true);
-        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         soft.assertThat(bulkAnalysisPage.getListOfWorksheets()).isGreaterThan(0);
 
-        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        bulkAnalysisPage.highlightWorksheet(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(worksheetResponse.getResponseEntity().getName())).isFalse();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
+        bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName());
+        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(worksheetResponse.getName())).isFalse();
         soft.assertAll();
     }
 
@@ -79,14 +88,14 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Create input row for the worksheet and go to evaluate page")
     public void testCreateInputAndGoToEvaluatePage() {
         setBulkCostingFlag(true);
-        userCredentials = UserUtil.getUser();
+
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
         String inputRowName1 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
         String inputRowName2 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 6);
 
@@ -104,14 +113,13 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Delete input row for the worksheet")
     public void testDeleteInputRow() {
         setBulkCostingFlag(true);
-        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
         String inputRowName = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
 
         worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
@@ -132,14 +140,13 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Update inputs")
     public void testUpdateInputs() {
         setBulkCostingFlag(true);
-        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
         bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
 
         worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
@@ -167,16 +174,15 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Edit Bulk Analysis name and search")
     public void editBulkAnalysisNameAndSearch() {
         setBulkCostingFlag(true);
-        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = createWorksheet(userCredentials).getResponseEntity();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName).getResponseEntity();
 
-        bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
+        bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
         soft.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
 
         bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
@@ -206,7 +212,6 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
-        RequestEntityUtil requestEntityUtil = TestHelper.initCustomUser(userCredentials);
         InstallationUtil installationUtil = new InstallationUtil(requestEntityUtil);
         CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();

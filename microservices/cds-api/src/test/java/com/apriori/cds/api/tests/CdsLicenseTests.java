@@ -15,6 +15,7 @@ import com.apriori.cds.api.models.response.UsersLicensing;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.SharedCustomerUtil;
@@ -44,6 +45,7 @@ public class CdsLicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private CdsUserUtil cdsUserUtil;
     private ResponseWrapper<LicenseResponse> license;
     private String customerIdentity;
@@ -64,6 +66,7 @@ public class CdsLicenseTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        customerUtil = new com.apriori.cds.api.utils.CustomerUtil(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
     }
 
@@ -416,7 +419,7 @@ public class CdsLicenseTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerName = customer.getResponseEntity().getName();
 
