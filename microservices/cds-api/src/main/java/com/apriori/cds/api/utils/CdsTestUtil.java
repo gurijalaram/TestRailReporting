@@ -9,7 +9,6 @@ import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
 import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
-import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
