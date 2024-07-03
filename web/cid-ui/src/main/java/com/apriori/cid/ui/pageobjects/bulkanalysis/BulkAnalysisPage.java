@@ -2,7 +2,6 @@ package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
-import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.BulkAnalysisToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
@@ -29,6 +28,9 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
+    @FindBy(xpath = "//div[@data-testid = 'table-body']/div")
+    private List<WebElement> listOfWorksheets;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -43,6 +45,27 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(scenarioCount);
+    }
+
+    /**
+     * Checks worksheets are present in the bulk analysis page
+     *
+     * @return boolean
+     */
+    public int getListOfWorksheets() {
+        return pageUtils.waitForElementsToAppear(listOfWorksheets).size();
+    }
+
+    /**
+     * Opens the scenario
+     *
+     * @param worksheetName - the name of the worksheet
+     * @return a new page object
+     */
+    public WorksheetsExplorePage openWorksheet(String worksheetName) {
+        By byWorksheet = By.xpath(String.format("//div[contains(.,'%s')][@data-testid = 'text-overflow']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
+        return new WorksheetsExplorePage(driver);
     }
 
     /**
@@ -94,18 +117,6 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     }
 
     /**
-     * Opens the scenario
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return a new page object
-     */
-    public EvaluatePage openScenario(String componentName, String scenarioName) {
-        scenarioTableController.openScenario(componentName, scenarioName);
-        return new EvaluatePage(driver);
-    }
-
-    /**
      * Get Component and Scenario names of first scenario in table
      *
      * @return The component and scenario names in a comma-separated String
@@ -115,15 +126,26 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     }
 
     /**
-     * Highlights the scenario in the table
+     * Highlights the worksheet in the table
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
+     * @param worksheetName - name of the part
      * @return current page object
      */
-    public BulkAnalysisPage highlightScenario(String componentName, String scenarioName) {
-        scenarioTableController.highlightScenario(componentName, scenarioName);
+    public BulkAnalysisPage highlightWorksheet(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
         return this;
+    }
+
+    /**
+     * Check if worksheet is present on UI
+     *
+     * @param worksheetName - name of the worksheet
+     * @return true/false
+     */
+    public boolean isWorksheetPresent(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        return pageUtils.isElementDisplayed(byWorksheet);
     }
 
     /**

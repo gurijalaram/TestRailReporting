@@ -1,10 +1,10 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.help.HelpPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.cid.ui.pageobjects.settings.DisplayPreferencesPage;
 import com.apriori.web.app.util.PageUtils;
 
@@ -146,9 +146,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      *
      * @return new page object
      */
-    public BulkCostingPage clickBulkAnalysis() {
+    public BulkAnalysisPage clickBulkAnalysis() {
         pageUtils.waitForElementAndClick(bulkAnalysisButton);
-        return new BulkCostingPage(driver);
+        return new BulkAnalysisPage(driver);
     }
 
     /**

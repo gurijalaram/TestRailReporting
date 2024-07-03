@@ -14,6 +14,8 @@ import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
+import com.apriori.css.api.utils.CssComponent;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -23,6 +25,7 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -132,12 +135,7 @@ public class BcmUtil extends TestUtil {
      * @return
      */
     public ResponseWrapper<WorkSheetInputRowGetResponse> getWorkSheetInputRow(String worksheetIdentity) {
-        final RequestEntity requestEntity =
-            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class)
-                .inlineVariables(worksheetIdentity)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).get();
+        return getCommonRequest(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class, HttpStatus.SC_OK, worksheetIdentity);
     }
 
     /**
@@ -280,22 +278,6 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
-     * Deletes worksheet - from UI for specific user
-     *
-     * @param klass                - class
-     * @param worksheetIdentity    - worksheet identity
-     * @param expectedResponseCode - expected response code
-     * @return response object
-     */
-    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
-        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
-            .inlineVariables(worksheetIdentity)
-            .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).delete();
-    }
-
-    /**
      * Edits public input row
      *
      * @param klass                - class
@@ -409,5 +391,23 @@ public class BcmUtil extends TestUtil {
             .queryParams(new QueryParams().use(param, value));
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Search Css and input row
+     * @param userCredentials
+     * @param worksheetResponse
+     * @param itemNumber
+     * @return
+     */
+    public String searchCreateInputRow(UserCredentials userCredentials, WorkSheetResponse worksheetResponse, int itemNumber) {
+        ScenarioItem scenarioItem =
+            new CssComponent().postSearchRequest(userCredentials, "PART")
+                .getResponseEntity().getItems().get(itemNumber);
+
+        createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(), worksheetResponse.getIdentity());
+
+        return scenarioItem.getComponentDisplayName();
     }
 }

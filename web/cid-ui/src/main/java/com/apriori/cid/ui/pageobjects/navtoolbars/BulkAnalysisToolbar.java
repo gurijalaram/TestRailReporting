@@ -1,10 +1,12 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisInfoPage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisModal;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
-import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,10 @@ import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
 public class BulkAnalysisToolbar extends MainNavBar {
+
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
+    @FindBy(css = "[id='qa-input-row-set-inputs'] button")
+    protected WebElement setInputsButton;
 
     @FindBy(css = "[id='qa-worksheet-create-new'] button")
     private WebElement newButton;
@@ -32,9 +38,6 @@ public class BulkAnalysisToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-bcm-sub-header-add-button'] button")
     private WebElement addScenariosButton;
 
-    @FindBy(css = "[id='qa-input-row-set-inputs'] button")
-    protected WebElement setInputsButton;
-
     @FindBy(css = "[id='qa-input-row-delete-new'] button")
     private WebElement removeButton;
 
@@ -49,8 +52,6 @@ public class BulkAnalysisToolbar extends MainNavBar {
 
     @FindBy(css = "[data-testid='bulk-analysis-evaluate'] .secondary-nav-bar-back-text")
     private WebElement allBulkAnalysesButton;
-
-    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -78,9 +79,18 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public InfoPage clickInfo() {
+    public BulkAnalysisInfoPage clickInfo() {
         pageUtils.waitForElementAndClick(infoButton);
-        return new InfoPage(driver);
+        return new BulkAnalysisInfoPage(driver);
+    }
+
+    /**
+     * Checks if the info button is enable
+     *
+     * @return true/false
+     */
+    public boolean isInfoButtonEnabled() {
+        return pageUtils.isElementEnabled(infoButton);
     }
 
     /**
@@ -98,9 +108,18 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public void clickRemove() {
+    public DeletePage clickRemove() {
         pageUtils.waitForElementAndClick(removeButton);
-        // FIXME: 28/06/2024 should return some new page object
+        return new DeletePage(driver);
+    }
+
+    /**
+     * Checks if the remove button is enable
+     *
+     * @return true/false
+     */
+    public boolean isRemoveButtonEnabled() {
+        return pageUtils.isElementEnabled(removeButton);
     }
 
     /**
@@ -128,9 +147,18 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public void setInputs() {
+    public SetInputsModalPage clickSetInputs() {
         pageUtils.waitForElementAndClick(setInputsButton);
-        // FIXME: 28/06/2024 should return some new page object
+        return new SetInputsModalPage(driver);
+    }
+
+    /**
+     * Checks set inputs button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isSetInputsEnabled() {
+        return pageUtils.waitForElementAppear(setInputsButton).isDisplayed();
     }
 
     /**
@@ -150,9 +178,9 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public BulkCostingPage clickAllBulkAnalyses() {
+    public BulkAnalysisPage clickAllBulkAnalyses() {
         pageUtils.waitForElementAndClick(allBulkAnalysesButton);
-        return new BulkCostingPage(driver);
+        return new BulkAnalysisPage(driver);
     }
 
     /**
