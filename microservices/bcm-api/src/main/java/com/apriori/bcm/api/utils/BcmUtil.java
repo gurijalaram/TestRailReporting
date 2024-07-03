@@ -135,12 +135,7 @@ public class BcmUtil extends TestUtil {
      * @return
      */
     public ResponseWrapper<WorkSheetInputRowGetResponse> getWorkSheetInputRow(String worksheetIdentity) {
-        final RequestEntity requestEntity =
-            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class)
-                .inlineVariables(worksheetIdentity)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).get();
+        return getCommonRequest(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class, HttpStatus.SC_OK, worksheetIdentity);
     }
 
     /**
