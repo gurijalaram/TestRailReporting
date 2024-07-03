@@ -283,22 +283,6 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
-     * Deletes worksheet - from UI for specific user
-     *
-     * @param klass                - class
-     * @param worksheetIdentity    - worksheet identity
-     * @param expectedResponseCode - expected response code
-     * @return response object
-     */
-    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
-        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
-            .inlineVariables(worksheetIdentity)
-            .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).delete();
-    }
-
-    /**
      * Edits public input row
      *
      * @param klass                - class

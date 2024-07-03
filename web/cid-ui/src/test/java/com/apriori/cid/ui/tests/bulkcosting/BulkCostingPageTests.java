@@ -54,7 +54,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+            bcmUtil.deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
             worksheetIdentity = null;
         }
     }
