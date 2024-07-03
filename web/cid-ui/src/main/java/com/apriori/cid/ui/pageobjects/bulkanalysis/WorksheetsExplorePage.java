@@ -1,22 +1,18 @@
-package com.apriori.cid.ui.pageobjects.explore;
-
-import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
 import com.apriori.cid.ui.pageobjects.common.ConfigurePage;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.navtoolbars.ExploreToolbar;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
+import com.apriori.cid.ui.pageobjects.explore.PreviewPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.BulkAnalysisToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
-import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +31,7 @@ import java.util.stream.Collectors;
  */
 
 @Slf4j
-public class ExplorePage extends ExploreToolbar {
-
-    @FindBy(css = "div[class='card-header'] .left")
-    private WebElement scenarioCount;
+public class WorksheetsExplorePage extends BulkAnalysisToolbar {
 
     @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
     private WebElement configureButton;
@@ -69,7 +62,7 @@ public class ExplorePage extends ExploreToolbar {
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
 
-    public ExplorePage(WebDriver driver) {
+    public WorksheetsExplorePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -77,16 +70,7 @@ public class ExplorePage extends ExploreToolbar {
         this.componentTableActions = new ComponentTableActions(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(scenarioCount);
-    }
-
-    /**
-     * Checks scenario count is displayed
-     *
-     * @return visibility of button
-     */
-    public boolean isScenarioCountPresent() {
-        return scenarioCount.isDisplayed();
+        pageUtils.waitForElementToAppear(setInputsButton);
     }
 
     /**
@@ -99,24 +83,6 @@ public class ExplorePage extends ExploreToolbar {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return new ExplorePage(driver);
-    }
-
-    /**
-     * Get Currently selected Filter
-     *
-     * @return The current filter name as a String
-     */
-    public String getCurrentFilter() {
-        return currentFilter.getText();
-    }
-
-    /**
-     * Gets the count of scenarios found
-     *
-     * @return string
-     */
-    public String getComponentsFound() {
-        return pageUtils.waitForElementToAppear(scenarioCount).getText();
     }
 
     /**
@@ -135,7 +101,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage selectAllScenarios() {
+    public WorksheetsExplorePage selectAllScenarios() {
         scenarioTableController.selectAllScenarios();
         return this;
     }
@@ -187,7 +153,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage highlightScenario(String componentName, String scenarioName) {
+    public WorksheetsExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -240,7 +206,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+    public WorksheetsExplorePage multiHighlightScenarios(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
@@ -251,7 +217,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+    public WorksheetsExplorePage multiSelectScenarios(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
@@ -263,7 +229,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+    public WorksheetsExplorePage controlHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -275,7 +241,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+    public WorksheetsExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -300,22 +266,6 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getScenarioState(String componentName, String scenarioName) {
         return scenarioTableController.getScenarioState(componentName, scenarioName);
-    }
-
-    /**
-     * Gets the processing failed state
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param currentUser   -  current user
-     * @return - String
-     */
-    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
-
-        return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 
     /**
@@ -379,7 +329,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage setPagination() {
+    public WorksheetsExplorePage setPagination() {
         componentTableActions.setPagination();
         return this;
     }
@@ -390,7 +340,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public ExplorePage enterKeySearch(String componentName) {
+    public WorksheetsExplorePage enterKeySearch(String componentName) {
         componentTableActions.enterKeySearch(componentName.toUpperCase());
         return this;
     }
@@ -401,7 +351,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public ExplorePage clickSearch(String componentName) {
+    public WorksheetsExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
     }
@@ -413,9 +363,8 @@ public class ExplorePage extends ExploreToolbar {
      * @param order  - the order
      * @return current page object
      */
-    public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+    public WorksheetsExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
-        pageUtils.waitForElementToAppear(scenarioCount);
         return this;
     }
 
@@ -436,7 +385,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioState - the scenario state to check for
      * @return current page object
      */
-    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+    public WorksheetsExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
         scenarioTableController.checkComponentState(componentInfo, scenarioState);
         refresh();
         return this;
@@ -449,7 +398,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param userCredentials - the user credentials
      * @return current page object
      */
-    public ExplorePage getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public WorksheetsExplorePage getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         scenarioTableController.getCssComponents(userCredentials, paramKeysValues);
         return this;
     }
@@ -496,7 +445,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param columnToAdd - Name of column to be added
      * @return - The current page object
      */
-    public ExplorePage addColumn(ColumnsEnum columnToAdd) {
+    public WorksheetsExplorePage addColumn(ColumnsEnum columnToAdd) {
         scenarioTableController.addColumn(columnToAdd);
         return this;
     }
