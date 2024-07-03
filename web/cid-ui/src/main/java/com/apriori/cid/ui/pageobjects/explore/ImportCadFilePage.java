@@ -41,6 +41,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "input[name='primaryScenarioName']")
     private WebElement defaultScenarioNameInput;
 
+    @FindBy(css = "input[name='bulkAnalysisOptions.bulkAnalysisName']")
+    private WebElement bulkAnalysisNameInput;
+
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
@@ -170,6 +173,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         pageUtils.waitForElementToAppear(defaultScenarioNameInput);
         pageUtils.clearValueOfElement(defaultScenarioNameInput);
         defaultScenarioNameInput.sendKeys(scenarioName);
+        return this;
+    }
+
+    /**
+     * Input bulk analysis name
+     *
+     * @param bulkAnalysisName - the scenario name
+     * @return current page object
+     */
+    public ImportCadFilePage inputBulkAnalysisName(String bulkAnalysisName) {
+        pageUtils.waitForElementToAppear(bulkAnalysisNameInput);
+        pageUtils.clearValueOfElement(bulkAnalysisNameInput);
+        bulkAnalysisNameInput.sendKeys(bulkAnalysisName);
         return this;
     }
 

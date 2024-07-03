@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
 
+// TODO: 01/07/2024 cn - remove this class entirely
 public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     @FindBy(xpath = "//button[contains(@class,'bcm-sub-header-delete-button')]")
     private WebElement deleteButton;

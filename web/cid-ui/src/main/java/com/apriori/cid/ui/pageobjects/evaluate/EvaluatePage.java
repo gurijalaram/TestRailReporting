@@ -15,6 +15,7 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,8 +23,6 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,10 +32,8 @@ import java.util.stream.Stream;
 /**
  * @author cfrith
  */
-
+@Slf4j
 public class EvaluatePage extends EvaluateToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(EvaluatePage.class);
 
     @FindBy(css = ".costing-inputs .spinner-border")
     private List<WebElement> panelLoaders;
@@ -204,7 +201,7 @@ public class EvaluatePage extends EvaluateToolbar {
         this.inputsController = new InputsController(driver);
         this.statusIcon = new StatusIcon(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementsToNotAppear(panelLoaders);
         this.get();
