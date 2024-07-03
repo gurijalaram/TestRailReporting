@@ -4,9 +4,11 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cas.ui.pageobjects.security.SecurityPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,19 +23,22 @@ public class MfaEnabledTests extends TestBaseUI {
     private SecurityPage securityPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private Customer customer;
     private String customerIdentity;
     private String customerName;
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+
         String cloudRef = generateStringUtil.generateCloudReference();
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String email = "\\S+@".concat(customerName);
 
-        cdsTestUtil = new CdsTestUtil();
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        customer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = customer.getIdentity();
 
         securityPage = new CasLoginPage(driver)
