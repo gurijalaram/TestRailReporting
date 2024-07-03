@@ -14,6 +14,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -48,6 +49,7 @@ public class BatchImportListTests extends TestBaseUI {
     private SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
     // TODO: 21/06/2024 cn - note to remove this variable when refactoring
@@ -58,12 +60,13 @@ public class BatchImportListTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         email = customerName.toLowerCase();
 
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         importPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())

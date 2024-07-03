@@ -12,6 +12,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.cds.api.utils.SiteUtil;
@@ -44,6 +45,7 @@ public class CdsUserManagementHighMemTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private ApplicationUtil applicationUtil;
     private SiteUtil siteUtil;
     private InstallationUtil installationUtil;
@@ -65,6 +67,7 @@ public class CdsUserManagementHighMemTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
@@ -175,7 +178,7 @@ public class CdsUserManagementHighMemTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
         String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
