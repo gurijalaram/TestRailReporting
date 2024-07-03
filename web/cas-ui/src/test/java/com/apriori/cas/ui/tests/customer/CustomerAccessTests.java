@@ -13,10 +13,13 @@ import com.apriori.cas.ui.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -30,10 +33,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class CustomerAccessTests extends TestBaseUI {
-    SoftAssertions soft = new SoftAssertions();
+    private final SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private String cloudRef;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String customerName;
     private String userName;
@@ -42,6 +46,10 @@ public class CustomerAccessTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+
         customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = customerName.toLowerCase();
@@ -49,8 +57,7 @@ public class CustomerAccessTests extends TestBaseUI {
         userName = currentUser.getUsername();
         userEmail = currentUser.getEmail();
 
-        cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
         customerIdentity = targetCustomer.getIdentity();
 

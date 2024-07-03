@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
@@ -11,9 +9,9 @@ import com.apriori.cas.api.models.response.CustomerAssociationUsers;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -23,7 +21,6 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
@@ -35,8 +32,8 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerUserAssociationTests {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private Customer aprioriInternal;
     private Customer targetCustomer;
@@ -44,13 +41,12 @@ public class CasCustomerUserAssociationTests {
     private List<CustomerAssociationUser> associatedUsers;
     private List<User> usersToAssociate;
 
-    @BeforeAll
-    public static void globalSetup() {
-        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser(APRIORI_DEVELOPER).getToken());
-    }
-
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
         aprioriInternal = casTestUtil.getAprioriInternal();
 
         associatedUsers = new ArrayList<>();

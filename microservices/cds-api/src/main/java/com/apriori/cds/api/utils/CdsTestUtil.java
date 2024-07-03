@@ -7,14 +7,14 @@ import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
-import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.PostBatch;
+import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
+import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.CustomAttribute;
-import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.Roles;
@@ -30,18 +30,18 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.UserProfile;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -63,109 +63,118 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *
-     * @param name           - the customer name
-     * @param cloudReference - the cloud reference name
-     * @param salesForceId   - the sales force id
-     * @param email          - the email pattern
+     * @param customerIdentity - the customer id
+     * @param userName         - the username
+     * @param domain           - the customer name
      * @return new object
      */
-    public ResponseWrapper<Customer> addCustomer(
-        String name,
-        String customerType,
-        String cloudReference,
-        String salesForceId,
-        String email) {
+    public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
 
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customer.class)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "customer",
-                Customer.builder().name(name)
-                    .description("Add new customers api test")
-                    .customerType(customerType)
-                    .createdBy("#SYSTEM00000")
-                    .cloudReference(cloudReference)
-                    .salesforceId(salesForceId)
-                    .active(true)
-                    .mfaRequired(false)
-                    .useExternalIdentityProvider(false)
-                    .maxCadFileRetentionDays(1095)
-                    .maxCadFileSize(51)
-                    .emailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk"))
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Creates customer with random data
-     *
-     * @param rcd random customer data
-     * @return new object
-     */
-    public ResponseWrapper<Customer> createCustomer(RandomCustomerData rcd) {
-        return addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
-    }
-
-    /**
-     * Creates customer via CAS API with service accounts
-     *
-     * @param name           - the customer name
-     * @param cloudReference - the cloud reference name
-     * @param email          - the email pattern
-     * @return new object
-     */
-    public ResponseWrapper<Customer> addCASCustomer(
-        String name,
-        String cloudReference,
-        String email,
-        UserCredentials currentUser) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
-            .token(currentUser.getToken())
-            .body(
-                "customer",
-                CASCustomerRequest.builder().name(name)
-                    .cloudReference(cloudReference)
-                    .description("Add new customers api test")
-                    .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
-                    .customerType("CLOUD_ONLY")
-                    .active(true)
-                    .mfaRequired(true)
-                    .mfaAuthenticator("ONE_TIME_PASSWORD")
-                    .useExternalIdentityProvider(false)
-                    .maxCadFileRetentionDays(584)
-                    .maxCadFileSize(51)
-                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Updates customer by customer id
-     *
-     * @param customerIdentity    - customer identity
-     * @param updatedEmailPattern - new value of email pattern
-     * @return new object
-     */
-    public ResponseWrapper<Customer> updateCustomer(String customerIdentity, String updatedEmailPattern) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userName + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .headers(new HashMap<String, String>() {
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body("user", requestBody);
 
-                {
-                    put("Content-Type", "application/json");
-                }
-            })
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Creates user with set of enablements
+     *
+     * @param customerIdentity     - the customer id
+     * @param userName             - the username
+     * @param domain               - the customer name
+     * @param customerAssignedRole - the customer assigned role
+     * @return new object
+     */
+    public ResponseWrapper<User> addUserWithEnablements(String customerIdentity, String userName, String domain, String customerAssignedRole) {
+
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserWithEnablementsData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userName + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
+        requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body("user", requestBody);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * PATCH call to update a user
+     *
+     * @param user - the user
+     * @return new object
+     */
+    public ResponseWrapper<User> patchUser(User user) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
+            .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK)
             .body(
-                "customer",
-                Customer.builder()
-                    .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
+                "user",
+                User.builder()
+                    .identity(user.getIdentity())
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .createdBy(user.getCreatedBy())
+                    .active(user.getActive())
+                    .userProfile(UserProfile.builder()
+                        .department("Design Dept")
+                        .supervisor("Moya Parker").build())
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    public <T> ResponseWrapper<T> patchUser(
+        Class<T> klass,
+        String customerIdentity,
+        String userIdentity,
+        Integer expectedResponseCode,
+        JsonNode user) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
+            .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body("user", user);
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * PATCH call to update the user credentials
+     *
+     * @param customerIdentity    - the customer id
+     * @param userIdentity        - the user id
+     * @param passwordHashCurrent - current hash password
+     * @param passwordSalt        - the salt password
+     * @return new object
+     */
+    public ResponseWrapper<CredentialsItems> updateUserCredentials(
+        String customerIdentity,
+        String userIdentity,
+        String passwordHashCurrent,
+        String passwordSalt) {
+
+        RequestEntity requestEntity = requestEntityUtil
+            .init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .body(
+                "userCredential",
+                UpdateCredentials.builder()
+                    .currentPasswordHash(passwordHashCurrent)
+                    .newPasswordHash(new GenerateStringUtil().getHashPassword())
+                    .newPasswordSalt(passwordSalt)
+                    .newEncryptedPassword(new GenerateStringUtil().getRandomStringSpecLength(12).toLowerCase())
                     .build()
             );
 
