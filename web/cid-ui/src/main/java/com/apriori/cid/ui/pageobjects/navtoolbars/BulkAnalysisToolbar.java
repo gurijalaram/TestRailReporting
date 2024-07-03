@@ -2,11 +2,11 @@ package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisInfoPage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisModal;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.SetInputsModalPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
-import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -178,9 +178,9 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public BulkCostingPage clickAllBulkAnalyses() {
+    public BulkAnalysisPage clickAllBulkAnalyses() {
         pageUtils.waitForElementAndClick(allBulkAnalysesButton);
-        return new BulkCostingPage(driver);
+        return new BulkAnalysisPage(driver);
     }
 
     /**
