@@ -151,7 +151,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickSetInputs();
 
         setInputsModalPage.selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
-            // FIXME: 02/07/2024 cn - this was AGCO Assumption (which should match the assertion) but it doesn't seem to exist in aPD
+            // FIXME: 02/07/2024 cn - this df was AGCO Assumption (which should match the assertion) but it doesn't seem to exist in aPD
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .enterAnnualVolume("100")
             .enterAnnualYears("5")
