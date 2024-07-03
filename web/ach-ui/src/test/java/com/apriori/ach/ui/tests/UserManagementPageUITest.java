@@ -14,14 +14,12 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.login.LoginService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -113,7 +111,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
         userManagementPage.findUser(username);
 
-        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);;
+        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);
 
         userManagementPage.clickOnThreeDotsUserRowAndHitDelete();
 
