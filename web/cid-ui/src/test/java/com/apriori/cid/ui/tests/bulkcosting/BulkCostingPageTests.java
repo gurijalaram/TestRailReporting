@@ -43,7 +43,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private BulkAnalysisInfoPage bulkAnalysisInfoPage;
     private String worksheetIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials userCredentials = UserUtil.getUser();
+    private UserCredentials userCredentials;
     private BcmUtil bcmUtil = new BcmUtil();
 
     @AfterEach
@@ -59,6 +59,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Test bulk costing page visibility, add and delete worksheet")
     public void testAddAndDeleteWorksheet() {
         setBulkCostingFlag(true);
+        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
@@ -79,6 +80,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Create input row for the worksheet and go to evaluate page")
     public void testCreateInputAndGoToEvaluatePage() {
         setBulkCostingFlag(true);
+        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
@@ -103,6 +105,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Delete input row for the worksheet")
     public void testDeleteInputRow() {
         setBulkCostingFlag(true);
+        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
@@ -130,6 +133,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Update inputs")
     public void testUpdateInputs() {
         setBulkCostingFlag(true);
+        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
@@ -164,6 +168,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Description("Edit Bulk Analysis name and search")
     public void editBulkAnalysisNameAndSearch() {
         setBulkCostingFlag(true);
+        userCredentials = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         bulkAnalysisPage = loginPage
