@@ -8,6 +8,7 @@ import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SamlUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -34,6 +35,7 @@ public class AtsAuthenticationTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private SamlUtil samlUtil;
     private CustomerUtil customerUtil;
     private CdsUserUtil cdsUserUtil;
     private ResponseWrapper<User> user;
@@ -48,6 +50,7 @@ public class AtsAuthenticationTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
@@ -84,7 +87,7 @@ public class AtsAuthenticationTests extends TestUtil {
     @Description("Creates a user for SAML federated providers")
     public void createUserForSaml() {
         setCustomerData();
-        identityProvider = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        identityProvider = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = identityProvider.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> createSamlUser = atsTestUtil.putSAMLProviders(customerName);
