@@ -72,7 +72,7 @@ public class AchUsersTests extends AchTestUtil {
 
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
 
-        Customer customer = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
+        Customer customer = getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = customer.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");
     }
@@ -80,7 +80,7 @@ public class AchUsersTests extends AchTestUtil {
     @AfterEach
     public void cleanUp() {
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
     }
 
@@ -146,7 +146,7 @@ public class AchUsersTests extends AchTestUtil {
             .inlineVariables(customerIdentity, userIdentity);
         HTTPRequest.build(deleteRequest).delete();
 
-        ResponseWrapper<User> getDeletedUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, HttpStatus.SC_OK, userIdentity);
+        ResponseWrapper<User> getDeletedUser = getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, HttpStatus.SC_OK, userIdentity);
 
         soft.assertThat(getDeletedUser.getResponseEntity().getActive())
             .isFalse();
