@@ -9,7 +9,6 @@ import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
 import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
-import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
@@ -18,7 +17,6 @@ import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
 import com.apriori.cds.api.models.response.CredentialsItems;
-import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.LicenseResponse;
@@ -396,89 +394,6 @@ public class CdsTestUtil extends TestUtil {
                     .description("patch IDP using Automation")
                     .contact(userIdentity)
                     .identityProviderPlatform("Azure AD")
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * Posts custom attribute
-     *
-     * @param customerIdentity - the customer id
-     * @param userIdentity     - the user id
-     * @return - new object
-     */
-    public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "customAttribute",
-                CustomAttributeRequest.builder()
-                    .key("department")
-                    .name("department")
-                    .value("TestDepartment")
-                    .type("STRING")
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Updates or adds custom attributes
-     *
-     * @param customerIdentity  - the customer id
-     * @param userIdentity      - user id
-     * @param updatedDepartment - updated department string
-     * @return - new object
-     */
-    public ResponseWrapper<CustomAttribute> putCustomAttribute(
-        String customerIdentity,
-        String userIdentity,
-        String updatedDepartment) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "customAttribute",
-                CustomAttributeRequest.builder()
-                    .name("department")
-                    .value(updatedDepartment)
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).put();
-    }
-
-    /**
-     * Updates custom attribute
-     *
-     * @param customerIdentity  - the customer id
-     * @param userIdentity      - user id
-     * @param attributeIdentity - attribute id
-     * @param updatedDepartment -  updated department string
-     * @return - new object
-     */
-    public ResponseWrapper<CustomAttribute> updateAttribute(
-        String customerIdentity,
-        String userIdentity,
-        String attributeIdentity,
-        String updatedDepartment) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
-            .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "customAttribute",
-                CustomAttributeRequest.builder()
-                    .value(updatedDepartment)
                     .updatedBy("#SYSTEM00000")
                     .build()
             );
