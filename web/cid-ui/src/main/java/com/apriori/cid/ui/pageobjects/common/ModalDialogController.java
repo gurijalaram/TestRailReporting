@@ -69,6 +69,9 @@ public class ModalDialogController {
     @FindBy(css = "[role='dialog'] [data-icon='circle-xmark']")
     private WebElement exButton;
 
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Remove Scenarios']")
+    private WebElement removeScenariosButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -117,6 +120,16 @@ public class ModalDialogController {
      */
     public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Select the remove scenarios button
+     *
+     * @return generic page object
+     */
+    public <T> T removeScenarios(Class<T> klass) {
+        pageUtils.waitForElementAndClick(removeScenariosButton);
         return PageFactory.initElements(driver, klass);
     }
 

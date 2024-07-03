@@ -7,6 +7,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -34,6 +35,7 @@ public class AtsUsersTests {
     private CdsTestUtil cdsTestUtil;
     private CdsUserUtil cdsUserUtil;
     private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
     private ResponseWrapper<User> user;
     private String customerIdentity;
     private String userIdentity;
@@ -47,6 +49,7 @@ public class AtsUsersTests {
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         atsTestUtil = new AtsTestUtil(requestEntityUtil);
         userCreds = requestEntityUtil.getEmbeddedUser();
+        customerUtil = new CustomerUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -106,11 +109,11 @@ public class AtsUsersTests {
     }
 
     private void setCustomerData() {
-        RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        RandomCustomerData randomCustomerData = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(randomCustomerData);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        customerInfrastructure.createCustomerInfrastructure(randomCustomerData, customerIdentity);
         String userName = generateStringUtil.generateUserName();
 
         user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());

@@ -113,7 +113,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
         userManagementPage.findUser(username);
 
-        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);;
+        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);
 
         userManagementPage.clickOnThreeDotsUserRowAndHitDelete();
 

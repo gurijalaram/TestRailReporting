@@ -6,7 +6,11 @@ import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SamlUtil;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -31,6 +35,8 @@ public class AtsAuthenticationTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private SamlUtil samlUtil;
+    private CustomerUtil customerUtil;
     private CdsUserUtil cdsUserUtil;
     private ResponseWrapper<User> user;
     private ResponseWrapper<IdentityProviderResponse> identityProvider;
@@ -45,6 +51,8 @@ public class AtsAuthenticationTests extends TestUtil {
         requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         atsTestUtil = new AtsTestUtil(requestEntityUtil);
     }
@@ -80,7 +88,7 @@ public class AtsAuthenticationTests extends TestUtil {
     @Description("Creates a user for SAML federated providers")
     public void createUserForSaml() {
         setCustomerData();
-        identityProvider = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        identityProvider = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = identityProvider.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> createSamlUser = atsTestUtil.putSAMLProviders(customerName);
@@ -92,7 +100,7 @@ public class AtsAuthenticationTests extends TestUtil {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerName = customer.getResponseEntity().getName();
 

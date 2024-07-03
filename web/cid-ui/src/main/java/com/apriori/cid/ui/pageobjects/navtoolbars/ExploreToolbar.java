@@ -36,7 +36,6 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
-    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
     @FindBy(css = "[id='qa-sub-header-import-button']")
@@ -83,6 +82,9 @@ public class ExploreToolbar extends MainNavBar {
     private WebElement downloadReportButton;
     @FindBy(css = "[data-testid='apriori-alert']")
     private WebElement lastUpdatedAlert;
+
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
