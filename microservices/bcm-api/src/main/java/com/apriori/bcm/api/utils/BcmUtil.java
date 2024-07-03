@@ -14,6 +14,8 @@ import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
+import com.apriori.css.api.utils.CssComponent;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -23,6 +25,7 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

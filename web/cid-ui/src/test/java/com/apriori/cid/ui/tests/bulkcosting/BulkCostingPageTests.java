@@ -15,7 +15,6 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -32,12 +31,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
-// TODO: 01/07/2024 cn - all these tests need to be updated and fixed
 public class BulkCostingPageTests extends TestBaseUI {
-    private final String saltName = new GenerateStringUtil().saltString("name");
+    private final String saltName = GenerateStringUtil.saltString("name");
     private CidAppLoginPage loginPage;
     private BulkAnalysisPage bulkAnalysisPage;
     private EvaluatePage evaluatePage;
@@ -48,6 +43,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private String worksheetIdentity;
     private BcmUtil bcmUtil;
     private RequestEntityUtil requestEntityUtil;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeEach
     public void setup() {
@@ -74,13 +70,13 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        soft.assertThat(bulkAnalysisPage.getListOfWorksheets()).isGreaterThan(0);
+        softAssertions.assertThat(bulkAnalysisPage.getListOfWorksheets()).isGreaterThan(0);
 
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
         bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName());
-        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(worksheetResponse.getName())).isFalse();
-        soft.assertAll();
+        softAssertions.assertThat(bulkAnalysisPage.isWorksheetPresent(worksheetResponse.getName())).isFalse();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -95,17 +91,17 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
-        String inputRowName1 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
-        String inputRowName2 = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 6);
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
+        String inputRowName1 = bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
+        String inputRowName2 = bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 6);
 
         worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
-        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName1)).isGreaterThan(0);
-        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName2)).isGreaterThan(0);
+        softAssertions.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName1)).isGreaterThan(0);
+        softAssertions.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName2)).isGreaterThan(0);
 
         evaluatePage = worksheetsExplorePage.openComponentByRow(1);
-        soft.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
-        soft.assertAll();
+        softAssertions.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -119,20 +115,20 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
-        String inputRowName = bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
+        String inputRowName = bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
 
         worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
-        soft.assertThat(worksheetsExplorePage.isRemoveButtonEnabled()).isFalse();
+        softAssertions.assertThat(worksheetsExplorePage.isRemoveButtonEnabled()).isFalse();
 
         deletePage = worksheetsExplorePage.clickScenarioCheckbox(worksheetResponse.getName())
             .clickRemove();
 
-        soft.assertThat(deletePage.getDeleteText()).contains("You are attempting to remove", "from the bulk analysis. This action cannot be undone.");
+        softAssertions.assertThat(deletePage.getDeleteText()).contains("You are attempting to remove", "from the bulk analysis. This action cannot be undone.");
 
         deletePage.removeScenarios(WorksheetsExplorePage.class);
-        soft.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName)).isGreaterThan(0);
-        soft.assertAll();
+        softAssertions.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName)).isGreaterThan(0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -146,12 +142,12 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(userCredentials).getResponseEntity();
-        bcmUtil.searchCreateInputRow(userCredentials, worksheetResponse, 5);
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
+        bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
 
         worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
 
-        soft.assertThat(worksheetsExplorePage.isSetInputsEnabled()).isFalse();
+        softAssertions.assertThat(worksheetsExplorePage.isSetInputsEnabled()).isFalse();
 
         setInputsModalPage = worksheetsExplorePage.clickScenarioCheckbox(worksheetResponse.getName())
             .clickSetInputs();
@@ -164,9 +160,9 @@ public class BulkCostingPageTests extends TestBaseUI {
             .save()
             .clickClose();
 
-        soft.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("2-Model Machining");
-        soft.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("AGCO Assumption");
-        soft.assertAll();
+        softAssertions.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("2-Model Machining");
+        softAssertions.assertThat(worksheetsExplorePage.getRowDetails(worksheetResponse.getName())).contains("AGCO Assumption");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -180,10 +176,10 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
-        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName).getResponseEntity();
+        WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
         bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
-        soft.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
+        softAssertions.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
 
         bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
             .clickInfo();
@@ -193,22 +189,13 @@ public class BulkCostingPageTests extends TestBaseUI {
         bulkAnalysisInfoPage.enterBulkAnalysisName(updatedWorksheetName)
             .clickSave();
 
-        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
+        softAssertions.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
 
         bulkAnalysisPage.enterKeySearch(updatedWorksheetName);
 
-        soft.assertThat(bulkAnalysisPage.getListOfWorksheets()).isEqualTo(1);
-        soft.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
-        soft.assertAll();
-    }
-
-    private ResponseWrapper<WorkSheetResponse> createWorksheet(UserCredentials userCredentials) {
-        String name = new GenerateStringUtil().saltString("name");
-        BcmUtil bcmUtil = new BcmUtil();
-        ResponseWrapper<WorkSheetResponse> response =
-            bcmUtil.createWorksheetWithEmail(name, UserCredentials.init(userCredentials.getEmail(), null));
-        worksheetIdentity = response.getResponseEntity().getIdentity();
-        return response;
+        softAssertions.assertThat(bulkAnalysisPage.getListOfWorksheets()).isEqualTo(1);
+        softAssertions.assertThat(bulkAnalysisPage.isWorksheetPresent(updatedWorksheetName)).isTrue();
+        softAssertions.assertAll();
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
