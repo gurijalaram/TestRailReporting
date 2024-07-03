@@ -52,8 +52,8 @@ public class CasSitesTests {
     @TestRail(id = {5649})
     @Description("Returns a list of sites for the customer")
     public void getCustomerSites() {
-        String aPrioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        ResponseWrapper<Sites> siteResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aPrioriIdentity);
+        String aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
+        ResponseWrapper<Sites> siteResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity);
 
         soft.assertThat(siteResponse.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
@@ -65,15 +65,15 @@ public class CasSitesTests {
     @TestRail(id = {5650})
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
-        String aPrioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        ResponseWrapper<Sites> sitesResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aPrioriIdentity);
+        String aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
+        ResponseWrapper<Sites> sitesResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity);
 
         soft.assertThat(sitesResponse.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, aPrioriIdentity, siteIdentity);
+        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, aprioriIdentity, siteIdentity);
 
         soft.assertThat(site.getResponseEntity().getIdentity())
             .isEqualTo(siteIdentity);
@@ -84,15 +84,15 @@ public class CasSitesTests {
     @TestRail(id = {5651})
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
-        String aPrioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        ResponseWrapper<Sites> sitesResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aPrioriIdentity);
+        String aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
+        ResponseWrapper<Sites> sitesResponse = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity);
 
         soft.assertThat(sitesResponse.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(aPrioriIdentity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(aprioriIdentity, siteId);
 
         soft.assertThat(siteResponse.getResponseEntity().getStatus())
             .isEqualTo("EXISTS");
