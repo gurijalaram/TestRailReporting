@@ -7,7 +7,6 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -39,16 +38,15 @@ public class AtsAuthenticationTests extends TestUtil {
     private String customerName;
     private String userIdentity;
     private String idpIdentity;
-    private UserCredentials userCreds;
+    private RequestEntityUtil requestEntityUtil;
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         atsTestUtil = new AtsTestUtil(requestEntityUtil);
-        userCreds = requestEntityUtil.getEmbeddedUser();
     }
 
     @AfterEach
@@ -69,8 +67,8 @@ public class AtsAuthenticationTests extends TestUtil {
     @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
-        String userEmail = userCreds.getEmail();
-        String userPassword = userCreds.getPassword();
+        String userEmail = requestEntityUtil.getEmbeddedUser().getEmail();
+        String userPassword = requestEntityUtil.getEmbeddedUser().getPassword();
         ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);
