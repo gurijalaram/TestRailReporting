@@ -86,7 +86,7 @@ public class BulkAnalysisInfoPage extends LoadableComponent<BulkAnalysisInfoPage
      *
      * @return generic page object
      */
-    public WorksheetsExplorePage clickSave() {
-        return modalDialogController.save(WorksheetsExplorePage.class);
+    public BulkAnalysisPage clickSave() {
+        return modalDialogController.save(BulkAnalysisPage.class);
     }
 }

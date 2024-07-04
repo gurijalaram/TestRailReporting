@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
 import com.apriori.cid.ui.pageobjects.navtoolbars.BulkAnalysisToolbar;
@@ -132,7 +134,7 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
      * @return current page object
      */
     public BulkAnalysisPage highlightWorksheet(String worksheetName) {
-        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        By byWorksheet = with(By.cssSelector(".checkbox-cell")).toLeftOf(By.cssSelector(String.format("div[aria-label='%s']", worksheetName)));
         pageUtils.waitForElementAndClick(byWorksheet);
         return this;
     }
