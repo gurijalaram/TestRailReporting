@@ -9,6 +9,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -37,6 +38,7 @@ import java.util.UUID;
 public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private LicenseUtil licenseUtil;
     private SiteUtil siteUtil;
     private Customer targetCustomer;
@@ -62,6 +64,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
@@ -69,7 +72,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
         userName = generateStringUtil.generateUserName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, requestEntityUtil.getEmbeddedUser()).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsUserUtil.addUser(customerIdentity, userName, email).getResponseEntity();
         userIdentity = user.getIdentity();

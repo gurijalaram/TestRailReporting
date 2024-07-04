@@ -9,6 +9,7 @@ import com.apriori.cas.ui.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -34,6 +35,7 @@ public class EditUserTests extends TestBaseUI {
     private static final String USER_NAME = new GenerateStringUtil().generateUserName();
     private CdsTestUtil cdsTestUtil;
     private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
     private Customer targetCustomer;
     private CustomerWorkspacePage customerViewPage;
     private String customerIdentity;
@@ -48,6 +50,7 @@ public class EditUserTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         setCustomerData();
         userProfilePage = new CasLoginPage(driver)
@@ -200,7 +203,7 @@ public class EditUserTests extends TestBaseUI {
         RandomCustomerData rcd = new RandomCustomerData();
         String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         email = customerName.toLowerCase();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);

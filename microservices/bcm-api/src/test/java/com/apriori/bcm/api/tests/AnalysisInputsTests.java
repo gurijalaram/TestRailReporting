@@ -8,6 +8,8 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -16,21 +18,30 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class AnalysisInputsTests extends BcmUtil {
+public class AnalysisInputsTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final CssComponent cssComponent = new CssComponent();
     private final String componentType = "PART";
     private final String processGroupName = "Sheet Metal";
     private String worksheetIdentity;
+    private BcmUtil bcmUtil;
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        bcmUtil = new BcmUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+            bcmUtil.deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
         }
     }
 
@@ -39,18 +50,19 @@ public class AnalysisInputsTests extends BcmUtil {
     @Description("Verify setting inputs for an input row")
     public void settingInputs() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        WorkSheetResponse newWorksheet = bcmUtil.createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
-        ScenarioItem scenarioItem = cssComponent.postSearchRequest(testingUser, componentType).getResponseEntity().getItems().stream()
+
+        ScenarioItem scenarioItem = cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), componentType).getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
 
         InputRowPostResponse responseWorksheetInputRow =
-            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity).getResponseEntity();
         String inputRowIdentity = responseWorksheetInputRow.getIdentity();
 
-        SuccessAddingAnalysisInputs analysisInputsResponse = addAnalysisInputs(SuccessAddingAnalysisInputs.class, processGroupName, worksheetIdentity, HttpStatus.SC_OK, inputRowIdentity).getResponseEntity();
+        SuccessAddingAnalysisInputs analysisInputsResponse = bcmUtil.addAnalysisInputs(SuccessAddingAnalysisInputs.class, processGroupName, worksheetIdentity, HttpStatus.SC_OK, inputRowIdentity).getResponseEntity();
 
         softAssertions.assertThat(analysisInputsResponse.getSuccesses().get(0).getAnalysisInput().getProcessGroupName()).isEqualTo(processGroupName);
         softAssertions.assertAll();
@@ -61,22 +73,22 @@ public class AnalysisInputsTests extends BcmUtil {
     @Description("Verify negative cases of adding analysis inputs")
     public void settingInputsNegativeTests() {
         String notExistingIdentity = "000000000000";
-        WorkSheetResponse existingWorksheet = getWorksheets().getResponseEntity().getItems().get(0);
+        WorkSheetResponse existingWorksheet = bcmUtil.getWorksheets().getResponseEntity().getItems().get(0);
         String worksheetIdentity = existingWorksheet.getIdentity();
 
-        ErrorResponse invalidWorksheetId = addAnalysisInputs(ErrorResponse.class, processGroupName, "0000000", HttpStatus.SC_BAD_REQUEST, notExistingIdentity).getResponseEntity();
+        ErrorResponse invalidWorksheetId = bcmUtil.addAnalysisInputs(ErrorResponse.class, processGroupName, "0000000", HttpStatus.SC_BAD_REQUEST, notExistingIdentity).getResponseEntity();
         softAssertions.assertThat(invalidWorksheetId.getMessage()).isEqualTo("'identity' is not a valid identity.");
 
-        ErrorResponse invalidInputRowId = addAnalysisInputs(ErrorResponse.class, processGroupName, worksheetIdentity, HttpStatus.SC_BAD_REQUEST, "0000000").getResponseEntity();
+        ErrorResponse invalidInputRowId = bcmUtil.addAnalysisInputs(ErrorResponse.class, processGroupName, worksheetIdentity, HttpStatus.SC_BAD_REQUEST, "0000000").getResponseEntity();
         softAssertions.assertThat(invalidInputRowId.getMessage()).isEqualTo("'inputRowIdentity' is not a valid identity.");
 
-        ErrorResponse withoutInputRowId = addAnalysisInputs(ErrorResponse.class, processGroupName, worksheetIdentity, HttpStatus.SC_BAD_REQUEST, null).getResponseEntity();
+        ErrorResponse withoutInputRowId = bcmUtil.addAnalysisInputs(ErrorResponse.class, processGroupName, worksheetIdentity, HttpStatus.SC_BAD_REQUEST, null).getResponseEntity();
         softAssertions.assertThat(withoutInputRowId.getMessage()).isEqualTo("'inputRowIdentity' should not be null.");
 
-        ErrorResponse notExistingWorksheet = addAnalysisInputs(ErrorResponse.class, processGroupName, notExistingIdentity, HttpStatus.SC_NOT_FOUND, notExistingIdentity).getResponseEntity();
+        ErrorResponse notExistingWorksheet = bcmUtil.addAnalysisInputs(ErrorResponse.class, processGroupName, notExistingIdentity, HttpStatus.SC_NOT_FOUND, notExistingIdentity).getResponseEntity();
         softAssertions.assertThat(notExistingWorksheet.getMessage()).isEqualTo(String.format("Resource 'Worksheet' with identity '%s' was not found", notExistingIdentity));
 
-        FailureAddingAnalysisInputs notRelatedInputRows = addAnalysisInputs(FailureAddingAnalysisInputs.class, processGroupName, worksheetIdentity, HttpStatus.SC_OK, notExistingIdentity).getResponseEntity();
+        FailureAddingAnalysisInputs notRelatedInputRows = bcmUtil.addAnalysisInputs(FailureAddingAnalysisInputs.class, processGroupName, worksheetIdentity, HttpStatus.SC_OK, notExistingIdentity).getResponseEntity();
         softAssertions.assertThat(notRelatedInputRows.getFailures().get(0).getError()).isEqualTo(String.format("Input Row with Identity: '%s'  does not exist in Worksheet with Identity: '%s'", notExistingIdentity, worksheetIdentity));
 
         softAssertions.assertAll();

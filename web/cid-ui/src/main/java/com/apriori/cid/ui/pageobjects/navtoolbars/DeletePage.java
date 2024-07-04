@@ -5,19 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.apriori.cid.ui.pageobjects.common.ModalDialogController;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class DeletePage extends LoadableComponent<DeletePage> {
-    private static final Logger logger = LoggerFactory.getLogger(DeletePage.class);
 
     @FindBy(xpath = "//h1[.='Delete']")
     private WebElement deleteHeader;
@@ -28,15 +27,19 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = "[data-testid = 'delete-button']")
     private WebElement deleteButton;
 
+    @FindBy(css = "[role='dialog']")
+    private  WebElement deleteText;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
 
+    // FIXME: 02/07/2024 cn - this should really be an abstract class with other delete functionality extending it eg. delete in explore page is different from bulk analysis
     public DeletePage(WebDriver driver) {
         this.driver = driver;
         this.modalDialogController = new ModalDialogController(driver);
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -75,6 +78,23 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Select the remove scenarios button
+     *
+     * @return generic page object
+     */
+    public <T> T removeScenarios(Class<T> klass) {
+        return modalDialogController.removeScenarios(klass);
+    }
+
+    /**
+     * Gets text from delete dialog
+     * @return string
+     */
+    public String getDeleteText() {
+        return pageUtils.waitForElementAppear(deleteText).getAttribute("textContent");
     }
 
     /**
