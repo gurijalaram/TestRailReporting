@@ -18,10 +18,10 @@ public class BulkAnalysisInfoPage extends LoadableComponent<BulkAnalysisInfoPage
     @FindBy(css = "[role='dialog'] h2")
     private WebElement headerText;
 
-    @FindBy(css = "[id='name']")
+    @FindBy(css = "[name='name']")
     private WebElement nameInput;
 
-    @FindBy(css = "[id='description']")
+    @FindBy(css = "[name='description']")
     private WebElement descriptionInput;
 
     private ModalDialogController modalDialogController;
