@@ -16,8 +16,9 @@ import com.apriori.shared.util.AuthorizationUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Token;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -25,15 +26,22 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class AtsAuthorizationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+public class AtsAuthorizationTests {
+    private AtsTestUtil atsTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials currentUser = UserUtil.getUser();
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil1 = TestHelper.initUser();
+        atsTestUtil = new AtsTestUtil();
+    }
 
     @Test
     @TestRail(id = {3581})
