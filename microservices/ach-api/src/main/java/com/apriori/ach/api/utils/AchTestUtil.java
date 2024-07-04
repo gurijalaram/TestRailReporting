@@ -30,67 +30,6 @@ public class AchTestUtil extends TestUtil {
         this.requestEntityUtil = requestEntityUtil;
     }
 
-    //    @BeforeEach
-//    public void init() {
-//        requestEntityUtil = RequestEntityUtilBuilder
-//            .useRandomUser(APRIORI_DEVELOPER)
-//            .useTokenInRequests();
-//    }
-//
-//
-//    /**
-//     * Calls an api with the GET verb.
-//     *
-//     * @param apiEnum         The api enum that specifies the endpoint.
-//     * @param klass           The returning class object.
-//     * @param inlineVariables Options variables used to help build the endpoint string.
-//     * @param <E>             The api enum type
-//     * @param <T>             The data type expected to be returned.
-//     * @return The response wrapper that contains the response data.
-//     */
-//    @Override
-//    public <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
-//        RequestEntity request = requestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
-//        return HTTPRequest.build(request).get();
-//    }
-//
-//    /**
-//     * Invokes a search on an api.
-//     *
-//     * @param apiEnum         The enum to invoke the search on.
-//     * @param klass           The class return value.
-//     * @param filter          The filter parameters
-//     * @param sort            The sort parameters
-//     * @param pageNumber      What page to retrieve
-//     * @param pageSize        What the page size is
-//     * @param inlineVariables The optional inline variables
-//     * @param <E>             The api enum type
-//     * @param <T>             The paginated data type to return
-//     * @return The pagination for the given klass.
-//     */
-//    // TODO vzarovnyi: fix with TestUtil to the new approach
-//    @Override
-//    public <E extends EndpointEnum, T, P extends Paged<T>> ResponseWrapper<P> find(
-//        E apiEnum,
-//        Class<P> klass,
-//        Map<String, ?> filter,
-//        Map<String, String> sort,
-//        int pageNumber,
-//        int pageSize,
-//        String... inlineVariables) {
-//
-//        Map<String, String> pagination = new HashMap<>();
-//        pagination.put("pageNumber", String.format("%d", pageNumber));
-//        pagination.put("pageSize", String.format("%d", pageSize));
-//
-//        RequestEntity request = requestEntityUtil.init(apiEnum, klass)
-//            .inlineVariables(inlineVariables)
-//            .expectedResponseCode(HttpStatus.SC_OK)
-//            .urlParams(Arrays.asList(filter, sort, pagination));
-//
-//        return HTTPRequest.build(request).get();
-//    }
-
     /**
      * Gets the special customer by name
      *

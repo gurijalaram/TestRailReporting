@@ -7,7 +7,6 @@ import com.apriori.ach.api.enums.ACHAPIEnum;
 import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -52,7 +51,6 @@ public class AchUsersTests {
     private static String customerIdentity;
     private RequestEntityUtil requestEntityUtilNoAdmin;
     private RequestEntityUtil requestEntityUtil;
-    private CdsTestUtil cdsTestUtil;
     private AchTestUtil achTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private String domain;
@@ -65,14 +63,18 @@ public class AchUsersTests {
         customerIdentity = serviceCustomer.getIdentity();
 
         requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(UserCredentials.init(USER_ADMIN, null))
-            .useCustomTokenInRequests(getWidgetsUserToken(USER_ADMIN));
+            .useCustomUser(UserCredentials.init(USER_ADMIN, null));
+
+        requestEntityUtil = new RequestEntityUtil(requestEntityUtil.getEmbeddedUser())
+            .useCustomTokenInRequests(getWidgetsUserToken(requestEntityUtil.getEmbeddedUser().getUsername()));
 
         requestEntityUtilNoAdmin = RequestEntityUtilBuilder
-            .useCustomUser(UserCredentials.init(NOT_ADMIN_USER, null))
-            .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+            .useCustomUser(UserCredentials.init(NOT_ADMIN_USER, null));
 
-        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        requestEntityUtilNoAdmin = new RequestEntityUtil(requestEntityUtilNoAdmin.getEmbeddedUser())
+            .useCustomTokenInRequests(getWidgetsUserToken(requestEntityUtilNoAdmin.getEmbeddedUser().getUsername()));
+
+        achTestUtil = new AchTestUtil(requestEntityUtil);
 
         Customer customer = achTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = customer.getEmailRegexPatterns().stream().findFirst().orElseThrow();
