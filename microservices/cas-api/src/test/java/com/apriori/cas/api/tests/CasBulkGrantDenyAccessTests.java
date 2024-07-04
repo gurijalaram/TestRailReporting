@@ -41,7 +41,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
@@ -88,7 +87,8 @@ public class CasBulkGrantDenyAccessTests {
         achIdentity = applicationUtil.getApplicationIdentity(CLOUD_HOME);
         apWIdentity = applicationUtil.getApplicationIdentity(CIS);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
+        apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream()
+            .filter(site -> site.getName().contains("Internal")).toList().get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");
         apInstallationIdentity = PropertiesContext.get("cds.apriori_core_services_installation_identity");
     }
@@ -207,7 +207,8 @@ public class CasBulkGrantDenyAccessTests {
         deploymentIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity,
-            "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+            "Automation Installation",
+            rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);

@@ -7,8 +7,9 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -29,14 +30,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class AtsUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    private AtsTestUtil atsTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil;
     private CdsUserUtil cdsUserUtil;
     private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
     private ResponseWrapper<User> user;
     private String customerIdentity;
     private String userIdentity;
+    private UserCredentials userCreds;
 
     @BeforeEach
     public void init() {
@@ -44,6 +47,9 @@ public class AtsUsersTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        userCreds = requestEntityUtil.getEmbeddedUser();
+        customerUtil = new CustomerUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -65,7 +71,7 @@ public class AtsUsersTests {
     @TestRail(id = {3578})
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
-        String userEmail = UserUtil.getUser().getEmail();
+        String userEmail = userCreds.getEmail();
         ResponseWrapper<User> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
 
         soft.assertThat(user.getResponseEntity().getEmail()).isEqualTo(userEmail);
@@ -103,11 +109,11 @@ public class AtsUsersTests {
     }
 
     private void setCustomerData() {
-        RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        RandomCustomerData randomCustomerData = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(randomCustomerData);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        customerInfrastructure.createCustomerInfrastructure(randomCustomerData, customerIdentity);
         String userName = generateStringUtil.generateUserName();
 
         user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());

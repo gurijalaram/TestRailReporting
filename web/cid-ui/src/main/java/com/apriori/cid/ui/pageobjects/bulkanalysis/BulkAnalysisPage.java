@@ -1,22 +1,11 @@
-package com.apriori.cid.ui.pageobjects.explore;
-
-import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
-import com.apriori.cid.ui.pageobjects.common.ConfigurePage;
-import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
-import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.navtoolbars.ExploreToolbar;
+import com.apriori.cid.ui.pageobjects.navtoolbars.BulkAnalysisToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
-import com.apriori.css.api.utils.CssComponent;
-import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,46 +19,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author cfrith
- */
-
 @Slf4j
-public class ExplorePage extends ExploreToolbar {
+public class BulkAnalysisPage extends BulkAnalysisToolbar {
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
-    @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
-    private WebElement configureButton;
-
-    @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
-    private WebElement filterButton;
-
-    @FindBy(css = "[id='qa-sub-component-detail-filter-button'] button")
-    private WebElement filterButtonOnTableView;
-
-    @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
-    private WebElement previewButton;
-
-    @FindBy(id = "qa-scenario-explorer-filter-selector")
-    private WebElement filterDropdown;
-
-    @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
-    private WebElement filterInput;
-
-    @FindBy(css = "[id='qa-scenario-explorer-filter-selector']")
-    private WebElement currentFilter;
-
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
+
+    @FindBy(xpath = "//div[@data-testid = 'table-body']/div")
+    private List<WebElement> listOfWorksheets;
 
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
 
-    public ExplorePage(WebDriver driver) {
+    public BulkAnalysisPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -81,33 +48,33 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Checks worksheets are present in the bulk analysis page
+     *
+     * @return boolean
+     */
+    public int getListOfWorksheets() {
+        return pageUtils.waitForElementsToAppear(listOfWorksheets).size();
+    }
+
+    /**
+     * Opens the scenario
+     *
+     * @param worksheetName - the name of the worksheet
+     * @return a new page object
+     */
+    public WorksheetsExplorePage openWorksheet(String worksheetName) {
+        By byWorksheet = By.xpath(String.format("//div[contains(.,'%s')][@data-testid = 'text-overflow']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
+        return new WorksheetsExplorePage(driver);
+    }
+
+    /**
      * Checks scenario count is displayed
      *
      * @return visibility of button
      */
     public boolean isScenarioCountPresent() {
         return scenarioCount.isDisplayed();
-    }
-
-    /**
-     * Uses type ahead to input the filter
-     *
-     * @param filter - the filter
-     * @return current page object
-     */
-    public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
-        setPagination();
-        return new ExplorePage(driver);
-    }
-
-    /**
-     * Get Currently selected Filter
-     *
-     * @return The current filter name as a String
-     */
-    public String getCurrentFilter() {
-        return currentFilter.getText();
     }
 
     /**
@@ -135,7 +102,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage selectAllScenarios() {
+    public BulkAnalysisPage selectAllScenarios() {
         scenarioTableController.selectAllScenarios();
         return this;
     }
@@ -150,28 +117,6 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Opens the scenario
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return a new page object
-     */
-    public EvaluatePage openScenario(String componentName, String scenarioName) {
-        scenarioTableController.openScenario(componentName, scenarioName);
-        return new EvaluatePage(driver);
-    }
-
-    /**
-     * Opens the first scenario
-     *
-     * @return a new page object
-     */
-    public EvaluatePage openFirstScenario() {
-        scenarioTableController.openFirstScenario();
-        return new EvaluatePage(driver);
-    }
-
-    /**
      * Get Component and Scenario names of first scenario in table
      *
      * @return The component and scenario names in a comma-separated String
@@ -181,15 +126,26 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Highlights the scenario in the table
+     * Highlights the worksheet in the table
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
+     * @param worksheetName - name of the part
      * @return current page object
      */
-    public ExplorePage highlightScenario(String componentName, String scenarioName) {
-        scenarioTableController.highlightScenario(componentName, scenarioName);
+    public BulkAnalysisPage highlightWorksheet(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
         return this;
+    }
+
+    /**
+     * Check if worksheet is present on UI
+     *
+     * @param worksheetName - name of the worksheet
+     * @return true/false
+     */
+    public boolean isWorksheetPresent(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        return pageUtils.isElementDisplayed(byWorksheet);
     }
 
     /**
@@ -215,32 +171,12 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Gets the number of elements with state present on the page
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return boolean
-     */
-    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
-        return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
-    }
-
-    /**
-     * Open configure page
-     *
-     * @return new page object
-     */
-    public ConfigurePage configure() {
-        return componentTableActions.configure(configureButton);
-    }
-
-    /**
      * Multi-highlight scenarios
      *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiHighlightScenarios(String... componentScenarioName) {
+    public BulkAnalysisPage multiHighlightScenarios(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
@@ -251,7 +187,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ExplorePage multiSelectScenarios(String... componentScenarioName) {
+    public BulkAnalysisPage multiSelectScenarios(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
@@ -263,7 +199,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage controlHighlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysisPage controlHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -275,7 +211,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysisPage shiftHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -289,60 +225,6 @@ public class ExplorePage extends ExploreToolbar {
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
         return scenarioTableController.getRowDetails(componentName, scenarioName);
-    }
-
-    /**
-     * Gets the data-icon value for the State icon
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return String representation of state icon
-     */
-    public String getScenarioState(String componentName, String scenarioName) {
-        return scenarioTableController.getScenarioState(componentName, scenarioName);
-    }
-
-    /**
-     * Gets the processing failed state
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param currentUser   -  current user
-     * @return - String
-     */
-    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
-
-        return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
-    }
-
-    /**
-     * Open filters page
-     *
-     * @return new page object
-     */
-    public FilterPage filter() {
-        return componentTableActions.filter(filterButton);
-    }
-
-    /**
-     * Open filters page on Table View
-     *
-     * @return new page object
-     */
-    public FilterPage filterOnTableView() {
-        return componentTableActions.filter(filterButtonOnTableView);
-    }
-
-    /**
-     * Opens the preview panel
-     *
-     * @return new page object
-     */
-    public PreviewPage openPreviewPanel() {
-        return componentTableActions.openPreviewPanel(previewButton);
     }
 
     /**
@@ -379,7 +261,7 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage setPagination() {
+    public BulkAnalysisPage setPagination() {
         componentTableActions.setPagination();
         return this;
     }
@@ -390,7 +272,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public ExplorePage enterKeySearch(String componentName) {
+    public BulkAnalysisPage enterKeySearch(String componentName) {
         componentTableActions.enterKeySearch(componentName.toUpperCase());
         return this;
     }
@@ -401,7 +283,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public ExplorePage clickSearch(String componentName) {
+    public BulkAnalysisPage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
     }
@@ -413,7 +295,7 @@ public class ExplorePage extends ExploreToolbar {
      * @param order  - the order
      * @return current page object
      */
-    public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+    public BulkAnalysisPage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
         pageUtils.waitForElementToAppear(scenarioCount);
         return this;
@@ -427,31 +309,6 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getSortOrder(ColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
-    }
-
-    /**
-     * Checks component is in a required state
-     *
-     * @param componentInfo - the component info builder object
-     * @param scenarioState - the scenario state to check for
-     * @return current page object
-     */
-    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
-        scenarioTableController.checkComponentState(componentInfo, scenarioState);
-        refresh();
-        return this;
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
-     * @param userCredentials - the user credentials
-     * @return current page object
-     */
-    public ExplorePage getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-        scenarioTableController.getCssComponents(userCredentials, paramKeysValues);
-        return this;
     }
 
     /**
@@ -488,17 +345,6 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
-    }
-
-    /**
-     * Check if table column already displayed and add if not
-     *
-     * @param columnToAdd - Name of column to be added
-     * @return - The current page object
-     */
-    public ExplorePage addColumn(ColumnsEnum columnToAdd) {
-        scenarioTableController.addColumn(columnToAdd);
-        return this;
     }
 
     /**
