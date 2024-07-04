@@ -17,6 +17,7 @@ production:
 sandbox:
   name: Sandbox
   url_part: sandbox.${env}
+  st_url_part: sandbox
 #==========================================================
 
 # Define the global properties not related to environment
@@ -97,9 +98,6 @@ default:
 #  Deployment URL
   deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net
 
-  admin:
-    ui_url: https://${deployment_url_template}apriori/login
-
   bcs:
     api_url: https://bcs.${deployment_url_template}
     number_of_parts: 5
@@ -169,9 +167,19 @@ default:
   gcd:
     api_url: https://gcd.${deployment_url_template}
 
+#################################################################################################################
+# ST Deployment URL
+#################################################################################################################
+  st_deployment_url_template: ${default.aws_region}-install.${${deployment}.st_url_part}.${customer}.${env}.apriori.net
+
+  admin:
+    ui_url: https://ci-admin.${st_deployment_url_template}/apriori/index
+    api_url: https://${deployment_url_template}/apriori/index/
+
   reports:
-    ui_url: https://${deployment_url_template}jasperserver-pro/
-    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+    #ui_url: https://ci-report.${st_deployment_url_template}/jasperserver-pro/
+    ui_url: https://${st_deployment_url_template}/jasperserver-pro/
+
 ###########################
 
 ###########################
