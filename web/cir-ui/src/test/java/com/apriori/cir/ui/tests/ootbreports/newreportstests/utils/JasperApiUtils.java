@@ -130,6 +130,42 @@ public class JasperApiUtils {
         return jasperReportSummary;
     }
 
+    public JasperReportSummary genericTestCoreIncExportDate(String exportDateToSet, String keyToSet, String valueToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (!valueToSet.isEmpty()) {
+            setReportParameterByName(keyToSet, valueToSet);
+        }
+
+        if (!exportDateToSet.isEmpty()) {
+            setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), "2024-06-17T08:21:08");
+            setReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId(), "2024-03-04T05:12:52");
+        }
+
+        if (processGroupName != null) {
+            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+            setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
+        }
+
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+
+        if (reportRequest.getParameters().toString().contains(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())) {
+            setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
     /**
      * Generic test for upgrade part comparison report
      *
