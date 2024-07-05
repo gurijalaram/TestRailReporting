@@ -215,7 +215,7 @@ public class CustomerWorkspacePage extends NavToolbar {
      */
     public String findCustomerIdentity() {
         String baseUrl = PropertiesContext.get("cas.ui_url");
-        String url = getDriver().getCurrentUrl().replace(String.format("%scustomers/", baseUrl), "");
+        String url = getDriver().getCurrentUrl().replace(String.format("%s/customers/", baseUrl), "");
         return Arrays.stream(url.split("/")).findFirst().orElse("");
     }
 
