@@ -28,12 +28,10 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
-import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -198,8 +196,8 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("13935")
-    @TestRail(id = 13935)
+    @TmsLink("28465")
+    @TestRail(id = 28465)
     @Description("Input controls - Export Date - Main Report")
     public void testInputControlsExportDate() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
@@ -428,6 +426,55 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
         softAssertions.assertThat(chartDataPoints.get(5).getPartName())
             .isEqualTo("VERY LONG NAME 01234567890123456789012345678901234567890123456789");
 
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2006")
+    @TestRail(id = 2006)
+    @Description("Validate the reports correct with user overrides")
+    public void validateReportAccuracyWithUserOverrides() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummary jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(3).getFullyBurdenedCost())
+            .isEqualTo("10429.19");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2007")
+    @TestRail(id = 2007)
+    @Description("Validate the reports correct with multiple VPEs export set - Main Report")
+    public void testReportWithMultiVpeData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+
+        List<ChartDataPoint> chartDataPointList = jasperReportSummary.getChartData().get(0).getChartDataPoints();
+        softAssertions.assertThat(chartDataPointList.get(4).getFullyBurdenedCost()).isEqualTo("2.12");
+        softAssertions.assertThat(chartDataPointList.get(2).getFullyBurdenedCost()).isEqualTo("0.24");
 
         softAssertions.assertAll();
     }

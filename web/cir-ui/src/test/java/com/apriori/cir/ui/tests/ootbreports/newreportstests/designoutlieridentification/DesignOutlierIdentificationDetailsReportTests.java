@@ -3,10 +3,8 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridenti
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
-import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
@@ -470,6 +468,32 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
         );
 
         softAssertions.assertThat(jasperReportSummary).isNotEqualTo(null);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31251")
+    @TestRail(id = 31251)
+    @Description("Validate the reports correct with multiple VPEs export set - Main Report")
+    public void testReportWithMultiVpeData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        ArrayList<Element> colSpanFourElements = jasperReportSummaryDetailsReport.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        softAssertions.assertThat(colSpanFourElements.get(5).text()).isEqualTo("3.20");
+        softAssertions.assertThat(colSpanFourElements.get(6).text()).isEqualTo("2.12");
 
         softAssertions.assertAll();
     }
