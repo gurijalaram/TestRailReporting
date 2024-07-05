@@ -12,6 +12,7 @@ import com.apriori.cas.api.models.response.AccessControls;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Sites;
 import com.apriori.cas.api.utils.CasTestUtil;
+import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
@@ -81,12 +82,13 @@ public class CasBulkGrantDenyAccessTests {
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
-        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
-        ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
-        cirIdentity = applicationUtil.getApplicationIdentity(CIR);
-        acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        achIdentity = applicationUtil.getApplicationIdentity(CLOUD_HOME);
-        apwIdentity = applicationUtil.getApplicationIdentity(CIS);
+        appIdentity = getApplicationIdentity(AP_PRO);
+        ciaIdentity = getApplicationIdentity(CIA);
+        cirIdentity = getApplicationIdentity(CIR);
+        acsIdentity = getApplicationIdentity(ACS);
+        achIdentity = getApplicationIdentity(CLOUD_HOME);
+        apwIdentity = getApplicationIdentity(CIS);
+
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream()
             .filter(site -> site.getName().contains("Internal")).toList().get(0).getIdentity();
@@ -221,5 +223,9 @@ public class CasBulkGrantDenyAccessTests {
         sourceUsers = new ArrayList<>();
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
+    }
+
+    private String getApplicationIdentity(ApplicationEnum identity) {
+        return applicationUtil.getApplicationIdentity(identity);
     }
 }
