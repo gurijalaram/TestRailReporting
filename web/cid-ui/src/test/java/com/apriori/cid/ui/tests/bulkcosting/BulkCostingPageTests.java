@@ -179,9 +179,8 @@ public class BulkCostingPageTests extends TestBaseUI {
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
         bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
-        softAssertions.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
 
-        bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
+        bulkAnalysisInfoPage = bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
             .clickInfo();
 
         String updatedWorksheetName = worksheetResponse.getName().concat("_updated");

@@ -33,6 +33,9 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     @FindBy(xpath = "//div[@data-testid = 'table-body']/div")
     private List<WebElement> listOfWorksheets;
 
+    @FindBy(css = "[role='cell']")
+    private List<WebElement> tableCell;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -146,6 +149,7 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
      * @return true/false
      */
     public boolean isWorksheetPresent(String worksheetName) {
+        pageUtils.waitForElementsToAppear(tableCell);
         By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
         return pageUtils.isElementDisplayed(byWorksheet);
     }
