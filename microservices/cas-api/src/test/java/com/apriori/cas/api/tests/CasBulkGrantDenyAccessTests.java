@@ -40,6 +40,7 @@ import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -69,7 +70,7 @@ public class CasBulkGrantDenyAccessTests {
     private String licensedCiaIdentity;
     private String licensedCirIdentity;
     private String licensedAcsIdentity;
-    private String apWIdentity;
+    private String apwIdentity;
 
     @BeforeEach
     public void setup() {
@@ -85,7 +86,7 @@ public class CasBulkGrantDenyAccessTests {
         cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         acsIdentity = applicationUtil.getApplicationIdentity(ACS);
         achIdentity = applicationUtil.getApplicationIdentity(CLOUD_HOME);
-        apWIdentity = applicationUtil.getApplicationIdentity(CIS);
+        apwIdentity = applicationUtil.getApplicationIdentity(CIS);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream()
             .filter(site -> site.getName().contains("Internal")).toList().get(0).getIdentity();
@@ -99,18 +100,12 @@ public class CasBulkGrantDenyAccessTests {
         if (installationIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
         }
-        if (licensedApProIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
-        }
-        if (licensedCiaIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
-        }
-        if (licensedCirIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
-        }
-        if (licensedAcsIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
-        }
+
+        Arrays.asList(licensedApProIdentity, licensedCiaIdentity, licensedCirIdentity, licensedAcsIdentity).forEach(identity -> {
+            if (identity != null) {
+                cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, identity);
+            }
+        });
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
@@ -122,7 +117,7 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "grant-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "grant-all", customerIdentity);
 
         ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
@@ -148,9 +143,9 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "grant-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "grant-all", customerIdentity);
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "deny-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "deny-all", customerIdentity);
 
         ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
@@ -220,10 +215,8 @@ public class CasBulkGrantDenyAccessTests {
         ResponseWrapper<LicensedApplications> acsLicensed = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
         licensedAcsIdentity = acsLicensed.getResponseEntity().getIdentity();
 
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+        Arrays.asList(appIdentity, ciaIdentity, cirIdentity, acsIdentity).forEach(identity ->
+            applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, identity, siteIdentity));
 
         sourceUsers = new ArrayList<>();
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
