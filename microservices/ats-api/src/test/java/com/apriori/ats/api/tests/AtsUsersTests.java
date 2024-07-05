@@ -94,6 +94,7 @@ public class AtsUsersTests {
     @Description("Reset the MFA configuration for a user.")
     public void resetUserMFA() {
         setCustomerData();
+
         atsUtil.resetUserMFA(ATSAPIEnum.CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
         atsUtil.resetUserMFA(ATSAPIEnum.USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
     }

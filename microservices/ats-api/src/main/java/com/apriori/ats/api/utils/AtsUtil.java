@@ -79,15 +79,15 @@ public class AtsUtil extends TestUtil {
     /**
      * Resets customer users mfa or user mfa
      *
-     * @param endpoint - customer users or particular user endpoint
-     * @param identity - customer or user identity
-     * @param status   - response status code
+     * @param <E>                  - the api enum type
+     * @param identity             - customer or user identity
+     * @param expectedResponseCode - response status code
      * @return generic response object
      */
-    public <T> ResponseWrapper<T> resetUserMFA(EndpointEnum endpoint, String identity, Integer status) {
+    public <T, E extends EndpointEnum> ResponseWrapper<T> resetUserMFA(E endpoint, String identity, Integer expectedResponseCode) {
         RequestEntity requestEntity = requestEntityUtil.init(endpoint, null)
             .inlineVariables(identity)
-            .expectedResponseCode(status)
+            .expectedResponseCode(expectedResponseCode)
             .body(ResetMFA.builder()
                 .resetBy("#SYSTEM00000")
                 .build());
