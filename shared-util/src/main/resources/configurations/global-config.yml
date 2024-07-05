@@ -13,11 +13,12 @@ customer: apriori-internal
 production:
   name: Production
   url_part: ${env}
+  st_url_part: ${customer}.${env}
 
 sandbox:
   name: Sandbox
   url_part: sandbox.${env}
-  st_url_part: sandbox
+  st_url_part: sandbox.${customer}.${env}
 #==========================================================
 
 # Define the global properties not related to environment
@@ -170,15 +171,15 @@ default:
 #################################################################################################################
 # ST Deployment URL
 #################################################################################################################
-  st_deployment_url_template: ${default.aws_region}-install.${${deployment}.st_url_part}.${customer}.${env}.apriori.net
+  st_deployment_url_template: ${default.aws_region}-install.${${deployment}.st_url_part}.apriori.net
 
   admin:
-    ui_url: https://ci-admin.${st_deployment_url_template}/apriori/index
-    api_url: https://${deployment_url_template}/apriori/index/
+    #ui_url: https://ci-admin.${st_deployment_url_template}/apriori/index
+    ui_url: https://${st_deployment_url_template}/apriori/index/
 
   reports:
     #ui_url: https://ci-report.${st_deployment_url_template}/jasperserver-pro/
-    ui_url: https://${st_deployment_url_template}/jasperserver-pro/
+    ui_url: https://${st_deployment_url_template}/jasperserver-pro
 
 ###########################
 
