@@ -9,7 +9,7 @@ qa-test:
   base_url: https://na-1-install.${customer}.qa-test.apriori.net/
 
   admin:
-    ui_url: https://${st_deployment_url_template}/apriori/index/
+    ui_url: https://${st_deployment_url_template}/apriori/index
     welcome_page_text: CI-Admin
     login_locator: //button[@id='1-submit']
     login_title_locator: //*[@class='auth0-lock-name']
@@ -176,6 +176,6 @@ development:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: https://${st_deployment_url_template}/apriori/index/
+    ui_url: https://${st_deployment_url_template}/apriori/index
 
 ########################################################################################################################
