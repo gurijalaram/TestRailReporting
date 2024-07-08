@@ -8,7 +8,6 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
 import com.apriori.cds.api.models.request.ActivateLicenseRequest;
-import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
@@ -33,7 +32,6 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
@@ -182,39 +180,6 @@ public class CdsTestUtil extends TestUtil {
             );
 
         return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * POST call to add a deployment to a customer
-     *
-     * @param customerIdentity - the customer id
-     * @param siteIdentity     - the site Identity
-     * @return new object
-     */
-    public ResponseWrapper<Deployment> addDeployment(
-        String customerIdentity,
-        String deploymentName,
-        String siteIdentity,
-        String deploymentType) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "deployment",
-                AddDeployment.builder()
-                    .name(deploymentName)
-                    .description("Deployment added by API automation")
-                    .deploymentType(deploymentType)
-                    .siteIdentity(siteIdentity)
-                    .active("true")
-                    .isDefault("true")
-                    .createdBy("#SYSTEM00000")
-                    .apVersion("2020 R1")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**

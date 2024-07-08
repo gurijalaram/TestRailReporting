@@ -9,6 +9,7 @@ import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -40,6 +41,7 @@ public class CdsInstallationApplicationTests {
     private ApplicationUtil applicationUtil;
     private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
+    private DeploymentUtil deploymentUtil;
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -61,6 +63,7 @@ public class CdsInstallationApplicationTests {
         customerUtil = new CustomerUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
@@ -77,7 +80,7 @@ public class CdsInstallationApplicationTests {
         site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
 
-        deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deployment = deploymentUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
     }
 

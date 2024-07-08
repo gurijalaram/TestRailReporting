@@ -27,11 +27,13 @@ import java.util.List;
 
 public class ApplicationUtil {
     private final AccessControlUtil accessControlUtil;
+    private final DeploymentUtil deploymentUtil;
     private RequestEntityUtil requestEntityUtil;
 
     public ApplicationUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
         this.accessControlUtil = new AccessControlUtil(requestEntityUtil);
+        this.deploymentUtil = new DeploymentUtil(requestEntityUtil);
     }
 
     /**
@@ -67,7 +69,7 @@ public class ApplicationUtil {
 
         accessControlItems.forEach(item -> {
             Application application = getApplication(item.getApplicationIdentity());
-            Deployment deployment = getDeployment(user.getCustomerIdentity(), item.getDeploymentIdentity());
+            Deployment deployment = deploymentUtil.getDeployment(user.getCustomerIdentity(), item.getDeploymentIdentity());
 
             if (deployment.getName().equals(deploymentVar.getDeployment())) {
                 deploymentApplications.getApplications()
@@ -89,22 +91,6 @@ public class ApplicationUtil {
             .inlineVariables(applicationIdentity)
             .expectedResponseCode(HttpStatus.SC_OK);
         ResponseWrapper<Application> response = HTTPRequest.build(requestEntityApp).get();
-
-        return response.getResponseEntity();
-    }
-
-    /**
-     * Calls an API with GET verb
-     *
-     * @param customerIdentity   - the customer id
-     * @param deploymentIdentity - the deployment id
-     * @return new object
-     */
-    public Deployment getDeployment(String customerIdentity, String deploymentIdentity) {
-        RequestEntity requestEntityDep = requestEntityUtil.init(CDSAPIEnum.DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS, Deployment.class)
-            .inlineVariables(customerIdentity, deploymentIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK);
-        ResponseWrapper<Deployment> response = HTTPRequest.build(requestEntityDep).get();
 
         return response.getResponseEntity();
     }
