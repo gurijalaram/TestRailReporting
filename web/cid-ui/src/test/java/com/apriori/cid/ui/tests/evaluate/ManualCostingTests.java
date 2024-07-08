@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -17,11 +18,13 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.CostRollupOverrides;
@@ -36,6 +39,8 @@ import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class ManualCostingTests  extends TestBaseUI {
 
     private EvaluatePage evaluatePage;
@@ -43,6 +48,7 @@ public class ManualCostingTests  extends TestBaseUI {
     private PreviewPage previewPage;
     private SwitchCostModePage switchCostModePage;
 
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static IterationsUtil iterationsUtil = new IterationsUtil();
@@ -395,6 +401,35 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getListOfScenarios(copiedScenario.getComponentName(), copiedScenario.getScenarioName()))
             .as("Verify scenario removed from explore page").isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {31259})
+    @Description("Verify Manually Costed Scenario can be used in Assembly")
+    public void testManuallyCostedSubComponent() {
+        ComponentInfoBuilder assemblyScenario = new AssemblyRequestUtil().getAssembly();
+        assemblyUtils.uploadSubComponents(assemblyScenario)
+            .uploadAssembly(assemblyScenario);
+        assemblyScenario.getSubComponents().get(0).setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(0.39)
+                .totalCapitalInvestment(59.87)
+                .build())
+            .build());
+        assemblyUtils.costSubComponents(assemblyScenario);
+
+        ComponentInfoBuilder manuallyCostedComponent = assemblyScenario.getSubComponents().get(0);
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(assemblyScenario.getUser());
+
+        softAssertions.assertThat(explorePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
+            .as("Verify Sub-Component displays as Manually Costed").isEqualTo("money-check-dollar-pen");
+
+        //ToDo:- Add testrail ID for the verification of icon then cost asm, store the PPC and TCI, update manual costs and recost asm and verify changes
 
         softAssertions.assertAll();
     }
