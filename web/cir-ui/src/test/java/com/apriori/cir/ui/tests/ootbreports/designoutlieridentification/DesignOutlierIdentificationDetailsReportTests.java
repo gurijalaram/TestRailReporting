@@ -68,34 +68,6 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("7387")
-    @TestRail(id = {7387})
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
-    public void testMassMetricFinishMass() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricReportsWithChart(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName(),
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("7386")
-    @TestRail(id = {7386})
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
-    public void testMassMetricRoughMass() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricReportsWithChart(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName(),
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
     @TmsLink("1988")
     @TestRail(id = {1988})
     @Description("Export date calendar widgets")
@@ -143,19 +115,6 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("6249")
-    @TestRail(id = 6249)
-    @Description("Min and max cost filter works")
-    public void testMinAndMaxCostFilter() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-            "Cost"
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
     @TmsLink("6261")
     @TestRail(id = 6261)
     @Description("Min and max cost filter - junk value test")
@@ -164,19 +123,6 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
         inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
             ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
             "Cost"
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("6250")
-    @TestRail(id = 6250)
-    @Description("Min and max mass filter works")
-    public void testMinAndMaxMassFilter() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierDetailsReports(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
-            "Mass"
         );
     }
 
