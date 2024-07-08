@@ -4,11 +4,10 @@ import com.apriori.shared.util.annotations.Schema;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Data
-@Schema(location = "acs/MaterialMetadataResponse.json")
-public class MaterialMetadataResponse {
-    private List<PropertyValuesList> propertyValuesList;
-    private PropertyInfoMap propertyInfoMap;
+@Schema(location = "acs/MaterialMetadata.json")
+public class MaterialMetadataResponse extends ArrayList<MaterialMetadataItem> {
+    private MaterialMetadataItem materialMetadataItem;
 }

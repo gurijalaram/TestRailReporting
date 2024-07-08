@@ -3,7 +3,7 @@ package com.apriori.acs.api.models.response.acs.materialmetadata;
 import lombok.Data;
 
 @Data
-public class PropertyValuesList {
+public class MaterialMetadataItem {
     private String displayName;
     private String name;
     private String type;
