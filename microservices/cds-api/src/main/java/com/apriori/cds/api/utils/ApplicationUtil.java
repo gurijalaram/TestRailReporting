@@ -64,7 +64,8 @@ public class ApplicationUtil {
             .deployment(deploymentVar.getDeployment())
             .applications(new ArrayList<>())
             .build();
-        for (AccessControlResponse item : accessControlItems) {
+
+        accessControlItems.forEach(item -> {
             Application application = getApplication(item.getApplicationIdentity());
             Deployment deployment = getDeployment(user.getCustomerIdentity(), item.getDeploymentIdentity());
 
@@ -72,7 +73,8 @@ public class ApplicationUtil {
                 deploymentApplications.getApplications()
                     .add(AppAccessControlsEnum.fromString(application.getName()));
             }
-        }
+        });
+
         return deploymentApplications;
     }
 
