@@ -30,7 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    private AtsTestUtil atsTestUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -44,15 +44,17 @@ public class AtsAuthenticationTests extends TestUtil {
     private String customerName;
     private String userIdentity;
     private String idpIdentity;
+    private RequestEntityUtil requestEntityUtil;
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         samlUtil = new SamlUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        atsTestUtil = new AtsTestUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -73,9 +75,8 @@ public class AtsAuthenticationTests extends TestUtil {
     @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
-        UserCredentials userCredentials = UserUtil.getUser();
-        String userEmail = userCredentials.getEmail();
-        String userPassword = userCredentials.getPassword();
+        String userEmail = requestEntityUtil.getEmbeddedUser().getEmail();
+        String userPassword = requestEntityUtil.getEmbeddedUser().getPassword();
         ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);
