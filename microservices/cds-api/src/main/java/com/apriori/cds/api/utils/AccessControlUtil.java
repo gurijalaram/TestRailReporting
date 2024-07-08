@@ -5,6 +5,7 @@ import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessControlRequest;
 import com.apriori.cds.api.models.response.AccessControlResponse;
+import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -48,5 +49,22 @@ public class AccessControlUtil {
             );
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Calls an API with get verb
+     *
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the user id
+     * @return new object
+     */
+    public AccessControls getAccessControl(String customerIdentity, String userIdentity) {
+        RequestEntity requestEntity =
+            requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
+                .inlineVariables(customerIdentity, userIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
+
+        return accessControl.getResponseEntity();
     }
 }

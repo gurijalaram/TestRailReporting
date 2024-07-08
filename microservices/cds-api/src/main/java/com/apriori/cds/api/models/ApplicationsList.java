@@ -15,5 +15,5 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ApplicationsList {
-    public List<Applications> applicationsList;
+    public List<DeploymentApplications> deploymentApplicationsList;
 }
