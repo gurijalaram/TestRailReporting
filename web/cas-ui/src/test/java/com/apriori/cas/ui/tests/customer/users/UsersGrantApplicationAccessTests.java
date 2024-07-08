@@ -13,7 +13,11 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
@@ -44,7 +48,11 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
+    private CustomerUtil customerUtil;
+    private SiteUtil siteUtil;
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private Customer targetCustomer;
     private String customerIdentity;
     private String customerName;
@@ -64,6 +72,10 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
 
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateNumericString("SFID", 10);
@@ -72,13 +84,13 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         String email = "\\S+@".concat(customerName);
         String customerType = Constants.ON_PREM_CUSTOMER;
 
-        targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
+        targetCustomer = customerUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
         siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
@@ -93,7 +105,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             .siteIdentity(siteIdentity)
             .licenseIdentity(licensedApplicationIdentity)
             .build();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
 
         installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()

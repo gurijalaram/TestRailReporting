@@ -12,6 +12,7 @@ import com.apriori.cds.api.models.response.StatusAccessAuthorization;
 import com.apriori.cds.api.models.response.StatusAccessAuthorizations;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -40,6 +41,7 @@ public class CdsAccessAuthorizationsTests {
     private String customerAssociationUserIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private ResponseWrapper<Customer> customer;
     private String customerName;
     private String cloudRef;
@@ -58,6 +60,7 @@ public class CdsAccessAuthorizationsTests {
     public void setDetails() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         url = Constants.getServiceUrl();
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
@@ -65,12 +68,12 @@ public class CdsAccessAuthorizationsTests {
         emailPattern = "\\S+@".concat(customerName);
         apStaffIdentity = currentUser.getUserDetails().getIdentity();
 
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern, currentUser);
+        customer = customerUtil.addCASCustomer(customerName, cloudRef, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         apCustomerIdentity = currentUser.getUserDetails().getCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).toList().get(0).getIdentity();
-        associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
+        associationUser = customerUtil.addCustomerAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }

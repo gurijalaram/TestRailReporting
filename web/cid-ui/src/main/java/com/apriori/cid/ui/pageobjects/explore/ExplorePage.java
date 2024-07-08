@@ -10,7 +10,6 @@ import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.ExploreToolbar;
-import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.css.api.utils.CssComponent;
@@ -20,13 +19,12 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,9 +34,8 @@ import java.util.stream.Collectors;
  * @author cfrith
  */
 
+@Slf4j
 public class ExplorePage extends ExploreToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
@@ -67,9 +64,6 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
-    @FindBy(xpath = "//button[contains(.,'Bulk Analysis')]")
-    private WebElement bulkCostingButton;
-
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -81,7 +75,7 @@ public class ExplorePage extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(scenarioCount);
     }
@@ -518,22 +512,4 @@ public class ExplorePage extends ExploreToolbar {
     public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
         return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
-
-    /**
-     * click on projects button and go to the projects page
-     * @return projectsPage object
-     */
-    public BulkCostingPage clickBulkCostingButton() {
-        pageUtils.waitForElementAndClick(bulkCostingButton);
-        return new BulkCostingPage(driver);
-    }
-
-    /**
-     * check if projects button is visible
-     * @return boolean
-     */
-    public boolean isProjectsButtonVisible() {
-        return pageUtils.isElementDisplayed(bulkCostingButton);
-    }
-
 }

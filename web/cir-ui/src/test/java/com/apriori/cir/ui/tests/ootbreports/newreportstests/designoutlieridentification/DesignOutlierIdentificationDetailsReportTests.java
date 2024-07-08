@@ -5,12 +5,22 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
+import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.models.response.InputControlState;
+import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemDesignOutlierIdentification;
+import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
+import com.apriori.cir.ui.enums.RollupEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
+import com.apriori.cir.ui.utils.Constants;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
+import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ReportNamesEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -21,6 +31,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,18 +56,18 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7387")
-    @TestRail(id = 7387)
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
+    @TmsLink("31200")
+    @TestRail(id = 31200)
+    @Description("Input controls - Mass Metric - Details Report - Finish Mass")
     public void testMassMetricFinishMass() {
         genericMassMetricTest(MassMetricEnum.FINISH_MASS.getMassMetricName());
     }
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7386")
-    @TestRail(id = 7386)
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
+    @TmsLink("31201")
+    @TestRail(id = 31201)
+    @Description("Input controls - Mass Metric - Details Report - Rough Mass")
     public void testMassMetricRoughMass() {
         genericMassMetricTest(MassMetricEnum.ROUGH_MASS.getMassMetricName());
     }
@@ -157,6 +170,334 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31128")
+    @TestRail(id = 31128)
+    @Description("Validate report details align with aP Pro / CID - Details Report")
+    public void testReportDetailsAlignWithApProAndCid() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummary jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        String jasperReportSummaryString = jasperReportSummary.getReportHtmlPart().toString();
+        softAssertions.assertThat(jasperReportSummaryString.contains("257280C")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("101.64")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummaryString.contains("40137441.MLDES.0002")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("1,421.78")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummaryString.contains("A257280C")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("158.2")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummaryString.contains("CASE_07")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("10,429.19")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummaryString.contains("PLASTIC MOULDED CAP THICKPART")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("1.25")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummaryString.contains(
+            "VERY LONG NAME 01234567890123456789012345678901234567890123456789")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryString.contains("32.08")).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31131")
+    @TestRail(id = 31131)
+    @Description("Input controls - Date ranges (Earliest and Latest export date) - Details Report")
+    public void testDateRangeInputControls() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        ResponseWrapper<UpdatedInputControlsRootItemDesignOutlierIdentification> inputControlsSetEarliestExportDate =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemDesignOutlierIdentification.class,
+                false,
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId(),
+                currentDateTime,
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsSetEarliestExportDate.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("0");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31137")
+    @TestRail(id = 31137)
+    @Description("Input controls - Rollup - Details Report")
+    public void testInputControlsRollup() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemDesignOutlierIdentification> inputControlsRollup =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemDesignOutlierIdentification.class,
+                false,
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                currentExportSetValue,
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList = inputControlsRollup.getResponseEntity().getInputControlState();
+        String rollupAName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+        softAssertions.assertThat(Integer.parseInt(inputControlStateArrayList.get(9).getTotalCount())).isGreaterThanOrEqualTo(12);
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOption(rollupAName).getLabel()).isEqualTo(
+            rollupAName
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOption(rollupAName).getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOption(rollupAName).getLabel()).isEqualTo(
+            rollupAName
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOption(rollupAName).getSelected()).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOptions().get(0).getLabel()).isEqualTo(
+            RollupEnum.ROLL_UP_A.getRollupName().concat(" ")
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOptions().get(0).getSelected()).isEqualTo(true);
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Rollup Name:").get(6).siblingElements().get(2).text()
+        ).startsWith(RollupEnum.ROLL_UP_A.getRollupName().substring(0, 9));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31143")
+    @TestRail(id = 31143)
+    @Description("Input controls - Export Date - Details Report")
+    public void testInputControlsExportDate() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemDesignOutlierIdentification> inputControlsExportDate =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemDesignOutlierIdentification.class,
+                false,
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                currentExportSetValue,
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("12");
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(9)
+            .getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getLabel()).isEqualTo(ExportSetEnum.ROLL_UP_A.getExportSetName());
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(9)
+            .getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getSelected()).isEqualTo(Boolean.TRUE);
+
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("1");
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(10).getOptions().get(0).getLabel())
+            .isEqualTo("ROLL-UP A (Initial) ");
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(10).getOptions().get(0).getSelected())
+            .isEqualTo(Boolean.TRUE);
+
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("1");
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(11).getOptions().get(0).getValue())
+            .isEqualTo("2024-06-17T08:19:07");
+        softAssertions.assertThat(inputControlsExportDate.getResponseEntity().getInputControlState().get(11).getOptions().get(0).getSelected())
+            .isEqualTo(Boolean.TRUE);
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName()
+        );
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Costed Date:").get(6).siblingElements().get(2).text()
+        ).isEqualTo("2019-07-30 04:20:20 PDT");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31189")
+    @TestRail(id = 31189)
+    @Description("Input controls - Export Date - Details Report - Fully Burdened Cost")
+    public void testInputControlCostMetricMainReportFullyBurdenedCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31192")
+    @TestRail(id = 31192)
+    @Description("Input controls - Export Date - Details Report - Piece Part Cost")
+    public void testInputControlCostMetricMainReportPiecePartCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31220")
+    @TestRail(id = 31220)
+    @Description("Input controls - Minimum and Maximum aPriori Cost - Details Report")
+    public void testInputControlsMinMaxAprioriCost() {
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency()
+        );
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MIN.getInputControlId(),
+            "1.26"
+        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_COST_MAX.getInputControlId(),
+            "10429.18"
+        );
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("CASE_07")).isEqualTo(false);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("PLASTIC_MOULDED_CAP_THICKPART"))
+            .isEqualTo(false);
+
+        softAssertions.assertThat(
+                jasperReportSummary.getReportHtmlPart().getElementsContainingText("Minimum aPriori Cost:").get(6).siblingElements().get(5).text())
+            .isEqualTo("1.26");
+        softAssertions.assertThat(
+                jasperReportSummary.getReportHtmlPart().getElementsContainingText("Maximum aPriori Cost:").get(6).siblingElements().get(1).text())
+            .isEqualTo("10,429.18");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31221")
+    @TestRail(id = 31221)
+    @Description("Input controls - Minimum and Maximum aPriori Cost - Details Report")
+    public void testInputControlsMinAndMaxMass() {
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency()
+        );
+
+        jasperApiUtils.genericTestCoreIncExportDate(
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now().minusWeeks(3)),
+            InputControlsEnum.APRIORI_MASS_MIN.getInputControlId(),
+            "0.03"
+        );
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.APRIORI_MASS_MAX.getInputControlId(),
+            "1173"
+        );
+
+        String reportSummaryString = jasperReportSummary.getReportHtmlPart().toString();
+        softAssertions.assertThat(reportSummaryString.contains("12.441")).isEqualTo(true);
+        softAssertions.assertThat(reportSummaryString.contains("4.076")).isEqualTo(true);
+        softAssertions.assertThat(reportSummaryString.contains("17.756")).isEqualTo(true);
+        softAssertions.assertThat(reportSummaryString.contains("5.267")).isEqualTo(true);
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1")
+            .get(0).child(1).children().size()).isEqualTo(17);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31223")
+    @TmsLink("2014")
+    @TestRail(id = {31223, 2014})
+    @Description("Report generation - multiple currency export set - Details Report")
+    public void testReportGenerationWithMultipleCurrencyExportSetData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.EUR.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().toString().contains("1.10")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().toString().contains("21.23")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().toString().contains("0.21")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().toString().contains("153.96")).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2010")
+    @TestRail(id = 2010)
+    @Description("Validate report correct with rollups of roll ups in export set")
+    public void testReportGenerationWithRollupContainingRollup() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue();
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            currentExportSet
+        );
+
+        softAssertions.assertThat(jasperReportSummary).isNotEqualTo(null);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31251")
+    @TestRail(id = 31251)
+    @Description("Validate the reports correct with multiple VPEs export set - Main Report")
+    public void testReportWithMultiVpeData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        ArrayList<Element> colSpanFourElements = jasperReportSummaryDetailsReport.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        softAssertions.assertThat(colSpanFourElements.get(5).text()).isEqualTo("3.20");
+        softAssertions.assertThat(colSpanFourElements.get(6).text()).isEqualTo("2.12");
+
+        softAssertions.assertAll();
+    }
+
     private void genericMassMetricTest(String massMetricToUse) {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.MASS_METRIC.getInputControlId(),
@@ -175,6 +516,19 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
             softAssertions.assertThat(partNumberElements.get(j).child(0).child(0).text()).isEqualTo(mostCommonPartNames.get(i));
             j++;
         }
+
+        softAssertions.assertAll();
+    }
+
+    private void genericCostMetricDesignOutlierDetailsTest(String costMetricToUse) {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(InputControlsEnum.COST_METRIC.getInputControlId(),
+            costMetricToUse);
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Cost Metric:").get(6).siblingElements().get(8).text()
+        ).isEqualTo(costMetricToUse);
+
+        // TODO - assert on changing values - I don't see anything changing in UI
 
         softAssertions.assertAll();
     }

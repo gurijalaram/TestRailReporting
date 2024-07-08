@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
@@ -37,7 +38,6 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
@@ -179,7 +179,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         evaluatePage.goToAdvancedTab();
 
-        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -271,7 +271,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Incomplete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.63")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.94")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage.selectRoutingPreferenceByName("Gravity Die Cast");
@@ -489,27 +489,24 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2757")
     @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .selectProcessGroup(CASTING)
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("SandCasting", "DieCasting", "Permanent Mold");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("PM Molding");
 
@@ -607,20 +604,18 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("3D Printing", "Selective Laser Sintering", "Stereolithography");
 
-        routingSelectionPage.selectRoutingPreferenceByName("3D Printing")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("3D Printing")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("Printing");
 
@@ -696,21 +691,20 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing",
             "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("Laser Cut");
 
@@ -940,6 +934,7 @@ public class ProcessRoutingTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();

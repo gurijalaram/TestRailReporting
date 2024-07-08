@@ -21,7 +21,6 @@ import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -33,8 +32,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class SecondaryProcessTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
@@ -78,7 +75,7 @@ public class SecondaryProcessTests extends TestBaseUI {
             .submit(AdvancedPage.class)
             .openSecondaryDF()
             .usePrimaryDF("No")
-            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_CANADA)
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -800,6 +797,9 @@ public class SecondaryProcessTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
+            .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
