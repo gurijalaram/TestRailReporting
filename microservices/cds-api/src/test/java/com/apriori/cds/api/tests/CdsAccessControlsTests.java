@@ -120,7 +120,8 @@ public class CdsAccessControlsTests {
             .accessControlIdentity(accessControlIdentity)
             .build();
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class,
+            HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
 
         soft.assertThat(accessControlResponse.getResponseEntity().getUserIdentity()).isEqualTo(userIdentity);
         soft.assertAll();
