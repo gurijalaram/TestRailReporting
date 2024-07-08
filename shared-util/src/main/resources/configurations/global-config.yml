@@ -178,7 +178,7 @@ default:
     ui_url: https://${st_deployment_url_template}/apriori/index/
 
   reports:
-    #ui_url: https://ci-report.${st_deployment_url_template}/jasperserver-pro/
+    #ui_url: https://ci-report.${st_deployment_url_template}/jasperserver-pro
     ui_url: https://${st_deployment_url_template}/jasperserver-pro
 
 ###########################
