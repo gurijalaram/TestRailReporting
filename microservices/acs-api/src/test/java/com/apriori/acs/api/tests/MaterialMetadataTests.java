@@ -32,10 +32,9 @@ public class MaterialMetadataTests extends TestUtil {
         AcsResources acsResources = new AcsResources(userCredentials);
         MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
             AcsApiEnum.MATERIAL_METADATA,
+            MaterialMetadataResponse.class,
             "aPriori Canada",
-            null,
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-            MaterialMetadataResponse.class
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
         ).getResponseEntity();
 
         softAssertions.assertThat(materialMetadataResponse.size()).isGreaterThan(0);
@@ -51,10 +50,10 @@ public class MaterialMetadataTests extends TestUtil {
         AcsResources acsResources = new AcsResources(userCredentials);
         MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
             AcsApiEnum.MATERIAL_METADATA_REVISION,
+            MaterialMetadataResponse.class,
             "aPriori USA",
             "aP2023R1_SP00_F00_(2022-07)",
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-            MaterialMetadataResponse.class
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
         ).getResponseEntity();
 
         softAssertions.assertThat(materialMetadataResponse.size()).isGreaterThan(0);
@@ -92,7 +91,7 @@ public class MaterialMetadataTests extends TestUtil {
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        softAssertions.assertThat((genericErrorResponse.getErrorCode()).equals(HttpStatus.SC_NOT_FOUND));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
         softAssertions.assertAll();
     }
 }

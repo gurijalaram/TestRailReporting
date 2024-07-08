@@ -156,29 +156,16 @@ public class AcsResources {
     /**
      * Gets Material Metadata Info on Process Group with Revision input as optional
      *
-     * @param vpeName      - String
-     * @param processGroup - String
-     * @param revision     - String
+     * @param inlineVariables - String
      * @return instance of MaterialMetadataResponse
      */
-    public <T> ResponseWrapper<T> getMaterialMetadata(AcsApiEnum uRL, String vpeName, String revision, String processGroup, Class<T> klass) {
+    public <T> ResponseWrapper<T> getMaterialMetadata(AcsApiEnum url, Class<T> klass, String... inlineVariables) {
         setupHeader();
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(uRL, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(url, klass)
             .headers(headers)
-            .inlineVariables(
-                vpeName,
-                processGroup)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK);
-
-        if (revision != null) {
-            requestEntity.inlineVariables(
-                vpeName,
-                revision,
-                processGroup
-            );
-        }
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -192,14 +179,12 @@ public class AcsResources {
     public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String vpeName, String pgName) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(endpoint, GenericErrorResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, GenericErrorResponse.class)
             .headers(headers)
-            .inlineVariables(
-                vpeName,
-                pgName);
+            .inlineVariables(vpeName, pgName);
+        ResponseWrapper<GenericErrorResponse> response = HTTPRequest.build(requestEntity).get();
 
-        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return response.getResponseEntity();
     }
 
     /**
@@ -211,8 +196,7 @@ public class AcsResources {
     public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
