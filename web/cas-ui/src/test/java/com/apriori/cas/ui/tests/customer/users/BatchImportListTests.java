@@ -13,12 +13,13 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
-import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
-import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
@@ -40,7 +41,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BatchImportListTests extends TestBaseUI {
-    private CustomerInfrastructure customerInfrastructure;
     private final String fileName = "testUsersBatch.csv";
     private ImportPage importPage;
     private String email;
@@ -56,7 +56,6 @@ public class BatchImportListTests extends TestBaseUI {
     public void setup() {
         requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
-        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
 
         String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
@@ -74,7 +73,6 @@ public class BatchImportListTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -140,10 +138,13 @@ public class BatchImportListTests extends TestBaseUI {
     }
 
     private List<User> collectUsers(String customerIdentity) {
-        cdsTestUtil = new CdsTestUtil();
         List<User> sourceUsers = new ArrayList<>();
         for (int i = 0; i < 10; ++i) {
-            User added = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity().getItems().get(i);
+            RequestEntity request = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
+                .inlineVariables(customerIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
+            ResponseWrapper<Users> users = HTTPRequest.build(request).get();
+            User added = users.getResponseEntity().getItems().get(i);
             sourceUsers.add(added);
         }
         return sourceUsers;
@@ -154,7 +155,6 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {
-        setCustomerData();
         cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity, requestEntityUtil.getEmbeddedUser());
 
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
@@ -209,7 +209,6 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Upload user csv with invalid users data")
     @TestRail(id = {4348})
     public void testCsvInvalidUsersData() {
-        setCustomerData();
         cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile, requestEntityUtil.getEmbeddedUser());
         importPage.refreshBatchFilesList();
 
@@ -233,10 +232,5 @@ public class BatchImportListTests extends TestBaseUI {
 
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
-    }
-
-    private void setCustomerData() {
-        RandomCustomerData rcd = new RandomCustomerData();
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
     }
 }

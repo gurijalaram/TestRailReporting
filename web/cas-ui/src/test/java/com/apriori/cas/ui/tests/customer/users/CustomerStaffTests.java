@@ -19,7 +19,6 @@ import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -57,9 +56,8 @@ public class CustomerStaffTests extends TestBaseUI {
     private String customerIdentity;
     private IdentityHolder deleteIdentityHolder;
     private SoftAssertions soft = new SoftAssertions();
-    private String siteIdentity;
-    private String siteId;
     private String siteName;
+    private RandomCustomerData rcd = new RandomCustomerData();
 
     @BeforeEach
     public void setup() {
@@ -206,6 +204,11 @@ public class CustomerStaffTests extends TestBaseUI {
     @Description("Validate license details panel")
     @TestRail(id = {13101, 13102, 13103, 13104})
     public void licenseDetailsTest() {
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        ResponseWrapper<Sites> customerSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
+        String siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
+        String siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
+        siteName = customerSites.getResponseEntity().getItems().get(0).getName();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
@@ -270,7 +273,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     private long checkEveryOtherItem(List<TableRowComponent> rows, long pageSize) {
         long count = 0;
-        for (int i = 0; i < pageSize; i += 2, ++count) {
+        for (int i = 4; i < pageSize; i += 2, ++count) {
             final TableRowComponent row = rows.get(i);
             Obligation.mandatory(row::getCheck, "The check cell is missing").check(true);
         }
@@ -299,6 +302,7 @@ public class CustomerStaffTests extends TestBaseUI {
         usersTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
         ++selected;
 
+        paginator.getPageSize().select("20");
         long expected = usersTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
         soft.assertThat(expected)
             .overridingErrorMessage("The selection is not holding across pages.")
@@ -362,18 +366,10 @@ public class CustomerStaffTests extends TestBaseUI {
     }
 
     private void setCustomerData() {
-        RandomCustomerData rcd = new RandomCustomerData();
         customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
         Customer targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
-        ResponseWrapper<Sites> customerSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
-        siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
-        siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
-        siteName = customerSites.getResponseEntity().getItems().get(0).getName();
-
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

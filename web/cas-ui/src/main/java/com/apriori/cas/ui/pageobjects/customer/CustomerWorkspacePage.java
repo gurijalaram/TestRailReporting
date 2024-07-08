@@ -67,7 +67,7 @@ public class CustomerWorkspacePage extends NavToolbar {
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='primary-button']")
     private WebElement requestOkButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement confirmRevokeOkButton;
 
     @FindBy(css = ".Toastify__toast.Toastify__toast--error .Toastify__toast-body")

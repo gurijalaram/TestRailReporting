@@ -44,7 +44,7 @@ public class ImportPage extends UsersPage {
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmRemoveCancelButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement confirmRemoveOkButton;
 
     private UsersTableController usersTableController;
