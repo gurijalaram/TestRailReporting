@@ -73,10 +73,6 @@ public class AcsResources {
 
     private final String validUsername;
     private final String invalidUsername;
-    private final String validDigitalFactory = "aPriori USA";
-    private final String invalidDigitalFactory = "aPriori Fake";
-    private final String validProcessGroup = "Forging";
-    private final String invalidProcessGroup = "Marbling";
 
     public AcsResources(UserCredentials user) {
         this.userCredentials = user;
@@ -158,83 +154,50 @@ public class AcsResources {
     }
 
     /**
-     * Gets Material Metadata Info
-     *
-     * @param vpeName      - String
-     * @param processGroup - String
-     * @return instance of MaterialMetadataResponse
-     */
-    public <T> ResponseWrapper<T> getMaterialMetadata(String vpeName, String processGroup, Class<T> klass) {
-        setupHeader();
-
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(AcsApiEnum.MATERIAL_METADATA, klass)
-            .headers(headers)
-            .inlineVariables(
-                vpeName,
-                processGroup)
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * Gets Material Metadata Info on Process Group with Revision
+     * Gets Material Metadata Info on Process Group with Revision input as optional
      *
      * @param vpeName      - String
      * @param processGroup - String
      * @param revision     - String
      * @return instance of MaterialMetadataResponse
      */
-    public <T> ResponseWrapper<T> getMaterialMetadataWithRevision(String vpeName, String revision, String processGroup, Class<T> klass) {
+    public <T> ResponseWrapper<T> getMaterialMetadata(AcsApiEnum uRL, String vpeName, String revision, String processGroup, Class<T> klass) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(AcsApiEnum.MATERIAL_METADATA_REVISION, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(uRL, klass)
             .headers(headers)
             .inlineVariables(
                 vpeName,
-                revision,
                 processGroup)
             .expectedResponseCode(HttpStatus.SC_OK);
+
+        if (revision != null) {
+            requestEntity.inlineVariables(
+                vpeName,
+                revision,
+                processGroup
+            );
+        }
 
         return HTTPRequest.build(requestEntity).get();
     }
 
     /**
-     * Generic call for get endpoint with invalid digital factory
+     * Generic call for get endpoint with error response
      *
      * @param endpoint - endpoint to call
      * @return instance of GenericErrorResponse
      */
-    public GenericErrorResponse getEndpointInvalidDigitalFactory(EndpointEnum endpoint) {
+    public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String vpeName, String pgName) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil_Old
             .init(endpoint, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(
-                invalidDigitalFactory,
-                validProcessGroup);
-
-        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-    }
-
-    /**
-     * Generic call for get endpoint with invalid digital factory
-     *
-     * @param endpoint - endpoint to call
-     * @return instance of GenericErrorResponse
-     */
-    public GenericErrorResponse getEndpointInvalidProcessGroup(EndpointEnum endpoint) {
-        setupHeader();
-
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(endpoint, GenericErrorResponse.class)
-            .headers(headers)
-            .inlineVariables(
-                validDigitalFactory,
-                invalidProcessGroup);
+                vpeName,
+                pgName);
 
         return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }

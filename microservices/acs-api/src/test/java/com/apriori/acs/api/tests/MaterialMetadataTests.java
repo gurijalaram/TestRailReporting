@@ -6,6 +6,7 @@ import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.materialmetadata.MaterialMetadataResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -26,14 +27,16 @@ public class MaterialMetadataTests extends TestUtil {
 
     @Test
     @TestRail(id = {31138})
-    @Description("Test Get Material Metadata endpoint")
+    @Description("Test Get Material Metadata")
     public void testGetMaterialMetadata() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources
-            .getMaterialMetadata(
-                "aPriori Canada",
-                ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-                MaterialMetadataResponse.class).getResponseEntity();
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+            AcsApiEnum.MATERIAL_METADATA,
+            "aPriori Canada",
+            null,
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+            MaterialMetadataResponse.class
+        ).getResponseEntity();
 
         softAssertions.assertThat(materialMetadataResponse.size()).isGreaterThan(0);
         softAssertions.assertThat(materialMetadataResponse.get(1).getName()).isEqualTo("rectangularBarCostPerKG");
@@ -46,11 +49,13 @@ public class MaterialMetadataTests extends TestUtil {
     @Description("Test Get Material Metadata endpoint with Revision")
     public void testGetMaterialMetadataWithRevision() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources
-            .getMaterialMetadataWithRevision(
-                "aPriori USA", "aP2023R1_SP00_F00_(2022-07)",
-                ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
-                MaterialMetadataResponse.class).getResponseEntity();
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+            AcsApiEnum.MATERIAL_METADATA_REVISION,
+            "aPriori USA",
+            "aP2023R1_SP00_F00_(2022-07)",
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+            MaterialMetadataResponse.class
+        ).getResponseEntity();
 
         softAssertions.assertThat(materialMetadataResponse.size()).isGreaterThan(0);
         softAssertions.assertThat(materialMetadataResponse.get(2).getName()).isEqualTo("rectangularBarCostPerUnit");
@@ -63,7 +68,11 @@ public class MaterialMetadataTests extends TestUtil {
     @Description("Get Material Metadata endpoint with Invalid Digital Factory")
     public void testGetMaterialMetadataWithInvalidDF() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidDigitalFactory(AcsApiEnum.MATERIAL_METADATA);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
+            AcsApiEnum.MATERIAL_METADATA,
+            "aPriori Fake",
+            ProcessGroupEnum.FORGING.getProcessGroup()
+        );
 
         assertOnInvalidResponse(genericErrorResponse);
     }
@@ -73,7 +82,11 @@ public class MaterialMetadataTests extends TestUtil {
     @Description("Get Material Metadata endpoint with Invalid Process Group")
     public void testGetMaterialMetadataWithInvalidPG() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidProcessGroup(AcsApiEnum.MATERIAL_METADATA);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
+            AcsApiEnum.MATERIAL_METADATA,
+            DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(),
+            "Fake Process"
+        );
 
         assertOnInvalidResponse(genericErrorResponse);
     }
