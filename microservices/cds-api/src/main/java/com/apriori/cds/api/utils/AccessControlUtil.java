@@ -15,8 +15,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import org.apache.http.HttpStatus;
 
 public class AccessControlUtil {
-    private RequestEntityUtil requestEntityUtil;
     private final ApplicationUtil applicationUtil;
+    private RequestEntityUtil requestEntityUtil;
 
     public AccessControlUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
@@ -26,12 +26,13 @@ public class AccessControlUtil {
     /**
      * Post to add out of context access control
      *
+     * @param inlineVariables - inline variables
      * @return new object
      */
-    public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
+    public ResponseWrapper<AccessControlResponse> addAccessControl(String... inlineVariables) {
 
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
-            .inlineVariables(customerIdentity, userIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "accessControl",
