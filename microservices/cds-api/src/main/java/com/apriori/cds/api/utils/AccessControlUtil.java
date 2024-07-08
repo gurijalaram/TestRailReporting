@@ -14,11 +14,11 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
-public class AccessUtil {
+public class AccessControlUtil {
     private RequestEntityUtil requestEntityUtil;
     private final ApplicationUtil applicationUtil;
 
-    public AccessUtil(RequestEntityUtil requestEntityUtil) {
+    public AccessControlUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
     }
