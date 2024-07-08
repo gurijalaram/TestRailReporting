@@ -16,12 +16,10 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import org.apache.http.HttpStatus;
 
 public class AccessControlUtil {
-    private final ApplicationUtil applicationUtil;
     private RequestEntityUtil requestEntityUtil;
 
     public AccessControlUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
-        this.applicationUtil = new ApplicationUtil(requestEntityUtil);
     }
 
     /**
@@ -41,7 +39,7 @@ public class AccessControlUtil {
                     .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getUserDetails().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(applicationUtil.getApplicationIdentity(CIS))
+                    .applicationIdentity(new ApplicationUtil(requestEntityUtil).getApplicationIdentity(CIS))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
                     .roleIdentity(PropertiesContext.get("cds.identity_role"))
