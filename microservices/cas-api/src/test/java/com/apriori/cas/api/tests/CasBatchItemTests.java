@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.BatchItem;
 import com.apriori.cas.api.models.response.BatchItems;
@@ -10,11 +8,10 @@ import com.apriori.cas.api.models.response.PostBatch;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -31,16 +28,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasBatchItemTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    public final UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -59,11 +58,11 @@ public class CasBatchItemTests {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
@@ -87,15 +86,15 @@ public class CasBatchItemTests {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        CasTestUtil.newUsersFromBatch(customerIdentity, batchIdentity);
+        casTestUtil.newUsersFromBatch(customerIdentity, batchIdentity);
 
     }
 
@@ -108,11 +107,11 @@ public class CasBatchItemTests {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
@@ -150,11 +149,11 @@ public class CasBatchItemTests {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
@@ -166,6 +165,6 @@ public class CasBatchItemTests {
 
         String itemId = getItems.getResponseEntity().getItems().get(0).getIdentity();
 
-        CasTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
+        casTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
     }
 }

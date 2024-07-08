@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.IdentityHolder;
 import com.apriori.cas.api.models.response.AssociationUser;
@@ -17,8 +15,6 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -52,9 +48,8 @@ public class CasUserSubLicensesTests {
     private String userIdentity;
     private String siteIdentity;
     private String siteId;
-    private CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private CdsTestUtil cdsTestUtil;
-    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
     private String casLicense;
     private String casExpiredLicense;
     private String casApInternalLicense;
@@ -63,8 +58,10 @@ public class CasUserSubLicensesTests {
     @SneakyThrows
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
 
         casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);

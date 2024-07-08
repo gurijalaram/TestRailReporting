@@ -6,7 +6,9 @@ import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.utils.AccessUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -30,8 +32,10 @@ public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
     private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
     private CdsTestUtil cdsTestUtil;
     private AccessUtil accessUtil;
+    private CdsUserUtil cdsUserUtil;
     private String customerIdentity;
     private String userIdentity;
     private final SoftAssertions soft = new SoftAssertions();
@@ -42,6 +46,8 @@ public class CdsAccessControlsTests {
         accessUtil = new AccessUtil(requestEntityUtil);
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -122,13 +128,13 @@ public class CdsAccessControlsTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

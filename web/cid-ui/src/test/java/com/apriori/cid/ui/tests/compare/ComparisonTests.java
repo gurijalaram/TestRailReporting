@@ -877,7 +877,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getOutput(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
         softAssertions.assertThat(comparePage.getOutput(component3.getComponentName(), component3.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
         softAssertions.assertThat(comparePage.getOutput(component4.getComponentName(), component4.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
-        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Critical");
+        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
 
         softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(),
             ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);

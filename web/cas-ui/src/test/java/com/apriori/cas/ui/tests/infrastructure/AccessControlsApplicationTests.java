@@ -12,7 +12,9 @@ import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -37,7 +39,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Disabled("Feature was disabled")
 public class AccessControlsApplicationTests extends TestBaseUI {
@@ -46,35 +47,41 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private IdentityHolder installationIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
+    private SiteUtil siteUtil;
     private InfrastructurePage infrastructurePage;
     private Customer targetCustomer;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
+    private UserCreation userCreation;
     private String customerIdentity;
     private String customerName;
-    private UserCreation userCreation;
     private String siteIdentity;
     private String deploymentIdentity;
     private String installationIdentity;
     private String appIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-        userCreation = new UserCreation();
+
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         String deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
@@ -85,27 +92,27 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .siteIdentity(siteIdentity)
-                .licenseIdentity(licensedApplicationIdentity)
-                .build();
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licensedApplicationIdentity)
+            .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
 
         installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .deploymentIdentity(deploymentIdentity)
-                .installationIdentity(installationIdentity)
-                .build();
+            .customerIdentity(customerIdentity)
+            .deploymentIdentity(deploymentIdentity)
+            .installationIdentity(installationIdentity)
+            .build();
 
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         infrastructurePage = new CasLoginPage(driver)
-                .login(UserUtil.getUser())
-                .openCustomer(customerIdentity)
-                .goToInfrastructure()
-                .selectApplication("aPriori Professional");
+            .login(UserUtil.getUser())
+            .openCustomer(customerIdentity)
+            .goToInfrastructure()
+            .selectApplication("aPriori Professional");
     }
 
     @AfterEach
@@ -113,13 +120,13 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
-                licensedAppIdentityHolder.customerIdentity(),
-                licensedAppIdentityHolder.siteIdentity(),
-                licensedAppIdentityHolder.licenseIdentity());
+            licensedAppIdentityHolder.customerIdentity(),
+            licensedAppIdentityHolder.siteIdentity(),
+            licensedAppIdentityHolder.licenseIdentity());
         cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
-                installationIdentityHolder.customerIdentity(),
-                installationIdentityHolder.deploymentIdentity(),
-                installationIdentityHolder.installationIdentity());
+            installationIdentityHolder.customerIdentity(),
+            installationIdentityHolder.deploymentIdentity(),
+            installationIdentityHolder.installationIdentity());
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -130,7 +137,8 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     public void testUsersCanBeGivenAccessToApplication() {
         SoftAssertions soft = new SoftAssertions();
         ResponseWrapper<Users> customerUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
-        String serviceAccountIdentity = customerUsers.getResponseEntity().getItems().stream().filter(givenName -> givenName.getUserProfile().getGivenName().equals("service-account")).collect(Collectors.toList()).get(0).getIdentity();
+        String serviceAccountIdentity = customerUsers.getResponseEntity().getItems().stream().filter(givenName -> givenName.getUserProfile().getGivenName().equals("service-account"))
+            .toList().get(0).getIdentity();
         String userIdentity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 

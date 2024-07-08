@@ -5,7 +5,9 @@ import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.cds.api.models.response.UserRoles;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -26,20 +28,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsCustomerUserRolesTests {
+    private final String role = "AP_USER_ADMIN";
+    private final String invalidRole = "ADMIN";
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String userIdentity;
-    private final String role = "AP_USER_ADMIN";
-    private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void init() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -69,8 +75,8 @@ public class CdsCustomerUserRolesTests {
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
         setCustomerData();
-        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, role);
-        String roleId = newRole.getResponseEntity().getIdentity();
+        UserRole newRole = cdsUserUtil.createRoleForUser(role, customerIdentity, userIdentity);
+        String roleId = newRole.getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
 
@@ -87,7 +93,7 @@ public class CdsCustomerUserRolesTests {
         setCustomerData();
         String expectedMessage = "Resource 'Role' with identity 'ADMIN' was not found";
         String expectedError = "Not Found";
-        ErrorResponse response = cdsTestUtil.createInvalidRoleForUser(customerIdentity, userIdentity,invalidRole);
+        ErrorResponse response = cdsUserUtil.createInvalidRoleForUser(invalidRole, customerIdentity, userIdentity);
 
         soft.assertThat(response.getMessage()).isEqualTo(expectedMessage);
         soft.assertThat(response.getError()).isEqualTo(expectedError);
@@ -96,13 +102,13 @@ public class CdsCustomerUserRolesTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }
