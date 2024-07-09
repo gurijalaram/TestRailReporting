@@ -159,10 +159,10 @@ public class AcsResources {
      * @param inlineVariables - String
      * @return instance of MaterialMetadataResponse
      */
-    public <T> ResponseWrapper<T> getMaterialMetadata(AcsApiEnum url, Class<T> klass, String... inlineVariables) {
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
         setupHeader();
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(url, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, klass)
             .headers(headers)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -176,12 +176,12 @@ public class AcsResources {
      * @param endpoint - endpoint to call
      * @return instance of GenericErrorResponse
      */
-    public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String vpeName, String pgName) {
+    public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String... inlineVariables) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, GenericErrorResponse.class)
             .headers(headers)
-            .inlineVariables(vpeName, pgName);
+            .inlineVariables(inlineVariables);
         ResponseWrapper<GenericErrorResponse> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity();
