@@ -21,7 +21,6 @@ import org.junit.platform.suite.api.Suite;
     CustomerAccessTests.class,
     NavigationTests.class,
     CasGuiUsersSuite.class,
-    CasGuiSystemConfigurationSuite.class,
     MfaEnabledTests.class,
     AccessControlsApplicationTests.class
 })

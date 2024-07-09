@@ -53,7 +53,7 @@ public class UsersListPage extends UsersPage {
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmDeleteCancelButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement confirmDeleteOkButton;
 
     @FindBy(css = ".fa-file-circle-minus")

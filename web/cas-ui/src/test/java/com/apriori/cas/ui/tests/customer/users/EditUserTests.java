@@ -11,8 +11,6 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -34,7 +32,6 @@ import java.util.List;
 public class EditUserTests extends TestBaseUI {
     private static final String USER_NAME = new GenerateStringUtil().generateUserName();
     private CdsTestUtil cdsTestUtil;
-    private CustomerInfrastructure customerInfrastructure;
     private CustomerUtil customerUtil;
     private Customer targetCustomer;
     private CustomerWorkspacePage customerViewPage;
@@ -42,19 +39,16 @@ public class EditUserTests extends TestBaseUI {
     private String email;
     private String userIdentity;
     private UserProfilePage userProfilePage;
-    // TODO: 21/06/2024 cn - remove this var when refactoring
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
-        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
 
         setCustomerData();
         userProfilePage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(customerIdentity)
             .goToUsersPage()
             .goToCustomerStaff()
@@ -66,7 +60,6 @@ public class EditUserTests extends TestBaseUI {
     @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -138,7 +131,7 @@ public class EditUserTests extends TestBaseUI {
         userIdentity = userProfilePage.getUserIdentity();
         SoftAssertions soft = new SoftAssertions();
 
-        userProfilePage = userProfilePage.edit();
+        userProfilePage.edit();
 
         soft.assertThat(userProfilePage.canSave())
             .overridingErrorMessage("Expected save button to be disabled.")
@@ -205,7 +198,5 @@ public class EditUserTests extends TestBaseUI {
         email = customerName.toLowerCase();
         targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
     }
 }
