@@ -9,8 +9,9 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cas.ui.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.PageUtils;
@@ -44,9 +45,10 @@ public class NewCustomerTests extends TestBaseUI {
     @BeforeEach
     public void setup() {
         created = new ArrayList<>();
-        cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerViewPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickNewCustomerButton();
         customerProfilePage = customerViewPage.goToProfile();
     }

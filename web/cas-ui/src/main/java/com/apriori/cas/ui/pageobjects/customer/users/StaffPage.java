@@ -20,7 +20,7 @@ public final class StaffPage extends UsersPage {
     @FindBy(className = "customer-user-associations-remove-button")
     private WebElement removeButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement confirmRemoveOkButton;
 
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
