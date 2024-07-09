@@ -350,12 +350,12 @@ public class FilterCriteriaTests extends TestBaseUI {
     @Description("Validate user can filter by Cost Mode used")
     public void testCodeModeFiltering() {
         String manualFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
-        String simulateFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String aPrioriFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
         String mixedFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
-        ComponentInfoBuilder simulateComponent = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder aPrioriComponent = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder manualComponent = new ComponentRequestUtil().getComponent();
-        manualComponent.setUser(simulateComponent.getUser());
+        manualComponent.setUser(aPrioriComponent.getUser());
         manualComponent.setCostingTemplate(CostingTemplate.builder()
             .costMode("MANUAL")
             .costRollupOverrides(CostRollupOverrides.builder()
@@ -367,13 +367,13 @@ public class FilterCriteriaTests extends TestBaseUI {
         ScenariosUtil scenariosUtil = new ScenariosUtil();
         ComponentsUtil componentsUtil = new ComponentsUtil();
 
-        componentsUtil.postComponent(simulateComponent);
+        componentsUtil.postComponent(aPrioriComponent);
         componentsUtil.postComponent(manualComponent);
-        scenariosUtil.postCostScenario(simulateComponent);
+        scenariosUtil.postCostScenario(aPrioriComponent);
         scenariosUtil.postCostScenario(manualComponent);
 
         explorePage = new CidAppLoginPage(driver)
-            .login(simulateComponent.getUser())
+            .login(aPrioriComponent.getUser())
             .filter()
             .newFilter()
             .inputName(manualFilter)
@@ -381,35 +381,35 @@ public class FilterCriteriaTests extends TestBaseUI {
             .save(FilterPage.class)
             .submit(ExplorePage.class);
 
-        softAssertion.assertThat(explorePage.getListOfScenarios(simulateComponent.getComponentName(), simulateComponent.getScenarioName()))
-            .as("Verify Simulate Mode costed scenario not displayed").isEqualTo(0);
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario not displayed").isEqualTo(0);
         softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
             .as("Verify Manual Mode costed scenario displayed").isEqualTo(1);
 
         explorePage = explorePage.filter()
             .newFilter()
-            .inputName(simulateFilter)
-            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "Simulate")
+            .inputName(aPrioriFilter)
+            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "aPriori")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
 
         softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
             .as("Verify Manual Mode costed scenario not displayed").isEqualTo(0);
-        softAssertion.assertThat(explorePage.getListOfScenarios(simulateComponent.getComponentName(), simulateComponent.getScenarioName()))
-            .as("Verify Simulate Mode costed scenario displayed").isEqualTo(1);
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario displayed").isEqualTo(1);
 
         explorePage = explorePage.filter()
             .newFilter()
             .inputName(mixedFilter)
-            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "Simulate")
+            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "aPriori")
             .includeCriteria(PropertyEnum.COST_MODE, "Manual")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
 
         softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
             .as("Verify Manual Mode costed scenario displayed").isEqualTo(1);
-        softAssertion.assertThat(explorePage.getListOfScenarios(simulateComponent.getComponentName(), simulateComponent.getScenarioName()))
-            .as("Verify Simulate Mode costed scenario displayed").isEqualTo(1);
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario displayed").isEqualTo(1);
 
         softAssertion.assertAll();
     }
