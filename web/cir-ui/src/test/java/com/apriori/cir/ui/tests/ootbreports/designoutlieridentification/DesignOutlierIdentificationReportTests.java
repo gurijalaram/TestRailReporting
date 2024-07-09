@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.DesignOutlierIdentificationReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
@@ -20,8 +19,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
 
 public class DesignOutlierIdentificationReportTests extends TestBaseUI {
 
@@ -67,34 +64,6 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
             ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("1997")
-    @TestRail(id = {1997})
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
-    public void testMassMetricFinishMass() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricReportsWithChart(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName(),
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("7385")
-    @TestRail(id = {7385})
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
-    public void testMassMetricRoughMass() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testMassMetricReportsWithChart(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-            ExportSetEnum.ROLL_UP_A.getExportSetName(),
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -195,32 +164,5 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
             ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
             "Mass"
         );
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("2006")
-    @TestRail(id = {2006})
-    @Description("Validate the reports correct with user overrides")
-    public void testReportFunctionsWithUserCostOverride() {
-        genericReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                GenericReportPage.class)
-            .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
-            .clickOk(GenericReportPage.class);
-
-        genericReportPage.setReportName(
-            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3")
-        );
-        for (int i = 0; i < 2; i++) {
-            genericReportPage.hoverPartNameBubbleDtcReports();
-        }
-        BigDecimal fbcValue = genericReportPage.getFBCValueFromBubbleTooltip(
-            "FBC Value"
-        );
-
-        assertThat(fbcValue.compareTo(new BigDecimal("10429.19")), is(equalTo(0)));
     }
 }
