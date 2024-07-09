@@ -49,7 +49,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
     private String customerIdentity;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
-    private com.apriori.cds.api.utils.CustomerUtil customerUtil;
+    private CustomerUtil customerUtil;
     private CdsUserUtil cdsUserUtil;
     private StaffPage staffPage;
     private SoftAssertions soft = new SoftAssertions();
@@ -61,7 +61,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
@@ -81,7 +81,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(targetCustomer.getIdentity())
             .goToUsersPage()
             .goToStaffPage();
