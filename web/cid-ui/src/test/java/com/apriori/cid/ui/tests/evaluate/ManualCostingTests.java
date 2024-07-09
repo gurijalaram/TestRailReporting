@@ -6,7 +6,10 @@ import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
+import com.apriori.cid.ui.pageobjects.evaluate.CostDetailsPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
+import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -406,17 +409,22 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31259})
+    @TestRail(id = {31224, 31259, 31261})
     @Description("Verify Manually Costed Scenario can be used in Assembly")
     public void testManuallyCostedSubComponent() {
+        Double componentPPC = 0.39;
+        Double piecePartCostDifference = 1.23;
+        Double componentTCI = 59.87;
+        Double totalCapitalInvestmentDifference = 16.54;
+
         ComponentInfoBuilder assemblyScenario = new AssemblyRequestUtil().getAssembly();
         assemblyUtils.uploadSubComponents(assemblyScenario)
             .uploadAssembly(assemblyScenario);
         assemblyScenario.getSubComponents().get(0).setCostingTemplate(CostingTemplate.builder()
             .costMode("MANUAL")
             .costRollupOverrides(CostRollupOverrides.builder()
-                .piecePartCost(0.39)
-                .totalCapitalInvestment(59.87)
+                .piecePartCost(componentPPC)
+                .totalCapitalInvestment(componentTCI)
                 .build())
             .build());
         assemblyUtils.costSubComponents(assemblyScenario);
@@ -427,9 +435,53 @@ public class ManualCostingTests  extends TestBaseUI {
             .login(assemblyScenario.getUser());
 
         softAssertions.assertThat(explorePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
-            .as("Verify Sub-Component displays as Manually Costed").isEqualTo("money-check-dollar-pen");
+            .as("Verify Scenario displays as Manually Costed").isEqualTo("money-check-dollar-pen");
 
-        //ToDo:- Add testrail ID for the verification of icon then cost asm, store the PPC and TCI, update manual costs and recost asm and verify changes
+        ComponentsTreePage componentsTreePage = explorePage.openScenario(assemblyScenario.getComponentName(), assemblyScenario.getScenarioName())
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
+            .as("Verify Sub-Component displays as Manually Costed in Tree View").isEqualTo("money-check-dollar-pen");
+
+        ComponentsTablePage componentsTablePage = componentsTreePage.selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
+            .as("Verify Sub-Component displays as Manually Costed in Table View").isEqualTo("money-check-dollar-pen");
+
+        CostDetailsPage costDetailsPage = componentsTablePage.closePanel()
+            .costScenario()
+            .openCostDetails();
+
+        //ToDo:- Add check for blue alert bar when it's added
+
+        costDetailsPage.expandDropDown("Piece Part Cost");
+        //ToDo:- Timeout when attempting to read values - Find fix for locator
+        Double manualPPCValue = costDetailsPage.getCostSumValue("Manual Components");
+        costDetailsPage.expandDropDown("Total Capital Investment");
+        Double manualTCIValue = costDetailsPage.getCostSumValue("Manual Investment");
+
+        softAssertions.assertThat(manualPPCValue).as("Verify Piece Part Cost Total").isEqualTo(componentPPC);
+        softAssertions.assertThat(manualTCIValue).as("Verify Total Capital Investment Total").isEqualTo(componentTCI);
+
+        assemblyScenario.getSubComponents().get(0).setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(componentPPC + piecePartCostDifference)
+                .totalCapitalInvestment(componentTCI - totalCapitalInvestmentDifference)
+                .build())
+            .build());
+        scenariosUtil.postCostScenario(assemblyScenario.getSubComponents().get(0));
+
+        costDetailsPage = costDetailsPage.closePanel()
+            .costScenario()
+            .openCostDetails();
+
+        costDetailsPage.expandDropDown("Piece Part Cost");
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Manual Components"))
+            .as("Verify change in manual PPC").isEqualTo(componentPPC + piecePartCostDifference);
+        costDetailsPage.expandDropDown("Total Capital Investment");
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Manual Investment"))
+            .as("Verify change to manual TCI").isEqualTo(componentTCI - totalCapitalInvestmentDifference);
 
         softAssertions.assertAll();
     }
