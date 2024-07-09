@@ -46,23 +46,22 @@ public class CustomerAccessTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
 
         customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = customerName.toLowerCase();
-        UserCredentials currentUser = UserUtil.getUser();
-        userName = currentUser.getUsername();
-        userEmail = currentUser.getEmail();
+        userName = requestEntityUtil.getEmbeddedUser().getUsername();
+        userEmail = requestEntityUtil.getEmbeddedUser().getEmail();
 
         targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
         customerIdentity = targetCustomer.getIdentity();
 
         usersPage = new CasLoginPage(driver)
-            .login(currentUser)
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(customerIdentity)
             .goToUsersPage();
     }
