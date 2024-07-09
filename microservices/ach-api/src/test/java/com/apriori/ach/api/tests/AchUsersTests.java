@@ -206,7 +206,7 @@ public class AchUsersTests {
 
         soft.assertThat(updateUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
 
-        // TODO: 09/07/2024 should this be a status code 204 with User already deactivated?
+        // TODO: 09/07/2024 cn - nataliia, should this be a status code 204 with User already deactivated?
         AchErrorResponse errorResponse = achTestUtil.deleteUser(HttpStatus.SC_FORBIDDEN, customerIdentity, userIdentity);
 
         soft.assertThat(errorResponse.getMessage()).isEqualTo("Operation not allowed.");
