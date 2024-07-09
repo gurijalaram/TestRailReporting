@@ -24,7 +24,7 @@ public class ModalUserList {
     @FindBy(css = ".close-modal")
     private WebElement candidatesCloseButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement candidatesConfirmOkButton;
 
     @FindBy(css = ".candidate-confirm-modal .MuiDialogActions-spacing [data-testid='secondary-button']")
