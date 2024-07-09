@@ -62,7 +62,6 @@ public class AchUsersTests {
     @TestRail(id = {29177, 29178})
     @Description("User Admin can create a user, user can be created with unique email")
     public void createUserByAdmin() {
-
         String userName = new GenerateStringUtil().generateUserName();
 
         ResponseWrapper<User> newUser = achTestUtil.createNewUser("CreateUserData.json", customerIdentity, userName, domain, HttpStatus.SC_CREATED, User.class);
