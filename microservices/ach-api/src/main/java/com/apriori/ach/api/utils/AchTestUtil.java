@@ -1,8 +1,10 @@
 package com.apriori.ach.api.utils;
 
 import com.apriori.ach.api.enums.ACHAPIEnum;
+import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.models.response.CustomerAch;
 import com.apriori.ach.api.models.response.CustomersAch;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -11,6 +13,7 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
@@ -42,7 +45,7 @@ public class AchTestUtil extends TestUtil {
         CustomerAch customer = findFirst(ACHAPIEnum.CUSTOMERS, CustomersAch.class, filters, Collections.emptyMap());
 
         if (customer == null) {
-            throw new IllegalStateException(String.format("Customer, aPriori Internal, is missing.  The data set is corrupted."));
+            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
         }
 
         return customer;
@@ -72,49 +75,13 @@ public class AchTestUtil extends TestUtil {
      * @param expectedResponseCode - response code
      * @return ResponseWrapper T
      */
-    public <T> ResponseWrapper<T> createNewUser(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode, RequestEntityUtil requestEntityUtilUser) {
-        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
+    public <T> ResponseWrapper<T> createNewUser(String fileName, String customerIdentity, String userName, String domain, Integer expectedResponseCode, Class<T> klass) {
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile(fileName).getPath(), User.class);
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = requestEntityUtilUser.init(ACHAPIEnum.CUSTOMER_USERS, klass)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(expectedResponseCode)
-            .body("user", requestBody);
 
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Creates a new user
-     *
-     * @param klass                - class
-     * @param customerIdentity     - the customer identity
-     * @param userName             - user name
-     * @param domain               - domain
-     * @param expectedResponseCode - response code
-     * @return ResponseWrapper T
-     */
-    public <T> ResponseWrapper<T> createNewUser(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode) {
-        return createNewUser(klass, customerIdentity, userName, domain, expectedResponseCode, requestEntityUtil);
-    }
-
-    /**
-     * Creates a new user AP_STAFF_USER
-     *
-     * @param klass                - class
-     * @param customerIdentity     - the customer identity
-     * @param userName             - user name
-     * @param domain               - domain
-     * @param expectedResponseCode - response code
-     * @return ResponseWrapper T
-     */
-    public <T> ResponseWrapper<T> createNewUserApStaff(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode, RequestEntityUtil requestEntityUtilUser) {
-        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserDataApStaff.json").getPath(), User.class);
-        requestBody.setUsername(userName);
-        requestBody.setEmail(userName + "@" + domain + ".com");
-        requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = requestEntityUtilUser.init(ACHAPIEnum.CUSTOMER_USERS, klass)
+        RequestEntity requestEntity = requestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, klass)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body("user", requestBody);
@@ -143,7 +110,54 @@ public class AchTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
+    /**
+     * Updates the existing user
+     *
+     * @param klass                - class
+     * @param user                 - user response
+     * @param updatedJobTitle      - string job title
+     * @param expectedResponseCode - response code
+     * @return ResponseWrapper T
+     */
     public <T> ResponseWrapper<T> patchUser(Class<T> klass, User user, String updatedJobTitle, Integer expectedResponseCode) {
         return patchUser(klass, user, updatedJobTitle, expectedResponseCode, requestEntityUtil);
+    }
+
+    /**
+     * Calls an API with DELETE verb
+     *
+     * @param expectedResponseCode - the expected response code
+     * @param inlineVariables      - the variables
+     * @return new object
+     */
+    public AchErrorResponse deleteUser(Integer expectedResponseCode, String... inlineVariables) {
+        RequestEntity deleteRequest = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
+            .expectedResponseCode(expectedResponseCode)
+            .inlineVariables(inlineVariables);
+
+        ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
+
+        return errorResponse.getResponseEntity();
+    }
+
+    /**
+     * Calls an API with PATCH verb
+     *
+     * @param inlineVariables - the variables
+     * @return new object
+     */
+    public AchErrorResponse patchEnablements(String... inlineVariables) {
+        RequestEntity updateEnablements = requestEntityUtil.init(ACHAPIEnum.USER_BY_ID, AchErrorResponse.class)
+            .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
+            .inlineVariables(inlineVariables)
+            .body("user",
+                User.builder()
+                    .enablements(Enablements.builder()
+                        .customerAssignedRole(RolesEnum.APRIORI_DEVELOPER.getRole())
+                        .userAdminEnabled(false).build())
+                    .build());
+        ResponseWrapper<AchErrorResponse> response = HTTPRequest.build(updateEnablements).patch();
+
+        return response.getResponseEntity();
     }
 }
