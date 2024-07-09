@@ -1,0 +1,238 @@
+{
+  "inputControlState": [
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/currencyCode",
+      "id": "currencyCode",
+      "totalCount": "12",
+      "options": [
+        {
+          "selected": true,
+          "label": "USD",
+          "value": "USD"
+        },
+        {
+          "selected": false,
+          "label": "BRL",
+          "value": "BRL"
+        },
+        {
+          "selected": false,
+          "label": "CAD",
+          "value": "CAD"
+        },
+        {
+          "selected": false,
+          "label": "CNY",
+          "value": "CNY"
+        },
+        {
+          "selected": false,
+          "label": "EUR",
+          "value": "EUR"
+        },
+        {
+          "selected": false,
+          "label": "GBP",
+          "value": "GBP"
+        },
+        {
+          "selected": false,
+          "label": "HKD",
+          "value": "HKD"
+        },
+        {
+          "selected": false,
+          "label": "INR",
+          "value": "INR"
+        },
+        {
+          "selected": false,
+          "label": "JPY",
+          "value": "JPY"
+        },
+        {
+          "selected": false,
+          "label": "KRW",
+          "value": "KRW"
+        },
+        {
+          "selected": false,
+          "label": "MXN",
+          "value": "MXN"
+        },
+        {
+          "selected": false,
+          "label": "TWD",
+          "value": "TWD"
+        }
+      ]
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/outlierLines",
+      "id": "outlierLines",
+      "value": "1",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/aPrioriMassMax",
+      "id": "aPrioriMassMax",
+      "value": "",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/aPrioriMassMin",
+      "id": "aPrioriMassMin",
+      "value": "0",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/aPrioriCostMax",
+      "id": "aPrioriCostMax",
+      "value": "",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/aPrioriCostMin",
+      "id": "aPrioriCostMin",
+      "value": "0",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/massMetric",
+      "id": "massMetric",
+      "totalCount": "2",
+      "options": [
+        {
+          "selected": true,
+          "label": "Finish Mass",
+          "value": "Finish Mass"
+        },
+        {
+          "selected": false,
+          "label": "Rough Mass",
+          "value": "Rough Mass"
+        }
+      ]
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/costMetric",
+      "id": "costMetric",
+      "totalCount": "2",
+      "options": [
+        {
+          "selected": true,
+          "label": "Fully Burdened Cost",
+          "value": "Fully Burdened Cost"
+        },
+        {
+          "selected": false,
+          "label": "Piece Part Cost",
+          "value": "Piece Part Cost"
+        }
+      ]
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/latestExportDate",
+      "id": "latestExportDate",
+      "value": "2024-06-27T03:38:24",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/earliestExportDate",
+      "id": "earliestExportDate",
+      "value": "2010-02-28T02:38:24",
+      "totalCount": "1"
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/exportSetName",
+      "id": "exportSetName",
+      "totalCount": "12",
+      "options": [
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-All-PG-Current-0",
+          "value": "24"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-All-PG-New-0",
+          "value": "23"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-cost-outlier-threshold-rollup-0",
+          "value": "22"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-cycle-time-value-tracking-0",
+          "value": "21"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-dtc-casting-0",
+          "value": "16"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-dtc-machiningdataset-0",
+          "value": "15"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-piston-assembly-0",
+          "value": "14"
+        },
+        {
+          "selected": true,
+          "label": "- - - 0 0 0-roll-up-a-0",
+          "value": "17"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-sheet-metal-dtc-0",
+          "value": "19"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-sub-sub-asm-0",
+          "value": "18"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-top-level-0",
+          "value": "13"
+        },
+        {
+          "selected": false,
+          "label": "- - - 0 0 0-top-level-multi-vpe-0",
+          "value": "20"
+        }
+      ]
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/rollup",
+      "id": "rollup",
+      "totalCount": "1",
+      "options": [
+        {
+          "selected": true,
+          "label": "ROLL-UP A (Initial) ",
+          "value": "123"
+        }
+      ]
+    },
+    {
+      "uri": "/aPriori/resources/internal/designOutlierIdentification/exportDate",
+      "id": "exportDate",
+      "totalCount": "1",
+      "options": [
+        {
+          "selected": true,
+          "label": "2024-06-17T08:19:07",
+          "value": "2024-06-17T08:19:07"
+        }
+      ]
+    }
+  ]
+}

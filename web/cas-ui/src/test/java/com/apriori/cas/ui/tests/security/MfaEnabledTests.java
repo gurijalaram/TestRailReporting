@@ -5,7 +5,6 @@ import com.apriori.cas.ui.pageobjects.security.SecurityPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -30,7 +29,7 @@ public class MfaEnabledTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
 
@@ -42,7 +41,7 @@ public class MfaEnabledTests extends TestBaseUI {
         customerIdentity = customer.getIdentity();
 
         securityPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(customerIdentity)
             .goToSecurityPage();
     }

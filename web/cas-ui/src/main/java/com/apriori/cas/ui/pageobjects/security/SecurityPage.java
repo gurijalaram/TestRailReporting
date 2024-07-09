@@ -22,7 +22,7 @@ public final class SecurityPage extends CustomerWorkspacePage {
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmResetCancelButton;
 
-    @FindBy(xpath = "//button[.='Ok']")
+    @FindBy(xpath = "//button[.='Submit']")
     private WebElement confirmResetOkButton;
 
     @FindBy(xpath = "//div[@class='Toastify__toast Toastify__toast--success']/div[@role='alert']")
