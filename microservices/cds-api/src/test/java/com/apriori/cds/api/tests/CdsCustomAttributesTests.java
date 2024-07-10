@@ -107,7 +107,7 @@ public class CdsCustomAttributesTests {
 
         soft.assertThat(customAttributes.getResponseEntity().getIdentity()).isEqualTo(attributeIdentity);
 
-        CustomAttribute updateCustomAttribute = attributeUtil.updateAttribute(customerIdentity, userIdentity, attributeIdentity, updatedDepartment);
+        CustomAttribute updateCustomAttribute = attributeUtil.updateAttribute(updatedDepartment, customerIdentity, userIdentity, attributeIdentity);
 
         soft.assertThat(updateCustomAttribute.getValue()).isEqualTo(updatedDepartment);
         soft.assertAll();
