@@ -84,4 +84,38 @@ public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUt
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13700")
+    @TestRail(id = 13700)
+    @Description("Validate report details align with aP Pro / CID - Main Report")
+    public void validateReportAlignsWithApProOrCID() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyCycleTimeReport(
+            CurrencyEnum.GBP.getCurrency()
+        );
+
+        List<ChartDataPoint> chartDataPointList = jasperReportSummary.getFirstChartData().getChartDataPoints();
+        softAssertions.assertThat(chartDataPointList.get(0).getProperties().get(0).getValue().toString().startsWith("64.43"))
+            .isEqualTo(true);
+        softAssertions.assertThat(chartDataPointList.get(0).getProperties().get(1).getValue().toString().startsWith("15402.86"))
+            .isEqualTo(true);
+
+        softAssertions.assertThat(chartDataPointList.get(1).getProperties().get(0).getValue().toString().startsWith("15416.53"))
+            .isEqualTo(true);
+        softAssertions.assertThat(chartDataPointList.get(1).getProperties().get(1).getValue().toString().startsWith("15378.73"))
+            .isEqualTo(true);
+
+        softAssertions.assertThat(chartDataPointList.get(2).getProperties().get(0).getValue().toString().startsWith("230.58"))
+            .isEqualTo(true);
+        softAssertions.assertThat(chartDataPointList.get(2).getProperties().get(1).getValue().toString().startsWith("164.74"))
+            .isEqualTo(true);
+
+        softAssertions.assertThat(chartDataPointList.get(3).getProperties().get(0).getValue().toString().startsWith("1525.97"))
+            .isEqualTo(true);
+        softAssertions.assertThat(chartDataPointList.get(3).getProperties().get(1).getValue().toString().startsWith("194.58"))
+            .isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }

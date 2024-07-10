@@ -6,6 +6,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
+import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.ui.enums.RollupEnum;
@@ -187,6 +188,33 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
         List<Element> listOf181Elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("-18_1");
         softAssertions.assertThat(listOf181Elements.get(8).text().equals("-18_1")).isEqualTo(true);
         softAssertions.assertThat(listOf181Elements.get(12).text().equals("-18_1")).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31309")
+    @TestRail(id = 31309)
+    @Description("Validate report details align with aP Pro / CID - Details Report")
+    public void validateReportAlignsWithApProOrCID() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(JasperApiAuthenticationUtil.jSessionId);
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.GBP.getCurrency());
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String projectRollupValue = inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName()).getValue();
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROJECT_NAME.getInputControlId(), "PROJECT 2");
+
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("26.55")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("6.00")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("13.38")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("15,402.86")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
