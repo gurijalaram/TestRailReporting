@@ -452,13 +452,12 @@ public class ManualCostingTests  extends TestBaseUI {
             .costScenario()
             .openCostDetails();
 
-        //ToDo:- Add check for blue alert bar when it's added
+        //ToDo:- Add check for blue alert bar when it's added to fully cover TestRail ID 312621
 
         costDetailsPage.expandDropDown("Piece Part Cost");
-        //ToDo:- Timeout when attempting to read values - Find fix for locator
-        Double manualPPCValue = costDetailsPage.getCostSumValue("Manual Components");
+        Double manualPPCValue = costDetailsPage.getCostContributionValue("Manual Components");
         costDetailsPage.expandDropDown("Total Capital Investment");
-        Double manualTCIValue = costDetailsPage.getCostSumValue("Manual Investment");
+        Double manualTCIValue = costDetailsPage.getCostContributionValue("Manual Investment");
 
         softAssertions.assertThat(manualPPCValue).as("Verify Piece Part Cost Total").isEqualTo(componentPPC);
         softAssertions.assertThat(manualTCIValue).as("Verify Total Capital Investment Total").isEqualTo(componentTCI);
@@ -473,14 +472,15 @@ public class ManualCostingTests  extends TestBaseUI {
         scenariosUtil.postCostScenario(assemblyScenario.getSubComponents().get(0));
 
         costDetailsPage = costDetailsPage.closePanel()
-            .costScenario()
+            .clickCostButton()
+            .confirmCost("Yes")
             .openCostDetails();
 
         costDetailsPage.expandDropDown("Piece Part Cost");
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Manual Components"))
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Manual Components"))
             .as("Verify change in manual PPC").isEqualTo(componentPPC + piecePartCostDifference);
         costDetailsPage.expandDropDown("Total Capital Investment");
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Manual Investment"))
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Manual Investment"))
             .as("Verify change to manual TCI").isEqualTo(componentTCI - totalCapitalInvestmentDifference);
 
         softAssertions.assertAll();
