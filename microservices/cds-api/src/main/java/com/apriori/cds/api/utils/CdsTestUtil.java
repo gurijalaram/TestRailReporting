@@ -6,27 +6,15 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
-import com.apriori.cds.api.models.request.ActivateLicense;
-import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
-import com.apriori.cds.api.models.request.License;
-import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
-import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
-import com.apriori.cds.api.models.response.AssociationUserItems;
-import com.apriori.cds.api.models.response.AttributeMappings;
-import com.apriori.cds.api.models.response.CredentialsItems;
-import com.apriori.cds.api.models.response.IdentityProviderRequest;
-import com.apriori.cds.api.models.response.IdentityProviderResponse;
-import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -36,17 +24,12 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.models.response.UserProfile;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
 
 
 public class CdsTestUtil extends TestUtil {
@@ -86,105 +69,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Creates user with set of enablements
-     *
-     * @param customerIdentity     - the customer id
-     * @param userName             - the username
-     * @param domain               - the customer name
-     * @param customerAssignedRole - the customer assigned role
-     * @return new object
-     */
-    public ResponseWrapper<User> addUserWithEnablements(String customerIdentity, String userName, String domain, String customerAssignedRole) {
-
-        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserWithEnablementsData.json").getPath(), User.class);
-        requestBody.setUsername(userName);
-        requestBody.setEmail(userName + "@" + domain + ".com");
-        requestBody.getUserProfile().setGivenName(userName);
-        requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("user", requestBody);
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * PATCH call to update a user
-     *
-     * @param user - the user
-     * @return new object
-     */
-    public ResponseWrapper<User> patchUser(User user) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
-            .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .body(
-                "user",
-                User.builder()
-                    .identity(user.getIdentity())
-                    .username(user.getUsername())
-                    .email(user.getEmail())
-                    .createdBy(user.getCreatedBy())
-                    .active(user.getActive())
-                    .userProfile(UserProfile.builder()
-                        .department("Design Dept")
-                        .supervisor("Moya Parker").build())
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    public <T> ResponseWrapper<T> patchUser(
-        Class<T> klass,
-        String customerIdentity,
-        String userIdentity,
-        Integer expectedResponseCode,
-        JsonNode user) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(expectedResponseCode)
-            .body("user", user);
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * PATCH call to update the user credentials
-     *
-     * @param customerIdentity    - the customer id
-     * @param userIdentity        - the user id
-     * @param passwordHashCurrent - current hash password
-     * @param passwordSalt        - the salt password
-     * @return new object
-     */
-    public ResponseWrapper<CredentialsItems> updateUserCredentials(
-        String customerIdentity,
-        String userIdentity,
-        String passwordHashCurrent,
-        String passwordSalt) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .body(
-                "userCredential",
-                UpdateCredentials.builder()
-                    .currentPasswordHash(passwordHashCurrent)
-                    .newPasswordHash(new GenerateStringUtil().getHashPassword())
-                    .newPasswordSalt(passwordSalt)
-                    .newEncryptedPassword(new GenerateStringUtil().getRandomStringSpecLength(12).toLowerCase())
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
      * POST call to add a deployment to a customer
      *
      * @param customerIdentity - the customer id
@@ -215,190 +99,6 @@ public class CdsTestUtil extends TestUtil {
             );
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add an apriori staff user association to a customer
-     *
-     * @param apCustomerIdentity  - the ap customer id
-     * @param associationIdentity - the association id
-     * @param userIdentity        - the aPriori Staff users identity
-     * @return new object
-     */
-    public ResponseWrapper<AssociationUserItems> addAssociationUser(
-        String apCustomerIdentity,
-        String associationIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
-            .inlineVariables(apCustomerIdentity, associationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userAssociation",
-                AssociationUserItems.builder()
-                    .userIdentity(userIdentity)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Post to add site license
-     *
-     * @param customerIdentity - the customer id
-     * @param siteIdentity     - the site id
-     * @param customerName     - the customer name
-     * @param siteId           - the site id
-     * @param licenseId        - the license id
-     * @param subLicenseId     - the sublicense id
-     * @return new object
-     */
-    @SneakyThrows
-    public ResponseWrapper<LicenseResponse> addLicense(
-        String customerIdentity,
-        String siteIdentity,
-        String customerName,
-        String siteId,
-        String licenseId,
-        String subLicenseId) {
-
-        String licenseXml = new String(FileResourceUtil.getResourceFileStream("CdsLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
-        String licenseTemplate = new String(FileResourceUtil.getResourceFileStream("CdsLicenseTemplate.xml").readAllBytes(), StandardCharsets.UTF_8);
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
-            .inlineVariables(customerIdentity, siteIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(LicenseRequest.builder()
-                .license(
-                    License.builder()
-                        .description("Test License")
-                        .apVersion("2020 R1")
-                        .createdBy("#SYSTEM00000")
-                        .active("false")
-                        .license(String.format(licenseXml, customerName, siteId, licenseId, subLicenseId))
-                        .licenseTemplate(String.format(licenseTemplate, customerName))
-                        .build())
-                .build());
-
-        return HTTPRequest.build(requestEntity).post();
-
-    }
-
-    /**
-     * Post request to activate license
-     *
-     * @param customerIdentity - the customer id
-     * @param siteIdentity     - the site id
-     * @param licenseIdentity  - the license identity
-     * @param userIdentity     - the user identity
-     */
-    public void activateLicense(
-        String customerIdentity,
-        String siteIdentity,
-        String licenseIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
-            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(ActivateLicenseRequest.builder()
-                .license(ActivateLicense.builder()
-                    .active(true)
-                    .updatedBy(userIdentity)
-                    .build())
-                .build());
-
-        HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Post to add SAML
-     *
-     * @param customerIdentity - the customer id
-     * @param userIdentity     - the aPriori Staff users identity
-     * @param customerName     - the customer name
-     * @return new object
-     */
-    @SneakyThrows
-    public ResponseWrapper<IdentityProviderResponse> addSaml(
-        String customerIdentity,
-        String userIdentity,
-        String customerName) {
-
-        String signingCertificate = new String(FileResourceUtil.getResourceFileStream("SigningCert.txt").readAllBytes(), StandardCharsets.UTF_8);
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "identityProvider",
-                IdentityProviderRequest.builder().contact(userIdentity)
-                    .name(customerName + "-idp")
-                    .displayName(customerName + "SAML")
-                    .idpDomains(Collections.singletonList(customerName + ".com"))
-                    .identityProviderPlatform("Azure AD")
-                    .description("Create IDP using CDS automation")
-                    .active(true)
-                    .createdBy("#SYSTEM00000")
-                    .signInUrl(Constants.SIGNIN_URL)
-                    .signingCertificate(signingCertificate)
-                    .signingCertificateExpiresAt("2030-07-22T22:45:45.245Z")
-                    .signRequest(true)
-                    .signRequestAlgorithm("RSA_SHA256")
-                    .signRequestAlgorithmDigest("SHA256")
-                    .protocolBinding("HTTP_POST")
-                    .authenticationType("IDENTITY_PROVIDER_INITIATED_SSO")
-                    .attributeMappings(AttributeMappings.builder()
-                        .userId(Constants.SAML_ATTRIBUTE_NAME_IDENTIFIER)
-                        .email(Constants.SAML_ATTRIBUTE_NAME_EMAIL)
-                        .name(Constants.SAML_ATTRIBUTE_NAME)
-                        .givenName(Constants.SAML_ATTRIBUTE_NAME_GIVEN_NAME)
-                        .familyName(Constants.SAML_ATTRIBUTE_NAME_FAMILY_NAME).build())
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Patches and idp user
-     *
-     * @param customerIdentity - the customer id
-     * @param idpIdentity      - the idp id
-     * @param userIdentity     - the user id
-     * @return new object
-     */
-    public ResponseWrapper<IdentityProviderResponse> patchIdp(
-        String customerIdentity,
-        String idpIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
-            .inlineVariables(customerIdentity, idpIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .headers(new HashMap<>() {
-
-                {
-                    put("Content-Type", "application/json");
-                }
-            })
-            .body(
-                "identityProvider",
-                IdentityProviderRequest.builder()
-                    .description("patch IDP using Automation")
-                    .contact(userIdentity)
-                    .identityProviderPlatform("Azure AD")
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
