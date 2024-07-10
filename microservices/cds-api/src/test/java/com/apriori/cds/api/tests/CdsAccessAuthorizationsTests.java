@@ -49,7 +49,7 @@ public class CdsAccessAuthorizationsTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @BeforeEach
-    public void setDetails() {
+    public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();;
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
