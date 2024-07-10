@@ -174,11 +174,9 @@ default:
   st_deployment_url_template: ${default.aws_region}-install.${${deployment}.st_url_part}.apriori.net
 
   admin:
-    #ui_url: https://ci-admin.${st_deployment_url_template}/apriori/index
     ui_url: https://${st_deployment_url_template}/apriori/index/
 
   reports:
-    #ui_url: https://ci-report.${st_deployment_url_template}/jasperserver-pro
     ui_url: https://${st_deployment_url_template}/jasperserver-pro
 
 ###########################
