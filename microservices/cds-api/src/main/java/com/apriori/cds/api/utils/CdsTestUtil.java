@@ -11,13 +11,21 @@ import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
+import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
+import com.apriori.cds.api.models.response.AssociationUserItems;
+import com.apriori.cds.api.models.response.AttributeMappings;
+import com.apriori.cds.api.models.response.CredentialsItems;
+import com.apriori.cds.api.models.response.IdentityProviderRequest;
+import com.apriori.cds.api.models.response.IdentityProviderResponse;
+import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -26,12 +34,17 @@ import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.UserProfile;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashMap;
 
 
 public class CdsTestUtil extends TestUtil {
