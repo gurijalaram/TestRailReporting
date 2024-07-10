@@ -17,6 +17,7 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem ultimateTensileStrength;
     private GenericExtendedPropertyInfoItem costPerKG;
     private GenericExtendedPropertyInfoItem density;
+    private GenericExtendedPropertyInfoItem inheritSourceStocks;
     @JsonProperty("k")
     private GenericExtendedPropertyInfoItem kkValue;
     private GenericExtendedPropertyInfoItem shearStrength;
