@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CostOrderStatusOutputs {
     private ScenarioIterationKey scenarioIterationKey;
     private String costStatus;
+    private String loggableStatus;
 }
