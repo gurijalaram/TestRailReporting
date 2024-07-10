@@ -10,15 +10,19 @@
         "items"
       ],
       "allOf": [
-        {"$ref": "common/PaginationSchema.json"},
-        {"properties": {
-          "items": {
-            "type": "array",
+        {
+          "$ref": "common/PaginationSchema.json"
+        },
+        {
+          "properties": {
             "items": {
-              "$ref": "CustomAttributeSchema.json"
+              "type": "array",
+              "items": {
+                "$ref": "CustomAttributeSchema.json"
+              }
             }
           }
-        }}
+        }
       ]
     }
   }

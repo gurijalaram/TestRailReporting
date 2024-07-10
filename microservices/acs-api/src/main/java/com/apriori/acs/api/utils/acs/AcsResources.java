@@ -154,16 +154,49 @@ public class AcsResources {
     }
 
     /**
+     * Gets Material Metadata Info on Process Group with Revision input as optional
+     *
+     * @param inlineVariables - String
+     * @return instance of MaterialMetadataResponse
+     */
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
+        setupHeader();
+
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, klass)
+            .headers(headers)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Generic call for get endpoint with error response
+     *
+     * @param endpoint - endpoint to call
+     * @return instance of GenericErrorResponse
+     */
+    public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String... inlineVariables) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, GenericErrorResponse.class)
+            .headers(headers)
+            .inlineVariables(inlineVariables);
+        ResponseWrapper<GenericErrorResponse> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity();
+    }
+
+    /**
      * Gets All Material Stocks Info
      *
-     * @param scenarioIterationKey      - scenario to get Design Guidance for
+     * @param scenarioIterationKey - scenario to get Design Guidance for
      * @return instance of DesignGuidanceResponse
      */
     public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -751,9 +784,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil_Old
-                .init(AcsApiEnum.GCD_TYPES, klass)
-                .headers(headers)
-                .inlineVariables(processGroupName);
+            .init(AcsApiEnum.GCD_TYPES, klass)
+            .headers(headers)
+            .inlineVariables(processGroupName);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -769,9 +802,9 @@ public class AcsResources {
 
         List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();
         groupItemsList.add(GcdPropertiesGroupItemsInputs.builder()
-                .artifactKey(artifactKey)
-                .propertiesToSet(propertiesToSet)
-                .propertiesToReset(propertiesToReset)
+            .artifactKey(artifactKey)
+            .propertiesToSet(propertiesToSet)
+            .propertiesToReset(propertiesToReset)
             .build()
         );
 
