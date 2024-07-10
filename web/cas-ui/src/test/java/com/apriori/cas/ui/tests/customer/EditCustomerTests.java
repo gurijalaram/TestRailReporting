@@ -7,8 +7,9 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cas.ui.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -51,9 +52,10 @@ public class EditCustomerTests extends TestBaseUI {
         valueMap.put("maxCadFileRetentionDays", "1");
         valueMap.put("maxCadFileSize", "10");
 
-        cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         CustomerWorkspacePage customerViewPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickNewCustomerButton();
         customerProfilePage = customerViewPage.goToProfile();
 
