@@ -6,22 +6,27 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
-import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.models.response.InputControlOption;
+import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCycleTimeValueTracking;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCycleTimeValueTrackingDetails;
 import com.apriori.cir.ui.enums.RollupEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.Constants;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
+import com.apriori.shared.util.enums.ReportNamesEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
 import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.assertj.core.api.SoftAssertions;
-import org.checkerframework.checker.units.qual.C;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.IsoFields;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,13 +83,13 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(JasperApiAuthenticationUtil.jSessionId);
 
         jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.GBP.getCurrency());
-        jasperApiUtils.setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
 
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String projectRollupValue = inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName()).getValue();
-        jasperApiUtils.setReportParameterByName("projectRollup", projectRollupValue);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
-        jasperApiUtils.setReportParameterByName("projectName", "PROJECT 4");
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROJECT_NAME.getInputControlId(), "PROJECT 4");
 
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(jasperApiUtils.getReportRequest());
 
@@ -194,8 +199,11 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("31309")
-    @TestRail(id = 31309)
+    @TmsLinks({
+        @TmsLink("31309"),
+        @TmsLink("2334")
+    })
+    @TestRail(id = {31309, 2334})
     @Description("Validate report details align with aP Pro / CID - Details Report")
     public void validateReportAlignsWithApProOrCID() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(JasperApiAuthenticationUtil.jSessionId);
@@ -219,6 +227,81 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7627")
+    @TestRail(id = 7627)
+    @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
+    public void testExportDateInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentProjectRollup = inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+            .getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemCycleTimeValueTrackingDetails> inputControlsExportDate =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCycleTimeValueTrackingDetails.class,
+                false,
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStates = inputControlsExportDate.getResponseEntity().getInputControlState();
+        softAssertions.assertThat(inputControlStates.get(0).getTotalCount().equals("12")).isEqualTo(true);
+        InputControlOption currencyGbpOption = inputControlStates.get(0).getOptions().get(5);
+        softAssertions.assertThat(currencyGbpOption.getValue().equals("GBP")).isEqualTo(true);
+        softAssertions.assertThat(currencyGbpOption.getSelected()).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStates.get(1).getTotalCount().equals("2")).isEqualTo(true);
+        InputControlOption rollupOption = inputControlStates.get(1).getOptions().get(1);
+        softAssertions.assertThat(rollupOption.getValue().equals(currentProjectRollup)).isEqualTo(true);
+        softAssertions.assertThat(rollupOption.getSelected().equals(true)).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStates.get(2).getTotalCount().equals("4")).isEqualTo(true);
+        InputControlOption projectNameOption = inputControlStates.get(2).getOptions().get(1);
+        softAssertions.assertThat(projectNameOption.getValue().equals("PROJECT 2")).isEqualTo(true);
+        softAssertions.assertThat(projectNameOption.getSelected().equals(true)).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStates.get(3).getTotalCount().equals("2")).isEqualTo(true);
+        softAssertions.assertThat(inputControlStates.get(3).getOptions().get(0).getSelected().equals(true)).isEqualTo(true);
+        softAssertions.assertThat(inputControlStates.get(3).getOptions().get(1).getSelected().equals(true)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7628")
+    @TestRail(id = 7628)
+    @Description("Projects rollup drop list - Cycle Time Value Tracking Details Report")
+    public void testProjectNameRollupDropdownList() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentProjectRollup = inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+            .getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemCycleTimeValueTrackingDetails> inputControlsProjectName =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCycleTimeValueTrackingDetails.class,
+                false,
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStates = inputControlsProjectName.getResponseEntity().getInputControlState();
+        softAssertions.assertThat(inputControlStates.get(1).getTotalCount().equals("2")).isEqualTo(true);
+        InputControlOption rollupOption = inputControlStates.get(1).getOptions().get(1);
+        softAssertions.assertThat(rollupOption.getValue().equals(currentProjectRollup)).isEqualTo(true);
+        softAssertions.assertThat(rollupOption.getSelected().equals(true)).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStates.get(2).getTotalCount().equals("4")).isEqualTo(true);
+        InputControlOption projectNameOption = inputControlStates.get(2).getOptions().get(1);
+        softAssertions.assertThat(projectNameOption.getValue().equals("PROJECT 2")).isEqualTo(true);
+        softAssertions.assertThat(projectNameOption.getSelected().equals(true)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
     private String getCycleTimeTotalValue(String currencyToUse, int indexToUse) {
         return generateReportCurrencyProjectRollupOnly(currencyToUse, RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
             .getReportHtmlPart().getElementsByAttributeValue("colspan", "6")
@@ -229,11 +312,11 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(JasperApiAuthenticationUtil.jSessionId);
 
         jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        jasperApiUtils.setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
 
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String projectRollupValue = inputControls.getProjectRollup().getOption(rollupToSet).getValue();
-        jasperApiUtils.setReportParameterByName("projectRollup", projectRollupValue);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
