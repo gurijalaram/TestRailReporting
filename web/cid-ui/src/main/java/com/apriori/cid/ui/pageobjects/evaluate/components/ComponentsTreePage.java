@@ -373,7 +373,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @param scenarioName - Name of scenario
      * @return - Integer of quantity value
      */
-    public Integer getScenarioQuantity(String componentName, String scenarioName) {
+    public int getScenarioQuantity(String componentName, String scenarioName) {
         return assembliesComponentsController.getScenarioQuantity(componentName, scenarioName);
     }
 

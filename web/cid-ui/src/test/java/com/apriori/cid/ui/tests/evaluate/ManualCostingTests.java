@@ -440,7 +440,7 @@ public class ManualCostingTests  extends TestBaseUI {
         ComponentsTreePage componentsTreePage = explorePage.openScenario(assemblyScenario.getComponentName(), assemblyScenario.getScenarioName())
             .openComponents();
 
-        Integer manualScenarioQuantity = componentsTreePage.getScenarioQuantity(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName());
+        int manualScenarioQuantity = componentsTreePage.getScenarioQuantity(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
             .as("Verify Sub-Component displays as Manually Costed in Tree View").isEqualTo("money-check-dollar-pen");
@@ -477,6 +477,7 @@ public class ManualCostingTests  extends TestBaseUI {
         costDetailsPage = costDetailsPage.closePanel()
             .clickCostButton()
             .confirmCost("Yes")
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
             .openCostDetails();
 
         costDetailsPage.expandDropDown("Piece Part Cost");
