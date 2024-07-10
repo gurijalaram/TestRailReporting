@@ -22,6 +22,7 @@ public class PropertyValuesList {
     private Double costPerKG;
     private Double ultimateTensileStrength;
     private Double density;
+    private Boolean inheritSourceStocks;
     @JsonProperty("k")
     private Double kkValue;
     private Double shearStrength;
