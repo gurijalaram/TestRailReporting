@@ -10,7 +10,6 @@ import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlOption;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
-import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCycleTimeValueTracking;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCycleTimeValueTrackingDetails;
 import com.apriori.cir.ui.enums.RollupEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;

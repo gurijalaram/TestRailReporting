@@ -4,7 +4,6 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
-import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlOption;
