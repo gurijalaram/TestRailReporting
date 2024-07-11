@@ -58,7 +58,7 @@ public class CdsAccessAuthorizationsTests {
 
     @BeforeEach
     public void setDetails() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
 
