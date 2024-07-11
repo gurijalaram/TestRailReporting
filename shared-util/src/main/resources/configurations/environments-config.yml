@@ -9,7 +9,6 @@ qa-test:
   base_url: https://na-1-install.${customer}.qa-test.apriori.net/
 
   admin:
-    ui_url: ${base_url}apriori/login
     welcome_page_text: CI-Admin
     login_locator: //button[@id='1-submit']
     login_title_locator: //*[@class='auth0-lock-name']
@@ -20,8 +19,6 @@ qa-test:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_url}jasperserver-pro/
-    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
     username_locator: //input[@type='email']
     login_locator: //button[@id='1-submit']
     welcome_page_text: CI-Admin aPriori Internal
@@ -43,9 +40,6 @@ staging:
     apriori_production_deployment_identity: 7G0JGBE2N4GN
     identity_role: 7G0JGBE2N2GE
 
-  reports:
-    ui_url: ${base_url}jasperserver-pro/
-
 ########################################################################################################################
 
 ######################################################## PRODUCTION #####################################################
@@ -58,9 +52,8 @@ prod:
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: walqbaci01/
   name: onprem
-  deployment_url_template: ${base_url}
+  st_deployment_url_template: walqbaci01
   users_csv_file: onprem-users.csv
 
 ########################################################################################################################
@@ -169,7 +162,6 @@ development:
   name: development
   aws_parameter_store_name: development
   base_url: https://cloud.na-1.development.apriori.net/
-  base_url_reports: https://na-1-install.apriori-internal.development.apriori.net/
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
@@ -177,8 +169,5 @@ development:
     apriori_core_services_installation_identity: ND11N124DE4F
     apriori_production_deployment_identity: N6LFCKE8GL94
     identity_role: 67J517C9L763
-
-  reports:
-    ui_url: ${base_url_reports}jasperserver-pro/
 
 ########################################################################################################################
