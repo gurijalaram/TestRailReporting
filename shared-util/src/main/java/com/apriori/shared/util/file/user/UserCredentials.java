@@ -43,38 +43,54 @@ public class UserCredentials implements Serializable {
     public UserCredentials() {
     }
 
+    /**
+     * Initialize user
+     *
+     * @param username - the username
+     * @param password - the password
+     * @return current object
+     */
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
     }
 
+    /**
+     * Initialize user with role
+     *
+     * @param username - the username
+     * @param password - the password
+     * @param role     - the role
+     * @return current object
+     */
     public static UserCredentials initWithRole(String username, String password, RolesEnum role) {
         return new UserCredentials(username, password, role);
     }
 
+    /**
+     * Set security level
+     *
+     * @param securityLevel - the security level
+     * @return current object
+     */
     public UserCredentials setRole(RolesEnum securityLevel) {
         this.role = securityLevel;
         return this;
     }
 
-    public UserCredentials setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
+    /**
+     * Get username
+     *
+     * @return string
+     */
     public String getUsername() {
         return email.split("@")[0];
     }
 
-    public UserCredentials setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public UserCredentials setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
+    /**
+     * Get token
+     *
+     * @return string
+     */
     public synchronized String getToken() {
         if (token == null) {
             generateToken();
@@ -87,6 +103,11 @@ public class UserCredentials implements Serializable {
         return token;
     }
 
+    /**
+     * Generate token
+     *
+     * @return current object
+     */
     public UserCredentials generateToken() {
         this.token = new AuthorizationUtil().getToken(this)
             .getResponseEntity()
@@ -94,12 +115,22 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
+    /**
+     * Generates cloud context
+     *
+     * @return current object
+     */
     // TODO: 20/06/2024 cn - this should not be in this class as this is a customer (eg. apriori-internal) construct or make customer a sub-object of user
     public UserCredentials generateCloudContext() {
         this.cloudContext = cloudContext != null ? cloudContext : SharedCustomerUtil.getAuthTargetCloudContext();
         return this;
     }
 
+    /**
+     * Get user details
+     *
+     * @return new object
+     */
     public synchronized User getUserDetails() {
         return user != null ? user : UserUtil.getUserByEmail(this);
     }
