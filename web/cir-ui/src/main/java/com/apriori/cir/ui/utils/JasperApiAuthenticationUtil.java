@@ -41,7 +41,7 @@ public class JasperApiAuthenticationUtil extends TestBaseUI {
         String urlLink = PropertiesContext.get("reports.ui_url")
             .concat(
                 String.format(
-                    "rest_v2/login?j_username=%s&j_password=%s",
+                    "/rest_v2/login?j_username=%s&j_password=%s",
                     usernamePassword,
                     usernamePassword
                 )
