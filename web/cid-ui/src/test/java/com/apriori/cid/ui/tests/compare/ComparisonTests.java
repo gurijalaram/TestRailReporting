@@ -1392,4 +1392,78 @@ public class ComparisonTests extends TestBaseUI {
         return String.format("%.2f", Math.abs(((basis - comparedScenario) / basis) * 100)) + "%";
     }
 
+    @Test
+    @TestRail(id = {30611, 30609, 30610, 30607})
+    @Description("User can add manual scenarios to the currently open comparison via UI within current comparison")
+    public void addManualScenarioToComparison() {
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
+        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
+        component3.setUser(component.getUser());
+        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
+        component4.setUser(component.getUser());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
+            .uploadComponentAndOpen(component3)
+            .uploadComponentAndOpen(component4)
+            .navigateToScenario(component)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("4")
+            .enterTotalCapitalInvestment("55")
+            .clickSaveButton()
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class)
+            .clickExplore()
+            .navigateToScenario(component2)
+            .selectProcessGroup(component.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName())
+            .createComparison()
+            .selectManualComparison();
+
+        softAssertions.assertThat(comparePage.getBasis()).contains(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.INFO_COST_MODE)).isEqualTo("Manual");
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
+            .clickScenarioCheckbox(component3.getComponentName(), component3.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(component3.getComponentName().toUpperCase() + "  / " + component3.getScenarioName());
+        softAssertions.assertThat(comparePage.getOutput(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.INFO_COST_MODE)).isEqualTo("aPriori");
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component4.getComponentName(), component4.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(component4.getComponentName().toUpperCase() + "  / " + component4.getScenarioName());
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
+            .clickScenarioCheckbox(component3.getComponentName(), component3.getScenarioName())
+            .clickScenarioCheckbox(component4.getComponentName(), component4.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
 }
