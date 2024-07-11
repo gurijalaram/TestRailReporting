@@ -130,15 +130,15 @@
       "required": [
         "identity",
         "createdBy",
-        "createdAt",
+        "createdAt"
+      ],
+      "optional": [
+        "updatedBy",
         "hexBarCarbonEmissionsFactor",
         "rectangularBarCarbonEmissionsFactor",
         "roundBarCarbonEmissionsFactor",
         "roundTubeCarbonEmissionsFactor",
         "squareBarCarbonEmissionsFactor"
-      ],
-      "optional": [
-        "updatedBy"
       ],
       "properties": {
         "identity": {
