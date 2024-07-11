@@ -1433,7 +1433,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getBasis()).contains(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.INFO_COST_MODE)).isEqualTo("Manual");
 
-            comparePage.modify()
+        comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
