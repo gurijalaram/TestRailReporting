@@ -35,9 +35,6 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = ".basis .card-header")
     private WebElement basisColumnHeader;
 
-    @FindBy(css = ".basis .card-header")
-    private WebElement basisCostMode;
-
     @FindBy(css = ".comparison-basis-column")
     private WebElement basisColumn;
 
