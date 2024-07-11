@@ -35,6 +35,9 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = ".basis .card-header")
     private WebElement basisColumnHeader;
 
+    @FindBy(css = ".basis .card-header")
+    private WebElement basisCostMode;
+
     @FindBy(css = ".comparison-basis-column")
     private WebElement basisColumn;
 
@@ -294,6 +297,15 @@ public class ComparePage extends CompareToolbar {
      * @return string
      */
     public String getBasis() {
+        return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
+    }
+
+    /**
+     * Gets Cost Mode
+     *
+     * @return string
+     */
+    public String getCostMode() {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
     }
 
