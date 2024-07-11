@@ -298,15 +298,6 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
-     * Gets Cost Mode
-     *
-     * @return string
-     */
-    public String getCostMode() {
-        return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
-    }
-
-    /**
      * Gets basis
      *
      * @return string
