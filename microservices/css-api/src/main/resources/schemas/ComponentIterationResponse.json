@@ -1148,6 +1148,12 @@
             "logisticsCost": {
               "type": "number"
             },
+            "manualPiecePartCost": {
+              "type": "number"
+            },
+            "manualCapitalInvestment": {
+              "type": "number"
+            },
             "margin": {
               "type": "number"
             },
