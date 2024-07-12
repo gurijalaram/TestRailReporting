@@ -143,6 +143,20 @@ public class StandardFields extends ConnectorMappings {
     }
 
     /**
+     * select CI Connect field in Standard mappings rows
+     *
+     * @param webElement        - selected row element
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
+        pageUtils.waitForElementAndClick(webElement);
+        pageUtils.waitForElementAppear(driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")));
+        driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")).sendKeys(plmTypeAttributes.getCicGuiField());
+        this.selectValueFromDDL(0, plmTypeAttributes.getCicGuiField());
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+    }
+
+    /**
      * verify CI Connect Field is Enabled
      *
      * @param plmTypeAttributes - PlmTypeAttributes enum
@@ -264,20 +278,6 @@ public class StandardFields extends ConnectorMappings {
             .filter(e -> e.getText().equals(plmTypeAttributes.getCicGuiField()))
             .findFirst()
             .isPresent();
-    }
-
-    /**
-     * select CI Connect field in Standard mappings rows
-     *
-     * @param webElement        - selected row element
-     * @param plmTypeAttributes - PlmTypeAttributes enum
-     */
-    private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.waitForElementAndClick(webElement);
-        pageUtils.waitForElementAppear(driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")));
-        driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")).sendKeys(plmTypeAttributes.getCicGuiField());
-        this.selectValueFromDDL(0, plmTypeAttributes.getCicGuiField());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
     }
 
     /**

@@ -73,6 +73,19 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * Get matching workflow from list of returned workflows
+     *
+     * @return Current class object
+     */
+    public WorkflowTestUtil getWorkflowId() {
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
+        if (agentWorkflowResponse == null) {
+            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
+        }
+        return this;
+    }
+
+    /**
      * Invoke workflow
      *
      * @return Current class object
@@ -95,6 +108,20 @@ public class WorkflowTestUtil extends CicUtil {
         agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
             agentWorkflowResponse.getId(),
             workflowParts,
+            AgentWorkflowJobRun.class,
+            HttpStatus.SC_OK);
+        return this;
+    }
+
+    /**
+     * Invoke Workflow of Part Selection Type REST with number of parts
+     *
+     * @return WorkflowTestUtil
+     */
+    public WorkflowTestUtil invokeRestWorkflow() {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
+            agentWorkflowResponse.getId(),
+            this.workflowPartsRequestDataBuilder,
             AgentWorkflowJobRun.class,
             HttpStatus.SC_OK);
         return this;
@@ -197,19 +224,6 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
-     * Get matching workflow from list of returned workflows
-     *
-     * @return Current class object
-     */
-    public WorkflowTestUtil getWorkflowId() {
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
-        if (agentWorkflowResponse == null) {
-            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
-        }
-        return this;
-    }
-
-    /**
      * delete workflow
      *
      * @return current class object
@@ -218,20 +232,6 @@ public class WorkflowTestUtil extends CicUtil {
         if (this.workflowRequestDataBuilder != null) {
             CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
         }
-        return this;
-    }
-
-    /**
-     * Invoke Workflow of Part Selection Type REST with number of parts
-     *
-     * @return WorkflowTestUtil
-     */
-    public WorkflowTestUtil invokeRestWorkflow() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            this.workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
         return this;
     }
 
