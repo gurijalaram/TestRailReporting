@@ -161,6 +161,7 @@ public class AchUsersTests {
     @Description("Error when non admin user trying to create user")
     public void notAdminCreateUser() {
         String userName = new GenerateStringUtil().generateUserName();
+        String secondUserName = new GenerateStringUtil().generateUserName();
 
         ResponseWrapper<User> newNonAdminUser = achTestUtil.createNewUser("CreateUserData.json", customerIdentity, userName, domain, HttpStatus.SC_CREATED, User.class);
         User userResponse = newNonAdminUser.getResponseEntity();
@@ -168,8 +169,8 @@ public class AchUsersTests {
 
         requestEntityUtil = TestHelper.initCustomUser(new UserCredentials().setEmail(userResponse.getEmail())).useTokenInRequests();
 
-        ResponseWrapper<AchErrorResponse> newUser = achTestUtil.createNewUser("CreateUserData.json", customerIdentity,
-            userName, domain, HttpStatus.SC_FORBIDDEN, AchErrorResponse.class);
+        ResponseWrapper<AchErrorResponse> newUser = new AchTestUtil(requestEntityUtil).createNewUser("CreateUserData.json", customerIdentity,
+            secondUserName, domain, HttpStatus.SC_FORBIDDEN, AchErrorResponse.class);
 
         soft.assertThat(newUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
         soft.assertAll();
@@ -205,8 +206,7 @@ public class AchUsersTests {
 
         soft.assertThat(updateUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
 
-        // TODO: 09/07/2024 cn - nataliia, should this be a status code 204 with User already deactivated?
-        AchErrorResponse errorResponse = achTestUtil.deleteUser(HttpStatus.SC_FORBIDDEN, customerIdentity, userIdentity);
+        AchErrorResponse errorResponse = new AchTestUtil(requestEntityUtil).deleteUser(HttpStatus.SC_FORBIDDEN, customerIdentity, userIdentity);
 
         soft.assertThat(errorResponse.getMessage()).isEqualTo("Operation not allowed.");
         soft.assertAll();
