@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Applications {
+public class DeploymentApplications {
     public String deployment;
     public List<AppAccessControlsEnum> applications;
 }
