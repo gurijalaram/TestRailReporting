@@ -404,6 +404,19 @@ public class CostingInputsPart extends CICBasePage {
     }
 
     /**
+     * select CI Connect field in Standard mappings rows
+     *
+     * @param webElement        - selected row element
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(webElement);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, plmTypeAttributes.getCicGuiField())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+    }
+
+    /**
      * Get the data row from connector Standard Mappings Rows.
      *
      * @param plmTypeAttributes - PlmTypeAttributes enum
@@ -429,19 +442,6 @@ public class CostingInputsPart extends CICBasePage {
     public List<WebElement> getStandardFieldsRows() {
         pageUtils.waitForElementsToAppear(By.xpath(costingInputFlexRows));
         return driver.findElements(By.xpath(costingInputFlexRows));
-    }
-
-    /**
-     * select CI Connect field in Standard mappings rows
-     *
-     * @param webElement        - selected row element
-     * @param plmTypeAttributes - PlmTypeAttributes enum
-     */
-    private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
-        pageUtils.waitForElementAndClick(webElement);
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, plmTypeAttributes.getCicGuiField())));
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
     /**
