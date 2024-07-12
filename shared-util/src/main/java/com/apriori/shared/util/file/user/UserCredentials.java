@@ -6,7 +6,7 @@ import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -14,20 +14,17 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
+@Data
 public class UserCredentials implements Serializable {
     private static final int TOKEN_MIN_TIME_IN_MINUTES = 10;
     private volatile String token;
-    @Getter
     private String email;
-    @Getter
     private String password;
     private String username;
-    @Getter
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
-    @Getter
     private RolesEnum role;
-    private User user;
+    private User userDetails;
 
     public UserCredentials(String email, String password, RolesEnum role) {
         this.email = email;
@@ -132,6 +129,6 @@ public class UserCredentials implements Serializable {
      * @return new object
      */
     public synchronized User getUserDetails() {
-        return user != null ? user : UserUtil.getUserByEmail(this);
+        return userDetails = userDetails == null ? UserUtil.getUserByEmail(this) : userDetails;
     }
 }

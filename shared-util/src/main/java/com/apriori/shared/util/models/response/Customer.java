@@ -1,6 +1,7 @@
 package com.apriori.shared.util.models.response;
 
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.annotations.CreatableModel;
 import com.apriori.shared.util.annotations.Schema;
 
@@ -53,4 +54,9 @@ public class Customer {
     private List<String> emailDomains;
     private String authenticationType;
     private List<String> emailRegexPatterns;
+    private String cloudContext;
+
+    public String getCloudContext() {
+        return this.cloudContext = cloudContext == null ? SharedCustomerUtil.getAuthTargetCloudContext() : cloudContext;
+    }
 }
