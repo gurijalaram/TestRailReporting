@@ -9,16 +9,12 @@ import static org.hamcrest.Matchers.not;
 
 import com.apriori.ats.api.models.response.AuthorizationResponse;
 import com.apriori.ats.api.models.response.CloudContextResponse;
-import com.apriori.ats.api.utils.AtsTestUtil;
-import com.apriori.ats.api.utils.AuthorizeUserUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
-import com.apriori.shared.util.AuthorizationUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Token;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -32,23 +28,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class AtsAuthorizationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil;
-    private UserCredentials userCreds;
+public class AtsAuthorizationTests {
+    private AtsUtil atsUtil;
+    private RequestEntityUtil requestEntityUtil;
     private SoftAssertions soft = new SoftAssertions();
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
-        atsTestUtil = new AtsTestUtil(requestEntityUtil);
-        userCreds = requestEntityUtil.getEmbeddedUser();
+        requestEntityUtil = TestHelper.initUser();
+        atsUtil = new AtsUtil(requestEntityUtil);
     }
 
     @Test
     @TestRail(id = {3581})
     @Description("Generate a JWT from the ATS Token endpoint")
     public void generateTokenTest() {
-        ResponseWrapper<Token> response = new AuthorizationUtil().getToken(userCreds);
+        ResponseWrapper<Token> response = atsUtil.getToken();
 
         assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
     }
@@ -58,9 +53,9 @@ public class AtsAuthorizationTests extends TestUtil {
     @TestRail(id = {3913})
     @Description("Authorize a user to access a specified application")
     public void authorizeUserTest() {
-        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(SharedCustomerUtil.getAuthTargetCloudContext(), userCreds.getToken());
+        ResponseWrapper<AuthorizationResponse> response = atsUtil.authorizeUser(SharedCustomerUtil.getAuthTargetCloudContext());
 
-        assertThat(response.getResponseEntity().getEmail(), is(equalTo(userCreds.getEmail())));
+        assertThat(response.getResponseEntity().getEmail(), is(equalTo(requestEntityUtil.getEmbeddedUser().getEmail())));
     }
 
     @Test
@@ -68,8 +63,8 @@ public class AtsAuthorizationTests extends TestUtil {
     @Description("Get a Cloud Context identified by a cloud context string")
     public void getCloudContextTest() {
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
-        String contextString = userCreds.generateCloudContext().getCloudContext();
-        ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
+        String contextString = requestEntityUtil.getEmbeddedUser().generateCloudContext().getCloudContext();
+        ResponseWrapper<CloudContextResponse> getCloudContext = atsUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
 
         soft.assertThat(getCloudContext.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);
         soft.assertAll();

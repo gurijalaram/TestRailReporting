@@ -1,7 +1,7 @@
 package com.apriori.ach.ui.tests;
 
 import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
-import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -34,7 +34,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     private CloudHomePage cloudHomePage;
     private UserManagementPage userManagementPage;
     private LoginService aprioriLoginService;
-    private AtsTestUtil atsTestUtil;
+    private AtsUtil atsUtil;
 
 
     @Test
@@ -171,9 +171,9 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
     private void deleteCreatedUser(String email) {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
-        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        atsUtil = new AtsUtil(requestEntityUtil);
         CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
-        ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
+        ResponseWrapper<User> response = atsUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
 
         String customerIdentity = response.getResponseEntity().getCustomerIdentity();
         String userIdentity = response.getResponseEntity().getIdentity();
