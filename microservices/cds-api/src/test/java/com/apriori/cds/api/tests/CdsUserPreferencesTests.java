@@ -125,7 +125,7 @@ public class CdsUserPreferencesTests {
         setCustomerData();
         String preferenceName = generateStringUtil.getRandomStringSpecLength(8);
 
-        ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
+        ResponseWrapper<UserPreference> preferenceResponse = cdsUserUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
 
         soft.assertThat(preferenceResponse.getResponseEntity().getName()).isEqualTo(preferenceName);
         soft.assertAll();
