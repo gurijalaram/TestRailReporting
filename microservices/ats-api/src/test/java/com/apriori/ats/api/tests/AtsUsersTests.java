@@ -1,7 +1,7 @@
 package com.apriori.ats.api.tests;
 
 import com.apriori.ats.api.models.response.AtsErrorMessage;
-import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class AtsUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private AtsTestUtil atsTestUtil;
+    private AtsUtil atsUtil;
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil;
     private CdsUserUtil cdsUserUtil;
@@ -47,7 +47,7 @@ public class AtsUsersTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
-        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        atsUtil = new AtsUtil(requestEntityUtil);
         userCreds = requestEntityUtil.getEmbeddedUser();
         customerUtil = new CustomerUtil(requestEntityUtil);
     }
@@ -72,7 +72,7 @@ public class AtsUsersTests {
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
         String userEmail = userCreds.getEmail();
-        ResponseWrapper<User> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
+        ResponseWrapper<User> user = atsUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
 
         soft.assertThat(user.getResponseEntity().getEmail()).isEqualTo(userEmail);
         soft.assertAll();
@@ -83,7 +83,7 @@ public class AtsUsersTests {
     @Description("Get user by invalid email")
     public void getUserInvalidEmail() {
         String invalidEmail = "qa-automation-01-apriori.com";
-        ResponseWrapper<AtsErrorMessage> errorResponse = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, AtsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, invalidEmail);
+        ResponseWrapper<AtsErrorMessage> errorResponse = atsUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, AtsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, invalidEmail);
 
         soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("'email' is not a valid email address.");
         soft.assertAll();
@@ -94,8 +94,9 @@ public class AtsUsersTests {
     @Description("Reset the MFA configuration for a user.")
     public void resetUserMFA() {
         setCustomerData();
-        atsTestUtil.resetUserMFA(ATSAPIEnum.CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
-        atsTestUtil.resetUserMFA(ATSAPIEnum.USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
+
+        atsUtil.resetUserMFA(ATSAPIEnum.CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
+        atsUtil.resetUserMFA(ATSAPIEnum.USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
@@ -105,7 +106,7 @@ public class AtsUsersTests {
         setCustomerData();
         String userEmail = user.getResponseEntity().getEmail();
 
-        atsTestUtil.changePassword(userEmail);
+        atsUtil.changePassword(userEmail);
     }
 
     private void setCustomerData() {

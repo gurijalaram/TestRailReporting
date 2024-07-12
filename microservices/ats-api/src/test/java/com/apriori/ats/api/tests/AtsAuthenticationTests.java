@@ -1,6 +1,6 @@
 package com.apriori.ats.api.tests;
 
-import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -9,8 +9,6 @@ import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.cds.api.utils.SamlUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -30,7 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil;
+    private AtsUtil atsUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -54,7 +52,7 @@ public class AtsAuthenticationTests extends TestUtil {
         samlUtil = new SamlUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
-        atsTestUtil = new AtsTestUtil(requestEntityUtil);
+        atsUtil = new AtsUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -77,7 +75,7 @@ public class AtsAuthenticationTests extends TestUtil {
     public void authenticateUserTest() {
         String userEmail = requestEntityUtil.getEmbeddedUser().getEmail();
         String userPassword = requestEntityUtil.getEmbeddedUser().getPassword();
-        ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
+        ResponseWrapper<User> authenticate = atsUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);
         soft.assertAll();
@@ -91,7 +89,7 @@ public class AtsAuthenticationTests extends TestUtil {
         identityProvider = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = identityProvider.getResponseEntity().getIdentity();
 
-        ResponseWrapper<User> createSamlUser = atsTestUtil.putSAMLProviders(customerName);
+        ResponseWrapper<User> createSamlUser = atsUtil.samlProviders(customerName);
 
         soft.assertThat(createSamlUser.getResponseEntity().getIdentity()).isNotEmpty();
         soft.assertThat(createSamlUser.getResponseEntity().getUserType()).isEqualTo("AP_SAML_USER");
