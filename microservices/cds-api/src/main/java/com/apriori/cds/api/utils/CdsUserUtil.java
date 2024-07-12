@@ -235,6 +235,34 @@ public class CdsUserUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
+    /**
+     * Adds or replaces user preferences
+     *
+     * @param customerIdentity - customer id
+     * @param userIdentity     - user id
+     * @param preferenceName   - preference name
+     * @return new object
+     */
+    public ResponseWrapper<UserPreference> putUserPreference(
+        String customerIdentity,
+        String userIdentity,
+        String preferenceName) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
+            .inlineVariables(customerIdentity, userIdentity, preferenceName)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "userPreference",
+                UserPreference.builder()
+                    .value("6548")
+                    .type("INTEGER")
+                    .createdBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
     private <T> RequestEntity createRole(String role, Integer expectedStatusCode, Class<T> klass, String... inlineVariables) {
         return requestEntityUtil.init(CDSAPIEnum.USER_ROLES, klass)
             .inlineVariables(inlineVariables)
