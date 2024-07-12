@@ -7,11 +7,6 @@
       "isSaved",
       "isActionRequired",
       "identity",
-      "externalId",
-      "manufacturerPartNumber",
-      "manufacturer",
-      "classification",
-      "description",
       "status",
       "type"
     ],
@@ -19,7 +14,12 @@
       "availability",
       "rohs",
       "rohsVersion",
-      "dataSheetUrl"
+      "dataSheetUrl",
+      "manufacturerPartNumber",
+      "manufacturer",
+      "classification",
+      "externalId",
+      "description"
     ],
     "properties": {
       "isUserPart": {
