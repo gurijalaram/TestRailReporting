@@ -367,17 +367,6 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     }
 
     /**
-     * Get the quantity value for a scenario
-     *
-     * @param componentName - Name of component
-     * @param scenarioName - Name of scenario
-     * @return - Integer of quantity value
-     */
-    public Integer getScenarioQuantity(String componentName, String scenarioName) {
-        return assembliesComponentsController.getScenarioQuantity(componentName, scenarioName);
-    }
-
-    /**
      * Gets the scenario state of the component
      *
      * @param componentName - the component name
@@ -388,6 +377,17 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
         return assembliesComponentsController.getScenarioState(componentName, scenarioName, currentUser, stateEnum);
+    }
+
+    /**
+     * Get the quantity value for a scenario
+     *
+     * @param componentName - Name of component
+     * @param scenarioName - Name of scenario
+     * @return - Integer of quantity value
+     */
+    public Integer getScenarioQuantity(String componentName, String scenarioName) {
+        return assembliesComponentsController.getScenarioQuantity(componentName, scenarioName);
     }
 
     /**
