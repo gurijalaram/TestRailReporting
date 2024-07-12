@@ -326,6 +326,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get the Quantity value for the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return Integer value of quantity in assembly
+     */
+    public Integer getScenarioQuantity(String componentName, String scenarioName) {
+        return Integer.parseInt(getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-header-id='occurrences']"))
+            .getText());
+    }
+
+    /**
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component
