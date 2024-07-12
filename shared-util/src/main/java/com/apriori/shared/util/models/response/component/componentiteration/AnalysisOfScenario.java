@@ -51,6 +51,8 @@ public class AnalysisOfScenario {
     private Double lifetimeCost;
     private Double logisticsCarbon;
     private Double logisticsCost;
+    private Double manualPiecePartCost;
+    private Double manualCapitalInvestment;
     private Double margin;
     private Double marginPercent;
     private Double materialCarbon;
