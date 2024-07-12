@@ -81,7 +81,7 @@ public class CdsCustomAttributesTests {
             customerIdentity, userIdentity);
         soft.assertThat(customAttributes.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
 
-        CustomAttribute putCustomAttribute = attributeUtil.putCustomAttribute(customerIdentity, userIdentity, updatedDepartment);
+        CustomAttribute putCustomAttribute = attributeUtil.putCustomAttribute(updatedDepartment, customerIdentity, userIdentity);
         String customAttributeIdentity = putCustomAttribute.getIdentity();
 
         customAttributesIdentityHolder = IdentityHolder.builder()
