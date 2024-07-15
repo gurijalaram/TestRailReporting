@@ -63,6 +63,17 @@ public class UserCredentials implements Serializable {
     }
 
     /**
+     * Sets user email
+     *
+     * @param email - the email address
+     * @return current object
+     */
+    public UserCredentials setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    /**
      * Set security level
      *
      * @param securityLevel - the security level

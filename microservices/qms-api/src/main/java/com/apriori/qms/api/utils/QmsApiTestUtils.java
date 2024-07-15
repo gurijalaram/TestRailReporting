@@ -63,9 +63,9 @@ public class QmsApiTestUtils {
      */
     public static UserCredentials getCustomerUser() {
         if (PropertiesContext.get("customer").startsWith(CustomerEnum.AP_INT.getCustomer())) {
-            return new UserCredentials("testUser1@widgets.aprioritest.com", null);
+            return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
         }
-        return new UserCredentials("qa-automation-01@apriori.com", null);
+        return new UserCredentials().setEmail("qa-automation-01@apriori.com");
     }
 
     /**
