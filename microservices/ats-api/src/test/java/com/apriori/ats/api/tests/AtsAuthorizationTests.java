@@ -68,7 +68,7 @@ public class AtsAuthorizationTests extends TestUtil {
     @Description("Get a Cloud Context identified by a cloud context string")
     public void getCloudContextTest() {
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
-        String contextString = userCreds.generateCloudContext().getCloudContext();
+        String contextString = userCreds.getUserDetails().getCustomerData().getCloudContext();
         ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
 
         soft.assertThat(getCloudContext.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);
