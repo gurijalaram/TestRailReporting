@@ -29,7 +29,6 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.User;
@@ -55,8 +54,13 @@ public class CasTestUtil extends TestUtil {
         this.requestEntityUtil = requestEntityUtil;
     }
 
-    // TODO: 14/06/2024 cn - remove in next iteration
-    public CasTestUtil() {
+    /**
+     * @param userName - username
+     * @return ResponseWrapper User
+     */
+    public ResponseWrapper<User> addUser(String identity, String userName, String customerName) {
+        String domain = String.format("%s.co.uk", customerName.toLowerCase());
+        return createUser(identity, userName, domain);
     }
 
     /**
@@ -167,17 +171,6 @@ public class CasTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * @param userName - username
-     * @return ResponseWrapper User
-     */
-    public static ResponseWrapper<User> addUser(String identity, String userName, String customerName) {
-
-        String domain = String.format("%s.co.uk", customerName.toLowerCase());
-        CasTestUtil util = new CasTestUtil();
-        return util.createUser(identity, userName, domain);
     }
 
     public ResponseWrapper<User> updateUser(User user) {

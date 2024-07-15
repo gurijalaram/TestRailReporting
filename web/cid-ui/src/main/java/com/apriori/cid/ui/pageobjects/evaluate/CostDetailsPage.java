@@ -27,6 +27,9 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     @FindBy(css = "div[class='cost-result-list']")
     private WebElement costResults;
 
+    @FindBy(css = "div[data-testid='apriori-alert']")
+    private WebElement alertBar;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -49,6 +52,25 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(costResultChart);
         pageUtils.waitForElementToAppear(costResults);
+    }
+
+    /**
+     * Visibility of Alert Bar
+     *
+     * @return - Boolean of alert visibility
+     */
+    public Boolean isAlertBarDisplayed() {
+        return pageUtils.isElementDisplayed(alertBar);
+    }
+
+    /**
+     * Get Alert Text
+     *
+     * @return - Text displayed in alert bar
+     */
+    public String alertBarText() {
+        pageUtils.waitForElementAppear(alertBar);
+        return alertBar.getText();
     }
 
     /**
