@@ -76,11 +76,11 @@ public class UserCredentials implements Serializable {
     /**
      * Set security level
      *
-     * @param securityLevel - the security level
+     * @param role - the role
      * @return current object
      */
-    public UserCredentials setRole(RolesEnum securityLevel) {
-        this.role = securityLevel;
+    public UserCredentials setRole(RolesEnum role) {
+        this.role = role;
         return this;
     }
 
