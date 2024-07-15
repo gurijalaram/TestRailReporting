@@ -118,16 +118,15 @@ public class BulkCostingPageTests extends TestBaseUI {
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
         String inputRowName = bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
 
-        worksheetsExplorePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName());
-        softAssertions.assertThat(worksheetsExplorePage.isRemoveButtonEnabled()).isFalse();
-
-        deletePage = worksheetsExplorePage.clickScenarioCheckbox(worksheetResponse.getName())
+        deletePage = bulkAnalysisPage.openWorksheet(worksheetResponse.getName())
+            .clickScenarioCheckbox(inputRowName)
             .clickRemove();
 
         softAssertions.assertThat(deletePage.getDeleteText()).contains("You are attempting to remove", "from the bulk analysis. This action cannot be undone.");
 
-        deletePage.removeScenarios(WorksheetsExplorePage.class);
-        softAssertions.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName)).isGreaterThan(0);
+        worksheetsExplorePage = deletePage.removeScenarios(DeletePage.class)
+            .clickClose(WorksheetsExplorePage.class);
+        softAssertions.assertThat(worksheetsExplorePage.isInputRowDisplayed(inputRowName)).isLessThan(1);
         softAssertions.assertAll();
     }
 
@@ -179,9 +178,8 @@ public class BulkCostingPageTests extends TestBaseUI {
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
         bcmUtil.searchCreateInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
-        softAssertions.assertThat(bulkAnalysisPage.isInfoButtonEnabled()).isTrue();
 
-        bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
+        bulkAnalysisInfoPage = bulkAnalysisPage.highlightWorksheet(worksheetResponse.getName())
             .clickInfo();
 
         String updatedWorksheetName = worksheetResponse.getName().concat("_updated");

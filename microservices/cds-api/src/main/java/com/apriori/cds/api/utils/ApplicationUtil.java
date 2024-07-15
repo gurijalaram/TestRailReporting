@@ -60,7 +60,7 @@ public class ApplicationUtil {
      * @return new object
      */
     public DeploymentApplications getUserApplications(User user, DeploymentEnum deploymentVar) {
-        List<AccessControlResponse> accessControlItems = accessControlUtil.getAccessControl(user.getCustomerIdentity(), user.getIdentity()).getItems();
+        List<AccessControlResponse> accessControlItems = new AccessControlUtil(requestEntityUtil).getAccessControl(user.getCustomerIdentity(), user.getIdentity()).getItems();
 
         DeploymentApplications deploymentApplications = DeploymentApplications.builder()
             .deployment(deploymentVar.getDeployment())

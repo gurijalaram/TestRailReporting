@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.bulkanalysis;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.cid.ui.pageobjects.common.ComponentTableActions;
 import com.apriori.cid.ui.pageobjects.common.ConfigurePage;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
@@ -127,8 +129,7 @@ public class WorksheetsExplorePage extends BulkAnalysisToolbar {
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName) {
-        By byScenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='sticky-columns']//div//span[@data-testid='checkbox']",
-            componentName.toUpperCase().trim()));
+        By byScenario = with(By.cssSelector(".checkbox-cell")).toLeftOf(By.xpath(String.format("//span[text()='%s']", componentName.toUpperCase().trim())));
         pageUtils.waitForElementToAppear(byScenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(byScenario), true);
     }
