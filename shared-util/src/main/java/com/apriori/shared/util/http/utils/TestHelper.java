@@ -2,6 +2,7 @@ package com.apriori.shared.util.http.utils;
 
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 
 public class TestHelper {
@@ -13,6 +14,17 @@ public class TestHelper {
     public static RequestEntityUtil initUser() {
         return RequestEntityUtilBuilder
             .useRandomUser(APRIORI_DEVELOPER)
+            .useApUserContextInRequests();
+    }
+
+    /**
+     * Initializes a user with custom role
+     *
+     * @return RequestEntityUtil object
+     */
+    public static RequestEntityUtil initUser(RolesEnum role) {
+        return RequestEntityUtilBuilder
+            .useRandomUser(role)
             .useApUserContextInRequests();
     }
 

@@ -1,10 +1,14 @@
 package com.apriori.ats.api.utils;
 
 import com.apriori.ats.api.models.request.AuthenticateRequest;
+import com.apriori.ats.api.models.request.AuthorizeRequest;
 import com.apriori.ats.api.models.request.CreateSamlUserRequest;
 import com.apriori.ats.api.models.request.ResetAutoUsers;
 import com.apriori.ats.api.models.request.ResetMFA;
+import com.apriori.ats.api.models.response.AuthorizationResponse;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
+import com.apriori.shared.util.SharedCustomerUtil;
+import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -12,14 +16,21 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.interfaces.EndpointEnum;
+import com.apriori.shared.util.models.request.TokenRequest;
+import com.apriori.shared.util.models.response.Claims;
+import com.apriori.shared.util.models.response.Token;
+import com.apriori.shared.util.models.response.TokenInformation;
 import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.properties.PropertiesContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-public class AtsTestUtil extends TestUtil {
+@Slf4j
+public class AtsUtil extends TestUtil {
     private RequestEntityUtil requestEntityUtil;
 
-    public AtsTestUtil(RequestEntityUtil requestEntityUtil) {
+    public AtsUtil(RequestEntityUtil requestEntityUtil) {
         super.requestEntityUtil = requestEntityUtil;
         this.requestEntityUtil = requestEntityUtil;
     }
@@ -27,7 +38,7 @@ public class AtsTestUtil extends TestUtil {
     /**
      * Authenticates a user
      *
-     * @param email - user email
+     * @param email    - user email
      * @param password - user password
      * @return response object
      */
@@ -48,9 +59,10 @@ public class AtsTestUtil extends TestUtil {
      * @param email - user email
      * @return response object
      */
-    public ResponseWrapper<User> putSAMLProviders(String email) {
+    public ResponseWrapper<User> samlProviders(String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
         String userName = generator.generateUserName();
+
         RequestEntity requestEntity = requestEntityUtil.init(ATSAPIEnum.SAML_PROVIDERS, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
@@ -67,15 +79,15 @@ public class AtsTestUtil extends TestUtil {
     /**
      * Resets customer users mfa or user mfa
      *
-     * @param endpoint - customer users or particular user endpoint
-     * @param identity - customer or user identity
-     * @param status - response status code
+     * @param <E>                  - the api enum type
+     * @param identity             - customer or user identity
+     * @param expectedResponseCode - response status code
      * @return generic response object
      */
-    public <T> ResponseWrapper<T> resetUserMFA(EndpointEnum endpoint, String identity, Integer status) {
+    public <T, E extends EndpointEnum> ResponseWrapper<T> resetUserMFA(E endpoint, String identity, Integer expectedResponseCode) {
         RequestEntity requestEntity = requestEntityUtil.init(endpoint, null)
             .inlineVariables(identity)
-            .expectedResponseCode(status)
+            .expectedResponseCode(expectedResponseCode)
             .body(ResetMFA.builder()
                 .resetBy("#SYSTEM00000")
                 .build());
@@ -98,5 +110,44 @@ public class AtsTestUtil extends TestUtil {
                 .build());
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * POST authorize user
+     *
+     * @param targetCloudContext - target cloud context
+     * @return authorization object
+     */
+    public ResponseWrapper<AuthorizationResponse> authorizeUser(String targetCloudContext) {
+        RequestEntity requestEntity = requestEntityUtil.init(ATSAPIEnum.POST_AUTHORIZE_BY_BASE_URL_SECRET, AuthorizationResponse.class)
+            .body(AuthorizeRequest.builder().targetCloudContext(targetCloudContext)
+                .token(requestEntityUtil.getEmbeddedUser().getToken())
+                .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST to get a JWT token
+     *
+     * @return string
+     */
+    public synchronized ResponseWrapper<Token> getToken() {
+        log.info("Getting ATS Token...");
+
+        RequestEntity requestEntity = requestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
+            .body(TokenRequest.builder()
+                .token(TokenInformation.builder()
+                    .issuer(PropertiesContext.get("ats.token_issuer"))
+                    .subject(SharedCustomerUtil.getTokenSubjectForCustomer())
+                    .claims(Claims.builder()
+                        .name(requestEntityUtil.getEmbeddedUser().getUsername())
+                        .email(requestEntityUtil.getEmbeddedUser().getEmail())
+                        .build())
+                    .build())
+                .build())
+            .expectedResponseCode(org.apache.hc.core5.http.HttpStatus.SC_CREATED);
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }

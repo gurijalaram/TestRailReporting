@@ -252,6 +252,17 @@ public class AssembliesComponentsController {
     }
 
     /**
+     * Get the quantity value for a scenario
+     *
+     * @param componentName - Name of component
+     * @param scenarioName - Name of scenario
+     * @return - Integer of quantity value
+     */
+    public Integer getScenarioQuantity(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioQuantity(componentName, scenarioName);
+    }
+
+    /**
      * Gets the cost value for the State icon
      *
      * @param componentName - name of the part

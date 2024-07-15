@@ -204,7 +204,7 @@
             <property name="severity" value="ignore"/>
         </module>
         <module name="OverloadMethodsDeclarationOrder">
-            <property name="severity" value="warning"/>
+            <property name="severity" value="error"/>
         </module>
         <module name="VariableDeclarationUsageDistance">
             <property name="severity" value="ignore"/>

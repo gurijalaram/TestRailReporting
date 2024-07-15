@@ -230,20 +230,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Add further Criteria
-     *
-     * @param propertyEnum  - property from the enum
-     * @param value         - the value
-     * @return current page object
-     */
-    public FilterPage includeCriteria(final PropertyEnum propertyEnum, final String value) {
-        index = findIndex(propertyEnum);
-
-        inputValue(index, propertyEnum, value);
-        return this;
-    }
-
-    /**
      * Adds a criteria
      *
      * @param propertyEnum  - property from the enum
@@ -257,6 +243,20 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         add().selectProperty(index, propertyEnum)
             .selectOperation(index, operationEnum)
             .inputDate(index, propertyEnum, dateTime);
+        return this;
+    }
+
+    /**
+     * Add further Criteria
+     *
+     * @param propertyEnum  - property from the enum
+     * @param value         - the value
+     * @return current page object
+     */
+    public FilterPage includeCriteria(final PropertyEnum propertyEnum, final String value) {
+        index = findIndex(propertyEnum);
+
+        inputValue(index, propertyEnum, value);
         return this;
     }
 
@@ -295,7 +295,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
             pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
             //click the dropdown again to remove it and unhide the submit button
-            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target'] svg[data-icon='chevron-down']", index)));
         }
         return this;
     }

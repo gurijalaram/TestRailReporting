@@ -10,7 +10,6 @@ import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.Roles;
-import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -20,7 +19,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
@@ -44,28 +42,6 @@ public class CdsTestUtil extends TestUtil {
     // TODO: 14/06/2024 cn - remove in next iteration
     // this empty constructor is needed just for now to avoid multiple errors.
     public CdsTestUtil() {
-    }
-
-    /**
-     * POST call to add a customer
-     *
-     * @param customerIdentity - the customer id
-     * @param userName         - the username
-     * @param domain           - the customer name
-     * @return new object
-     */
-    public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
-
-        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
-        requestBody.setUsername(userName);
-        requestBody.setEmail(userName + "@" + domain + ".com");
-        requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("user", requestBody);
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -99,34 +75,6 @@ public class CdsTestUtil extends TestUtil {
             );
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Adds or replaces user preferences
-     *
-     * @param customerIdentity - customer id
-     * @param userIdentity     - user id
-     * @param preferenceName   - preference name
-     * @return new object
-     */
-    public ResponseWrapper<UserPreference> putUserPreference(
-        String customerIdentity,
-        String userIdentity,
-        String preferenceName) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity, preferenceName)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .value("6548")
-                    .type("INTEGER")
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).put();
     }
 
     /**
