@@ -33,7 +33,6 @@ public class DeploymentUtil {
         return response.getResponseEntity();
     }
 
-
     /**
      * POST call to add a deployment to a customer
      *

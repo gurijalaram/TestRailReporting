@@ -33,7 +33,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-
 public class CdsTestUtil extends TestUtil {
 
     private RequestEntityUtil requestEntityUtil;
