@@ -6,13 +6,9 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
-import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.response.AccessAuthorization;
-import com.apriori.cds.api.models.response.IdentityProviderRequest;
-import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.Roles;
-import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -22,7 +18,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
 
@@ -31,7 +26,6 @@ import org.apache.http.HttpStatus;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 public class CdsTestUtil extends TestUtil {
 
@@ -45,103 +39,6 @@ public class CdsTestUtil extends TestUtil {
     // TODO: 14/06/2024 cn - remove in next iteration
     // this empty constructor is needed just for now to avoid multiple errors.
     public CdsTestUtil() {
-    }
-
-    /**
-     * POST call to add a deployment to a customer
-     *
-     * @param customerIdentity - the customer id
-     * @param siteIdentity     - the site Identity
-     * @return new object
-     */
-    public ResponseWrapper<Deployment> addDeployment(
-        String customerIdentity,
-        String deploymentName,
-        String siteIdentity,
-        String deploymentType) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "deployment",
-                AddDeployment.builder()
-                    .name(deploymentName)
-                    .description("Deployment added by API automation")
-                    .deploymentType(deploymentType)
-                    .siteIdentity(siteIdentity)
-                    .active("true")
-                    .isDefault("true")
-                    .createdBy("#SYSTEM00000")
-                    .apVersion("2020 R1")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Patches and idp user
-     *
-     * @param customerIdentity - the customer id
-     * @param idpIdentity      - the idp id
-     * @param userIdentity     - the user id
-     * @return new object
-     */
-    public ResponseWrapper<IdentityProviderResponse> patchIdp(
-        String customerIdentity,
-        String idpIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
-            .inlineVariables(customerIdentity, idpIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .headers(new HashMap<>() {
-
-                {
-                    put("Content-Type", "application/json");
-                }
-            })
-            .body(
-                "identityProvider",
-                IdentityProviderRequest.builder()
-                    .description("patch IDP using Automation")
-                    .contact(userIdentity)
-                    .identityProviderPlatform("Azure AD")
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * Adds or replaces user preferences
-     *
-     * @param customerIdentity - customer id
-     * @param userIdentity     - user id
-     * @param preferenceName   - preference name
-     * @return new object
-     */
-    public ResponseWrapper<UserPreference> putUserPreference(
-        String customerIdentity,
-        String userIdentity,
-        String preferenceName) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity, preferenceName)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .value("6548")
-                    .type("INTEGER")
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).put();
     }
 
     /**
