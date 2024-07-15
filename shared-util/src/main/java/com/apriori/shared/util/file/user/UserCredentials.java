@@ -104,11 +104,10 @@ public class UserCredentials implements Serializable {
      *
      * @return current object
      */
-    public UserCredentials generateToken() {
-        this.token = new AuthorizationUtil().getToken(this)
+    private String generateToken() {
+        return token = new AuthorizationUtil().getToken(this)
             .getResponseEntity()
             .getToken();
-        return this;
     }
 
     /**
