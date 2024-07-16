@@ -323,3 +323,4 @@ To get a property with a reference that may have another reference inside, use t
    - get the value from a property `qa-test/bcs/api_url`
 
 <br>An example of properties usage you can find in `com.apriori.util.test.PropertiesContextTestTest`
+
