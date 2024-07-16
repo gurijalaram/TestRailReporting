@@ -23,7 +23,7 @@ public class AchCustomersTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
         achTestUtil = new AchTestUtil(requestEntityUtil);
     }
 
