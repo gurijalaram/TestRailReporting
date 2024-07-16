@@ -1,4 +1,4 @@
-# How to setup automation 
+# How to setup automation test environment locally
 
 ## Complete Prerequisites
 - Java 11
