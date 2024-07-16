@@ -106,7 +106,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
     @Test
     @Tag(ASSEMBLY)
-    @TestRail(id = {10799, 6076, 6515})
+    @TestRail(id = {10799, 6076, 6515, 31338})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
 
