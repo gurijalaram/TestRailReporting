@@ -255,6 +255,16 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
+     * Check if Manual Mode Toggle button is disabled
+     *
+     * @return - Boolean of enabled state for manual mode toggle button
+     */
+    public Boolean isManualModeToggleEnabled() {
+        pageUtils.waitForElementToAppear(manualCostModeButton);
+        return manualCostModeButton.isEnabled();
+    }
+
+    /**
      * Check state of Manual Costing Save As button
      *
      * @return - Boolean of Manual Costing Save As button enabled state
