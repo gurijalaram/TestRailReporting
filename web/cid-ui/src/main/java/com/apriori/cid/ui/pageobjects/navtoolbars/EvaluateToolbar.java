@@ -255,7 +255,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
-     * Check if Manual Mode Toggle button is disabled
+     * Check if Manual Mode Toggle button is enabled
      *
      * @return - Boolean of enabled state for manual mode toggle button
      */
