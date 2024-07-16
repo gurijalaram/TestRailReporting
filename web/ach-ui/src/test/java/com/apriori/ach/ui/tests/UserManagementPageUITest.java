@@ -22,20 +22,24 @@ import com.apriori.web.app.util.login.LoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserManagementPageUITest extends AchEnvironmentUIUtil {
-
-    private AchEnvironmentAPIUtil achEnvironmentAPIUtil = new AchEnvironmentAPIUtil();
-    private final UserCredentials userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
+    private RequestEntityUtil requestEntityUtil;
+    private UserCredentials userCredentials;
     private CloudHomePage cloudHomePage;
     private UserManagementPage userManagementPage;
     private LoginService aprioriLoginService;
-    private AtsUtil atsUtil;
 
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        userCredentials = new AchEnvironmentAPIUtil(requestEntityUtil).getAwsCustomerUserCredentials();
+    }
 
     @Test
     @TestRail(id = {28492, 28502})
@@ -170,8 +174,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     }
 
     private void deleteCreatedUser(String email) {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
-        atsUtil = new AtsUtil(requestEntityUtil);
+        AtsUtil atsUtil = new AtsUtil(requestEntityUtil);
         CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         ResponseWrapper<User> response = atsUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
 

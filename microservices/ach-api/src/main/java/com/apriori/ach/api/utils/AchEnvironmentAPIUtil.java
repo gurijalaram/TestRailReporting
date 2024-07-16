@@ -9,7 +9,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Application;
@@ -26,23 +26,47 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
  */
 @Slf4j
 public class AchEnvironmentAPIUtil extends TestUtil {
-
     protected final String deploymentName = PropertiesContext.get("${deployment}.name");
-    protected final String identitiesDelimiter = "_";
+    public final String identitiesDelimiter = "_";
 
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
+    private RequestEntityUtil requestEntityUtil;
 
+    public AchEnvironmentAPIUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
+        this.requestEntityUtil = requestEntityUtil;
+    }
+
+    /**
+     * Find information about customer's user
+     *
+     * @param email            - the email
+     * @param customerIdentity - the customer id
+     * @return filtered customer user and all related information
+     */
+    public User getCustomerUserDataByEmail(final String email, final String customerIdentity) {
+        RequestEntity customerUsersRequest = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
+            .inlineVariables(customerIdentity)
+            .queryParams(new QueryParams().use("email[EQ]", email))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Users> customerUsersResponse = HTTPRequest.build(customerUsersRequest).get();
+
+        return customerUsersResponse
+            .getResponseEntity()
+            .getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
+    }
 
     /**
      * Get user credentials for a customer from AWS ParameterStore
-     * @return
+     *
+     * @return new object
      */
     public UserCredentials getAwsCustomerUserCredentials() {
         String username;
@@ -60,71 +84,51 @@ public class AchEnvironmentAPIUtil extends TestUtil {
     }
 
     /**
-     * Find information about customer's user
-     *
-     * @param email
-     * @param customerIdentity
-     * @return filtered customer user and all related information
-     */
-    protected static User getCustomerUserDataByEmail(final String email, final String customerIdentity) {
-        RequestEntity customerUsersRequest = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
-                .inlineVariables(customerIdentity)
-                .queryParams(new QueryParams().use("email[EQ]", email))
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<Users> customerUsersResponse = HTTPRequest.build(customerUsersRequest).get();
-
-        return customerUsersResponse
-                .getResponseEntity()
-                .getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
-    }
-
-    /**
      * Get user access information for a specific customer
      *
-     * @param userIdentity
-     * @param customerIdentity
+     * @param userIdentity     - the user id
+     * @param customerIdentity - the customer id
      * @return user access information
      */
-    protected List<AccessControlResponse> getUserAccessControls(final String userIdentity, final String customerIdentity) {
-        RequestEntity userAccessControlRequest = RequestEntityUtil_Old.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
-                .inlineVariables(customerIdentity, userIdentity)
-                .expectedResponseCode(HttpStatus.SC_OK);
+    public List<AccessControlResponse> getUserAccessControls(final String userIdentity, final String customerIdentity) {
+        RequestEntity userAccessControlRequest = requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControls> serviceAccountControls = HTTPRequest.build(userAccessControlRequest)
-                .get();
+            .get();
 
         return serviceAccountControls.getResponseEntity()
-                .getItems();
+            .getItems();
     }
 
     /**
      * Get customer deployments and all related objects information
      *
-     * @param customerIdentity
+     * @param customerIdentity - the customer id
      * @return customer deployments
      */
     public Deployment getCustomerDeploymentInformation(final String customerIdentity) {
-        RequestEntity customerApplicationsRequest = RequestEntityUtil_Old.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
-                .inlineVariables(customerIdentity)
-                .queryParams(new QueryParams().use("name[EQ]", deploymentName))
-                .expectedResponseCode(HttpStatus.SC_OK);
+        RequestEntity customerApplicationsRequest = requestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
+            .inlineVariables(customerIdentity)
+            .queryParams(new QueryParams().use("name[EQ]", deploymentName))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Deployments> customerApplicationsResponse = HTTPRequest.build(customerApplicationsRequest)
-                .get();
+            .get();
 
         return customerApplicationsResponse
-                .getResponseEntity()
-                .getItems()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Customer deployment was not found. Deployment name: " + deploymentName));
+            .getResponseEntity()
+            .getItems()
+            .stream()
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Customer deployment was not found. Deployment name: " + deploymentName));
     }
-
 
 
     /**
      * Map customer deployment data into ApplicationDTO class
+     *
      * @param customerDeployment
      * @return
      */
@@ -132,13 +136,13 @@ public class AchEnvironmentAPIUtil extends TestUtil {
         final List<ApplicationDTO> mappedApplicationDTOs = new ArrayList<>();
 
         customerDeployment.getInstallations().forEach(
-                installation -> {
-                    installation.getApplications().forEach(
-                            application -> {
-                                mappedApplicationDTOs.add(buildApplicationDTO(customerDeployment, installation, application));
-                            }
-                    );
-                }
+            installation -> {
+                installation.getApplications().forEach(
+                    application -> {
+                        mappedApplicationDTOs.add(buildApplicationDTO(customerDeployment, installation, application));
+                    }
+                );
+            }
         );
 
         return mappedApplicationDTOs;
