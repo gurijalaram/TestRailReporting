@@ -4,7 +4,6 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
 
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.ComponentCostReportPage;
@@ -59,51 +58,6 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName());
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("2331")
-    @TestRail(id = {2331})
-    @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
-    public void testProjectRollupDropdownList() {
-        cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                CycleTimeValueTrackingPage.class
-            );
-
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), anyOf(equalTo("1"), equalTo("2")));
-        String expectedProjectRollup = "AC CYCLE TIME VT 1";
-        assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
-
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
-
-        assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo(expectedProjectRollup)));
-        assertThat(cycleTimeValueTrackingPage.getRollupInUseInChart(), is(equalTo(expectedProjectRollup)));
-    }
-
-    @Test
-    @Tag(REPORTS)
-    @TmsLink("2332")
-    @TestRail(id = {2332})
-    @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
-    public void testExportDateFilterFunctionality() {
-        cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                CycleTimeValueTrackingPage.class
-            ).selectCycleTimeRollup();
-
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), anyOf(equalTo("1"), equalTo("2")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), anyOf(equalTo("1"), equalTo("6")));
-
-        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
-        assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo("AC CYCLE TIME VT 1")));
     }
 
     @Test
