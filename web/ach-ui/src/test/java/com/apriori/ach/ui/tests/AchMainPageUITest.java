@@ -10,12 +10,15 @@ import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.testrail.TestRail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -23,9 +26,16 @@ import java.util.List;
 
 @Slf4j
 public class AchMainPageUITest extends AchEnvironmentUIUtil {
-    private AchEnvironmentAPIUtil achEnvironmentAPIUtil = new AchEnvironmentAPIUtil();
-    private final UserCredentials userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
+    private AchEnvironmentAPIUtil achEnvironmentAPIUtil;
+    private UserCredentials userCredentials;
     private CloudHomePage cloudHomePage;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        achEnvironmentAPIUtil = new AchEnvironmentAPIUtil(requestEntityUtil);
+        userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
+    }
 
     @Test
     @TestRail(id = {27951})
@@ -48,6 +58,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
 
     /**
      * Validate applications on the user screen
+     *
      * @param cloudHomePage
      * @param deploymentName
      */
@@ -79,6 +90,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
 
     /**
      * Validate applications text in UI
+     *
      * @param applications
      * @param customerApplicationsData
      */
@@ -92,6 +104,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
 
     /**
      * Click on each application on the user screen and validate that application is launched
+     *
      * @param userApplicationsFromUI
      */
     private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDTO> userApplicationsFromUI) {
@@ -99,7 +112,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
             log.debug("*********************** Testing application name: {}  **********************", application.getApplicationName());
 
             cloudHomePage.clickWebApplicationByNameAndCloseAfterLoad(application.getApplicationName(),
-                    getPageObjectTypeByApplicationName(application.getApplicationName())
+                getPageObjectTypeByApplicationName(application.getApplicationName())
             );
         });
 
