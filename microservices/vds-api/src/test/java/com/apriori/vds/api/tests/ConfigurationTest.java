@@ -4,16 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.configuration.Configuration;
 import com.apriori.vds.api.models.response.configuration.ConfigurationsItems;
-import com.apriori.vds.api.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +23,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.HashMap;
 
 @ExtendWith(TestRulesAPI.class)
-public class ConfigurationTest extends VDSTestUtil {
+public class ConfigurationTest {
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+    }
 
     @Test
     @TestRail(id = {7929})

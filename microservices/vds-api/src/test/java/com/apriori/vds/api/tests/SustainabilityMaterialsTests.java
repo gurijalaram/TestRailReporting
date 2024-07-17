@@ -2,7 +2,9 @@ package com.apriori.vds.api.tests;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -15,21 +17,32 @@ import com.apriori.vds.api.tests.util.VDSTestUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class SustainabilityMaterialsTests extends ProcessGroupUtil {
+public class SustainabilityMaterialsTests {
     private SoftAssertions soft = new SoftAssertions();
+    private ProcessGroupUtil processGroupUtil;
+    private RequestEntityUtil requestEntityUtil;
+    private VDSTestUtil vdsTestUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        processGroupUtil = new ProcessGroupUtil(requestEntityUtil);
+        vdsTestUtil = new VDSTestUtil(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {24098})
     @Description("Get materials endpoint returns sustainability info")
     public void verifySustainabilityFieldsForMaterials() {
-        List<ProcessGroupMaterial> materials = ProcessGroupUtil.getProcessGroupMaterial();
-        materials.stream().forEach(material -> assertSustainabilityInfoInMaterials(material.getSustainabilityInfo()));
+        List<ProcessGroupMaterial> materials = processGroupUtil.getProcessGroupMaterial();
+        materials.forEach(material -> assertSustainabilityInfoInMaterials(material.getSustainabilityInfo()));
 
         ResponseWrapper<ProcessGroupMaterial> materialById = getMaterialById();
         assertSustainabilityInfoInMaterials(materialById.getResponseEntity().getSustainabilityInfo());
@@ -40,20 +53,19 @@ public class SustainabilityMaterialsTests extends ProcessGroupUtil {
     @TestRail(id = {24099})
     @Description("Get material stocks endpoint returns sustainability info")
     public void verifySustainabilityInfoForMaterialStocks() {
-        List<ProcessGroupMaterialStock> materialStocks = ProcessGroupUtil.getProcessGroupMaterialStocks();
-        materialStocks.stream().forEach(stock -> assertMaterialStocksSustainabilityInfo(stock.getSustainabilityInfo()));
+        List<ProcessGroupMaterialStock> materialStocks = processGroupUtil.getProcessGroupMaterialStocks();
+        materialStocks.forEach(stock -> assertMaterialStocksSustainabilityInfo(stock.getSustainabilityInfo()));
 
-        List<ProcessGroupMaterialStock> processGroupMaterialsStocks = ProcessGroupUtil.getMaterialsStocksWithItems();
-        ResponseWrapper<ProcessGroupMaterialStock> stockById = ProcessGroupUtil.getMaterialStockById(processGroupMaterialsStocks);
+        List<ProcessGroupMaterialStock> processGroupMaterialsStocks = processGroupUtil.getMaterialsStocksWithItems();
+        ResponseWrapper<ProcessGroupMaterialStock> stockById = processGroupUtil.getMaterialStockById(processGroupMaterialsStocks);
         assertMaterialStocksSustainabilityInfo(stockById.getResponseEntity().getSustainabilityInfo());
         soft.assertAll();
     }
 
-
     private ResponseWrapper<ProcessGroupMaterial> getMaterialById() {
         RequestEntity materialById =
             requestEntityUtil.init(VDSAPIEnum.SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterial.class)
-                .inlineVariables(VDSTestUtil.getDigitalFactoryIdentity(), ProcessGroupUtil.getAssociatedProcessGroupIdentity(), ProcessGroupUtil.getMaterialIdentity())
+                .inlineVariables(vdsTestUtil.getDigitalFactoriesResponse().getIdentity(), processGroupUtil.getAssociatedProcessGroupIdentity(), processGroupUtil.getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(materialById).get();

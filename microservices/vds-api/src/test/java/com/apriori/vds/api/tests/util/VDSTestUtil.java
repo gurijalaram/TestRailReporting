@@ -18,7 +18,7 @@ import org.assertj.core.api.SoftAssertions;
 import java.util.List;
 
 public class VDSTestUtil extends TestUtil {
-    protected static final String customerId = SharedCustomerUtil.getCurrentCustomerIdentity();
+    public final String customerId = SharedCustomerUtil.getCurrentCustomerIdentity();
     private RequestEntityUtil requestEntityUtil;
 
     public VDSTestUtil(RequestEntityUtil requestEntityUtil) {

@@ -4,7 +4,9 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -17,7 +19,8 @@ import com.apriori.vds.api.tests.util.SiteVariableUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,13 +29,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ExtendWith(TestRulesAPI.class)
-public class SiteVariablesTest extends SiteVariableUtil {
+public class SiteVariablesTest {
     protected static final Set<String> siteVariableNamesToDelete = new HashSet<>();
     private final SoftAssertions softAssertions = new SoftAssertions();
+    private RequestEntityUtil requestEntityUtil;
+    private SiteVariableUtil siteVariableUtil;
 
-    @AfterAll
-    public static void deleteTestingData() {
-        siteVariableNamesToDelete.forEach(SiteVariablesTest::deleteSiteVariables);
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        siteVariableUtil = new SiteVariableUtil(requestEntityUtil);
+    }
+
+    @AfterEach
+    public void deleteTestingData() {
+        siteVariableNamesToDelete.forEach(this::deleteSiteVariables);
     }
 
     @Test
@@ -109,7 +120,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSiteVariables(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -125,7 +136,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -139,7 +150,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -155,7 +166,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -169,7 +180,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemConfigurationMapSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -185,7 +196,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -200,7 +211,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postPrimitiveValueMapSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -216,7 +227,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -231,7 +242,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelDefaultsSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -247,7 +258,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -262,7 +273,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelOverridesSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
@@ -278,7 +289,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
@@ -291,7 +302,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
 
-        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        siteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityUpdate =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
@@ -313,14 +324,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
 
-        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+        siteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
-        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getUpdatedAt()
-            .equals(updatedSiteVariableResponse.getResponseEntity().getUpdatedAt()));
-        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedBy()
-            .equals(updatedSiteVariableResponse.getResponseEntity().getCreatedBy()));
-        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedAt()
-            .equals(updatedSiteVariableResponse.getResponseEntity().getCreatedAt()));
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getUpdatedAt())
+            .isEqualTo(updatedSiteVariableResponse.getResponseEntity().getUpdatedAt());
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedBy())
+            .isEqualTo(updatedSiteVariableResponse.getResponseEntity().getCreatedBy());
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedAt())
+            .isEqualTo(updatedSiteVariableResponse.getResponseEntity().getCreatedAt());
         softAssertions.assertAll();
     }
 
@@ -390,7 +401,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         responseWrapper.getResponseEntity();
     }
 
-    private static void deleteSiteVariables(final String name) {
+    private void deleteSiteVariables(final String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(name)
