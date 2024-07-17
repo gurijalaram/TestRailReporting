@@ -43,7 +43,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
 
     private static void deleteProcessGroupAssociation(final String associationId) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.DELETE_PG_ASSOCIATIONS_BY_ID, null)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, null)
                 .inlineVariables(associationId)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -54,7 +54,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
 
     private static ProcessGroupAssociation createProcessGroupAssociation(final ProcessGroupAssociationRequest processGroupAssociationRequest) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.POST_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -86,7 +86,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     @Description("Get a ProcessGroupAssociation for a customer.")
     public void testGetMaterialByIdentity() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
                 .inlineVariables(ProcessGroupUtil.getFirstGroupAssociation().getIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -120,7 +120,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PATCH_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
                 .inlineVariables(getTestingProcessGroupAssociation().getIdentity())
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -152,7 +152,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -181,7 +181,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 

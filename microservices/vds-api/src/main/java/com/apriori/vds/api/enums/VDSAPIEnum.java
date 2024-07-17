@@ -6,73 +6,55 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum VDSAPIEnum implements ExternalEndpointEnum {
 
     // Access Controls
-    GET_GROUPS("/groups"),
-    GET_PERMISSIONS("/permissions"),
-
-    POST_SYNCHRONIZE("/synchronize"),
-
+    GROUPS("/groups"),
+    PERMISSIONS("/permissions"),
+    SYNCHRONIZE("/synchronize"),
 
     // Configurations
-    GET_CONFIGURATIONS("/configurations"),
-    GET_CONFIGURATIONS_BY_IDENTITY("/configurations/%s"),
-
-    PUT_CONFIGURATION("/configurations"),
+    CONFIGURATIONS("/configurations"),
+    CONFIGURATIONS_BY_IDENTITY("/configurations/%s"),
+    CONFIGURATION("/configurations"),
 
     // Custom Attributes
-    GET_CUSTOM_ATTRIBUTES("/custom-attributes"),
+    CUSTOM_ATTRIBUTES("/custom-attributes"),
 
     // Customizations
-    GET_CUSTOMIZATIONS("/customizations"),
-
+    CUSTOMIZATIONS("/customizations"),
 
     // Digital Factories
-    GET_DIGITAL_FACTORIES("/digital-factories?pageSize=100"),
-    GET_DIGITAL_FACTORIES_BY_IDENTITY("/digital-factories/%s"),
-    GET_VPES("/vpes"),
-    GET_VPES_BY_IDENTITY("/vpes/%s"),
-
-    POST_DIGITAL_FACTORIES("/digital-factories"),
-    POST_VPES("/vpes"),
-
+    DIGITAL_FACTORIES("/digital-factories?pageSize=100"),
+    DIGITAL_FACTORIES_BY_IDENTITY("/digital-factories/%s"),
+    VPES("/vpes"),
+    VPES_BY_IDENTITY("/vpes/%s"),
 
     // Process Group Materials
-    GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs("/digital-factories/%s/process-groups/%s/materials"),
-    GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs("/digital-factories/%s/process-groups/%s/materials/%s"),
-
+    PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_ID("/digital-factories/%s/process-groups/%s/materials"),
+    SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_ID("/digital-factories/%s/process-groups/%s/materials/%s"),
 
     // Process Group Materials Stocks
-    GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
-    GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
+    PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
+    PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_STOCK_ID("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
 
     // Process Groups
-    GET_PROCESS_GROUPS("/process-groups"),
-    GET_PROCESS_GROUP_BY_IDENTITY("/process-groups/%s"),
-
+    PROCESS_GROUPS("/process-groups"),
+    PROCESS_GROUP_BY_IDENTITY("/process-groups/%s"),
 
     // Process Group Site Variables
-    PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID("/process-groups/%s/site-variables"),
-    DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs("/process-groups/%s/site-variables/%s"),
+    PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID("/process-groups/%s/site-variables"),
+    PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs("/process-groups/%s/site-variables/%s"),
+
+    // Process Group Associations
+    GET_PG_ASSOCIATIONS("/process-group-associations?pageSize=100"),
+    PG_ASSOCIATIONS("/process-group-associations"),
+    PG_ASSOCIATIONS_BY_ID("/process-group-associations/%s"),
 
     // Site Variables
-    GET_SITE_VARIABLES("/site-variables"),
-    PUT_SITE_VARIABLES("/site-variables"),
-    DELETE_SITE_VARIABLE_BY_ID("/site-variables/%s"),
-
-    // Process Group Associations,
-    GET_PG_ASSOCIATIONS("/process-group-associations?pageSize=100"),
-    POST_PG_ASSOCIATIONS("/process-group-associations"),
-    PUT_PG_ASSOCIATIONS("/process-group-associations"),
-    GET_PG_ASSOCIATIONS_BY_ID("/process-group-associations/%s"),
-    DELETE_PG_ASSOCIATIONS_BY_ID("/process-group-associations/%s"),
-    PATCH_PG_ASSOCIATIONS_BY_ID("/process-group-associations/%s"),
+    SITE_VARIABLES("/site-variables"),
+    SITE_VARIABLE_BY_ID("/site-variables/%s"),
 
     // User Group Associations,
-    GET_UG_ASSOCIATIONS_BY_GROUP_ID("/groups/%s/user-group-associations"),
-    POST_UG_ASSOCIATIONS_BY_GROUP_ID("/groups/%s/user-group-associations"),
-    GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("/groups/%s/user-group-associations/%s"),
-    DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("/groups/%s/user-group-associations/%s"),
-    PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs("/groups/%s/user-group-associations/%s");
-
+    USER_GROUP_ASSOCIATIONS_BY_GROUP_ID("/groups/%s/user-group-associations"),
+    USER_GROUP_ASSOCIATIONS_BY_GROUP_USER_GROUP_ASSOCIATION_ID("/groups/%s/user-group-associations/%s");
 
     private final String endpoint;
 

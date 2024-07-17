@@ -112,7 +112,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -142,7 +142,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -172,7 +172,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -203,7 +203,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -234,7 +234,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -265,7 +265,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityGet =
-            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariablesItems.class)
                 .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -294,7 +294,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
         RequestEntity requestEntityUpdate =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("STRING")
@@ -329,7 +329,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Attempt to create a site variable with empty name.")
     public void emptyNameSiteVariableError() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
                     .name("")
                     .type("STRING")
@@ -351,7 +351,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Attempt to create a site variable with invalid type.")
     public void invalidTypeSiteVariableError() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))
                     .type("BLUE")
@@ -373,7 +373,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Attempt to create a site variable with empty createdBy.")
     public void emptyCreatedBySiteVariableError() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))
                     .type("STRING")
@@ -392,7 +392,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteSiteVariables(final String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(name)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -401,7 +401,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postSiteVariables(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("STRING")
@@ -417,7 +417,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postSystemVariableMapSiteVariable(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("BOOLEAN")
@@ -434,7 +434,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postSystemConfigurationMapSiteVariable(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("DOUBLE")
@@ -451,7 +451,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postPrimitiveValueMapSiteVariable(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("INTEGER")
@@ -469,7 +469,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postProcessModelDefaultsSiteVariable(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("DOUBLE")
@@ -487,7 +487,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postProcessModelOverridesSiteVariable(String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("FLOAT")
@@ -505,7 +505,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private RequestEntity postUpdatedSiteVariable(String name, String variableType, String processGroup) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(name)
                     .type("STRING")

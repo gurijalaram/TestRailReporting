@@ -52,7 +52,7 @@ public class SustainabilityMaterialsTests extends ProcessGroupUtil {
 
     private ResponseWrapper<ProcessGroupMaterial> getMaterialById() {
         RequestEntity materialById =
-            requestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterial.class)
+            requestEntityUtil.init(VDSAPIEnum.SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterial.class)
                 .inlineVariables(VDSTestUtil.getDigitalFactoryIdentity(), ProcessGroupUtil.getAssociatedProcessGroupIdentity(), ProcessGroupUtil.getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 

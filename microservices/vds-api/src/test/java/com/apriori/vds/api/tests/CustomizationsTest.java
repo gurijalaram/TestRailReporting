@@ -20,7 +20,7 @@ public class CustomizationsTest extends VDSTestUtil {
     @TestRail(id = {7953})
     @Description("Get a list of Customizations for a specific customer.")
     public void getCustomizations() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CUSTOMIZATIONS, CustomizationsItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CUSTOMIZATIONS, CustomizationsItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();

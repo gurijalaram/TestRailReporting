@@ -31,7 +31,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_ID, ProcessGroupMaterialsItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -42,7 +42,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static List<ProcessGroupMaterialStock> getProcessGroupMaterialStocks() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -54,7 +54,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
     protected static List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
         for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
             RequestEntity requestEntity =
-                requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
                     .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
                     .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -74,7 +74,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static ResponseWrapper<ProcessGroupMaterialStock> getMaterialStockById(List<ProcessGroupMaterialStock> processGroupMaterialStocks) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_STOCK_ID, ProcessGroupMaterialStock.class)
                 .inlineVariables(
                     getDigitalFactoryIdentity(),
                     getAssociatedProcessGroupIdentity(),
@@ -87,7 +87,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUPS, ProcessGroups.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(requestEntity).get();

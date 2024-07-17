@@ -42,7 +42,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES, DigitalFactoriesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
@@ -65,7 +65,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GROUPS, AccessControlGroupItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();

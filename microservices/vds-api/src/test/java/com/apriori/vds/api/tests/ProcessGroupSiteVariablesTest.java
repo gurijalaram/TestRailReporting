@@ -46,7 +46,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         siteVariableNamesToDelete.add(siteVariableBeforeUpdate.getName());
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate))
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -57,7 +57,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteProcessGroupSiteVariableByName(final String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity(), name)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -66,7 +66,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable postProcessGroupSiteVariables() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))

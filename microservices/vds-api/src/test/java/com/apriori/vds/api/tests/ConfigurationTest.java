@@ -38,7 +38,7 @@ public class ConfigurationTest extends VDSTestUtil {
 
         assertNotEquals(0, configurationsItems.getItems().size(), "To get Configuration, response should contain it.");
 
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATIONS_BY_IDENTITY, Configuration.class)
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -50,8 +50,8 @@ public class ConfigurationTest extends VDSTestUtil {
     @Description("Replaces a CustomerConfiguration for a customer. Creates it if it is missing.")
     @Disabled
     public void putConfiguration() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.PUT_CONFIGURATION, null)
-            .headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATION, null)
+            .headers(new HashMap<>() {
                 {
                     put("Content-Type", "application/json");
                 }
@@ -65,7 +65,7 @@ public class ConfigurationTest extends VDSTestUtil {
     }
 
     private ConfigurationsItems getConfigurationsItems() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATIONS, ConfigurationsItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTPRequest.build(requestEntity).get();

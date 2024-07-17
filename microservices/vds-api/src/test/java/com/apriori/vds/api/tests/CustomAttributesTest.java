@@ -20,7 +20,7 @@ public class CustomAttributesTest extends VDSTestUtil {
     @TestRail(id = {7949})
     @Description("Returns a list of UDAs for a specific customer.")
     public void getCustomAttributes() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
