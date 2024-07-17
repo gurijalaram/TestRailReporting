@@ -7,6 +7,7 @@ import com.apriori.bcs.api.models.response.ProcessGroups;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroup;
@@ -22,17 +23,21 @@ import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
 
-public class ProcessGroupUtil extends VDSTestUtil {
-
+public class ProcessGroupUtil {
+    private RequestEntityUtil requestEntityUtil;
     private static String groupIdentity;
     private static String materialIdentity;
     private static String associatedProcessGroupIdentity;
     private static String processGroupIdentity;
 
-    protected static List<ProcessGroupMaterial> getProcessGroupMaterial() {
+    public ProcessGroupUtil(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
+    }
+
+    public List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_ID, ProcessGroupMaterialsItems.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity())
+                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
@@ -40,10 +45,10 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return processGroupMaterialsItems.getResponseEntity().getItems();
     }
 
-    protected static List<ProcessGroupMaterialStock> getProcessGroupMaterialStocks() {
+    public List<ProcessGroupMaterialStock> getProcessGroupMaterialStocks() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
+                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ProcessGroupMaterialsStocksItems> materialStocksItems = HTTPRequest.build(requestEntity).get();
@@ -51,11 +56,11 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return materialStocksItems.getResponseEntity().getItems();
     }
 
-    protected static List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
+    public List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
         for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
             RequestEntity requestEntity =
                 requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
-                    .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
+                    .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
                     .expectedResponseCode(HttpStatus.SC_OK);
 
             ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
@@ -72,11 +77,11 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return null;
     }
 
-    protected static ResponseWrapper<ProcessGroupMaterialStock> getMaterialStockById(List<ProcessGroupMaterialStock> processGroupMaterialStocks) {
+    public ResponseWrapper<ProcessGroupMaterialStock> getMaterialStockById(List<ProcessGroupMaterialStock> processGroupMaterialStocks) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_STOCK_ID, ProcessGroupMaterialStock.class)
                 .inlineVariables(
-                    getDigitalFactoryIdentity(),
+                    new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(),
                     getAssociatedProcessGroupIdentity(),
                     getMaterialIdentity(),
                     processGroupMaterialStocks.get(0).getIdentity()
@@ -86,7 +91,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    protected static List<ProcessGroup> getProcessGroupsResponse() {
+    public List<ProcessGroup> getProcessGroupsResponse() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUPS, ProcessGroups.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -95,14 +100,14 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return processGroupsResponse.getResponseEntity().getItems();
     }
 
-    public static String getAssociatedProcessGroupIdentity() {
+    public String getAssociatedProcessGroupIdentity() {
         if (associatedProcessGroupIdentity == null) {
             associatedProcessGroupIdentity = getPGAssociationIdByPGName(ProcessGroupEnum.STOCK_MACHINING);
         }
         return associatedProcessGroupIdentity;
     }
 
-    private static String getPGAssociationIdByPGName(ProcessGroupEnum processGroup) {
+    private String getPGAssociationIdByPGName(ProcessGroupEnum processGroup) {
         return  getProcessGroupAssociations().stream()
             .filter(pgAssociation ->
                 pgAssociation.getProcessGroupName().equals(processGroup.getProcessGroup()))
@@ -110,14 +115,14 @@ public class ProcessGroupUtil extends VDSTestUtil {
             .getProcessGroupIdentity();
     }
 
-    public static String getProcessGroupIdentity() {
+    public String getProcessGroupIdentity() {
         if (processGroupIdentity == null) {
             processGroupIdentity = getProcessGroupsResponse().get(0).getIdentity();
         }
         return processGroupIdentity;
     }
 
-    protected static ProcessGroupAssociation getFirstGroupAssociation() {
+    public ProcessGroupAssociation getFirstGroupAssociation() {
         List<ProcessGroupAssociation> processGroupAssociations =  getProcessGroupAssociations();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -127,7 +132,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return processGroupAssociations.get(0);
     }
 
-    protected static List<ProcessGroupAssociation> getProcessGroupAssociations() {
+    public List<ProcessGroupAssociation> getProcessGroupAssociations() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -138,8 +143,8 @@ public class ProcessGroupUtil extends VDSTestUtil {
             .getItems();
     }
 
-    private static AccessControlGroup getSingleGroup() {
-        List<AccessControlGroup> accessControlGroups = getAccessControlGroupsResponse();
+    private AccessControlGroup getSingleGroup() {
+        List<AccessControlGroup> accessControlGroups = new VDSTestUtil(requestEntityUtil).getAccessControlGroupsResponse();
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(accessControlGroups.size()).isNotZero();
@@ -148,14 +153,14 @@ public class ProcessGroupUtil extends VDSTestUtil {
         return accessControlGroups.get(0);
     }
 
-    public static String getMaterialIdentity() {
+    public String getMaterialIdentity() {
         if (materialIdentity == null) {
             materialIdentity = getProcessGroupMaterial().get(0).getIdentity();
         }
         return materialIdentity;
     }
 
-    public static String getGroupIdentity() {
+    public String getGroupIdentity() {
         if (groupIdentity == null) {
             groupIdentity = getSingleGroup().getIdentity();
         }
