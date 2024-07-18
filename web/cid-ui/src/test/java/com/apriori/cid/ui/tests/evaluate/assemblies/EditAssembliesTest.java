@@ -106,7 +106,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
     @Test
     @Tag(ASSEMBLY)
-    @TestRail(id = {10799, 6076, 6515})
+    @TestRail(id = {10799, 6076, 6515, 31338})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
 
@@ -123,6 +123,7 @@ public class EditAssembliesTest extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
         softAssertions.assertThat(evaluatePage.isAnnualVolumeInputEnabled()).isEqualTo(false);
         softAssertions.assertThat(evaluatePage.isAnnualYearsInputEnabled()).isEqualTo(false);
+        softAssertions.assertThat(evaluatePage.isManualModeToggleEnabled()).as("Verify Manual Mode is disabled for assemblies").isFalse();
 
         evaluatePage.editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
