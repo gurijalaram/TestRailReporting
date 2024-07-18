@@ -688,7 +688,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14997, 15811})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Hydroforming",ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
