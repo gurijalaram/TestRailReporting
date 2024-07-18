@@ -18,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AchCustomersTests {
-
     private AchTestUtil achTestUtil;
 
     @BeforeEach

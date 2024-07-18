@@ -18,6 +18,7 @@ public class CustomerInfrastructure {
     private ApplicationUtil applicationUtil;
     private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
+    private DeploymentUtil deploymentUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
@@ -30,6 +31,7 @@ public class CustomerInfrastructure {
         this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         this.installationUtil = new InstallationUtil(requestEntityUtil);
         this.siteUtil = new SiteUtil(requestEntityUtil);
+        this.deploymentUtil = new DeploymentUtil(requestEntityUtil);
     }
 
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
@@ -40,7 +42,7 @@ public class CustomerInfrastructure {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
