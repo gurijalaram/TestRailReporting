@@ -25,7 +25,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class DisplayUnitsTests extends TestUtil {
-
     private AcsResources acsResources;
 
     @BeforeEach

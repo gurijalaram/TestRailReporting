@@ -29,7 +29,6 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -53,7 +52,6 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-    private UserCredentials user;
     private FileUploadResources fileUploadResources;
     private WorkorderApiUtils workorderApiUtils;
     private AcsResources acsResources;
@@ -64,7 +62,6 @@ public class WorkorderAPITests extends TestUtil {
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
-        user = requestEntityUtil.getEmbeddedUser();
         acsResources = new AcsResources(requestEntityUtil);
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);

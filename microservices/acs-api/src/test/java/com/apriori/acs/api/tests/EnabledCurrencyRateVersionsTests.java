@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class EnabledCurrencyRateVersionsTests extends TestUtil {
-
     private AcsResources acsResources;
 
     @BeforeEach

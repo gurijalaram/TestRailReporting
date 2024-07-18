@@ -29,7 +29,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class RoutingSelectionTests extends TestUtil {
     private FileUploadResources fileUploadResources;
-    private WorkorderApiUtils workorderApiUtils;
     private NewPartRequest productionInfoInputs;
     private AcsResources acsResources;
     private String testScenarioName;
@@ -38,9 +37,8 @@ public class RoutingSelectionTests extends TestUtil {
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
-        workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
-        productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
+        productionInfoInputs = new WorkorderApiUtils(requestEntityUtil).setupProductionInfoInputs();
         testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
     }
 

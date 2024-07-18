@@ -1,14 +1,9 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.models.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.api.utils.acs.AcsResources;
-import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;

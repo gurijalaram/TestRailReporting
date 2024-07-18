@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class PartPrimaryProcessGroupsTests extends TestUtil {
-
     private AcsResources acsResources;
 
     @BeforeEach

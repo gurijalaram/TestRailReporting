@@ -28,7 +28,6 @@ public class DesignGuidanceTests {
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
     }
 
-
     @Test
     @TestRail(id = 28350)
     @Description("Test Get Design Guidance for Casting - Die")
