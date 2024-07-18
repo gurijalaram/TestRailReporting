@@ -6,6 +6,7 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.api.models.response.process.group.site.variable.SiteVariable;
@@ -14,7 +15,7 @@ import com.apriori.vds.api.models.response.process.group.site.variable.SiteVaria
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 
-public class SiteVariableUtil {
+public class SiteVariableUtil extends TestUtil {
     protected static final String updatedName = new GenerateStringUtil().generateAlphabeticString("Site", 5);
     protected static final String updatedType = "STRING";
     protected static final String updatedValue = "UpdatedValue";
@@ -22,6 +23,7 @@ public class SiteVariableUtil {
     private RequestEntityUtil requestEntityUtil;
 
     public SiteVariableUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
         this.requestEntityUtil = requestEntityUtil;
     }
 
@@ -83,7 +85,7 @@ public class SiteVariableUtil {
      */
     public void deleteProcessGroupSiteVariableByName(final String name) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
+            requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_ID, null)
                 .inlineVariables(new ProcessGroupUtil(requestEntityUtil).getProcessGroupIdentity(), name)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 

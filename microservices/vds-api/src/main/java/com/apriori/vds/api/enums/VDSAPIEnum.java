@@ -41,7 +41,7 @@ public enum VDSAPIEnum implements ExternalEndpointEnum {
 
     // Process Group Site Variables
     PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID("/process-groups/%s/site-variables"),
-    PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs("/process-groups/%s/site-variables/%s"),
+    PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_ID("/process-groups/%s/site-variables/%s"),
 
     // Process Group Associations
     GET_PG_ASSOCIATIONS("/process-group-associations?pageSize=100"),
