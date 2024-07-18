@@ -16,6 +16,7 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -66,6 +67,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private UserProfilePage userProfilePage;
     private String installationIdentity;
     private String appIdentity;
+    private DeploymentUtil deploymentUtil;
 
     @BeforeEach
     public void setup() {
@@ -76,6 +78,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
 
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateNumericString("SFID", 10);
@@ -93,7 +96,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> deployment = deploymentUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);

@@ -13,6 +13,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -61,6 +62,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private String deploymentIdentity;
     private String installationIdentity;
     private String appIdentity;
+    private DeploymentUtil deploymentUtil;
 
     @BeforeEach
     public void setup() {
@@ -71,6 +73,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         userCreation = new UserCreation(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -84,7 +87,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         String deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> deployment = deploymentUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);

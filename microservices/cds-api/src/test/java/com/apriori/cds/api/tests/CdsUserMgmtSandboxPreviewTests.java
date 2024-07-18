@@ -12,6 +12,7 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -51,6 +52,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     private String previewInstallationIdentity;
     private String sandboxInstallationIdentity;
     private String userIdentity;
+    private DeploymentUtil deploymentUtil;
 
     @BeforeEach
     public void setDetails() {
@@ -61,6 +63,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         customerUtil = new CustomerUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
 
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     }
@@ -102,7 +105,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     @Description("The flag 'sandboxEnabled' is not persisted when Sandbox installation does not exist")
     public void sandboxInstallationNotExists() {
         setCustomerData();
-        cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
+        deploymentUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, true, false);
         ResponseWrapper<Enablements> getUserEnablements = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
@@ -160,7 +163,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     @Description("The flag 'previewEnabled' is not persisted when Preview installation does not exist")
     public void previewInstallationNotExists() {
         setCustomerData();
-        cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        deploymentUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, false, true);
         ResponseWrapper<Enablements> getUserEnablements = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
@@ -217,7 +220,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentSandboxIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         sandboxInstallationIdentity = installation.getResponseEntity().getIdentity();
@@ -232,7 +235,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentPreviewIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         previewInstallationIdentity = installation.getResponseEntity().getIdentity();
