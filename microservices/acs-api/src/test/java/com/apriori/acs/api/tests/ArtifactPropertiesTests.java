@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,30 +14,36 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class ArtifactPropertiesTests extends TestUtil {
-    private final UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
+    private FileUploadResources fileUploadResources;
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+        acsResources = new AcsResources(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = 12079)
     @Description("Verify Get Artifact Properties Endpoint")
     public void testGetArtifactPropertiesEndpoint() {
-        FileUploadResources fileUploadResources = new FileUploadResources(user);
-        AcsResources acsResources = new AcsResources(user);
-
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 

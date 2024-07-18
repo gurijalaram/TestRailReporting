@@ -56,12 +56,11 @@ import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.fms.api.controller.FileManagementController;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -94,9 +93,11 @@ public class FileUploadResources {
     private Assembly currentAssembly;
 
     private String currentWorkorderId;
+    private final RequestEntityUtil requestEntityUtil;
 
-    public FileUploadResources(UserCredentials user) {
-        this.token = new OldAuthorizationUtil().getTokenAsString(user);
+    public FileUploadResources(RequestEntityUtil requestEntityUtil) {
+        this.token = new OldAuthorizationUtil().getTokenAsString(requestEntityUtil.getEmbeddedUser());
+        this.requestEntityUtil = requestEntityUtil;
     }
 
     /**
@@ -570,14 +571,15 @@ public class FileUploadResources {
     public AdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.ADMIN_INFO, AdminInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 publishScenarioKey.getWorkspaceId().toString(),
                 publishScenarioKey.getTypeName(),
                 publishScenarioKey.getMasterName(),
-                publishScenarioKey.getStateName());
+                publishScenarioKey.getStateName()
+            );
 
         return (AdminInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -591,7 +593,7 @@ public class FileUploadResources {
     public ImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.IMAGE_INFO, ImageInfoResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -599,7 +601,8 @@ public class FileUploadResources {
                 scenarioIterationKey.getScenarioKey().getTypeName(),
                 scenarioIterationKey.getScenarioKey().getMasterName(),
                 scenarioIterationKey.getScenarioKey().getStateName(),
-                scenarioIterationKey.getIteration().toString());
+                scenarioIterationKey.getIteration().toString()
+            );
 
         return (ImageInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -613,7 +616,7 @@ public class FileUploadResources {
     public CadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.CAD_METADATA, CadMetadataResponse.class)
             .headers(headers)
             .inlineVariables(fileMetadataIdentity);
@@ -633,7 +636,7 @@ public class FileUploadResources {
 
         RequestEntity requestEntity;
         if (ignore500Error) {
-            requestEntity = RequestEntityUtil_Old
+            requestEntity = requestEntityUtil
                 .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
                 .headers(headers)
                 .body(new WorkorderRequest()
@@ -647,7 +650,7 @@ public class FileUploadResources {
             }
         }
 
-        requestEntity = RequestEntityUtil_Old
+        requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
             .headers(headers)
             .body(new WorkorderRequest()
@@ -668,7 +671,7 @@ public class FileUploadResources {
     public Object getImageById(String imageId) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.IMAGES, null)
             .headers(headers)
             .inlineVariables(imageId);
@@ -763,7 +766,7 @@ public class FileUploadResources {
 
         RequestEntity requestEntity;
         if (ignore500Error) {
-            requestEntity = RequestEntityUtil_Old
+            requestEntity = requestEntityUtil
                 .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
                 .headers(headers)
                 .body(new WorkorderRequest()
@@ -777,7 +780,7 @@ public class FileUploadResources {
             }
         }
 
-        requestEntity = RequestEntityUtil_Old
+        requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
             .headers(headers)
             .body(new WorkorderRequest()
@@ -798,7 +801,7 @@ public class FileUploadResources {
     private Object getWorkorderDetails(String workorderId) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.WORKORDER_DETAILS, WorkorderDetailsResponse.class)
             .headers(headers)
             .inlineVariables(workorderId);
@@ -907,7 +910,7 @@ public class FileUploadResources {
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.INITIALIZE_COST_SCENARIO, CreateWorkorderResponse.class)
             .headers(headers)
             .body(productionInfo(fileObject, scenarioKey, processGroup))
@@ -930,7 +933,7 @@ public class FileUploadResources {
     private int getLatestIteration(ScenarioKey scenarioKey) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.LATEST_ITERATION, CostIteration.class)
             .headers(headers)
             .inlineVariables(
@@ -963,7 +966,7 @@ public class FileUploadResources {
         do {
             setupHeaders("application/json");
 
-            final RequestEntity requestEntity = RequestEntityUtil_Old
+            final RequestEntity requestEntity = requestEntityUtil
                 .init(CidWorkorderApiEnum.CHECK_WORKORDER_STATUS, null)
                 .headers(headers)
                 .inlineVariables(workorderId);
@@ -995,7 +998,7 @@ public class FileUploadResources {
         OrderId orderId1 = new OrderId();
         orderId1.setOrderId(orderId);
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, null)
             .headers(headers)
             .body(FileWorkorder.builder()

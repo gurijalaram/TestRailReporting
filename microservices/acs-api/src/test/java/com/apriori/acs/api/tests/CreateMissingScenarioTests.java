@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,13 +10,14 @@ import com.apriori.acs.api.models.response.acs.missingscenario.MissingScenarioRe
 import com.apriori.acs.api.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.api.utils.Constants;
 import com.apriori.acs.api.utils.acs.AcsResources;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,13 +26,18 @@ import java.time.ZoneOffset;
 
 @ExtendWith(TestRulesAPI.class)
 public class CreateMissingScenarioTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = 8767)
     @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         MissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
 
         assertThat(createMissingScenarioResponse.isResourceCreated(), is(equalTo(true)));
@@ -54,7 +59,9 @@ public class CreateMissingScenarioTests extends TestUtil {
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), is(startsWith(currentDate)));
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), is(containsString("qa-automation")));
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), is(startsWith(currentDate)));
-        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName(), is(equalTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName())));
-        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName(), is(startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName())));
+        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName(),
+            is(equalTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName())));
+        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName(),
+            is(startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName())));
     }
 }

@@ -12,6 +12,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
@@ -90,7 +91,9 @@ public class FileManagementController {
             requestQueryParams.use("resourceName", resourceName);
         }
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(FMSAPIEnum.FILES, FileResponse.class)
+        RequestEntityUtil requestEntityUtil = new RequestEntityUtil(userCredentials);
+        RequestEntity requestEntity = requestEntityUtil
+            .init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
             .queryParams(requestQueryParams)

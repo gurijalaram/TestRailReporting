@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests.workorders;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -31,8 +30,9 @@ import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -42,6 +42,7 @@ import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -52,12 +53,22 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-    private final FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-    private final AcsResources acsResources = new AcsResources(userCredentials);
+    private UserCredentials user;
+    private FileUploadResources fileUploadResources;
+    private WorkorderApiUtils workorderApiUtils;
+    private AcsResources acsResources;
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String sheetMetalProcessGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        user = requestEntityUtil.getEmbeddedUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+    }
 
     @Test
     @Issue("AP-69600")
@@ -93,7 +104,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7697})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(castingProcessGroup);
@@ -124,7 +134,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11974)
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
@@ -175,7 +184,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7710})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
         FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
@@ -199,7 +207,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8681})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         Object productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -262,7 +269,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8689})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
         FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
@@ -289,7 +295,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -326,7 +331,6 @@ public class WorkorderAPITests extends TestUtil {
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
         String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -365,7 +369,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11981)
     @Description("Delete Scenario")
     public void testDeleteScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
@@ -395,7 +398,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11990)
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         workorderApiUtils.testShallowEditOfScenario(
             "Casting.prt",
             false
@@ -406,7 +408,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11991)
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         workorderApiUtils.testShallowEditOfScenario(
             "PatternThreadHoles.asm",
             true
@@ -417,7 +418,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12044)
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
@@ -440,7 +440,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12047)
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
