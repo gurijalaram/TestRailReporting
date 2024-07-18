@@ -34,7 +34,7 @@ import java.util.Arrays;
 
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsUserEnablementsTests extends CdsTestUtil {
+public class CdsUserEnablementsTests {
     private final String customerAssignedRole = "APRIORI_CONTRIBUTOR";
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -47,7 +47,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     private String userIdentity;
 
     @BeforeEach
-    public void setDetails() {
+    public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
