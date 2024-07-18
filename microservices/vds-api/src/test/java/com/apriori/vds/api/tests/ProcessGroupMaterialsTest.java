@@ -43,7 +43,7 @@ public class ProcessGroupMaterialsTest {
     public void getMaterialByIdentity() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterial.class)
-                .inlineVariables(vdsTestUtil.getDigitalFactoriesResponse().getIdentity(), processGroupUtil.getAssociatedProcessGroupIdentity(), processGroupUtil.getMaterialIdentity())
+                .inlineVariables(vdsTestUtil.getDigitalFactories().getIdentity(), processGroupUtil.getAssociatedProcessGroupIdentity(), processGroupUtil.getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();

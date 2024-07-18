@@ -37,7 +37,7 @@ public class ProcessGroupUtil {
     public List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_ID, ProcessGroupMaterialsItems.class)
-                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity())
+                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactories().getIdentity(), getAssociatedProcessGroupIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
@@ -48,7 +48,7 @@ public class ProcessGroupUtil {
     public List<ProcessGroupMaterialStock> getProcessGroupMaterialStocks() {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
-                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
+                .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactories().getIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ProcessGroupMaterialsStocksItems> materialStocksItems = HTTPRequest.build(requestEntity).get();
@@ -60,7 +60,7 @@ public class ProcessGroupUtil {
         for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
             RequestEntity requestEntity =
                 requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_ID, ProcessGroupMaterialsStocksItems.class)
-                    .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
+                    .inlineVariables(new VDSTestUtil(requestEntityUtil).getDigitalFactories().getIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
                     .expectedResponseCode(HttpStatus.SC_OK);
 
             ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
@@ -81,7 +81,7 @@ public class ProcessGroupUtil {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_STOCK_ID, ProcessGroupMaterialStock.class)
                 .inlineVariables(
-                    new VDSTestUtil(requestEntityUtil).getDigitalFactoriesResponse().getIdentity(),
+                    new VDSTestUtil(requestEntityUtil).getDigitalFactories().getIdentity(),
                     getAssociatedProcessGroupIdentity(),
                     getMaterialIdentity(),
                     processGroupMaterialStocks.get(0).getIdentity()
@@ -134,7 +134,7 @@ public class ProcessGroupUtil {
 
     public List<ProcessGroupAssociation> getProcessGroupAssociations() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ProcessGroupAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
@@ -144,7 +144,7 @@ public class ProcessGroupUtil {
     }
 
     private AccessControlGroup getSingleGroup() {
-        List<AccessControlGroup> accessControlGroups = new VDSTestUtil(requestEntityUtil).getAccessControlGroupsResponse();
+        List<AccessControlGroup> accessControlGroups = new VDSTestUtil(requestEntityUtil).getAccessControlGroups();
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(accessControlGroups.size()).isNotZero();

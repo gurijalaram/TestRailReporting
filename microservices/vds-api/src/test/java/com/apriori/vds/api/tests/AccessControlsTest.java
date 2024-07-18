@@ -31,7 +31,7 @@ public class AccessControlsTest {
     @TestRail(id = {7752})
     @Description("Get a list of Access Control Groups for a specific customer.")
     public void getGroups() {
-        vdsTestUtil.getAccessControlGroupsResponse();
+        vdsTestUtil.getAccessControlGroups();
     }
 
     @Test

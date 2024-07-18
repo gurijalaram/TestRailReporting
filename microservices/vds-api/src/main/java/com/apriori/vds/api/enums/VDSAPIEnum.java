@@ -22,7 +22,7 @@ public enum VDSAPIEnum implements ExternalEndpointEnum {
     CUSTOMIZATIONS("/customizations"),
 
     // Digital Factories
-    DIGITAL_FACTORIES("/digital-factories?pageSize=100"),
+    DIGITAL_FACTORIES("/digital-factories"),
     DIGITAL_FACTORIES_BY_IDENTITY("/digital-factories/%s"),
     VPES("/vpes"),
     VPES_BY_IDENTITY("/vpes/%s"),
@@ -44,7 +44,6 @@ public enum VDSAPIEnum implements ExternalEndpointEnum {
     PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_ID("/process-groups/%s/site-variables/%s"),
 
     // Process Group Associations
-    GET_PG_ASSOCIATIONS("/process-group-associations?pageSize=100"),
     PG_ASSOCIATIONS("/process-group-associations"),
     PG_ASSOCIATIONS_BY_ID("/process-group-associations/%s"),
 

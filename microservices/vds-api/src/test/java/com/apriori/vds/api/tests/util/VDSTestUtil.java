@@ -3,6 +3,7 @@ package com.apriori.vds.api.tests.util;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -31,8 +32,9 @@ public class VDSTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public DigitalFactory getDigitalFactoriesResponse() {
+    public DigitalFactory getDigitalFactories() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+            .queryParams(new QueryParams().use("pageSize", "100"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
@@ -66,7 +68,7 @@ public class VDSTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public List<AccessControlGroup> getAccessControlGroupsResponse() {
+    public List<AccessControlGroup> getAccessControlGroups() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GROUPS, AccessControlGroupItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 

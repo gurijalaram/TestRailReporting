@@ -45,7 +45,7 @@ public class DigitalFactoriesTest {
     @TestRail(id = {8030})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getDigitalFactories() {
-        vdsTestUtil.getDigitalFactoriesResponse();
+        vdsTestUtil.getDigitalFactories();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class DigitalFactoriesTest {
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(vdsTestUtil.getDigitalFactoriesResponse().getIdentity())
+            .inlineVariables(vdsTestUtil.getDigitalFactories().getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
