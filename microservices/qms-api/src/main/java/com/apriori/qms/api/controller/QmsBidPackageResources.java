@@ -183,7 +183,7 @@ public class QmsBidPackageResources {
     public static <T> T createBidPackageProject(HashMap<String, String> projectAttributesMap, String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         BidPackageProjectRequest projectRequest = getBidPackageProjectRequestBuilder(projectAttributesMap, currentUser);
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity)
             .body(projectRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -206,7 +206,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T createBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity)
             .body(bidPackageProjectRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -246,7 +246,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
@@ -290,7 +290,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT, klass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .body(bidPackageProjectRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -469,7 +469,7 @@ public class QmsBidPackageResources {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, BidPackageProjectUsersPostResponse.class)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -493,7 +493,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T createBidPackageProjectUser(BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -518,7 +518,7 @@ public class QmsBidPackageResources {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(deleteRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -546,7 +546,7 @@ public class QmsBidPackageResources {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(deleteRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -622,7 +622,7 @@ public class QmsBidPackageResources {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -648,7 +648,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T updateBidPackageProjectUser(BidPackageProjectUserRequest projectUserRequest, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .body(projectUserRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -770,7 +770,7 @@ public class QmsBidPackageResources {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS_DELETE, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectItemsRequestBuilder)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
