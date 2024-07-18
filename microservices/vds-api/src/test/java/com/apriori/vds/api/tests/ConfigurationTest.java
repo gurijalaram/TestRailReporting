@@ -1,5 +1,6 @@
 package com.apriori.vds.api.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -50,7 +51,9 @@ public class ConfigurationTest {
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<Configuration> response = HTTPRequest.build(requestEntity).get();
+
+        assertThat(response.getResponseEntity().getIdentity()).isNotEmpty();
     }
 
     @Test

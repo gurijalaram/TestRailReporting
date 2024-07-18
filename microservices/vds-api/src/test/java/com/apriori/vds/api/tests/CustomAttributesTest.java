@@ -1,8 +1,11 @@
 package com.apriori.vds.api.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -31,6 +34,8 @@ public class CustomAttributesTest {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<CustomAttributesItems> response = HTTPRequest.build(requestEntity).get();
+
+        assertThat(response.getResponseEntity().getItems()).isNotEmpty();
     }
 }
