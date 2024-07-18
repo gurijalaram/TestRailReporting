@@ -1,6 +1,7 @@
 package com.apriori.shared.util.models.response;
 
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.annotations.CreatableModel;
 import com.apriori.shared.util.annotations.Schema;
 
@@ -90,4 +91,9 @@ public class User {
     protected Boolean canEditEnablements;
     @Expose
     protected Boolean canEditProfile;
+    private Customer customerData;
+
+    public Customer getCustomerData() {
+        return customerData = customerData == null ? SharedCustomerUtil.getCustomerData() : customerData;
+    }
 }

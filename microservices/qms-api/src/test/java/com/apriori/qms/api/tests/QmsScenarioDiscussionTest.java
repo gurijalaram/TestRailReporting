@@ -107,7 +107,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Get list of all Scenario Discussions")
     public void getScenarioDiscussions() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -187,7 +187,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     public void getDiscussionComment() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, DiscussionCommentResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity(), discussionCommentResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -201,7 +201,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     public void getDiscussionComments() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentsResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -458,7 +458,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 

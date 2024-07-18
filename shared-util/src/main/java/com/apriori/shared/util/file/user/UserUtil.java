@@ -82,19 +82,6 @@ public class UserUtil {
     }
 
     /**
-     * Return common user with cloud context
-     *
-     * @return User
-     */
-    public static UserCredentials getUserWithCloudContext() {
-        UserCredentials user = UserCommonService.getUser()
-            .generateToken()
-            .generateCloudContext();
-        logInfo(user);
-        return user;
-    }
-
-    /**
      * Gets a common user for on prem env (without token or cloud context)
      *
      * @return UserCredentials instance
