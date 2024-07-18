@@ -10,6 +10,7 @@ import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -43,6 +44,7 @@ public class CdsInstallationsTests {
     private CustomerUtil customerUtil;
     private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
+    private DeploymentUtil deploymentUtil;
 
     @BeforeEach
     public void setup() {
@@ -52,6 +54,7 @@ public class CdsInstallationsTests {
         customerUtil = new CustomerUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -105,7 +108,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
@@ -152,7 +155,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
@@ -205,7 +208,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
