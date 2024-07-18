@@ -29,7 +29,7 @@ public class CidWorkorderAPITests extends TestUtil {
     }
 
     @ParameterizedTest
-    @CsvFileSource(files = "src/test/resources/auto_api_upload.csv")
+    @CsvFileSource(resources = "/auto_api_upload.csv")
     @Description("Upload, cost and publish a part using CID API")
     public void createDataUploadApi(String fileName, String scenarioName, String processGroup) {
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
