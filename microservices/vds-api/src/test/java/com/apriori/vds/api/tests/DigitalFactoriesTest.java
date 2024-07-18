@@ -70,7 +70,7 @@ public class DigitalFactoriesTest {
     @TestRail(id = {8032})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getVPEs() {
-        this.getVPEsResponse();
+        this.getVpes();
     }
 
     @Test
@@ -78,13 +78,13 @@ public class DigitalFactoriesTest {
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getVPEsByIdentity() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(this.getVPEsResponse().getIdentity())
+            .inlineVariables(this.getVpes().getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
     }
 
-    private DigitalFactory getVPEsResponse() {
+    private DigitalFactory getVpes() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES, DigitalFactoriesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
