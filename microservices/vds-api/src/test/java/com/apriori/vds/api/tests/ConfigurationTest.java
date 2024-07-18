@@ -1,19 +1,22 @@
 package com.apriori.vds.api.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.configuration.Configuration;
 import com.apriori.vds.api.models.response.configuration.ConfigurationsItems;
-import com.apriori.vds.api.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +24,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.HashMap;
 
 @ExtendWith(TestRulesAPI.class)
-public class ConfigurationTest extends VDSTestUtil {
+public class ConfigurationTest {
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+    }
 
     @Test
     @TestRail(id = {7929})
@@ -38,11 +47,13 @@ public class ConfigurationTest extends VDSTestUtil {
 
         assertNotEquals(0, configurationsItems.getItems().size(), "To get Configuration, response should contain it.");
 
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATIONS_BY_IDENTITY, Configuration.class)
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<Configuration> response = HTTPRequest.build(requestEntity).get();
+
+        assertThat(response.getResponseEntity().getIdentity()).isNotEmpty();
     }
 
     @Test
@@ -50,8 +61,8 @@ public class ConfigurationTest extends VDSTestUtil {
     @Description("Replaces a CustomerConfiguration for a customer. Creates it if it is missing.")
     @Disabled
     public void putConfiguration() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.PUT_CONFIGURATION, null)
-            .headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATION, null)
+            .headers(new HashMap<>() {
                 {
                     put("Content-Type", "application/json");
                 }
@@ -65,7 +76,7 @@ public class ConfigurationTest extends VDSTestUtil {
     }
 
     private ConfigurationsItems getConfigurationsItems() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.CONFIGURATIONS, ConfigurationsItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTPRequest.build(requestEntity).get();
