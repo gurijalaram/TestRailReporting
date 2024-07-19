@@ -36,11 +36,6 @@ public class CdsTestUtil extends TestUtil {
         this.requestEntityUtil = requestEntityUtil;
     }
 
-    // TODO: 14/06/2024 cn - remove in next iteration
-    // this empty constructor is needed just for now to avoid multiple errors.
-    public CdsTestUtil() {
-    }
-
     /**
      * @param customerIdentity customer id
      * @param userIdentity     user id
