@@ -145,12 +145,15 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15817, 15817, 15820})
     @Description("Validate routings availability in regards to scenario cost status")
     public void costStatusAndRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
