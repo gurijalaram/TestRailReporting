@@ -13,6 +13,8 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     MATERIALS_INFO("/ws/workspace/vpes/%s/process-groups/%s/materials-info"),
     MATERIAL_METADATA("/ws/workspace/vpes/%s/process-groups/%s/material-type"),
     MATERIAL_METADATA_REVISION("/ws/workspace/vpes/%s/revisions/%s/process-groups/%s/material-type"),
+    MATERIAL_STOCK_METADATA("/ws/workspace/vpes/%s/process-groups/%s/material-stock-type"),
+    MATERIAL_STOCK_METADATA_REVISION("/ws/workspace/vpes/%s/revisions/%s/process-groups/%s/material-stock-type"),
     ARTIFACT_PROPERTIES("/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/artifact-properties/%s/artifacts"),
     ARTIFACT_TABLE_INFO("/ws/workspace/process-groups/%s/artifact-tableinfos/%s"),
     CUSTOM_UNIT_VARIANT_SETTINGS("/ws/workspace/users/%s/custom-unit-variant-settings"),
