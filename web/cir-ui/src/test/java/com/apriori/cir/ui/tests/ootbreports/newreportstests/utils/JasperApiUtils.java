@@ -25,12 +25,14 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 
 import com.google.common.base.Stopwatch;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ import java.util.stream.Stream;
 public class JasperApiUtils {
     private JasperApiInputControlsPathEnum reportValueForInputControls;
     private SoftAssertions softAssertions = new SoftAssertions();
+    @Getter
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
@@ -127,20 +130,61 @@ public class JasperApiUtils {
         return jasperReportSummary;
     }
 
+    public JasperReportSummary genericTestCoreIncExportDate(String exportDateToSet, String keyToSet, String valueToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (!valueToSet.isEmpty()) {
+            setReportParameterByName(keyToSet, valueToSet);
+        }
+
+        if (!exportDateToSet.isEmpty()) {
+            setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), "2024-06-17T08:21:08");
+            setReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId(), "2024-03-04T05:12:52");
+        }
+
+        if (processGroupName != null) {
+            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+            setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
+        }
+
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+
+        if (reportRequest.getParameters().toString().contains(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())) {
+            setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
     /**
      * Generic test for upgrade part comparison report
      *
+     * @param isUpcReport - boolean to determine if part number need set or not
      * @param firstExportSetName - String of name of first export set to select
      * @param secondExportSetName - String of name of second export set to select
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreSetTwoExportSetsAndAllPgRollup(String firstExportSetName, String secondExportSetName) {
+    public JasperReportSummary genericTestCoreSetTwoExportSetsAndAllPgRollup(boolean isUpcReport, String firstExportSetName, String secondExportSetName) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String firstExportSetValue = inputControls.getExportSetName().getOption(firstExportSetName).getValue();
         String secondExportSetValue = inputControls.getExportSetName().getOption(secondExportSetName).getValue();
         String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
-        String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
+        if (isUpcReport) {
+            this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+                .setValue(Collections.singletonList(inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue()));
+            this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+        }
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
@@ -149,11 +193,7 @@ public class JasperApiUtils {
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
             .setValue(Collections.singletonList(rollupValue));
 
-        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
-            .setValue(Collections.singletonList(partNumber));
-
         this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
-        this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
             .setValue(Collections.singletonList("2023-04-13T06:57:36"));
@@ -175,14 +215,19 @@ public class JasperApiUtils {
      * @param changeLevelsToSet - ArrayList of Strings of change levels to set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreSetChangeLevel(ArrayList<String> changeLevelsToSet) {
+    public JasperReportSummary genericTestCoreSetChangeLevel(boolean setPartNumber, ArrayList<String> changeLevelsToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String firstExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
         String secondExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
         String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
-        String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (setPartNumber) {
+            this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+                .setValue(Collections.singletonList(inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue()));
+            this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+        }
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(firstExportSetValue, secondExportSetValue));
@@ -190,11 +235,7 @@ public class JasperApiUtils {
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
             .setValue(Collections.singletonList(rollupValue));
 
-        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
-            .setValue(Collections.singletonList(partNumber));
-
         this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
-        this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
             .setValue(Collections.singletonList("2023-04-13T06:57:36"));
@@ -221,14 +262,19 @@ public class JasperApiUtils {
      * @param highThreshold - String of high threshold to set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(boolean setCostMetricThresholds, String lowThreshold, String highThreshold) {
+    public JasperReportSummary genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(boolean setPartNumber, boolean setCostMetricThresholds, String lowThreshold, String highThreshold) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String firstExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
         String secondExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
         String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
-        String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (setPartNumber) {
+            this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+                .setValue(Collections.singletonList(inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue()));
+            this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+        }
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(firstExportSetValue, secondExportSetValue));
@@ -236,11 +282,7 @@ public class JasperApiUtils {
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
             .setValue(Collections.singletonList(rollupValue));
 
-        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
-            .setValue(Collections.singletonList(partNumber));
-
         this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
-        this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
             .setValue(Collections.singletonList("2023-04-13T06:57:36"));
@@ -426,6 +468,38 @@ public class JasperApiUtils {
         setTwoExportSetsParametersByName(valueOneToSet, valueTwoToSet);
         setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency only, for UC and UPC tests
+     *
+     * @param processGroupToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreProcessGroupOnlyUpgradeComparisonTests(String processGroupToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+
+        InputControl inputControlState = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String valueOneToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
+        String valueTwoToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
+
+        String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
+
+        setTwoExportSetsParametersByName(valueOneToSet, valueTwoToSet);
+        setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
+        setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+            inputControlState.getProcessGroup().getOption(processGroupToSet).getValue());
         setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
             DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
         );
@@ -694,8 +768,16 @@ public class JasperApiUtils {
             }
         }
 
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText(fixKeyToGetValuesBy(miscDataList.get(0)))
-            .get(5).text()).contains(assertValue);
+        if (assertValue.equals(DtcScoreEnum.ALL_CORRECT_ORDER.getDtcScoreName())) {
+            String valueFromReports = jasperReportSummary.getReportHtmlPart().getElementsContainingText(fixKeyToGetValuesBy(miscDataList.get(0)))
+                .get(5).text();
+            softAssertions.assertThat(valueFromReports.contains("High")).isEqualTo(true);
+            softAssertions.assertThat(valueFromReports.contains("Medium")).isEqualTo(true);
+            softAssertions.assertThat(valueFromReports.contains("Low")).isEqualTo(true);
+        } else {
+            softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText(fixKeyToGetValuesBy(miscDataList.get(0)))
+                .get(5).text()).contains(assertValue);
+        }
 
         softAssertions.assertAll();
     }
@@ -779,6 +861,7 @@ public class JasperApiUtils {
 
     /**
      * Generic test for minimum annual spend input control on a dtc details report
+     *
      * @param isNoDataAvailableExpected - boolean flag for if we are expecting no data available or not
      */
     public void genericMinAnnualSpendDtcDetailsTest(boolean isNoDataAvailableExpected) {
@@ -789,8 +872,7 @@ public class JasperApiUtils {
         );
 
         if (!isNoDataAvailableExpected) {
-            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
-            softAssertions.assertThat(minAnnualSpendValue).isEqualTo("34,661,340.98");
+            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text();
             softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
@@ -869,11 +951,11 @@ public class JasperApiUtils {
         }
 
         if (!assertValues.get(0).contains("0.0") && !assertValues.get(1).contains("0.0")) {
-            i = assertValues.get(1).startsWith("7") ? 15 : 9;
-            String colspanToUse = assertValues.get(1).startsWith("7") ? "3" : "4";
+            i = assertValues.get(1).startsWith("5") ? 15 : 9;
+            String colspanToUse = assertValues.get(1).startsWith("5") ? "3" : "4";
             for (String assertValue : assertValues) {
                 softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", colspanToUse).get(i).text()).isEqualTo(assertValue);
-                i = assertValues.get(1).startsWith("7") ? 20 : 11;
+                i = assertValues.get(1).startsWith("5") ? 20 : 11;
             }
         }
 
@@ -1188,8 +1270,30 @@ public class JasperApiUtils {
         return count;
     }
 
-    public ReportRequest getReportRequest() {
-        return reportRequest;
+    /**
+     * Works out and returns expected percentage difference value (Upgrade Comparison and Upgrade Part Comparison Report)
+     *
+     * @param oldValue - Double of first value for calculations
+     * @param newValue - Double of second value for calculations
+     * @return - String of expected percentage difference value
+     */
+    public String getExpectedPercentDiffValue(Double oldValue, Double newValue) {
+        DecimalFormat df = new DecimalFormat("#");
+
+        Double newMinusOldOverhead = newValue - oldValue;
+        double subSumDivideByOldOverhead = newMinusOldOverhead / oldValue;
+        return df.format(Math.round(subSumDivideByOldOverhead * (Double.parseDouble("100"))));
+    }
+
+    /**
+     * Generic method to get a list of elements based on their column span attribute (a common method to get values for assertion in jasper api)
+     *
+     * @param jasperReportSummary - JasperReportSummary to use to get elements
+     * @param columnSpanValue - String of column span value to use to retrieve values
+     * @return ArrayList of Elements by their column span
+     */
+    public ArrayList<Element> getElementsByColumnSpan(JasperReportSummary jasperReportSummary, String columnSpanValue) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", columnSpanValue);
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {

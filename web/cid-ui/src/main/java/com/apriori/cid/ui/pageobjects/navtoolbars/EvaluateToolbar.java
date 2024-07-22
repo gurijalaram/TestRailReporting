@@ -117,11 +117,14 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
+        waitForLabel(NewCostingLabelEnum.COSTING_IN_PROGRESS, timeoutInMinutes);
+    }
 
-        pageUtils.waitForElementToAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+    /**
+     * Method to check cost label is in correct state
+     */
+    public void waitForSaveLabel(int timeoutInMinutes) {
+        waitForLabel(NewCostingLabelEnum.SAVING_IN_PROGRESS, timeoutInMinutes);
     }
 
     /**
@@ -192,11 +195,11 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
-     * Select 'aPriori' Cost Mode
+     * Select 'Simulate' Cost Mode
      *
      * @return - New EvaluatePage PO
      */
-    public SwitchCostModePage clickAPrioriModeButton() {
+    public SwitchCostModePage clickSimulateModeButton() {
         pageUtils.waitForElementAndClick(aprioriCostModeButton);
         return new SwitchCostModePage(driver);
     }
@@ -206,7 +209,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - Boolean of mode state
      */
-    public Boolean isAPrioriCostModeSelected() {
+    public Boolean isSimulateCostModeSelected() {
         pageUtils.waitForElementToAppear(aprioriCostModeButton);
         return Boolean.parseBoolean(aprioriCostModeButton.getAttribute("aria-pressed"));
     }
@@ -252,11 +255,21 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
+     * Check if Manual Mode Toggle button is enabled
+     *
+     * @return - Boolean of enabled state for manual mode toggle button
+     */
+    public Boolean isManualModeToggleEnabled() {
+        pageUtils.waitForElementToAppear(manualCostModeButton);
+        return manualCostModeButton.isEnabled();
+    }
+
+    /**
      * Check state of Manual Costing Save As button
      *
      * @return - Boolean of Manual Costing Save As button enabled state
      */
-    public Boolean isSaveAsButtonEnabled() {
+    public Boolean isSaveButtonEnabled() {
         pageUtils.waitForElementToAppear(saveAsButton);
         return saveAsButton.isEnabled();
     }
@@ -266,9 +279,24 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - New Evaluate Page
      */
-    public EvaluatePage clickSaveAsButton() {
+    public EvaluatePage clickSaveButton() {
         pageUtils.waitForElementAndClick(saveAsButton);
+        waitForSaveLabel(2);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Wait for the status label to finish Costing/Saving
+     *
+     * @param inProgressLabel - Enum for Cost/Save label
+     * @param timeoutInMinutes - Time in minutes before wait times out
+     */
+    private void waitForLabel(NewCostingLabelEnum inProgressLabel, int timeoutInMinutes) {
+        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
+
+        pageUtils.waitForElementToAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", inProgressLabel.getCostingText())), timeoutInMinutes);
     }
 
 }

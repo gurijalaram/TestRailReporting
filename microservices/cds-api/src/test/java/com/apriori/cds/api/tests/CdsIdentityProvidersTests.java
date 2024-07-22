@@ -4,10 +4,15 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.IdentityProviderPagination;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SamlUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -17,6 +22,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,10 +32,23 @@ public class CdsIdentityProvidersTests {
     private String userIdentity;
     private String idpIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
+    private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
+    private SamlUtil samlUtil;
     private ResponseWrapper<User> user;
     private SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -50,9 +69,9 @@ public class CdsIdentityProvidersTests {
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
-        ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> samlResponse = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         soft.assertThat(samlResponse.getResponseEntity().getIdentity()).isNotNull();
         soft.assertAll();
 
@@ -64,12 +83,12 @@ public class CdsIdentityProvidersTests {
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
-        ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<IdentityProviderResponse> updatedDescription = cdsTestUtil.patchIdp(customerIdentity, idpIdentity, userIdentity);
+        ResponseWrapper<IdentityProviderResponse> updatedDescription = samlUtil.patchIdp(customerIdentity, idpIdentity, userIdentity);
         soft.assertThat(updatedDescription.getResponseEntity().getDescription()).isEqualTo("patch IDP using Automation");
         soft.assertAll();
     }
@@ -79,9 +98,9 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
-        ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
@@ -100,9 +119,9 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
-        ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> response = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_ID,
@@ -122,7 +141,7 @@ public class CdsIdentityProvidersTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
+        ResponseWrapper<IdentityProviderResponse> identityProviderResponse = samlUtil.addSaml(customerIdentity, userIdentity, userName);
         String identityProviderIdentity = identityProviderResponse.getResponseEntity().getIdentity();
 
         cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
@@ -133,13 +152,13 @@ public class CdsIdentityProvidersTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

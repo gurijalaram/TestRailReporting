@@ -15,6 +15,7 @@ import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutin
 import com.apriori.acs.api.models.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsResponse;
+import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.api.models.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.api.models.response.acs.gcdmapping.GcdMappingResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
@@ -95,7 +96,7 @@ public class AcsResources {
                 .baseName(Constants.PART_FILE_NAME)
                 .configurationName(Constants.PART_CONFIG_NAME)
                 .modelName(Constants.PART_MODEL_NAME)
-                .scenarioName(new GenerateStringUtil().generateScenarioName())
+                .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                 .scenarioType(Constants.PART_COMPONENT_TYPE)
                 .missing(true)
                 .publicItem(true)
@@ -153,16 +154,49 @@ public class AcsResources {
     }
 
     /**
+     * Gets Material Metadata Info or Material Stock Metadata Info on Process Group with Revision input as optional
+     *
+     * @param inlineVariables - String
+     * @return instance of MaterialMetadataResponse
+     */
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialOrStockMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
+        setupHeader();
+
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, klass)
+            .headers(headers)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Generic call for get endpoint with error response
+     *
+     * @param endpoint - endpoint to call
+     * @return instance of GenericErrorResponse
+     */
+    public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String... inlineVariables) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, GenericErrorResponse.class)
+            .headers(headers)
+            .inlineVariables(inlineVariables);
+        ResponseWrapper<GenericErrorResponse> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity();
+    }
+
+    /**
      * Gets All Material Stocks Info
      *
-     * @param scenarioIterationKey      - scenario to get Design Guidance for
+     * @param scenarioIterationKey - scenario to get Design Guidance for
      * @return instance of DesignGuidanceResponse
      */
     public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -750,9 +784,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil_Old
-                .init(AcsApiEnum.GCD_TYPES, klass)
-                .headers(headers)
-                .inlineVariables(processGroupName);
+            .init(AcsApiEnum.GCD_TYPES, klass)
+            .headers(headers)
+            .inlineVariables(processGroupName);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -768,9 +802,9 @@ public class AcsResources {
 
         List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();
         groupItemsList.add(GcdPropertiesGroupItemsInputs.builder()
-                .artifactKey(artifactKey)
-                .propertiesToSet(propertiesToSet)
-                .propertiesToReset(propertiesToReset)
+            .artifactKey(artifactKey)
+            .propertiesToSet(propertiesToSet)
+            .propertiesToReset(propertiesToReset)
             .build()
         );
 
@@ -1047,7 +1081,7 @@ public class AcsResources {
     public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -1113,4 +1147,85 @@ public class AcsResources {
         headers.put("apriori.tenant", defaultString);
         headers.put("Authorization", "Bearer " + token);
     }
+
+    /**
+     * Reset All User Preferences
+     *
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse resetSettings() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(UserPreferencesInputs.builder()
+                .costTableDecimalPlaces("2")
+                .tolerancePolicyDefaultsToleranceMode("SYSTEMDEFAULT")
+                .prodInfoDefaultVpe("aPriori USA")
+                .defaultScenarioName("Initial")
+                .prodInfoDefaultAnnualVolume("5500")
+                .prodInfoDefaultBatchSize(null)
+                .prodInfoDefaultMaterial(null)
+                .prodInfoDefaultPg(null)
+                .prodInfoDefaultMaterialCatalogName(null)
+                .prodInfoDefaultProductionLife("5")
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .tolerancePolicyDefaultsCadToleranceReplacement(null)
+                .tolerancePolicyDefaultsUseCadToleranceThreshhold("false")
+                .tolerancePolicyDefaultsDiamToleranceOverride(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsMinCadToleranceThreshhold(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsPositionToleranceOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsParallelismOverride(null)
+                .tolerancePolicyDefaultsProfileOfSurfaceOverride(null)
+                .tolerancePolicyDefaultsRoughnessOverride(null)
+                .tolerancePolicyDefaultsRoughnessRzOverride(null)
+                .tolerancePolicyDefaultsRunoutOverride(null)
+                .tolerancePolicyDefaultsStraightnessOverride(null)
+                .tolerancePolicyDefaultsSymmetryOverride(null)
+                .tolerancePolicyDefaultsToleranceOverride(null)
+                .tolerancePolicyDefaultsTotalRunoutOverride(null)
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .prodInfoDefaultUseVpeForAllProcesses("false")
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Reset All User Preferences
+     *
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse resetDisplayUnits() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.DISPLAY_UNITS, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(DisplayUnitsInputs.builder()
+                .currencyCode("USD")
+                .currencyLabel("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")
+                .unitVariantSettingsInfo(UnitVariantSettingsInfoInputs.builder()
+                    .name("MMKS")
+                    .type("simple")
+                    .metric("true")
+                    .length("mm")
+                    .mass("kg")
+                    .time("s")
+                    .decimalPlaces(2)
+                    .system(true)
+                    .custom(false)
+                    .build())
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
 }

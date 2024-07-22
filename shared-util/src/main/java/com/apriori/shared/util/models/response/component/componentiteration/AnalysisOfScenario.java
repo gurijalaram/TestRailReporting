@@ -25,6 +25,7 @@ public class AnalysisOfScenario {
     private Double cadSerLength;
     private Double cadSerWidth;
     private Double capitalInvestment;
+    private String costMode;
     private Double cycleTime;
     private String dfmRisk;
     private Double directOverheadCost;
@@ -50,6 +51,8 @@ public class AnalysisOfScenario {
     private Double lifetimeCost;
     private Double logisticsCarbon;
     private Double logisticsCost;
+    private Double manualPiecePartCost;
+    private Double manualCapitalInvestment;
     private Double margin;
     private Double marginPercent;
     private Double materialCarbon;

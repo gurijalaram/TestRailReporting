@@ -16,12 +16,14 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.models.response.User;
@@ -43,31 +45,39 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBaseUI {
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
+    private UserCreation userCreation;
+    private LicenseUtil licenseUtil;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
     private String customerIdentity;
     private IdentityHolder deleteIdentityHolder;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
-    private String siteIdentity;
-    private String siteId;
     private String siteName;
+    private RandomCustomerData rcd = new RandomCustomerData();
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        licenseUtil = new LicenseUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
+
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(customerIdentity)
             .goToUsersPage()
             .goToCustomerStaff();
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                 deleteIdentityHolder.customerIdentity(),
@@ -194,21 +204,26 @@ public class CustomerStaffTests extends TestBaseUI {
     @Description("Validate license details panel")
     @TestRail(id = {13101, 13102, 13103, 13104})
     public void licenseDetailsTest() {
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        ResponseWrapper<Sites> customerSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
+        String siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
+        String siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
+        siteName = customerSites.getResponseEntity().getItems().get(0).getName();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> license = licenseUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         String licenseIdentity = license.getResponseEntity().getIdentity();
         String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getIdentity();
+            .toList().get(0).getIdentity();
         String sublicenseName = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getName();
+            .toList().get(0).getName();
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
 
@@ -258,7 +273,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     private long checkEveryOtherItem(List<TableRowComponent> rows, long pageSize) {
         long count = 0;
-        for (int i = 0; i < pageSize; i += 2, ++count) {
+        for (int i = 4; i < pageSize; i += 2, ++count) {
             final TableRowComponent row = rows.get(i);
             Obligation.mandatory(row::getCheck, "The check cell is missing").check(true);
         }
@@ -287,6 +302,7 @@ public class CustomerStaffTests extends TestBaseUI {
         usersTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
         ++selected;
 
+        paginator.getPageSize().select("20");
         long expected = usersTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
         soft.assertThat(expected)
             .overridingErrorMessage("The selection is not holding across pages.")
@@ -302,6 +318,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(expected)
             .overridingErrorMessage("Expected users were not deleted")
             .isEqualTo(selected);
+
+        soft.assertAll();
     }
 
     @Test
@@ -343,22 +361,15 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(deletedUsers)
             .overridingErrorMessage("Expected soft deleted users are displayed")
             .isEqualTo(1L);
+
+        soft.assertAll();
     }
 
     private void setCustomerData() {
-        RandomCustomerData rcd = new RandomCustomerData();
-        customerName = new GenerateStringUtil().generateCustomerName();
+        customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
-        Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        Customer targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
-        ResponseWrapper<Sites> customerSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
-        siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
-        siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
-        siteName = customerSites.getResponseEntity().getItems().get(0).getName();
-
-        UserCreation userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

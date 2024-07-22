@@ -1,6 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -63,7 +63,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
         final String assemblyExtension = ".asm.1";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        scenarioName = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         currentUser = UserUtil.getUser();
 
         componentAssembly1 = assemblyUtils.uploadsAndOpenAssembly(SUB_SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames,
@@ -77,7 +77,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = 11979)
     @Description("Verify Include and Exclude buttons disabled for a component that is part both of the top level assembly and sub-assembly")
     public void testIncludeAndExcludeDisabledForAssembly() {
@@ -95,7 +95,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = 11158)
     @Description("Verify Exclude button disabled when selecting included sub-component from sub-assembly")
     public void testExcludeButtonDisabledWithSubcomponentsFromSubAssembly() {
@@ -110,7 +110,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11157, 11862, 6556})
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
@@ -138,7 +138,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11827, 11826})
     @Description("Validate  the publish button will only be enabled in the tree view and now the list view")
     public void testPublishButtonEnabledInTreeView() {
@@ -160,7 +160,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = 12196)
     @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")
     public void testExcludeRepeatingComponent() {
@@ -223,7 +223,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11873, 11863, 11950})
     @Description("Validate that in instances where multiple iterations of a part exist in an assembly, selection of this in table view will highlight all upon switch to tree view")
     public void testMultipleIterationOfPartHighlightedInTreeAndTableView() {

@@ -44,11 +44,10 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 // TODO: 13/12/2023 cn - almost all these tests are selecting a material. do we really need to? need to revise this.
 
@@ -348,7 +347,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7178, 7262, 7910})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
@@ -573,10 +572,10 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7199, 7912})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("RAPID PROTOTYPING", ProcessGroupEnum.RAPID_PROTOTYPING);
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -584,6 +583,10 @@ public class ActionsTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Default")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Stereolithography")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -599,7 +602,7 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", component.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(1);
 
         explorePage.filter()
             .newFilter()
@@ -608,7 +611,7 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", component.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -735,14 +738,14 @@ public class ActionsTests extends TestBaseUI {
     public void shiftControlHighlightScenarios() {
         component = new ComponentRequestUtil().getComponent();
 
-        ComponentInfoBuilder component2 = component;
-        component2.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        ComponentInfoBuilder component2 = SerializationUtils.clone(component);
+        component2.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
-        ComponentInfoBuilder component3 = component;
-        component3.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        ComponentInfoBuilder component3 = SerializationUtils.clone(component);
+        component3.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
-        ComponentInfoBuilder component4 = component;
-        component4.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        ComponentInfoBuilder component4 = SerializationUtils.clone(component);
+        component4.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         explorePage = new CidAppLoginPage(driver).login(component.getUser())
             .uploadComponentAndOpen(component)

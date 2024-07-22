@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,12 +22,20 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.restassured.http.Header;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+
+    @AfterEach
+    public void cleanup() {
+        AcsResources acsResources = new AcsResources(userCredentials);
+        acsResources.resetSettings();
+        acsResources.resetDisplayUnits();
+    }
 
     @Test
     @TestRail(id = 10759)

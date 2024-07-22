@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.compare;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
@@ -19,7 +18,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -48,7 +46,7 @@ public class PublicPrivateComparisonTests extends TestBaseUI {
         final String subComponentExtension1 = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup1 = ProcessGroupEnum.FORGING;
 
-        assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
+        assemblyScenarioName1 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         // TODO: 09/03/2023 refactor to dto
         ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
@@ -71,7 +69,7 @@ public class PublicPrivateComparisonTests extends TestBaseUI {
         final String subComponentExtension2 = ".CATPart";
         final ProcessGroupEnum subComponentProcessGroup2 = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        assemblyScenarioName2 = new GenerateStringUtil().generateScenarioName();
+        assemblyScenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName2,
@@ -93,7 +91,7 @@ public class PublicPrivateComparisonTests extends TestBaseUI {
         final String subComponentExtension3 = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup3 = ProcessGroupEnum.FORGING;
 
-        assemblyScenarioName3 = new GenerateStringUtil().generateScenarioName();
+        assemblyScenarioName3 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName3,
@@ -111,7 +109,6 @@ public class PublicPrivateComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = 6533)
     @Description("User can add assemblies to a blank new comparison")
     public void addPublicAndPrivateAssemblyToComparison() {

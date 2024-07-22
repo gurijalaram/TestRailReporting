@@ -1,4 +1,4 @@
-# How to setup automation 
+# How to setup automation test environment locally
 
 ## Complete Prerequisites
 - Java 11
@@ -32,7 +32,7 @@
 7. You are ready to run the tests.
 
 
-## List of special modules that are not included into a common build
+## List of special modules that are not included into a common build:
  - **database** module location "../db"
 
 ## Building the project
@@ -125,7 +125,7 @@ Get user functionality has reference to `{environment}.properties` file.
        
    **Example of execution API in code** :
    - to receive common user use: `UserUtil.getUser()`
-   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser("admin")`
+   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser(APRIORI_DEVELOPER)`
    
    **UserUtil.getUser()/getUser(accessLevel)**: return UserCredentials.class
    

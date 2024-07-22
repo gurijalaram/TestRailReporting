@@ -9,11 +9,10 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.InitFileData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -28,6 +27,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.ByteArrayInputStream;
@@ -42,19 +42,23 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersUsersTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CasTestUtil casTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 
     @AfterEach
@@ -102,7 +106,7 @@ public class CasCustomersUsersTests {
         User user = userResponse.getResponseEntity();
         userIdentity = user.getIdentity();
 
-        ResponseWrapper<User> updatedUser = CasTestUtil.updateUser(user);
+        ResponseWrapper<User> updatedUser = casTestUtil.updateUser(user);
 
         soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
             .isEqualTo("QA");
@@ -117,7 +121,7 @@ public class CasCustomersUsersTests {
         ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         userIdentity = user.getResponseEntity().getIdentity();
 
-        CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
+        casTestUtil.resetUserMfa(customerIdentity, userIdentity);
     }
 
     private List<String[]> getFileContent(InputStream response, String filename) {
@@ -145,7 +149,7 @@ public class CasCustomersUsersTests {
         customerIdentity = newCustomer.getIdentity();
         List<String> headers = Arrays.asList(
             "loginID", "email", "firstName", "lastName", "fullName", "isAdmin", "isVPEAdmin", "isJasperAdmin", "AppStream", "ReportUser", "defaultPassword", "resetPassword",
-            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "rolesAccessControlsMapping", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
+            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "roles", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
             "department", "city/town", "state/province", "county", "countryCode", "timezone"
         );
 

@@ -10,12 +10,13 @@ import com.apriori.cas.api.models.response.Customers;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -26,30 +27,33 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String userToken = UserUtil.getUser("admin").getToken();
+    private RequestEntityUtil requestEntityUtil;
+    private CasTestUtil casTestUtil;
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(userToken);
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
     }
 
     @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
-            // TODO z: fix it threads
-            // cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, currentUser.getToken(), customerIdentity);
-            HTTPRequest.build(new RequestEntity().endpoint(CDSAPIEnum.CUSTOMER_BY_ID).inlineVariables(customerIdentity).token(userToken).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -57,14 +61,9 @@ public class CasCustomersTests {
     @Tag(API_SANITY)
     @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
-    // TODO z: fix it threads
     public void getCustomersSortedByName() {
-        //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
-        // TODO cn - this test depends on a user to have prior access to cas so won't work properly until access is based on roles
-        RequestEntity request = new RequestEntity()
-            .endpoint(CASAPIEnum.CUSTOMERS)
-            .returnType(Customers.class)
-            .token(userToken)
+        RequestEntity request = requestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
+            .queryParams(new QueryParams().use("sortBy[ASC]", "name"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
@@ -113,7 +112,7 @@ public class CasCustomersTests {
     @TestRail(id = {5643})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + generateStringUtil.generateCustomerName());
+        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + generateStringUtil.generateAlphabeticString("Customer", 6));
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isEqualTo(0);
@@ -123,13 +122,13 @@ public class CasCustomersTests {
     @TestRail(id = {5642, 5644})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
 
         soft.assertThat(response.getResponseEntity().getName())
             .isEqualTo(customerName);
@@ -141,7 +140,7 @@ public class CasCustomersTests {
 
         customerIdentity = responseName.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Customer> patchResponse = CasTestUtil.updateCustomer(customerIdentity, email);
+        ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(customerIdentity, email);
 
         soft.assertThat(patchResponse.getResponseEntity().getEmailDomains())
             .isEqualTo(Arrays.asList(email + ".com", email + ".co.uk"));
@@ -159,19 +158,19 @@ public class CasCustomersTests {
     @TestRail(id = {5826})
     @Description("Resetting the MFA enrollment status of every user for the customer")
     public void resettingMFA() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         soft.assertThat(response.getResponseEntity().getName())
             .isEqualTo(customerName);
         soft.assertAll();
 
         customerIdentity = response.getResponseEntity().getIdentity();
-        CasTestUtil.resetMfa(customerIdentity);
+        casTestUtil.resetMfa(customerIdentity);
     }
 
     @Test
@@ -179,7 +178,6 @@ public class CasCustomersTests {
     @Description("Return a paged list of applications licensed for a specific customer.")
     public void getCustomerLicensedApplications() {
         String customerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-
 
         ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_LICENSED_APP,
             Applications.class,

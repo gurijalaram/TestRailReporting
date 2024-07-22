@@ -10,11 +10,11 @@ import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.cds.api.utils.SamlUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -26,23 +26,30 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasIdentityProvidersTests extends TestUtil {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CasTestUtil casTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private String userIdentity;
     private String idpIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private SamlUtil samlUtil;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
-    public void setUp() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -63,10 +70,10 @@ public class CasIdentityProvidersTests extends TestUtil {
     @TestRail(id = {5646, 5647})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         setCustomerData();
 
-        ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> postResponse = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = postResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviders> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProviders.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers");

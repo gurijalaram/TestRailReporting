@@ -42,7 +42,7 @@ public class PublishExistingCostedTests extends TestBaseUI {
     @TestRail(id = {6209, 5427, 6732})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
@@ -53,6 +53,10 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("4 Axis Mill Routing")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -102,14 +106,16 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .clickExplore()
             .uploadComponent(componentB)
             .selectFilter("Private")
-            .enterKeySearch(component.getComponentName())
+            .enterKeySearch(componentB.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(component.getComponentName(), component.getScenarioName())
+            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
             .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Closed Die Forging")
+            .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .override()
-            .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Band Saw / Preheat / Hammer / Trim");

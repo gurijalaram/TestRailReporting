@@ -1,12 +1,11 @@
 package com.apriori.cid.ui.tests.settings;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cid.api.utils.UserPreferencesUtil;
@@ -37,7 +36,6 @@ import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -83,7 +81,7 @@ public class SettingsTests extends TestBaseUI {
 
     @Tag(SMOKE)
     @Test
-    @TestRail(id = {6283, 6637, 6275, 8883})
+    @TestRail(id = {6283, 6637, 6275, 8883, 6281, 5442, 6282, 6285, 6286, 5429, 6287, 6288, 6284})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         currentUser = UserUtil.getUser();
@@ -109,114 +107,9 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6281, 5442})
-    @Description("User can change the default Process group")
-    public void defaultPG() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .navigateToScenario(component)
-            .costScenario();
-
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
-    }
-
-    @Test
-    @TestRail(id = {6282})
-    @Description("User can change the default VPE")
-    public void defaultVPE() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
-    }
-
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {6285, 6286, 5429})
-    @Description("User can change the default Production Life")
-    public void defaultProductionLife() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .inputAnnualVolume("9524")
-            .inputYears("7")
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getAnnualVolume()).isEqualTo("9524");
-        softAssertions.assertThat(evaluatePage.getProductionLife()).isEqualTo("7");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {6287, 6288})
-    @Description("User can change the default Batch size when set to manual")
-    public void defaultBatchSize() {
-        final String batchSize = "46";
-
-        component = new ComponentRequestUtil().getComponent();
-
-        loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize(batchSize)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .goToAdvancedTab();
-
-        assertThat(advancedPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
-    }
-
-    @Test
-    @TestRail(id = {6298})
-    @Description("User should be able to select a material catalogue from a different region than the VPE")
-    public void differentMaterialCatalog() {
-
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .selectDigitalFactory(APRIORI_USA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY)
-            .submit(ExplorePage.class)
-            .openSettings()
-            .goToProductionTab();
-
-        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(APRIORI_USA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getAnnualVolume()).isEqualTo("3000");
+        softAssertions.assertThat(productionDefaultPage.getProductionLife()).isEqualTo("7");
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEqualTo("50");
 
         softAssertions.assertAll();
     }
@@ -240,35 +133,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6284})
-    @Description("User can change the default Material")
-    public void defaultMaterial() {
-
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
-            .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.HIPS_EXTRUSION.getMaterialName())
-            .submit(ProductionDefaultsPage.class)
-            .submit(ExplorePage.class)
-            .openSettings()
-            .goToProductionTab();
-
-        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
-        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("HIPS Extrusion");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(id = {6279, 6692, 6696})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
@@ -280,7 +144,6 @@ public class SettingsTests extends TestBaseUI {
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005_SPONGE.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -292,16 +155,15 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.POWDER_METAL.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("F-0005 Sponge");
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {6289})
-    @Description("Manual Batch Quantity cannot be zero")
-    public void batchSize0() {
+    @TestRail(id = {6289, 3605, 6305, 6306, 6307})
+    @Description("Manual Batch Quantity cannot be zero, Junk or Decimal")
+    public void batchSizeNegativeTest() {
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -312,37 +174,13 @@ public class SettingsTests extends TestBaseUI {
             .inputBatchSize("0")
             .submit();
 
-        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
-    }
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be greater than 0.");
 
-    @Test
-    @TestRail(id = {3605})
-    @Description("Manual Batch Quantity cannot be junk")
-    public void batchSizeJunk() {
+        productionDefaultPage.inputBatchSize("JUNK");
 
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEmpty();
 
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("JUNK");
-
-        assertThat(productionDefaultPage.getBatchSize(), is(emptyString()));
-    }
-
-    @Test
-    @TestRail(id = {6305, 6306, 6307})
-    @Description("Manual Batch Quantity cannot be a decimal")
-    public void batchSizeDecimal() {
-
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
-
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("0.12.00");
+        productionDefaultPage.inputBatchSize("0.12.00");
 
         softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
 
@@ -415,7 +253,7 @@ public class SettingsTests extends TestBaseUI {
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
-            .selectMaterialCatalog(APRIORI_USA)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
@@ -491,20 +329,28 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
-        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("M3CapScrew", PLASTIC_MOLDING);
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", PLASTIC_MOLDING);
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component2)
             .selectProcessGroup(component2.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
@@ -521,7 +367,7 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
-        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,918.70913");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$12,347.03378");
 
         softAssertions.assertAll();
     }
@@ -616,6 +462,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21547, 21548})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
@@ -697,6 +544,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21653, 21654, 21655, 21656})
     @Description("Verify Assembly Strategy Dropdown and Description Cards")
     public void testAssemblyStrategyDropdownCards() {

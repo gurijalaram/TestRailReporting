@@ -1,13 +1,24 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
@@ -20,25 +31,42 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserMgmtSandboxPreviewTests {
-    private final String appIdentity = Constants.getApProApplicationIdentity();
-    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
-    private final String cirIdentity = Constants.getCirAppIdentity();
-    private final String acsIdentity = Constants.getACSAppIdentity();
+    private final String customerAssignedRole = "APRIORI_DEVELOPER";
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private InstallationUtil installationUtil;
+    private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
+    private ApplicationUtil applicationUtil;
+    private CustomerUtil customerUtil;
+    private String appIdentity;
     private String customerIdentity;
     private String siteIdentity;
     private String previewInstallationIdentity;
     private String sandboxInstallationIdentity;
     private String userIdentity;
-    private final String customerAssignedRole = "APRIORI_DEVELOPER";
+    private DeploymentUtil deploymentUtil;
+
+    @BeforeEach
+    public void setDetails() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
+
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -77,7 +105,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     @Description("The flag 'sandboxEnabled' is not persisted when Sandbox installation does not exist")
     public void sandboxInstallationNotExists() {
         setCustomerData();
-        cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
+        deploymentUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, true, false);
         ResponseWrapper<Enablements> getUserEnablements = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
@@ -135,7 +163,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     @Description("The flag 'previewEnabled' is not persisted when Preview installation does not exist")
     public void previewInstallationNotExists() {
         setCustomerData();
-        cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        deploymentUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, false, true);
         ResponseWrapper<Enablements> getUserEnablements = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
@@ -176,7 +204,7 @@ public class CdsUserMgmtSandboxPreviewTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
@@ -184,31 +212,37 @@ public class CdsUserMgmtSandboxPreviewTests {
         siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
     private void createSandboxDeployment() {
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
+        String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentSandboxIdentity = response.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         sandboxInstallationIdentity = installation.getResponseEntity().getIdentity();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, appIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, ciaIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, cirIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, acsIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, ciaIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, cirIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, acsIdentity, siteIdentity);
     }
 
     private void createPreviewDeployment() {
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentPreviewIdentity = response.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         previewInstallationIdentity = installation.getResponseEntity().getIdentity();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, appIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, ciaIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, cirIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, acsIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, ciaIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, cirIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, acsIdentity, siteIdentity);
     }
 }

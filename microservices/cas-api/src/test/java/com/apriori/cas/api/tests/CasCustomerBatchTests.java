@@ -8,11 +8,10 @@ import com.apriori.cas.api.models.response.PostBatch;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -22,20 +21,24 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerBatchTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -49,15 +52,15 @@ public class CasCustomerBatchTests {
     @TestRail(id = {5668, 5669, 5675})
     @Description("Upload a new user batch file, Returns a list of batches for the customer, Delete the Batch by its identity.")
     public void getCustomerBatches() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
@@ -73,23 +76,23 @@ public class CasCustomerBatchTests {
             .isGreaterThanOrEqualTo(1);
         soft.assertAll();
 
-        CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
+        casTestUtil.deleteBatch(customerIdentity, batchIdentity);
     }
 
     @Test
     @TestRail(id = {5668, 5670, 5675})
     @Description("Upload a new user batch file, Get the Batch identified by its identity, Delete the Batch by its identity.")
     public void getBatchById() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
@@ -103,6 +106,6 @@ public class CasCustomerBatchTests {
             .isEqualTo(batchIdentity);
         soft.assertAll();
 
-        CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
+        casTestUtil.deleteBatch(customerIdentity, batchIdentity);
     }
 }

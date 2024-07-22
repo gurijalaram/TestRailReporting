@@ -4,7 +4,7 @@ import static com.apriori.cid.ui.utils.ColumnsEnum.COMPONENT_NAME;
 import static com.apriori.cid.ui.utils.ColumnsEnum.COST_MATURITY;
 import static com.apriori.cid.ui.utils.ColumnsEnum.SCENARIO_NAME;
 import static com.apriori.cid.ui.utils.ColumnsEnum.STATUS;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -43,9 +43,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.componentiteration.AnalysisOfScenario;
-import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -105,7 +103,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7035})
     @Description("Validate user can select explore tab and then comparison tab again")
     public void goToExploreReturnCompare() {
@@ -341,7 +338,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {5784})
     @Description("User can add columns to the part table within the Add Scenarios dialog box")
     public void addColumnsConfigure() {
@@ -383,7 +379,7 @@ public class ComparisonTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         loginPage = new CidAppLoginPage(driver);
         modifyComparisonPage = loginPage.login(component.getUser())
@@ -434,7 +430,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7033})
     @Description("Validate user can drag and drop rows of comparison")
     public void dragAndDropCard() {
@@ -454,12 +449,12 @@ public class ComparisonTests extends TestBaseUI {
             .selectManualComparison();
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Results");
+            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Results");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Results");
+            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Results");
 
         softAssertions.assertAll();
     }
@@ -702,7 +697,7 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {6534})
     @Description("User can add assemblies to existing comparison containing part scenario")
     public void addAssemblyToExistingComparison() {
@@ -739,7 +734,7 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {6537, 6535})
     @Description("Assemblies in comparison can be interacted with in a similar way as part scenarios - open, basis, delete")
     public void interactWithAssemblyInComparison() {
@@ -818,18 +813,17 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6482, 6483})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
-        component = new ComponentRequestUtil().getComponentByExtension("catpart");
-        component2 = new ComponentRequestUtil().getComponentByExtension("ipt");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
+        component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Part0005b", ProcessGroupEnum.SHEET_METAL);
         component2.setUser(component.getUser());
-        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponentByExtension("SLDPRT");
+        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponentWithProcessGroup("2062987", ProcessGroupEnum.PLASTIC_MOLDING);
         component3.setUser(component.getUser());
-        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponentByExtension("x_t");
+        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponentWithProcessGroup("Bishop", ProcessGroupEnum.PLASTIC_MOLDING);
         component4.setUser(component.getUser());
-        ComponentInfoBuilder component5 = new ComponentRequestUtil().getComponentByExtension("ipt");
+        ComponentInfoBuilder component5 = new ComponentRequestUtil().getComponentWithProcessGroup("SandCastIssues", ProcessGroupEnum.CASTING_SAND);
         component5.setUser(component.getUser());
 
 
@@ -837,18 +831,38 @@ public class ComparisonTests extends TestBaseUI {
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario(4)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("4 Axis Mill Routing")
+            .submit(EvaluatePage.class)
+            .costScenario()
             .uploadComponentAndOpen(component2)
             .selectProcessGroup(component2.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component3)
             .selectProcessGroup(component3.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component4)
             .selectProcessGroup(component4.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component5)
             .selectProcessGroup(component5.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("ManualFloor")
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Private")
@@ -863,7 +877,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getOutput(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
         softAssertions.assertThat(comparePage.getOutput(component3.getComponentName(), component3.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
         softAssertions.assertThat(comparePage.getOutput(component4.getComponentName(), component4.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
-        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
+        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
 
         softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(),
             ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
@@ -877,7 +891,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(),
             ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
         softAssertions.assertThat(comparePage.isDeltaIcon(component5.getComponentName(), component5.getScenarioName(),
-            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
@@ -900,7 +914,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 25986})
     @Description("Verify that Save button is present and enabled for initial save and can only be clicked when changes made")
     public void testSaveComparison() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -941,8 +955,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = 25985)
     @Description("Verify that a Comparison cannot be saved using a name that already exists")
     public void testSaveComparisonWithExistingName() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1021,7 +1035,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26173, 26174})
     @Description("Verify that deleted Private scenarios are removed from saved comparison")
     public void testDeletePrivateScenarioInComparison() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1065,9 +1079,9 @@ public class ComparisonTests extends TestBaseUI {
         String componentName = "Part0004";
         String componentName2 = "700-33770-01_A0";
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
@@ -1116,7 +1130,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26175})
     @Description("Verify that scenario in position 2 will replace basis, if it is deleted")
     public void testDeleteReplacesBasis() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1154,7 +1168,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 26956, 26957, 26958, 27005, 27995})
     @Description("Verify Comparison Explorer can be launched and saved comparisons can be opened from it")
     public void testComparisonExplorer() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2 = new ComponentRequestUtil().getComponent();
@@ -1226,10 +1240,10 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {27967, 27968, 27969})
     @Description("Rename Comparison from Explorer and Comparison Views")
     public void testRenameComparison() {
-        String comparisonName1 = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
-        String comparisonViewRename = new GenerateStringUtil().generateComparisonName();
-        String comparisonExplorerRename = new GenerateStringUtil().generateComparisonName();
+        String comparisonName1 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonViewRename = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonExplorerRename = new GenerateStringUtil().generateStringForAutomation("Comparison");
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
@@ -1302,8 +1316,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26150, 26151, 27965})
     @Description("Verify Deleting Comparisons from Explore and Viewer pages")
     public void testDeleteComparisons() {
-        String comparisonName1 = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName1 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2 = new ComponentRequestUtil().getComponent();
@@ -1376,6 +1390,80 @@ public class ComparisonTests extends TestBaseUI {
      */
     private String calculatePercentageDifference(Double basis, Double comparedScenario) {
         return String.format("%.2f", Math.abs(((basis - comparedScenario) / basis) * 100)) + "%";
+    }
+
+    @Test
+    @TestRail(id = {30611, 30609, 30610, 30607})
+    @Description("User can add manual scenarios to the currently open comparison via UI within current comparison")
+    public void addManualScenarioToComparison() {
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
+        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
+        component3.setUser(component.getUser());
+        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
+        component4.setUser(component.getUser());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
+            .uploadComponentAndOpen(component3)
+            .uploadComponentAndOpen(component4)
+            .navigateToScenario(component)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("4")
+            .enterTotalCapitalInvestment("55")
+            .clickSaveButton()
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class)
+            .clickExplore()
+            .navigateToScenario(component2)
+            .selectProcessGroup(component.getProcessGroup())
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName())
+            .createComparison()
+            .selectManualComparison();
+
+        softAssertions.assertThat(comparePage.getBasis()).contains(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.INFO_COST_MODE)).isEqualTo("Manual");
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
+            .clickScenarioCheckbox(component3.getComponentName(), component3.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(component3.getComponentName().toUpperCase() + "  / " + component3.getScenarioName());
+        softAssertions.assertThat(comparePage.getOutput(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.INFO_COST_MODE)).isEqualTo("aPriori");
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component4.getComponentName(), component4.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(component4.getComponentName().toUpperCase() + "  / " + component4.getScenarioName());
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
+            .clickScenarioCheckbox(component3.getComponentName(), component3.getScenarioName())
+            .clickScenarioCheckbox(component4.getComponentName(), component4.getScenarioName())
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
+
+        softAssertions.assertAll();
     }
 
 }

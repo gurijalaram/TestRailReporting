@@ -1,11 +1,9 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
-import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_SAND;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.POWDER_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,15 +16,13 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
+import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class PsoEditTests extends TestBaseUI {
@@ -69,7 +65,6 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
@@ -79,6 +74,10 @@ public class PsoEditTests extends TestBaseUI {
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario(7)
             .openMaterialProcess()
             .selectBarChart("High Pressure Die Casting")
@@ -134,16 +133,19 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("225_gasket-1-solid1", STOCK_MACHINING);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("2AL+3AM Routing")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw")
@@ -181,7 +183,6 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
@@ -191,6 +192,10 @@ public class PsoEditTests extends TestBaseUI {
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -257,7 +262,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("PUSH PIN", PLASTIC_MOLDING);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -270,7 +275,7 @@ public class PsoEditTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         evaluatePage.openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -281,7 +286,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.82), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectOptionsTab();
@@ -296,7 +301,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(5.51), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.91), Offset.offset(0.9));
 
         evaluatePage.openMaterialProcess()
             .selectOptionsTab();
@@ -311,7 +316,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.58), Offset.offset(0.9));
 
         evaluatePage.openMaterialProcess()
             .selectOptionsTab();

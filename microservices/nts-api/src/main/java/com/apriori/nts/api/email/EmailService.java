@@ -5,9 +5,8 @@ import com.apriori.nts.api.models.response.Email;
 import com.apriori.nts.api.models.response.EmailsItems;
 import com.apriori.nts.api.models.response.SendEmail;
 import com.apriori.nts.api.utils.EmailSetup;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.email.GraphEmailService;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -25,10 +24,11 @@ import java.util.Map;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser("admin"));
-    private Map<String, String> headers = new HashMap<String, String>() {{
-            put("ap-cloud-context", cloudContext);
-        }};
+    private final String cloudContext = SharedCustomerUtil.getAuthTargetCloudContext();
+    private Map<String, String> headers =
+        new HashMap<>() {{
+                put("ap-cloud-context", cloudContext);
+            }};
 
     /**
      * Validates that an email has been sent by checking the target account

@@ -1,11 +1,11 @@
 package com.apriori.shared.util.file.user;
 
 import com.apriori.shared.util.AuthorizationUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,25 +13,22 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
+@Data
 public class UserCredentials implements Serializable {
     private static final int TOKEN_MIN_TIME_IN_MINUTES = 10;
     private volatile String token;
-    @Getter
     private String email;
-    @Getter
     private String password;
     private String username;
-    @Getter
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
-    @Getter
-    private String accessLevel;
-    private User user;
+    private RolesEnum role;
+    private User userDetails;
 
-    public UserCredentials(String email, String password, String accessLevel) {
+    public UserCredentials(String email, String password, RolesEnum role) {
         this.email = email;
         this.password = password;
-        this.accessLevel = accessLevel;
+        this.role = role;
     }
 
     public UserCredentials(String email, String password) {
@@ -42,38 +39,65 @@ public class UserCredentials implements Serializable {
     public UserCredentials() {
     }
 
+    /**
+     * Initialize user
+     *
+     * @param username - the username
+     * @param password - the password
+     * @return current object
+     */
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
     }
 
-    public static UserCredentials initWithAccessLevel(String username, String password, String accessLevel) {
-        return new UserCredentials(username, password, accessLevel);
+    /**
+     * Initialize user with role
+     *
+     * @param username - the username
+     * @param password - the password
+     * @param role     - the role
+     * @return current object
+     */
+    public static UserCredentials initWithRole(String username, String password, RolesEnum role) {
+        return new UserCredentials(username, password, role);
     }
 
-    public UserCredentials setAccessLevel(String securityLevel) {
-        this.accessLevel = securityLevel;
-        return this;
-    }
-
+    /**
+     * Sets user email
+     *
+     * @param email - the email address
+     * @return current object
+     */
     public UserCredentials setEmail(String email) {
         this.email = email;
         return this;
     }
 
+    /**
+     * Set security level
+     *
+     * @param role - the role
+     * @return current object
+     */
+    public UserCredentials setRole(RolesEnum role) {
+        this.role = role;
+        return this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
     public String getUsername() {
         return email.split("@")[0];
     }
 
-    public UserCredentials setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public UserCredentials setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
+    /**
+     * Get token
+     *
+     * @return string
+     */
     public synchronized String getToken() {
         if (token == null) {
             generateToken();
@@ -86,19 +110,23 @@ public class UserCredentials implements Serializable {
         return token;
     }
 
-    public UserCredentials generateToken() {
-        this.token = new AuthorizationUtil().getToken(this)
+    /**
+     * Generate token
+     *
+     * @return current object
+     */
+    private String generateToken() {
+        return token = new AuthorizationUtil().getToken(this)
             .getResponseEntity()
             .getToken();
-        return this;
     }
 
-    public UserCredentials generateCloudContext() {
-        this.cloudContext = cloudContext != null ? cloudContext : CustomerUtil.getAuthTargetCloudContext(this);
-        return this;
-    }
-
+    /**
+     * Get user details
+     *
+     * @return new object
+     */
     public synchronized User getUserDetails() {
-        return user != null ? user : UserUtil.getUserByEmail(this);
+        return userDetails = userDetails == null ? UserUtil.getUserByEmail(this) : userDetails;
     }
 }

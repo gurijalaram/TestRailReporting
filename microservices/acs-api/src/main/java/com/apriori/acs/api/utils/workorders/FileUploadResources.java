@@ -1,5 +1,6 @@
 package com.apriori.acs.api.utils.workorders;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -307,8 +308,8 @@ public class FileUploadResources {
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
             subComponentsList.add(
                 AssemblyImagesSubComponent.builder()
-                    .componentIdentity(generateStringUtil.getRandomString())
-                    .scenarioIdentity(generateStringUtil.getRandomString())
+                    .componentIdentity(generateStringUtil.getRandomStringSpecLength(12))
+                    .scenarioIdentity(generateStringUtil.getRandomStringSpecLength(12))
                     .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
                     .build()
             );
@@ -317,8 +318,8 @@ public class FileUploadResources {
         String generateAssemblyImagesWorkorderId = createWorkorder(
             WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
             AssemblyImagesInputs.builder()
-                .componentIdentity(generateStringUtil.getRandomString())
-                .scenarioIdentity(generateStringUtil.getRandomString())
+                .componentIdentity(generateStringUtil.getRandomStringSpecLength(12))
+                .scenarioIdentity(generateStringUtil.getRandomStringSpecLength(12))
                 .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                 .subComponents(subComponentsList)
                 .requestedBy(fileResponse.getUserIdentity())
@@ -814,7 +815,7 @@ public class FileUploadResources {
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
-            UserUtil.getUser("common"),
+            UserUtil.getUser(APRIORI_DESIGNER),
             ProcessGroupEnum.fromString(processGroup),
             fileName
         );

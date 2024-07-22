@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -25,7 +27,7 @@ public class AvailableRoutingsTests {
     private final UserCredentials user;
 
     public AvailableRoutingsTests() {
-        user = UserUtil.getUser("common");
+        user = UserUtil.getUser(APRIORI_DESIGNER);
     }
 
     @Test
@@ -37,7 +39,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -81,7 +83,7 @@ public class AvailableRoutingsTests {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -121,7 +123,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -159,7 +161,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14824)
+    @TestRail(id = {14824, 6124})
     @Description("Get available routings after Cost for Bar & Tube Fab scenario")
     public void testGetAvailableRoutingsBarandTube() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -167,7 +169,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -205,7 +207,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14825)
+    @TestRail(id = {14825, 6125})
     @Description("Get available routings after Cost for Casting - Die scenario")
     public void testGetAvailableRoutingsCastingDie() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -213,7 +215,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -259,7 +261,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -305,7 +307,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -343,7 +345,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14828)
+    @TestRail(id = {14828, 5441, 6631, 6632})
     @Description("Get available routings after Cost for Forging scenario")
     public void testGetAvailableRoutingsForging() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -351,7 +353,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -389,7 +391,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14829)
+    @TestRail(id = {14829, 6126, 6461})
     @Description("Get available routings after Cost for Plastic Molding scenario")
     public void testGetAvailableRoutingsPlasticMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -397,7 +399,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -435,7 +437,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14830)
+    @TestRail(id = {14830, 6142})
     @Description("Get available routings after Cost for Powder Metal scenario")
     public void testGetAvailableRoutingsPowderMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -443,7 +445,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -488,7 +490,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -526,7 +528,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14835)
+    @TestRail(id = {14835, 6061, 8336})
     @Description("Get available routings after Cost for Roto & Blow Molding scenario")
     public void testGetAvailableRoutingsRotoandBlowMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -534,7 +536,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -580,7 +582,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -626,7 +628,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -672,7 +674,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -717,7 +719,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -763,7 +765,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -808,7 +810,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -846,7 +848,7 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14842)
+    @TestRail(id = {14842, 6123})
     @Description("Get available routings after Cost for Stock Machining scenario")
     public void testGetAvailableRoutingsStockMachining() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
@@ -854,7 +856,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

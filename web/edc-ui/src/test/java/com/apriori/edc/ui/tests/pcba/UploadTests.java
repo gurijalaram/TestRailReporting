@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class UploadTests extends TestBaseUI {
 
@@ -53,8 +52,8 @@ public class UploadTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
 
         String fileName = "Test BOM 5.csv";
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+        String testMountTypeData = generateStringUtil.getRandomStringSpecLength(12);
+        String testPinCountData = generateStringUtil.getRandomNumbersSpecLength(8);
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
@@ -82,8 +81,8 @@ public class UploadTests extends TestBaseUI {
     @TestRail(id = 13253)
     @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
     public void uploadWireHarnessBOMTest() {
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+        String testMountTypeData = generateStringUtil.getRandomStringSpecLength(12);
+        String testPinCountData = generateStringUtil.getRandomNumbersSpecLength(8);
 
         currentUser = UserUtil.getUser();
         String fileName = "Wire Harness BOM.csv";
@@ -120,7 +119,6 @@ public class UploadTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Disabled("Ignored due to file location")
     @Test
     @TestRail(id = 1732)
     @Description("BOM can be exported to file from main page")
@@ -137,11 +135,9 @@ public class UploadTests extends TestBaseUI {
         electronicsDataCollectionPage =
             uploadedFilePage.backToElectronicsDataCollectionPage();
 
-        String bomIdName =
-            electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
-        String filePath = downloadPath + bomIdName + ".csv";
+        File bomIdName = electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
 
-        softAssertions.assertThat(FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath), 3)).isTrue();
+        softAssertions.assertThat(bomIdName.length()).isGreaterThan(0);
         softAssertions.assertAll();
     }
 }

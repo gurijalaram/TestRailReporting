@@ -41,7 +41,7 @@ public class WorkorderApiUtils {
 
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
-    private final String scenarioName = new GenerateStringUtil().generateScenarioName();
+    private final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
     private final FileUploadResources fileUploadResources;
     private final AcsResources acsResources;
 

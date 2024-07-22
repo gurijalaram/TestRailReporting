@@ -31,7 +31,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[data-testid='alert-messaging']")
     private WebElement conflictMessage;
 
-    @FindBy(css = "[data-testid='alert-messaging']")
+    @FindBy(css = "[role='dialog'] [data-testid='alert-messaging']")
     private WebElement alertMessage;
 
     @FindBy(css = "input[value='override']")

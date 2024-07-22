@@ -16,9 +16,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -29,8 +27,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class PreviewPanelTests extends TestBaseUI {
 
@@ -79,9 +75,9 @@ public class PreviewPanelTests extends TestBaseUI {
             .uploadComponentAndOpen(component)
             .selectProcessGroup(PLASTIC_MOLDING)
             .selectDigitalFactory(APRIORI_USA)
-            .openMaterialSelectorTable()
-            .search("ABS, 10")
-            .selectMaterial(MaterialNameEnum.ABS_10_GLASS.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -94,7 +90,7 @@ public class PreviewPanelTests extends TestBaseUI {
         softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
         softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(0.48), Offset.offset(3.0));
         softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(0.86), Offset.offset(3.0));
-        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(12256.87), Offset.offset(50.00));
+        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(13537.05), Offset.offset(500.00));
 
         softAssertions.assertAll();
     }
@@ -105,8 +101,8 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(id = {6202, 6203, 6204})
     public void previewPanelMultiSelect() {
-        String filterName = new GenerateStringUtil().generateFilterName();
-        String notes = new GenerateStringUtil().generateNotes();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String notes = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
 
         component = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();

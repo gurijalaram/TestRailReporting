@@ -21,14 +21,14 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentInfoBuilder componentAssembly;
 
     @Test
     @TestRail(id = 12308)
     @Description("Verify Shallow Publish through SDS api")
     public void testShallowPublishAssembly() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         UserCredentials testingUser = UserUtil.getUser();
 
         final String FLANGE = "flange";
@@ -64,7 +64,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
     @TestRail(id = 12309)
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         UserCredentials testingUser = UserUtil.getUser();
 
         final String FLANGE = "flange";

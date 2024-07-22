@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,11 +31,11 @@ public class ProductionInfoTests extends TestUtil {
     @TestRail(id = 15430)
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
-        UserCredentials userCredentials = UserUtil.getUser("common");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
         AcsResources acsResources = new AcsResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

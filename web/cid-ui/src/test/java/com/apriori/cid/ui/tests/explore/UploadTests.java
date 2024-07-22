@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.explore;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,6 +30,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -48,7 +50,7 @@ public class UploadTests extends TestBaseUI {
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
         resourceFile = FileResourceUtil.getResourceAsFile("InvalidFileType.txt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String fileError;
 
         loginPage = new CidAppLoginPage(driver);
@@ -61,10 +63,11 @@ public class UploadTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10558)
     @Description("Successful creation of new scenario from existing scenario")
     public void testUploadAssemblyAndRenameScenario() {
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
         assembly = new AssemblyRequestUtil().getAssembly();
@@ -94,7 +97,7 @@ public class UploadTests extends TestBaseUI {
 
         String componentName = "Piston_assembly";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -140,7 +143,7 @@ public class UploadTests extends TestBaseUI {
         String componentName = "SC Plasma 009-005";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".f3d");
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String fileError;
 

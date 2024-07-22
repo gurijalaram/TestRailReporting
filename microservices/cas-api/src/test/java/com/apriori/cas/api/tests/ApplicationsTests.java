@@ -5,9 +5,9 @@ import com.apriori.cas.api.models.response.Applications;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Customers;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -16,16 +16,20 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class ApplicationsTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser("admin").getToken());
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
     }
 
     @Test

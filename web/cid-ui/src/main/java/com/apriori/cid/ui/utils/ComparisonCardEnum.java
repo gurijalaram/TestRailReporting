@@ -6,10 +6,11 @@ public enum ComparisonCardEnum {
     INFO_MODIFIED_BY(2, Constants.INFO_INPUTS),
     INFO_LAST_MODIFIED(3, Constants.INFO_INPUTS),
     INFO_LOCKED(4, Constants.INFO_INPUTS),
-    INFO_PROCESS_GROUP(5, Constants.INFO_INPUTS),
-    INFO_ANNUAL_VOLUME(6, Constants.INFO_INPUTS),
-    INFO_VPE(7, Constants.INFO_INPUTS),
-    INFO_BATCH_SIZE(8, Constants.INFO_INPUTS),
+    INFO_COST_MODE(5, Constants.INFO_INPUTS),
+    INFO_PROCESS_GROUP(6, Constants.INFO_INPUTS),
+    INFO_ANNUAL_VOLUME(7, Constants.INFO_INPUTS),
+    INFO_VPE(8, Constants.INFO_INPUTS),
+    INFO_BATCH_SIZE(9, Constants.INFO_INPUTS),
     MATERIAL_MATERIAL(1, Constants.MATERIAL_AND_UTILIZATION),
     MATERIAL_FINISH_MASS(2, Constants.MATERIAL_AND_UTILIZATION),
     MATERIAL_UTILIZATION(3, Constants.MATERIAL_AND_UTILIZATION),
@@ -53,6 +54,6 @@ public enum ComparisonCardEnum {
         private static final String MATERIAL_AND_UTILIZATION = "Material & Utilization";
         private static final String DESIGN_GUIDANCE = "Design Guidance";
         private static final String PROCESS = "Process";
-        private static final String COST_RESULT = "Cost Result";
+        private static final String COST_RESULT = "Cost Results";
     }
 }

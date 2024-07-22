@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.explore;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -8,6 +9,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.cid.api.utils.ComponentsUtil;
+import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -28,6 +31,8 @@ import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
+import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -68,7 +73,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6213})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -90,8 +95,8 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6214, 6215})
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_DIE);
 
@@ -123,10 +128,11 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6216})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         assembly = new AssemblyRequestUtil().getAssembly();
 
@@ -144,10 +150,11 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6217})
     @Description("Test public criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         assembly = new AssemblyRequestUtil().getAssembly();
 
@@ -181,7 +188,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6218})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -206,8 +213,8 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
     public void testFilterAttributes() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -248,10 +255,10 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6169, 6170, 6100, 9108, 9109})
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void testCancelNewSaveRename() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
-        String filterName3 = generateStringUtil.generateFilterName();
-        String filterName4 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName3 = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName4 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         filterPage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -334,6 +341,75 @@ public class FilterCriteriaTests extends TestBaseUI {
             .filter();
 
         softAssertion.assertThat(filterPage.getFilterValue(PropertyEnum.CYCLE_TIME)).isEqualTo("1");
+
+        softAssertion.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30920, 30921, 30922, 30923, 30924})
+    @Description("Validate user can filter by Cost Mode used")
+    public void testCodeModeFiltering() {
+        String manualFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String aPrioriFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String mixedFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+
+        ComponentInfoBuilder aPrioriComponent = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder manualComponent = new ComponentRequestUtil().getComponent();
+        manualComponent.setUser(aPrioriComponent.getUser());
+        manualComponent.setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(2.3)
+                .totalCapitalInvestment(1.9)
+                .build())
+            .build());
+
+        ScenariosUtil scenariosUtil = new ScenariosUtil();
+        ComponentsUtil componentsUtil = new ComponentsUtil();
+
+        componentsUtil.postComponent(aPrioriComponent);
+        componentsUtil.postComponent(manualComponent);
+        scenariosUtil.postCostScenario(aPrioriComponent);
+        scenariosUtil.postCostScenario(manualComponent);
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(aPrioriComponent.getUser())
+            .filter()
+            .newFilter()
+            .inputName(manualFilter)
+            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "Manual")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario not displayed").isEqualTo(0);
+        softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
+            .as("Verify Manual Mode costed scenario displayed").isEqualTo(1);
+
+        explorePage = explorePage.filter()
+            .newFilter()
+            .inputName(aPrioriFilter)
+            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "aPriori")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
+            .as("Verify Manual Mode costed scenario not displayed").isEqualTo(0);
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario displayed").isEqualTo(1);
+
+        explorePage = explorePage.filter()
+            .newFilter()
+            .inputName(mixedFilter)
+            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "aPriori")
+            .includeCriteria(PropertyEnum.COST_MODE, "Manual")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        softAssertion.assertThat(explorePage.getListOfScenarios(manualComponent.getComponentName(), manualComponent.getScenarioName()))
+            .as("Verify Manual Mode costed scenario displayed").isEqualTo(1);
+        softAssertion.assertThat(explorePage.getListOfScenarios(aPrioriComponent.getComponentName(), aPrioriComponent.getScenarioName()))
+            .as("Verify aPriori Mode costed scenario displayed").isEqualTo(1);
 
         softAssertion.assertAll();
     }

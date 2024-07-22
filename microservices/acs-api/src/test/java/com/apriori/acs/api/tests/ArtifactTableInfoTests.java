@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class ArtifactTableInfoTests extends TestUtil {
-    private final UserCredentials user = UserUtil.getUser("common");
+    private final UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 12062)

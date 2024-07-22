@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests.workorders;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -51,7 +52,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
     private final FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
     private final AcsResources acsResources = new AcsResources(userCredentials);
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
@@ -324,7 +325,7 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 

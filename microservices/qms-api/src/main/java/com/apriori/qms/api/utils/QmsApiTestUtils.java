@@ -22,6 +22,7 @@ import com.apriori.qms.api.models.response.scenariodiscussion.DiscussionCommentR
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
+import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -61,7 +62,7 @@ public class QmsApiTestUtils {
      * @return the customer user
      */
     public static UserCredentials getCustomerUser() {
-        if (PropertiesContext.get("customer").startsWith("ap-int")) {
+        if (PropertiesContext.get("customer").startsWith(CustomerEnum.AP_INT.getCustomer())) {
             return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
         }
         return new UserCredentials().setEmail("qa-automation-01@apriori.com");
@@ -131,7 +132,7 @@ public class QmsApiTestUtils {
      * @return the bid package response
      */
     public static BidPackageResponse createTestDataBidPackage(UserCredentials currentUser, SoftAssertions softAssertions) {
-        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         if (bidPackageResponse == null) {
             softAssertions.fail("Bid Package Creation FAILED.");
         }

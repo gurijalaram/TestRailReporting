@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
@@ -17,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class LoadCadFileTests {
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 16515)
@@ -25,7 +27,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileKeepFreeBodiesFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -54,7 +56,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileKeepFreeBodiesTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -83,7 +85,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesPreserveCadTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -112,7 +114,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesPreserveCadFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -141,7 +143,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileFreeBodiesIgnoreMissingComponentsFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -170,7 +172,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesIgnoreMissingComponentsTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

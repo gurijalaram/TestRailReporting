@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
+
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -17,6 +19,7 @@ import io.qameta.allure.Description;
 import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -41,10 +44,11 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {21669, 21670})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with same scenario name are associated to assembly")
     public void testMaturityPresetPrivateWithSameNameAndMissing() {
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String asmStrategy = "PREFER_HIGH_MATURITY";
 

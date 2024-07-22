@@ -18,6 +18,7 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -44,6 +45,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Issue("PFE-6457")
     @Tags({
         @Tag(JASPER_API),
         @Tag(API_SANITY)
@@ -149,8 +151,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
-            JasperCirApiPartsEnum.P_1684402_TOP_BRACKET.getPartName(),
-            JasperCirApiPartsEnum.P_2840020_BRACKET.getPartName()
+            JasperCirApiPartsEnum.AP_SHEET_METAL_EXERCISE.getPartName(),
+            JasperCirApiPartsEnum.P_3574715_BULK_LOAD.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             true,

@@ -3,6 +3,7 @@ package com.apriori.sds.api.util;
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
@@ -25,6 +26,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
@@ -65,7 +67,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     @BeforeAll
     public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
 
@@ -161,7 +163,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static ScenarioItem postPart(String componentName, String extension, ProcessGroupEnum processGroup) {
-        final String uniqueScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String uniqueScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final File fileToUpload = FileResourceUtil.getS3FileAndSaveWithUniqueName(componentName,
             processGroup
         );
@@ -257,7 +259,7 @@ public abstract class SDSTestUtil extends TestUtil {
         return new HashMap<>() {
             {
                 put("ap-application-context", getApApplicationContext());
-                put("ap-cloud-context", testingUser.generateCloudContext().getCloudContext());
+                put("ap-cloud-context", testingUser.getUserDetails().getCustomerData().getCloudContext());
             }
         };
     }
@@ -275,7 +277,7 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("customer")))
         ).get();
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
@@ -497,6 +499,8 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                // TODO: 21/06/2024 cn - workaround for now so will be reworked with changes to requestentity
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(componentInfoBuilder.getUser().getEmail()))
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);

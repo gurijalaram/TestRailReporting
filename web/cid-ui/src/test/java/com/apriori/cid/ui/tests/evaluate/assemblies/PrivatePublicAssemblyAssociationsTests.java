@@ -1,6 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -88,11 +88,11 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
         currentUser = UserUtil.getUser();
 
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName2 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName3 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName4 = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName3 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName4 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hingeAssembly,
@@ -134,7 +134,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21707, 21708, 21709, 21710, 11955, 11958, 6600})
     @Description("Validate assembly association priority for Default strategy")
     public void testDefaultAssemblyAssociationsWorkflow() {
@@ -189,7 +189,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21699, 21701, 21702, 21703})
     @Description("Validate assembly association priority for Prefer Private strategy")
     public void testPreferPrivateAssemblyAssociationsWorkflow() {
@@ -251,7 +251,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21700, 21704, 21705, 21706})
     @Description("Validate assembly association priority for Prefer Public strategy")
     public void testPreferPublicAssemblyAssociationsWorkflow() {

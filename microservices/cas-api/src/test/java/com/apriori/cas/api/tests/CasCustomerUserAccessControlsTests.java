@@ -11,10 +11,9 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -25,24 +24,29 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerUserAccessControlsTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private final SoftAssertions soft = new SoftAssertions();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private IdentityHolder accessControlIdentityHolder;
     private String customerIdentity;
     private String userIdentity;
-    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
-    public void setDetails() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 
     @AfterEach

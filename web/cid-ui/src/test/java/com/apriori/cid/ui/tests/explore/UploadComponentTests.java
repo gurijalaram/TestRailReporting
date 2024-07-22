@@ -3,7 +3,7 @@ package com.apriori.cid.ui.tests.explore;
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SANITY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -92,7 +92,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .inputDefaultScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputDefaultScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
             .inputMultiComponentBuilderDetails(components);
 
         cadFileStatusPage = importCadFilePage.submit();
@@ -106,7 +106,7 @@ public class UploadComponentTests extends TestBaseUI {
     public void testUniqueScenarioNamesMultiUpload() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
-        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateScenarioName()));
+        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario")));
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
@@ -151,7 +151,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         UserCredentials currentUser = UserUtil.getUser();
         resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String message = "The file type of the selected file is not supported." +
             " Supported file types are: .asat, .asm, .asm.#, .catpart, .catproduct, .iam, .ipt," +
             " .jt, .model, .par, .prt, .prt.#, .psm, .sab, .sat, .sldasm, .sldprt, .step, .stp, .x_b, .x_t, .xas, .xpr";
@@ -303,11 +303,12 @@ public class UploadComponentTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
 
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -405,13 +406,13 @@ public class UploadComponentTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {12169, 12171, 12172, 12168})
     @Description("Validate race conditions - upload a full assembly with override")
     public void uploadMultiLevelAssemblyWithOverrideAndRename() {
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(9);
 

@@ -83,4 +83,6 @@ public class CostingTemplate implements Serializable {
     private SecondaryProcesses secondaryProcesses;
     private CostingInput.Threads threads;
     private CostingInput.Tolerances tolerances;
+    @Builder.Default
+    private CostRollupOverrides costRollupOverrides = null;
 }

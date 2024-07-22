@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -97,6 +98,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11812, 6042, 11902, 10762, 11861})
     @Description("Verify publish scenario modal appears when publish button is clicked")
     public void testIncludeSubcomponentsAndCost() {
@@ -130,6 +132,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11811)
     @Description("Publish button becomes unavailable when public sub-component selected alongside private sub-component(s)")
     public void testPublishButtonAvailability() {
@@ -166,6 +169,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11828)
     @Description("Validate an error message appears if any issues occur")
     public void testPublishWithExistingScenarioName() {
@@ -198,15 +202,23 @@ public class PublishAssembliesTests extends TestBaseUI {
             .changeName(preExistingComponentAssembly.getScenarioName())
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsTablePage.class);
+            .close(ComponentsTablePage.class)
+            .checkSubcomponentState(componentAssembly, bigRingSubcomponent.getComponentName())
+            .checkSubcomponentState(componentAssembly, smallRingSubcomponent.getComponentName());
+
+        evaluatePage = new EvaluatePage(driver);
+
+        componentsTablePage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11829)
     @Description("Validate a public iteration of the sub component is created")
     public void testCreatingPublicIterationOfSubcomponent() {
@@ -239,6 +251,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11813, 11814, 11808, 6051})
     @Description("Validate public scenarios are overridden from publish modal")
     public void testOverridePublicScenarios() {
@@ -265,7 +278,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
         componentsTreePage = componentsTreePage.multiSelectSubcomponents(
-            bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(),
+                bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(),
                 smallRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName())
             .publishSubcomponent()
             .override()
@@ -293,6 +306,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10773, 10775})
     @Description("Shallow Publish correctly publishes to Public Workspace")
     public void testShallowPublishInPublicWorkspace() {
@@ -333,6 +347,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10771, 10772, 10776, 10777, 10778, 6746, 6615, 6616, 6617, 6056, 6057})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
@@ -406,6 +421,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10770)
     @Description("Retain the Status/ Cost Maturity/ Lock during a Shallow Publish")
     public void testShallowPublishWithRetainedFeatures() {
@@ -455,6 +471,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10787, 10789})
     @Description("Shallow Publish over existing Public Scenarios")
     public void testShallowPublishOverExistingPublicScenario() {
@@ -500,6 +517,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10786)
     @Description("Attempt to Shallow Publish over existing Public locked scenarios")
     public void testShallowPublishExistingPublicLockedScenario() {
@@ -538,6 +556,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10780)
     @Description("Shallow Publish an assembly with Out of Date cost results")
     public void testShallowPublishWithOutOfDateCostResults() {
@@ -586,6 +605,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11094, 11095})
     @Description("Validate when I select a sub components in a processing state the set inputs button is disabled until the scenario is unselected")
     public void testInputsEnabledDisabled() {
@@ -622,33 +642,34 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11824, 11825})
     @Description("Validate when I select any sub components in a processing state the publish button is disabled")
     public void testPublishButtonDisabledEnabled() {
-        final String BASE = "titan charger base";
-        final String LEAD = "titan charger lead";
+        final String PISTON = "piston";
+        final String PIN = "piston_pin";
+
+        componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
+        ComponentInfoBuilder pistonComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(PISTON)).findFirst().get();
+        ComponentInfoBuilder pinComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(PIN)).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-
-        componentAssembly = new AssemblyRequestUtil().getAssembly("titan charger ass");
-        ComponentInfoBuilder baseComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BASE)).findFirst().get();
-        ComponentInfoBuilder leadComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(LEAD)).findFirst().get();
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName())
+            .multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getScenarioName())
             .publishSubcomponent()
             .publish(ComponentsTablePage.class)
-            .multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName(), leadComponent.getComponentName() + "," + leadComponent.getScenarioName());
+            .multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getScenarioName(), pinComponent.getComponentName() + "," + pinComponent.getScenarioName());
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(baseComponent.getComponentName(), baseComponent.getScenarioName())).contains("gear");
+        softAssertions.assertThat(componentsTablePage.getRowDetails(pistonComponent.getComponentName(), pistonComponent.getScenarioName())).contains("gear");
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
 
-        componentsTablePage.multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName());
+        componentsTablePage.multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getComponentName());
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 

@@ -56,7 +56,7 @@ public class UserTests {
         String newTownCity = generator.getRandomStringSpecLength(8);
         String newCounty = generator.getRandomStringSpecLength(8);
         String newOfficePhoneCountryCode = generator.getRandomNumbersSpecLength(3);
-        String newOfficePhoneNumber = generator.getRandomNumbers();
+        String newOfficePhoneNumber = generator.getRandomNumbersSpecLength(8);
         String newTimezone = generator.getRandomStringSpecLength(3);
 
         UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()

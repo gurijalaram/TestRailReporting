@@ -20,6 +20,9 @@ public class AttachReportTab extends NotificationsPart {
     @FindBy(xpath = "//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'layout-vert-fluid-center ')]//div[@class='widget-content widget-dropdown']")
     private WebElement reportNameDropDownElement;
 
+    @FindBy(xpath = "//div[@tab-number='4']//div[@tab-number='2']//span[.='No report configuration defined.']")
+    private WebElement noReportsDefinedElement;
+
     @FindBy(css = "#CIC_EmptyReport_MU-1_label-3 > span")
     private WebElement emptyReportLbl;
 
@@ -59,7 +62,15 @@ public class AttachReportTab extends NotificationsPart {
     public AttachReportTab selectReportName(ReportsEnum reportsEnum) {
         pageUtils.waitUntilDropdownOptionsLoaded(getReportNameDropdownElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        WebElement webElement = driver.findElement(By.xpath(String.format("//div[@class='ss-option']/..//div[.='%s']", reportsEnum.getReportName())));
+        pageUtils.moveAndClick(webElement);
+        switch (reportsEnum) {
+            case PART_COST:
+                pageUtils.waitForElementAppear(noReportsDefinedElement);
+                break;
+            default:
+                pageUtils.waitForElementAppear(getCurrencyCodeElement());
+        }
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -87,7 +98,7 @@ public class AttachReportTab extends NotificationsPart {
     public AttachReportTab selectCostRounding(FieldState fieldState) {
         pageUtils.waitForElementAppear(reportConfigurationLbl);
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
+        pageUtils.waitForElementAndClick(By.xpath(String.format("//div[contains(@class, 'ss-open')]//div[@class='ss-option']/..//div[.='%s']", fieldState)));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -141,13 +152,8 @@ public class AttachReportTab extends NotificationsPart {
      * @return WebElement
      */
     public WebElement getCurrencyCodeDdl() {
-        WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
-            .filter(webElement -> webElement.getText().equals("Curreny Code"))
-            .findFirst()
-            .get();
-
         return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-dropdown']"))
-            .toLeftOf(currencyTextBoxElement));
+            .toLeftOf(getCurrencyCodeElement()));
     }
 
     /**
@@ -180,4 +186,17 @@ public class AttachReportTab extends NotificationsPart {
         return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[@class='widget-content widget-dropdown']"))
             .below(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div//span[.='Report Name']")));
     }
+
+    /**
+     * get currency code disabled text element
+     *
+     * @return WebElement
+     */
+    private WebElement getCurrencyCodeElement() {
+        return getAttachReportTextFields().stream()
+            .filter(webElement -> webElement.getAttribute("value").equals("Currency Code"))
+            .findFirst()
+            .get();
+    }
+
 }

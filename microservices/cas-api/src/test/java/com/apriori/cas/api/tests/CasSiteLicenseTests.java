@@ -8,28 +8,31 @@ import com.apriori.cas.api.models.response.LicenseResponse;
 import com.apriori.cas.api.models.response.Licenses;
 import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.cas.api.utils.Constants;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasSiteLicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerName;
@@ -40,25 +43,30 @@ public class CasSiteLicenseTests {
     private String siteName;
     private String siteID;
     private String siteIdentity;
-    private CasTestUtil casTestUtil = new CasTestUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CasTestUtil casTestUtil;
+    private CdsTestUtil cdsTestUtil;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private String casLicense;
 
+    @SneakyThrows
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        customerName = generateStringUtil.generateCustomerName();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         email = customerName.toLowerCase();
         description = customerName + " Description";
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
+        casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
 
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
+        ResponseWrapper<Site> site = casTestUtil.addSite(customerIdentity, siteID, siteName);
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
@@ -76,7 +84,7 @@ public class CasSiteLicenseTests {
     public void getSitesLicenses() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        casTestUtil.addLicense(casLicense, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
         ResponseWrapper<Licenses> siteLicenses = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, Licenses.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
 
@@ -91,7 +99,7 @@ public class CasSiteLicenseTests {
     public void getSiteLicenseByIdentity() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casLicense, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
@@ -108,7 +116,7 @@ public class CasSiteLicenseTests {
     public void activateLicense() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casLicense, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 

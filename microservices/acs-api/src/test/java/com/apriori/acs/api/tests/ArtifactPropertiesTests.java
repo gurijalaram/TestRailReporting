@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class ArtifactPropertiesTests extends TestUtil {
-    private final UserCredentials user = UserUtil.getUser("common");
+    private final UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 12079)
@@ -48,7 +49,7 @@ public class ArtifactPropertiesTests extends TestUtil {
         );
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload("bracket_basic.prt", processGroup);
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, generateStringUtil.generateScenarioName());
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, generateStringUtil.generateStringForAutomation("Scenario"));
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,

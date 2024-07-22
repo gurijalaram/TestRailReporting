@@ -35,14 +35,22 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
         "componentSelect;componentCostCurrencyCode/values/pagination?freshData=false&includeTotalCount=true"))),
     COST_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;latestExportDate;").concat(
         "exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values?freshData=false")),
+    COST_OUTLIER_IDENTIFICATION_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;".concat(
+        "latestExportDate;exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values/pagination?freshData=false&includeTotalCount=true"))),
     COST_OUTLIER_IDENTIFICATION_DETAILS(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentificationDetails/inputControls/useLatestExport;earliestExportDate;").concat(
         "latestExportDate;exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values?freshData=false")),
     CYCLE_TIME_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTracking/inputControls/projectRollup;exportDate;currencyCode/values?freshData=false&includeTotalCount=true")),
+    CYCLE_TIME_VALUE_TRACKING_MODIFIED_IC(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTracking/inputControls/projectRollup;exportDate;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     CYCLE_TIME_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;currencyCode/values?freshData=false")),
+    CYCLE_TIME_VALUE_TRACKING_DETAILS_MODIFIED_IC(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     DESIGN_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentification/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;aPrioriCostMin;").concat(
         "aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values?freshData=false")),
+    DESIGN_OUTLIER_IDENTIFICATION_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentification/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;").concat(
+        "aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;").concat(
         "massMetric;aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;currencyCode/values")),
+    DESIGN_OUTLIER_IDENTIFICATION_DETAILS_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;").concat(
+        "aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     DIGITAL_FACTORY_PERFORMANCE(APRIORI_SOLUTIONS_QUOTING_REPORTS.getEndpointString().concat("/vpePerformance/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;performanceMetric;annualVolumeMin;").concat(
         "annualVolumeMax;processGroup;processName;materialName;vpeName;currencyCode/values?freshData=false")),
     DIGITAL_FACTORY_PERFORMANCE_DETAILS(APRIORI_SOLUTIONS_QUOTING_REPORTS.getEndpointString().concat("/vpePerformanceDetailsInternal/inputControls/currencyCode;annualVolumeMax;annualVolumeMin;performanceMetric;costMetric;").concat(
@@ -100,6 +108,8 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
         "currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false")))),
     UPGRADE_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;".concat(
         "timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),
+    UPGRADE_COMPARISON_MODIFIED_IC(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;".concat(
+        "costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values/pagination?freshData=false&includeTotalCount=true"))),
     UPGRADE_PART_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;partNumberNew;changeLevel;".concat(
         "costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),
     UPGRADE_PART_COMPARISON_MODIFIED_IC(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;".concat(
@@ -118,6 +128,6 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("reports.ui_url") + "rest_v2" + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("reports.ui_url") + "/rest_v2" + String.format(getEndpointString(), variables);
     }
 }

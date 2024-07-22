@@ -32,7 +32,7 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     @TestRail(id = {14217})
     @Description("Verify that user can Update description of Discussion")
     public void updateValidDiscussionDescription() {
-        String description = new GenerateStringUtil().generateNotes();
+        String description = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
             .discussion(DiscussionsRequestParameters.builder()
                 .description(description)

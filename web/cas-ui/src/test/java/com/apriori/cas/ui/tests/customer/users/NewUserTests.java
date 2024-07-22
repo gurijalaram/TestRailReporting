@@ -10,12 +10,12 @@ import com.apriori.cas.ui.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -31,19 +31,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewUserTests extends TestBaseUI {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String userIdentity;
     private NewUserPage newUserPage;
     private String email;
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+
         setCustomerData();
         newUserPage = new CasLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(requestEntityUtil.getEmbeddedUser())
             .openCustomer(customerIdentity)
             .goToUsersPage()
             .goToCustomerStaff()
@@ -55,7 +58,6 @@ public class NewUserTests extends TestBaseUI {
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
@@ -128,11 +130,9 @@ public class NewUserTests extends TestBaseUI {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         email = customerName.toLowerCase();
-        Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        Customer targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-
-        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
     }
 }

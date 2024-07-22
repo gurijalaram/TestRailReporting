@@ -7,11 +7,10 @@ import com.apriori.cas.api.models.response.ServiceAccounts;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -21,21 +20,25 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerServiceAccountsTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CasTestUtil casTestUtil;
+    private CdsTestUtil cdsTestUtil;
     private Customer customer;
     private Customer onPremCustomer;
     private String customerIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -64,7 +67,7 @@ public class CasCustomerServiceAccountsTests {
     @Description("Gets service accounts for On Prem customer")
     @TestRail(id = {16544})
     public void getServiceAccountsOnPremCustomer() {
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
         onPremCustomer = casTestUtil.findOnPremCustomer();
 

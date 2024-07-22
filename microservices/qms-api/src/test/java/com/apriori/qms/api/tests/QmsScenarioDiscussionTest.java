@@ -107,7 +107,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Get list of all Scenario Discussions")
     public void getScenarioDiscussions() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -123,7 +123,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(qmsScenarioItem.getComponentIdentity(), qmsScenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
 
-        String description = new GenerateStringUtil().generateNotes();
+        String description = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().description(description).build()).build();
         ScenarioDiscussionResponse updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
@@ -156,7 +156,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Verify that User can add comment, update status to delete to scenario discussion" +
         "and verify comment view is created for the same user")
     public void addAndDeleteCommentToDiscussion() {
-        String commentContent = new GenerateStringUtil().generateNotes();
+        String commentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentRequest discussionCommentRequest = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
                 .content(commentContent)
@@ -187,7 +187,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     public void getDiscussionComment() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, DiscussionCommentResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity(), discussionCommentResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -201,7 +201,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     public void getDiscussionComments() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentsResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -213,7 +213,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {14676})
     @Description("Verify that User can add comment with mentioning user to scenario discussion")
     public void addCommentWithUserToDiscussion() {
-        String commentContent = new GenerateStringUtil().generateNotes();
+        String commentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentResponse responseWrapper = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
             commentContent, "ACTIVE", currentUser);
         softAssertions.assertThat(responseWrapper.getContent()).isEqualTo(commentContent);
@@ -224,7 +224,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Verify that User will not get 409 error on valid actions after getting this error on invalid action")
     public void verifyScenarioDiscussionNo409ErrorWith2Users() {
         UserCredentials assignedUser = UserUtil.getUser();
-        String description = new GenerateStringUtil().generateNotes();
+        String description = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
             .getScenarioDiscussionRequest(assignedUser, qmsScenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
@@ -277,7 +277,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Verify that user can Assign / Un-assign scenario discussion")
     public void assignUnAssignDiscussion() {
         UserCredentials assigneeUser = UserUtil.getUser();
-        String description = new GenerateStringUtil().generateNotes();
+        String description = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
             .getScenarioDiscussionRequest(currentUser, qmsScenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
@@ -338,7 +338,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("ACTIVE");
 
-        String commentContent = new GenerateStringUtil().generateNotes();
+        String commentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentResponse responseWrapper = QmsScenarioDiscussionResources.addCommentToDiscussion(csdResponse.getIdentity(),
             commentContent, "ACTIVE", currentUser);
         softAssertions.assertThat(responseWrapper.getContent()).isEqualTo(commentContent);
@@ -391,7 +391,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {16056, 14679})
     @Description("Verify that user can Update discussion comment's Status (UnDeleted) and Content")
     public void updateDiscussionCommentStatusAndContent() {
-        String commentContent = new GenerateStringUtil().generateNotes();
+        String commentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentRequest addCommentRequest = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
                 .content(commentContent)
@@ -425,7 +425,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
             addCommentResponse.getIdentity(), updateCommentRequestActive, DiscussionCommentResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateCommentResponseActive.getStatus()).isEqualTo("ACTIVE");
 
-        String newCommentContent = new GenerateStringUtil().generateNotes();
+        String newCommentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentRequest updateCommentRequestNewContent = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
                 .content(newCommentContent)
@@ -442,7 +442,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Description("Verify that mentioned User in the comment will be added as participant")
     public void verifyCommentMentionedUserAsParticipant() {
         UserCredentials mentionedUser = UserUtil.getUser();
-        String commentContent = new GenerateStringUtil().generateNotes();
+        String commentContent = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         DiscussionCommentRequest discussionCommentRequest = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
                 .content(commentContent)
@@ -458,7 +458,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 

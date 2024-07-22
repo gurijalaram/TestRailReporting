@@ -4,11 +4,16 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
+import com.apriori.cds.api.utils.AccessControlUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -18,18 +23,32 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsAccessControlsTests extends CdsTestUtil {
+public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CustomerUtil customerUtil;
+    private CdsTestUtil cdsTestUtil;
+    private AccessControlUtil accessControlUtil;
+    private CdsUserUtil cdsUserUtil;
     private String customerIdentity;
     private String userIdentity;
-    private SoftAssertions soft = new SoftAssertions();
+    private final SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        accessControlUtil = new AccessControlUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -54,7 +73,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Adding out of context access control")
     public void postAccessControl() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = accessControlUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()
@@ -72,7 +91,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Get Access controls by Customer and User")
     public void getAccessControl() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = accessControlUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()
@@ -92,7 +111,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Get access control by Control ID")
     public void getAccessControlById() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControl = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControl = accessControlUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()
@@ -101,7 +120,8 @@ public class CdsAccessControlsTests extends CdsTestUtil {
             .accessControlIdentity(accessControlIdentity)
             .build();
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class,
+            HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
 
         soft.assertThat(accessControlResponse.getResponseEntity().getUserIdentity()).isEqualTo(userIdentity);
         soft.assertAll();
@@ -109,13 +129,13 @@ public class CdsAccessControlsTests extends CdsTestUtil {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

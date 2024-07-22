@@ -1,8 +1,10 @@
 package com.apriori.cid.ui.tests.explore;
 
+
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -30,6 +32,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -83,7 +86,7 @@ public class GroupCostTests extends TestBaseUI {
     @Description("Verify that Cost button is disabled when more than 10 private components are selected")
     public void testCostMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));
@@ -170,6 +173,7 @@ public class GroupCostTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {14800})
     @Description("Verify that Cost button is disabled when a combination of parts and assemblies are selected")
     public void testGroupCostPartAndAssemblyScenarios() {
@@ -199,7 +203,7 @@ public class GroupCostTests extends TestBaseUI {
     @Description("Verify that Cost button is disabled when any in a multi-selection of parts has Component Type Unknown")
     public void testGroupCostUnknownScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));

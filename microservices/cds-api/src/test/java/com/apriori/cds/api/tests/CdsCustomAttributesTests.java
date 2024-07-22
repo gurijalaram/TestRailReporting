@@ -4,11 +4,16 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.CustomAttributesResponse;
+import com.apriori.cds.api.utils.AttributeUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -18,6 +23,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -25,11 +31,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CdsCustomAttributesTests {
     private IdentityHolder customAttributesIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
+    private AttributeUtil attributeUtil;
     private String customerIdentity;
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
+    private CdsUserUtil cdsUserUtil;
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        attributeUtil = new AttributeUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -54,15 +73,16 @@ public class CdsCustomAttributesTests {
     @Description("Adding a CustomAttribute for a user and getting it")
     public void addCustomAttribute() {
         setCustomerData();
-        String updatedDepartment = generateStringUtil.getRandomString();
-        ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
-        soft.assertThat(customAttributeAdded.getResponseEntity().getIdentity()).isNotNull();
+        String updatedDepartment = generateStringUtil.getRandomStringSpecLength(8);
+        CustomAttribute customAttributeAdded = attributeUtil.addCustomAttribute(customerIdentity, userIdentity);
+        soft.assertThat(customAttributeAdded.getIdentity()).isNotNull();
 
-        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
+        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, HttpStatus.SC_OK,
+            customerIdentity, userIdentity);
         soft.assertThat(customAttributes.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
 
-        ResponseWrapper<CustomAttribute> putCustomAttribute = cdsTestUtil.putCustomAttribute(customerIdentity, userIdentity, updatedDepartment);
-        String customAttributeIdentity = putCustomAttribute.getResponseEntity().getIdentity();
+        CustomAttribute putCustomAttribute = attributeUtil.putCustomAttribute(updatedDepartment, customerIdentity, userIdentity);
+        String customAttributeIdentity = putCustomAttribute.getIdentity();
 
         customAttributesIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -70,7 +90,7 @@ public class CdsCustomAttributesTests {
             .customAttributeIdentity(customAttributeIdentity)
             .build();
 
-        soft.assertThat(putCustomAttribute.getResponseEntity().getValue()).isEqualTo(updatedDepartment);
+        soft.assertThat(putCustomAttribute.getValue()).isEqualTo(updatedDepartment);
         soft.assertAll();
     }
 
@@ -79,17 +99,17 @@ public class CdsCustomAttributesTests {
     @Description("Get a CustomAttribute by its identity and update")
     public void getCustomAttributeByIdAndUpdate() {
         setCustomerData();
-        String updatedDepartment = generateStringUtil.getRandomString();
-        ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
+        String updatedDepartment = generateStringUtil.getRandomStringSpecLength(8);
+        CustomAttribute customAttributeAdded = attributeUtil.addCustomAttribute(customerIdentity, userIdentity);
 
-        String attributeIdentity = customAttributeAdded.getResponseEntity().getIdentity();
+        String attributeIdentity = customAttributeAdded.getIdentity();
         ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, HttpStatus.SC_OK, customerIdentity, userIdentity, attributeIdentity);
 
         soft.assertThat(customAttributes.getResponseEntity().getIdentity()).isEqualTo(attributeIdentity);
 
-        ResponseWrapper<CustomAttribute> updateCustomAttribute = cdsTestUtil.updateAttribute(customerIdentity, userIdentity, attributeIdentity, updatedDepartment);
+        CustomAttribute updateCustomAttribute = attributeUtil.updateAttribute(updatedDepartment, customerIdentity, userIdentity, attributeIdentity);
 
-        soft.assertThat(updateCustomAttribute.getResponseEntity().getValue()).isEqualTo(updatedDepartment);
+        soft.assertThat(updateCustomAttribute.getValue()).isEqualTo(updatedDepartment);
         soft.assertAll();
 
         customAttributesIdentityHolder = IdentityHolder.builder()
@@ -101,13 +121,13 @@ public class CdsCustomAttributesTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

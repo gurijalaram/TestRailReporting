@@ -4,12 +4,10 @@ import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Deployment;
 import com.apriori.cas.api.models.response.Deployments;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.SharedCustomerUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.Customer;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -18,22 +16,22 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasDeploymentsTests {
-    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private CasTestUtil casTestUtil;
     private SoftAssertions soft = new SoftAssertions();
-    private Customer aprioriInternal;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String customerIdentity;
-    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
-        customerIdentity = aprioriInternal.getIdentity();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
     }
 
     @Test

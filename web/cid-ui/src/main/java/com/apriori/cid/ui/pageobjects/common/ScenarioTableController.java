@@ -195,6 +195,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Finds the scenario by component name and scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return by
+     */
+    public By byComponentRow(String componentName, String scenarioName) {
+        return By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[normalize-space(.)='%s']/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim()));
+    }
+
+    /**
      * Checks the scenario is not displayed
      *
      * @param componentName - component name
@@ -312,6 +323,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return getByParentLocator(componentName, scenarioName)
             .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
             .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the Quantity value for the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return Integer value of quantity in assembly
+     */
+    public Integer getScenarioQuantity(String componentName, String scenarioName) {
+        return Integer.parseInt(getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-header-id='occurrences']"))
+            .getText());
     }
 
     /**

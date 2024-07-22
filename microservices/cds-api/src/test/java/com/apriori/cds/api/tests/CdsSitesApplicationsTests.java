@@ -1,12 +1,20 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.SiteItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
@@ -26,7 +34,10 @@ public class CdsSitesApplicationsTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
+    private CustomerUtil customerUtil;
+    private SiteUtil siteUtil;
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -40,19 +51,25 @@ public class CdsSitesApplicationsTests {
 
     @BeforeEach
     public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
+
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
+        salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
         String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
+        customer = customerUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
 
-        site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
@@ -74,9 +91,9 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -92,18 +109,18 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6060})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
-        String appIdentity = Constants.getCiaApplicationIdentity();
+        String appIdentity = applicationUtil.getApplicationIdentity(CIA);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
-             .customerIdentity(customerIdentity)
-             .siteIdentity(siteIdentity)
-             .licenseIdentity(licensedApplicationIdentity)
-             .build();
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licensedApplicationIdentity)
+            .build();
 
         ResponseWrapper<SiteItems> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
-                SiteItems.class,
+            SiteItems.class,
             HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity
@@ -119,7 +136,7 @@ public class CdsSitesApplicationsTests {
             licensedApplicationIdentity
         );
         soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplication()).isEqualTo("aP Admin");
-        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(Constants.getCiaApplicationIdentity());
+        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(appIdentity);
         soft.assertAll();
     }
 }

@@ -11,7 +11,6 @@ import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -22,7 +21,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class ScenariosTests {
     @TestRail(id = 10620)
     @Description("Copy a scenario")
     public void testCopyScenario() {
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder oldhamAsm = new AssemblyRequestUtil().getAssembly("OLDHAM");
 
@@ -77,7 +75,7 @@ public class ScenariosTests {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -124,7 +122,7 @@ public class ScenariosTests {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
 
@@ -164,7 +162,7 @@ public class ScenariosTests {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(

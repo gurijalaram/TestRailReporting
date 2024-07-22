@@ -1,6 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
@@ -27,7 +27,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -47,16 +47,17 @@ public class FiltersTests extends TestBaseUI {
     private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private String filterName2 = generateStringUtil.generateFilterName();
+    private String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
     private FilterPage filterPage;
     private UserCredentials currentUser;
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10538, 6168})
     @Description("Verify that filter criteria can be deleted")
     public void filterCriteriaCanBeDeletedTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -79,6 +80,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10537, 6167, 6083})
     @Description("Verify that newly created filter is displayed in filters dropdown in my filter section")
     public void newlyCreatedFilterIsDisplayedInFiltersTest() {
@@ -104,6 +106,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10535, 6165})
     @Description("Verify Cancel button closes the Scenario filter table")
     public void cancelBtnCloseFilterTableTest() {
@@ -126,11 +129,12 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10534, 6164})
     @Description("User can clear added criteria simultaneously by Clear button")
     public void canClearAddedCriteriaTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
@@ -153,11 +157,12 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10532)
     @Description("Validate that user can cancel action New before saving")
     public void canCancelBeforeSavingTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -179,11 +184,12 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10531, 6099})
     @Description("User can filter scenarios from scenario filter modal box")
     public void canFilterScenariosFromModalBoxTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -207,11 +213,12 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10529, 6085})
     @Description("User can create new filter from already existing one using Save As button")
     public void canCreateNewFilterBySaveAsTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -234,12 +241,13 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10528, 6084})
     @Description("User is able to edit already created filters")
     public void ableToEditCreatedFilterTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -267,12 +275,13 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10527, 6353})
     @Description("Validate user can select custom filter")
     public void ableToSelectCustomFilterTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -303,11 +312,12 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10526, 6081})
     @Description("Validate user can create custom filter with all available attributes")
     public void ableToCreateCustomFilterWithAllAttributesTest() {
 
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -352,6 +362,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10525)
     @Description("Validate user can select Uncosted scenarios")
     public void ableToSelectUncostedScenarioTest() {
@@ -376,6 +387,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10524, 6077})
     @Description("Validate user can select Assigned to Me scenarios")
     public void ableToSelectAssignedToMeScenarioTest() {
@@ -396,6 +408,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10523)
     @Description("Validate user can select Missing scenarios")
     public void ableToSelectMissingScenarioTest() {
@@ -418,6 +431,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10522, 6531})
     @Description("Validate user can select All scenarios")
     public void ableToSelectAllScenarioTest() {
@@ -439,6 +453,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6075, 6080})
     @Description("Validate Private filter displays only Private Scenarios")
     public void verifyFilterContentTest() {
@@ -459,7 +474,7 @@ public class FiltersTests extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
             .as("Published state of top scenario sorted ascending")
-            .isEqualTo("Private");
+            .isEqualTo("Only you can see and modify this scenario.");
 
         explorePage.sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.DESCENDING);
         topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
@@ -468,7 +483,7 @@ public class FiltersTests extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
             .as("Published state of top scenario sorted ascending")
-            .isEqualTo("Private");
+            .isEqualTo("Only you can see and modify this scenario.");
 
         explorePage.selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
@@ -485,13 +500,14 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 6100)
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void cancelFilterTest() {
 
         currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-        String cancelledFilterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String cancelledFilterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
@@ -528,6 +544,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @Issue("BA-2610")
     @TestRail(id = 6532)
     @Description("User can perform complex searches and be able to find the desired assembly scenario")
@@ -535,7 +552,7 @@ public class FiltersTests extends TestBaseUI {
 
         final LocalDateTime testStart = LocalDateTime.now();
 
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -606,7 +623,7 @@ public class FiltersTests extends TestBaseUI {
             .inputName(filterName)
             .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, testStart)
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, componentAssembly.getComponentName().substring(0, 5))
-            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "AutoScenario")
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "AutoGenerated-Scenario")
             .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .addCriteria(PropertyEnum.FULLY_BURDENED_COST, OperationEnum.GREATER_THAN, "0.4")
             .save(FilterPage.class)

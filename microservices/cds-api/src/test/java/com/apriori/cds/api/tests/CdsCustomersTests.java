@@ -5,8 +5,11 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SAN
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -16,6 +19,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +29,15 @@ public class CdsCustomersTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -50,13 +62,13 @@ public class CdsCustomersTests {
     @TestRail(id = {3298})
     @Description("Add API customers")
     public void addCustomerTest() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
+        String salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         String emailPattern = "\\S+@".concat(customerName);
         String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         soft.assertThat(customer.getResponseEntity().getName()).isEqualTo(customerName);

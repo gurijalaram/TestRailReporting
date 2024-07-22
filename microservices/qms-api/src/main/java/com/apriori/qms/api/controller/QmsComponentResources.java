@@ -46,7 +46,7 @@ public class QmsComponentResources {
      */
     public static ScenarioItem createAndQueryComponent(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         ComponentInfoBuilder componentInfoBuilder = ComponentInfoBuilder.builder().componentName(componentName)
             .scenarioName(scenarioName).resourceFile(resourceFile).user(currentUser).build();
 
@@ -107,7 +107,7 @@ public class QmsComponentResources {
                                                                                          String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(UserUtil.getUser().generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(UserUtil.getUser().getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(userContext);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -142,7 +142,7 @@ public class QmsComponentResources {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .body(projectUserRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -168,7 +168,7 @@ public class QmsComponentResources {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .body(projectUserRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
@@ -189,7 +189,7 @@ public class QmsComponentResources {
     public static ScenarioProjectUserResponse addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest createProjectUserRequest, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .body(createProjectUserRequest)
             .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -209,7 +209,7 @@ public class QmsComponentResources {
     public static void deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .body(deleteProjectUserRequest)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
@@ -232,7 +232,7 @@ public class QmsComponentResources {
     public static <T> T deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
             .inlineVariables(componentIdentity, scenarioIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .body(deleteProjectUserRequest)
             .expectedResponseCode(httpStatus);
@@ -252,7 +252,7 @@ public class QmsComponentResources {
      */
     public static <T> T getComponentsAssigned(AssignedComponentRequest assignedComponentRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENTS_ASSIGNED, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .body(assignedComponentRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);

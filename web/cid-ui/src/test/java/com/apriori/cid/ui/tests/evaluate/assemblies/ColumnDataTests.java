@@ -47,7 +47,7 @@ public class ColumnDataTests extends TestBaseUI {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -73,7 +73,7 @@ public class ColumnDataTests extends TestBaseUI {
         String pinIdentity = cssComponent.findFirst(pin, scenarioName, currentUser).getScenarioIdentity();
         String smallRingIdentity = cssComponent.findFirst(small_ring, scenarioName, currentUser).getScenarioIdentity();
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("5,500");
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("500");
 
         componentsTablePage = explorePage.navigateToScenario(componentAssembly)
             .openComponents()
@@ -81,7 +81,7 @@ public class ColumnDataTests extends TestBaseUI {
 
         PersonResponse person = new PeopleUtil().getCurrentPerson(currentUser);
 
-        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.DIGITAL_FACTORY, bigRingIdentity, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.LAST_UPDATED_BY, pinIdentity, currentUser))
             .isEqualTo(person.getGivenName() + " " + person.getFamilyName());

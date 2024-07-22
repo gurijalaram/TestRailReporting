@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
@@ -18,7 +19,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +65,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})
     @Description("Generate and download a Assembly Cost Report")
@@ -82,7 +82,7 @@ public class WatchpointReportTests extends TestBaseUI {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
 
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,

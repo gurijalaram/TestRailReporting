@@ -1,7 +1,10 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import static com.apriori.shared.util.testconfig.TestBaseUI.homeDownloadPath;
+
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
+import com.apriori.cid.ui.pageobjects.compare.ComparePage;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.UpdateCadFilePage;
@@ -33,7 +36,6 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
-    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
     @FindBy(css = "[id='qa-sub-header-import-button']")
@@ -70,6 +72,8 @@ public class ExploreToolbar extends MainNavBar {
     private WebElement publishButton;
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
+    @FindBy(css = "[id='qa-sub-header-save-as-button'] button")
+    private WebElement saveButton;
     @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
     private WebElement reportButton;
     @FindBy(id = "qa-action-bar-generate-report")
@@ -78,6 +82,9 @@ public class ExploreToolbar extends MainNavBar {
     private WebElement downloadReportButton;
     @FindBy(css = "[data-testid='apriori-alert']")
     private WebElement lastUpdatedAlert;
+
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -98,6 +105,16 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T clickCostButton(Class<T> klass) {
         pageUtils.waitForElementAndClick(costButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Clicks the save button
+     *
+     * @return current page object
+     */
+    public <T> T clickSaveButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(saveButton);
         return PageFactory.initElements(driver, klass);
     }
 
@@ -233,6 +250,17 @@ public class ExploreToolbar extends MainNavBar {
     public EvaluatePage navigateToScenario(String scenarioUrl) {
         driver.navigate().to(scenarioUrl);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Navigates to the comparison via url
+     *
+     *@param scenarioUrl - url for the comparison
+     * @return new page object
+     */
+    public ComparePage navigateToComparison(String scenarioUrl) {
+        driver.navigate().to(scenarioUrl);
+        return new ComparePage(driver);
     }
 
     /**
@@ -496,10 +524,7 @@ public class ExploreToolbar extends MainNavBar {
         ResponseWrapper<String> reportsData = new ScenariosUtil().getReports(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(pageUtils.downloadPath + fileName);
-        file.deleteOnExit();
-
-        return file;
+        return pageUtils.downloadFile(homeDownloadPath, fileName);
     }
 
     /**
@@ -507,7 +532,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return string
      */
-    public String getUpdateTimestamp() {
+    public String getUpdatedTimestamp() {
         pageUtils.waitForElementsToNotAppear(refreshLabel);
         return lastUpdatedAlert.getText();
     }

@@ -42,8 +42,8 @@ public class ViewElementTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
-        layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
+        viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        layoutName = "LY" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
         viewElementResponse = LayoutResources.createLayoutViewElement(layoutResponse.getIdentity(), viewElementName, currentUser);

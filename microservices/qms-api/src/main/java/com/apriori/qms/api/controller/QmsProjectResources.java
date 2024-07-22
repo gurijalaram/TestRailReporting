@@ -41,9 +41,9 @@ public class QmsProjectResources {
      */
     public static BidPackageProjectRequest getProjectRequestBuilder(HashMap<String, String> projectAttributesMap, List<BidPackageItemRequest> projectItemsList,
                                                                     List<BidPackageProjectUserParameters> projectUsersList, UserCredentials currentUser) {
-        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomString());
-        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomString());
-        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
+        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomStringSpecLength(12));
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         String projectOwnerUserIdentity = projectAttributesMap.getOrDefault("projectOwnerUserIdentity", "N/A");
@@ -77,7 +77,7 @@ public class QmsProjectResources {
     public static <T> T createProject(HashMap<String, String> projectAttributesMap, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         BidPackageProjectRequest projectRequest = getProjectRequestBuilder(projectAttributesMap, itemsList, usersList, currentUser);
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.PROJECTS, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .body(projectRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
@@ -97,7 +97,7 @@ public class QmsProjectResources {
      */
     public static <T> T getProjects(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.PROJECTS, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -176,7 +176,7 @@ public class QmsProjectResources {
     public static BidPackageProjectsResponse getFilteredProjects(UserCredentials currentUser, String... paramKeysValues) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.PROJECTS, BidPackageProjectsResponse.class)
             .queryParams(new KeyValueUtil().keyValue(paramKeysValues, ","))
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -196,7 +196,7 @@ public class QmsProjectResources {
      */
     public static <T> T retrieveProjectNotifications(BidPackageProjectNotificationRequest notificationRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.PROJECT_NOTIFICATION_COUNT, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .body(notificationRequest)
             .expectedResponseCode(httpStatus);
@@ -221,7 +221,7 @@ public class QmsProjectResources {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, responseClass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .queryParams(new KeyValueUtil().keyValue(paramKeysValues, ","))
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 

@@ -3,8 +3,11 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -24,7 +27,8 @@ import java.util.Arrays;
 public class CdsGetCustomerTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private ResponseWrapper<Customer> customer;
     private String customerName;
     private String cloudRef;
@@ -35,14 +39,18 @@ public class CdsGetCustomerTests {
 
     @BeforeEach
     public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
+        salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
-        updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
+        updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateAlphabeticString("Customer", 6));
         String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
+        customer = customerUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
@@ -80,7 +88,7 @@ public class CdsGetCustomerTests {
     @TestRail(id = {5305})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        ResponseWrapper<Customer> updatedEmail = cdsTestUtil.updateCustomer(customerIdentity, updatedEmailPattern);
+        ResponseWrapper<Customer> updatedEmail = customerUtil.updateCustomer(customerIdentity, updatedEmailPattern);
 
         soft.assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns()).contains(updatedEmailPattern + ".com");
         soft.assertAll();

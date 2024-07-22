@@ -9,9 +9,7 @@
 ########################################################################################################################
 
 ######################################################## AP-INT ########################################################
-ap-int:
-  cloud_reference_name: apriori-internal
-
+apriori-internal:
   ci-connect:
     customer_name: aPrioriInternal_Customer
     agent_type: windchill
@@ -30,30 +28,16 @@ ap-int:
       port: 8808
       connector: EN-consvwc02
 
+  application_cloud_reference: ${aws_region}-install
+
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
   staging:
-    customer_identity: 7G0JGBE2N4GM
     token_subject: 2b68
-
-  development:
-    customer_identity: 212B5ABD2F6C
-  ###########################################################
-
-
-######################################################## GADGETS #######################################################
-gadgets:
-  cloud_reference_name: gadgets
-
-########################################################################################################################
-
 
 ######################################################## WIDGETS #######################################################
 widgets:
-  cloud_reference_name: widgets
-
   ci-connect:
-    customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
     agent_type: windchill
     windchill:
@@ -61,19 +45,18 @@ widgets:
       connector: WC-consvwc02
       agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
 
+  application_cloud_reference: ${aws_region}-install
+
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
-  staging:
-    customer_identity: 2F265BC1MKAB
-  ###########################################################
-
-########################################################################################################################
-
 
 ####################################################### SPROCKETS ######################################################
 sprockets:
   qa-test:
     token_subject: c8fc
 
-########################################################################################################################
+  application_cloud_reference: ${aws_region}-install
 
+###################################################### GADGETS #########################################################
+gadgets:
+  application_cloud_reference: ${aws_region}-install
