@@ -154,12 +154,12 @@ public class AcsResources {
     }
 
     /**
-     * Gets Material Metadata Info on Process Group with Revision input as optional
+     * Gets Material Metadata Info or Material Stock Metadata Info on Process Group with Revision input as optional
      *
      * @param inlineVariables - String
      * @return instance of MaterialMetadataResponse
      */
-    public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialOrStockMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
         setupHeader();
 
         RequestEntity requestEntity = requestEntityUtil

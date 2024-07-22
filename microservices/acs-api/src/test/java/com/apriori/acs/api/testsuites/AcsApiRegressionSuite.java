@@ -14,6 +14,7 @@ import com.apriori.acs.api.tests.GcdPropertiesTests;
 import com.apriori.acs.api.tests.GcdTypesTests;
 import com.apriori.acs.api.tests.LoadCadFileTests;
 import com.apriori.acs.api.tests.MaterialMetadataTests;
+import com.apriori.acs.api.tests.MaterialStockMetadataTests;
 import com.apriori.acs.api.tests.MaterialsInfoTests;
 import com.apriori.acs.api.tests.PartPrimaryProcessGroupsTests;
 import com.apriori.acs.api.tests.ProductionDefaultsTests;
@@ -46,6 +47,7 @@ import org.junit.platform.suite.api.Suite;
     LoadCadFileTests.class,
     MaterialMetadataTests.class,
     MaterialsInfoTests.class,
+    MaterialStockMetadataTests.class,
     PartPrimaryProcessGroupsTests.class,
     ProductionDefaultsTests.class,
     ProductionInfoTests.class,
