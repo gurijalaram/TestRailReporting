@@ -30,7 +30,7 @@ public class MaterialMetadataTests extends TestUtil {
     @Description("Test Get Material Metadata")
     public void testGetMaterialMetadata() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_METADATA,
             MaterialMetadataResponse.class,
             "aPriori Canada",
@@ -48,7 +48,7 @@ public class MaterialMetadataTests extends TestUtil {
     @Description("Test Get Material Metadata endpoint with Revision")
     public void testGetMaterialMetadataWithRevision() {
         AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_METADATA_REVISION,
             MaterialMetadataResponse.class,
             "aPriori USA",
