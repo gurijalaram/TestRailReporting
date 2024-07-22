@@ -748,7 +748,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15001, 15815})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("5d51749fig01", ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -951,7 +951,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.83841")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$26.47")).isTrue();
         softAssertions.assertAll();
     }
 
