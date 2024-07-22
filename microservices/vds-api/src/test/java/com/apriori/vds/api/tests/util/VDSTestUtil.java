@@ -1,12 +1,10 @@
 package com.apriori.vds.api.tests.util;
 
 import com.apriori.shared.util.SharedCustomerUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -17,32 +15,26 @@ import com.apriori.vds.api.models.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.util.List;
 
-public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId = SharedCustomerUtil.getCurrentCustomerIdentity();
-    protected static UserCredentials testingUser = UserUtil.getUser();
+public class VDSTestUtil extends TestUtil {
+    public final String customerId = SharedCustomerUtil.getCurrentCustomerIdentity();
+    private RequestEntityUtil requestEntityUtil;
 
-    protected static RequestEntityUtil requestEntityUtil;
-
-
-    private static DigitalFactory digitalFactory;
-    private static String digitalFactoryIdentity;
-
-    @BeforeAll
-    public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser()
-            .useTokenInRequests()
-            .useApUserContextInRequests();
-
-        testingUser = requestEntityUtil.getEmbeddedUser();
+    public VDSTestUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
+        this.requestEntityUtil = requestEntityUtil;
     }
 
-    protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+    /**
+     * Calls an API with GET verb
+     *
+     * @return new object
+     */
+    public DigitalFactory getDigitalFactories() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+            .queryParams(new QueryParams().use("pageSize", "100"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
@@ -55,7 +47,14 @@ public abstract class VDSTestUtil extends TestUtil {
         return findDigitalFactoryByName(digitalFactories, "aPriori USA");
     }
 
-    private static DigitalFactory findDigitalFactoryByName(List<DigitalFactory> digitalFactories, final String name) {
+    /**
+     * Find digital factory by name
+     *
+     * @param digitalFactories - digital factories
+     * @param name             - the name
+     * @return new object
+     */
+    public DigitalFactory findDigitalFactoryByName(List<DigitalFactory> digitalFactories, final String name) {
         return digitalFactories.stream()
             .filter(digitalFactory -> name.equals(digitalFactory.getName()))
             .findFirst()
@@ -64,26 +63,17 @@ public abstract class VDSTestUtil extends TestUtil {
             );
     }
 
-    protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
+    /**
+     * Calls an API with GET verb
+     *
+     * @return new object
+     */
+    public List<AccessControlGroup> getAccessControlGroups() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GROUPS, AccessControlGroupItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();
 
         return accessControlGroupsResponse.getResponseEntity().getItems();
-    }
-
-    public static DigitalFactory getDigitalFactory() {
-        if (digitalFactory == null) {
-            digitalFactory = getDigitalFactoriesResponse();
-        }
-        return digitalFactory;
-    }
-
-    public static String getDigitalFactoryIdentity() {
-        if (digitalFactoryIdentity == null) {
-            digitalFactoryIdentity = getDigitalFactory().getIdentity();
-        }
-        return digitalFactoryIdentity;
     }
 }

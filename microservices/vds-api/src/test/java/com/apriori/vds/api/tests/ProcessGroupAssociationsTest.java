@@ -2,7 +2,9 @@ package com.apriori.vds.api.tests;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -13,25 +15,28 @@ import com.apriori.vds.api.tests.util.ProcessGroupUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
-
+public class ProcessGroupAssociationsTest {
     private static ProcessGroupAssociation testingProcessGroupAssociation;
     private static ProcessGroupAssociation backupProcessGroupAssociation;
+    private ProcessGroupUtil processGroupUtil;
+    private RequestEntityUtil requestEntityUtil;
 
-    @BeforeAll
-    public static void initTestingData() {
-        backupProcessGroupAssociation = ProcessGroupUtil.getFirstGroupAssociation();
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        processGroupUtil = new ProcessGroupUtil(requestEntityUtil);
+        backupProcessGroupAssociation = processGroupUtil.getFirstGroupAssociation();
         deleteProcessGroupAssociation(backupProcessGroupAssociation.getIdentity());
     }
 
-    @AfterAll
-    public static void clearTestDataAndUploadDefault() {
+    @AfterEach
+    public void clearTestDataAndUploadDefault() {
         if (testingProcessGroupAssociation != null) {
             deleteProcessGroupAssociation(testingProcessGroupAssociation.getIdentity());
         }
@@ -41,9 +46,9 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
         );
     }
 
-    private static void deleteProcessGroupAssociation(final String associationId) {
+    private void deleteProcessGroupAssociation(final String associationId) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.DELETE_PG_ASSOCIATIONS_BY_ID, null)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, null)
                 .inlineVariables(associationId)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -52,9 +57,9 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
         testingProcessGroupAssociation = null;
     }
 
-    private static ProcessGroupAssociation createProcessGroupAssociation(final ProcessGroupAssociationRequest processGroupAssociationRequest) {
+    private ProcessGroupAssociation createProcessGroupAssociation(final ProcessGroupAssociationRequest processGroupAssociationRequest) {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.POST_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -78,7 +83,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     @TestRail(id = {8411})
     @Description("Returns a paged set of ProcessGroupAssociation for the current user.")
     public void testGetProcessGroupAssociations() {
-        ProcessGroupUtil.getProcessGroupAssociations();
+        processGroupUtil.getProcessGroupAssociations();
     }
 
     @Test
@@ -86,8 +91,8 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     @Description("Get a ProcessGroupAssociation for a customer.")
     public void testGetMaterialByIdentity() {
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
-                .inlineVariables(ProcessGroupUtil.getFirstGroupAssociation().getIdentity())
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+                .inlineVariables(processGroupUtil.getFirstGroupAssociation().getIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
@@ -120,7 +125,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PATCH_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
                 .inlineVariables(getTestingProcessGroupAssociation().getIdentity())
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -152,7 +157,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -181,7 +186,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .build();
 
         RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+            requestEntityUtil.init(VDSAPIEnum.PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 

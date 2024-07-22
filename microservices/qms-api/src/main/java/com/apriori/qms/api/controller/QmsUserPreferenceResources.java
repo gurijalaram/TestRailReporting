@@ -25,7 +25,7 @@ public class QmsUserPreferenceResources {
      */
     public static <T> T getUserPreference(Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 

@@ -10,7 +10,9 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -28,6 +30,9 @@ public class SystemConfigurationTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+
         systemConfigurationPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .openAprioriInternal()
@@ -38,7 +43,6 @@ public class SystemConfigurationTests extends TestBaseUI {
     @TestRail(id = {10977, 10978, 10979})
     @Description("Validate aPriori Internal Site and deployment can be selected in dropdown on System Configuration page")
     public void validateSelectSiteAndDeployment() {
-        cdsTestUtil = new CdsTestUtil();
         aprioriInternal = SharedCustomerUtil.getCustomerData();
         String customerIdentity = aprioriInternal.getIdentity();
         ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);

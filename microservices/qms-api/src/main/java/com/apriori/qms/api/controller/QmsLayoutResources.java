@@ -32,7 +32,7 @@ public class QmsLayoutResources {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
             .body(layoutConfigRequestBuilder)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -56,7 +56,7 @@ public class QmsLayoutResources {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .body(layoutConfigRequestBuilder)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -80,7 +80,7 @@ public class QmsLayoutResources {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .body(layoutConfigRequestBuilder)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -102,7 +102,7 @@ public class QmsLayoutResources {
     public static <T> T deleteLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -123,7 +123,7 @@ public class QmsLayoutResources {
     public static <T> T getLayoutConfigurations(String viewElementName, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -145,7 +145,7 @@ public class QmsLayoutResources {
     public static <T> T getLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.getUserDetails().getCustomerData().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 

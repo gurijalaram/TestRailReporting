@@ -15,7 +15,6 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -138,7 +137,7 @@ public class CustomerAccessTests extends TestBaseUI {
             .clickCandidatesAddButton()
             .clickCandidatesConfirmOkButton()
             .logout()
-            .login(new UserCredentials(email, password).generateToken())
+            .login(new UserCredentials(email, password))
             .openCustomer(customerIdentity)
             .clickRequestAccessButton()
             .selectServiceAccount("service-account.1")
