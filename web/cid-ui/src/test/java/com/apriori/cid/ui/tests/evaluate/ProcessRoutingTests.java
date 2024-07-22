@@ -847,7 +847,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry",
-            "Trim", "Cleaning", "Finishing", "Visual Inspection", "3 Axis Mill", "Drill Press");
+            "Trim", "Cleaning", "Finishing", "Visual Inspection", "5 Axis Mill", "Drill Press");
         softAssertions.assertAll();
     }
 
