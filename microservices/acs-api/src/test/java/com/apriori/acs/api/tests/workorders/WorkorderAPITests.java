@@ -156,7 +156,7 @@ public class WorkorderAPITests extends TestUtil {
             )
         );
 
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(startsWith("PATTERNTHREADHOLES")));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), startsWith("PATTERNTHREADHOLES"));
         assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
         assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId(), is(equalTo(0)));
         assertThat(publishResultOutputs.getScenarioIterationKey().getIteration(), is(not(costOutputs.getScenarioIterationKey().getIteration())));

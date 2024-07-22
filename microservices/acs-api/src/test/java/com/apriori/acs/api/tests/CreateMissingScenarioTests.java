@@ -56,12 +56,12 @@ public class CreateMissingScenarioTests extends TestUtil {
 
         String currentDate = LocalDateTime.now(ZoneOffset.UTC).withNano(0).toString().substring(0, 10);
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), is(startsWith(currentDate)));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), is(containsString("qa-automation")));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), is(startsWith(currentDate)));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), startsWith(currentDate));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), containsString("qa-automation"));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), startsWith(currentDate));
         assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName(),
             is(equalTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName())));
         assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName(),
-            is(startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName())));
+            startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName()));
     }
 }
