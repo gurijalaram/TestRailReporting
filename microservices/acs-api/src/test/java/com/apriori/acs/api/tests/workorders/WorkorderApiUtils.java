@@ -25,9 +25,9 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.json.JsonManager;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,12 +42,14 @@ public class WorkorderApiUtils {
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
     private final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-    private final FileUploadResources fileUploadResources;
-    private final AcsResources acsResources;
+    private FileUploadResources fileUploadResources;
+    private AcsResources acsResources;
+    private RequestEntityUtil requestEntityUtil;
 
-    public WorkorderApiUtils(UserCredentials user) {
-        fileUploadResources = new FileUploadResources(user);
-        acsResources = new AcsResources(user);
+    public WorkorderApiUtils(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
+        this.fileUploadResources = new FileUploadResources(this.requestEntityUtil);
+        this.acsResources = new AcsResources(this.requestEntityUtil);
     }
 
     /**

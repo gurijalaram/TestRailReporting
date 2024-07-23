@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -10,8 +9,8 @@ import static org.hamcrest.core.StringContains.containsString;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -19,16 +18,22 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferenceByNameTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanup() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         acsResources.resetSettings();
         acsResources.resetDisplayUnits();
     }
@@ -37,19 +42,18 @@ public class UserPreferenceByNameTests extends TestUtil {
     @TestRail(id = 10798)
     @Description("Validate Get User Preference By Name Endpoint")
     public void testGetUserPreferenceByName() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         String annualVolumeResponse = acsResources.getUserPreferenceByName("prod.info.default.annual.volume");
         String toleranceModeResponse = acsResources.getUserPreferenceByName("TolerancePolicyDefaults.toleranceMode");
 
         assertThat(annualVolumeResponse, is(equalTo("5500")));
-        assertThat(toleranceModeResponse, either(is(containsString("CAD"))).or(is(containsString("PARTOVERRIDE"))).or(is(containsString("SYSTEMDEFAULT"))));
+        assertThat(toleranceModeResponse, either(is(containsString("CAD")))
+            .or(is(containsString("PARTOVERRIDE"))).or(is(containsString("SYSTEMDEFAULT"))));
     }
 
     @Test
     @TestRail(id = 10846)
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getUserPreferenceByNameInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -62,7 +66,6 @@ public class UserPreferenceByNameTests extends TestUtil {
         String useVpeKey = "prod.info.default.use.vpe.for.all.processes";
         String toleranceModeKey = "TolerancePolicyDefaults.toleranceMode";
 
-        AcsResources acsResources = new AcsResources(userCredentials);
         String useVpeCurrentValue = acsResources.getUserPreferenceByName(useVpeKey);
         String toleranceModeCurrentValue = acsResources.getUserPreferenceByName(toleranceModeKey);
         String useVpeValueToSet = useVpeCurrentValue.equals("false") ? "true" : "false";
@@ -82,7 +85,6 @@ public class UserPreferenceByNameTests extends TestUtil {
     @TestRail(id = 10848)
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setUserPreferencesInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);

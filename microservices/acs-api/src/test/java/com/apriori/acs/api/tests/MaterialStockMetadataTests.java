@@ -10,6 +10,8 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -17,19 +19,25 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class MaterialStockMetadataTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
     private final SoftAssertions softAssertions = new SoftAssertions();
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {31243})
     @Description("Test Get Material Stock Metadata")
     public void testGetMaterialStockMetadata() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialStockMetadataResponse materialStockMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_STOCK_METADATA,
             MaterialStockMetadataResponse.class,
@@ -47,7 +55,6 @@ public class MaterialStockMetadataTests extends TestUtil {
     @TestRail(id = {31244})
     @Description("Test Get Material Stock Metadata endpoint with Revision")
     public void testGetMaterialStockMetadataWithRevision() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialStockMetadataResponse materialStockMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_STOCK_METADATA_REVISION,
             MaterialStockMetadataResponse.class,
@@ -66,7 +73,6 @@ public class MaterialStockMetadataTests extends TestUtil {
     @TestRail(id = {31245})
     @Description("Get Material Metadata Stock endpoint with Invalid Digital Factory")
     public void testGetMaterialtockMetadataWithInvalidDF() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
             AcsApiEnum.MATERIAL_STOCK_METADATA,
             "aPriori Fake",
@@ -80,7 +86,6 @@ public class MaterialStockMetadataTests extends TestUtil {
     @TestRail(id = {31246})
     @Description("Get Material Metadata Stock endpoint with Invalid Process Group")
     public void testGetMaterialStockMetadataWithInvalidPG() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
             AcsApiEnum.MATERIAL_STOCK_METADATA,
             DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(),
@@ -94,7 +99,6 @@ public class MaterialStockMetadataTests extends TestUtil {
     @TestRail(id = {31248})
     @Description("Get Material Metadata Stock endpoint with Process Group that does not have Stock")
     public void testGetStockMaterialStockMetadataWithNoStock() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
             AcsApiEnum.MATERIAL_STOCK_METADATA,
             DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(),
