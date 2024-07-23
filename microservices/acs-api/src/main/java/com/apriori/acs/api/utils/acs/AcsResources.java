@@ -49,7 +49,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
@@ -70,15 +70,16 @@ public class AcsResources {
     private static String token = "";
     private final UserCredentials userCredentials;
     private static final HashMap<String, String> headers = new HashMap<>();
-
+    private RequestEntityUtil requestEntityUtil;
     private final String validUsername;
     private final String invalidUsername;
 
-    public AcsResources(UserCredentials user) {
-        this.userCredentials = user;
-        token = new OldAuthorizationUtil().getTokenAsString(user);
-        validUsername = user.getEmail().split("@")[0];
-        invalidUsername = user.getUsername().split("@")[0].concat("41");
+    public AcsResources(RequestEntityUtil requestEntityUtil) {
+        this.userCredentials = requestEntityUtil.getEmbeddedUser();
+        this.requestEntityUtil = requestEntityUtil;
+        token = new OldAuthorizationUtil().getTokenAsString(userCredentials);
+        validUsername = userCredentials.getEmail().split("@")[0];
+        invalidUsername = userCredentials.getUsername().split("@")[0].concat("41");
     }
 
     /**
@@ -89,7 +90,7 @@ public class AcsResources {
     public MissingScenarioResponse createMissingScenario() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.CREATE_MISSING_SCENARIO, MissingScenarioResponse.class)
             .headers(headers)
             .body(MissingScenarioInputs.builder()
@@ -119,9 +120,8 @@ public class AcsResources {
     public AllMaterialStocksInfoResponse getAllMaterialStocksInfo(String vpeName, String processGroup, String materialName) {
         setupHeader();
         // TODO z: fix it threads
-        final RequestEntity requestEntity = new RequestEntity()
-            .endpoint(AcsApiEnum.ALL_MATERIAL_STOCKS_INFO)
-            .returnType(AllMaterialStocksInfoResponse.class)
+        final RequestEntity requestEntity = requestEntityUtil
+            .init(AcsApiEnum.ALL_MATERIAL_STOCKS_INFO, AllMaterialStocksInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 vpeName,
@@ -142,7 +142,7 @@ public class AcsResources {
     public <T> ResponseWrapper<T> getMaterialsInfo(String vpeName, String processGroup, Class<T> klass) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.MATERIALS_INFO, klass)
             .headers(headers)
             .inlineVariables(
@@ -162,7 +162,8 @@ public class AcsResources {
     public <E extends EndpointEnum, T> ResponseWrapper<T> getMaterialOrStockMetadata(E endpoint, Class<T> klass, String... inlineVariables) {
         setupHeader();
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, klass)
+        RequestEntity requestEntity = requestEntityUtil
+            .init(endpoint, klass)
             .headers(headers)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -179,7 +180,8 @@ public class AcsResources {
     public <E extends EndpointEnum> GenericErrorResponse getEndpointInvalidParameter(E endpoint, String... inlineVariables) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, GenericErrorResponse.class)
+        final RequestEntity requestEntity = requestEntityUtil
+            .init(endpoint, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(inlineVariables);
         ResponseWrapper<GenericErrorResponse> response = HTTPRequest.build(requestEntity).get();
@@ -196,7 +198,8 @@ public class AcsResources {
     public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+        final RequestEntity requestEntity = requestEntityUtil
+            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -217,7 +220,7 @@ public class AcsResources {
     public ScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, ScenarioInfoByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -242,7 +245,7 @@ public class AcsResources {
     public GenericErrorResponse getScenarioInfoByScenarioIterationKeyNegative(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -272,7 +275,7 @@ public class AcsResources {
         listOfKeys.add(scenarioIterationKeyOne);
         listOfKeys.add(scenarioIterationKeyTwo);
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.SCENARIOS_INFORMATION, ScenariosInfoResponse.class)
             .headers(headers)
             .body(ScenarioIterationKeysInputs.builder()
@@ -292,7 +295,7 @@ public class AcsResources {
     public ResponseWrapper<ScenariosInfoResponse> getScenariosInformationOneScenario(List<ScenarioIterationKey> scenarioIterationKeys) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.SCENARIOS_INFORMATION, ScenariosInfoResponse.class)
             .headers(headers)
             .body(ScenarioIterationKeysInputs.builder()
@@ -311,7 +314,7 @@ public class AcsResources {
     public ResponseWrapper<ScenariosInfoResponse> getScenariosInfoNullBody() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.SCENARIOS_INFORMATION, null)
             .headers(headers)
             .body(null)
@@ -328,7 +331,7 @@ public class AcsResources {
     public DisplayUnitsResponse getDisplayUnits() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.DISPLAY_UNITS, DisplayUnitsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -345,7 +348,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse setDisplayUnits(DisplayUnitsInputs setDisplayUnitsInputs) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.DISPLAY_UNITS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(setDisplayUnitsInputs)
@@ -362,7 +365,7 @@ public class AcsResources {
     public UnitVariantSettingsResponse getUnitVariantSettings() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.UNIT_VARIANT_SETTINGS, UnitVariantSettingsResponse.class)
             .headers(headers);
 
@@ -377,7 +380,7 @@ public class AcsResources {
     public UnitVariantSetting getCustomUnitVariantSettings() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -392,7 +395,7 @@ public class AcsResources {
     public void getEnabledCurrencyRateVersions() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
             .headers(headers);
 
@@ -407,7 +410,7 @@ public class AcsResources {
     public TolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, TolerancePolicyDefaultsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -428,7 +431,7 @@ public class AcsResources {
                                                                      boolean useCadToleranceThreshhold) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(TolerancePolicyDefaultsInputs.builder()
@@ -450,7 +453,7 @@ public class AcsResources {
     public GenericErrorResponse setTolerancePolicyDefaultsInvalidUsername() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
@@ -467,7 +470,7 @@ public class AcsResources {
     public ProductionDefaultsResponse getProductionDefaults() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, ProductionDefaultsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -483,7 +486,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse setProductionDefaults() {
         setupHeader();
         //TODO: 16/03/2023 Use JSON for Production Defaults entry
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(ProductionDefaultsInputs.builder()
@@ -507,7 +510,7 @@ public class AcsResources {
     public GenericErrorResponse setProductionDefaultsInvalidUsername() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
@@ -524,7 +527,7 @@ public class AcsResources {
     public UserPreferencesResponse getUserPreferences() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, UserPreferencesResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -542,7 +545,7 @@ public class AcsResources {
     public Headers getUserPreferencesHeaders() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, UserPreferencesResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
@@ -559,7 +562,7 @@ public class AcsResources {
     public String getUserPreferenceByName(String userPrefToGet) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCE_BY_NAME, null)
             .headers(headers)
             .inlineVariables(validUsername, userPrefToGet);
@@ -575,7 +578,7 @@ public class AcsResources {
     public GenericErrorResponse getUserPreferenceByNameInvalidUser() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCE_BY_NAME, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(invalidUsername, "TolerancePolicyDefaults.toleranceMode");
@@ -592,7 +595,7 @@ public class AcsResources {
     public GenericErrorResponse getEndpointInvalidUsername(EndpointEnum endpoint) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(endpoint, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(invalidUsername);
@@ -609,7 +612,7 @@ public class AcsResources {
     public ProductionInfoResponse getProductionInfo(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PRODUCTION_INFO, ProductionInfoResponse.class)
             .headers(headers)
             .queryParams(new QueryParams().use("applyEdits", "true"))
@@ -635,7 +638,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse setUserPreferences(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(UserPreferencesInputs.builder()
@@ -656,7 +659,7 @@ public class AcsResources {
     public GenericErrorResponse setUserPreferencesInvalidUser() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
@@ -675,7 +678,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse setUserPreferenceByName(String prefToSetKey, String prefToSetValue) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCE_BY_NAME, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(prefToSetValue)
@@ -695,7 +698,7 @@ public class AcsResources {
                                                               ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PRODUCTION_INFO, GenericResourceCreatedIdResponse.class)
             .headers(headers)
             .body(getProductionInfoResponse)
@@ -723,7 +726,7 @@ public class AcsResources {
 
         final RequestEntity requestEntity;
         try {
-            requestEntity = RequestEntityUtil_Old
+            requestEntity = requestEntityUtil
                 .init(AcsApiEnum.COST_RESULTS, klass)
                 .headers(headers)
                 .inlineVariables(
@@ -756,7 +759,7 @@ public class AcsResources {
 
         final RequestEntity requestEntity;
         try {
-            requestEntity = RequestEntityUtil_Old
+            requestEntity = requestEntityUtil
                 .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
                 .headers(headers)
                 .inlineVariables(
@@ -783,7 +786,7 @@ public class AcsResources {
     public <T> ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.GCD_TYPES, klass)
             .headers(headers)
             .inlineVariables(processGroupName);
@@ -808,7 +811,7 @@ public class AcsResources {
             .build()
         );
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.GCD_PROPERTIES, GcdPropertiesResponse.class)
             .headers(headers)
             .body(GcdPropertiesInputs.builder()
@@ -843,7 +846,7 @@ public class AcsResources {
             .build()
         );
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ROUTING_SELECTION, GenericResourceCreatedIdResponse.class)
             .headers(headers)
             .body(RoutingSelectionInputs.builder()
@@ -872,7 +875,7 @@ public class AcsResources {
     public PartPrimaryProcessGroupsResponse getPartPrimaryProcessGroups() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.PART_PRIMARY_PROCESS_GROUPS, PartPrimaryProcessGroupsResponse.class)
             .headers(headers);
 
@@ -888,7 +891,7 @@ public class AcsResources {
     public String get2DImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.TWO_DIMENSIONAL_IMAGE, null)
             .headers(headers)
             .inlineVariables(
@@ -915,7 +918,7 @@ public class AcsResources {
         AcsApiEnum getImageUrl = getWebImage ? AcsApiEnum.WEB_IMAGE_BY_SCENARIO_ITERATION_KEY :
             AcsApiEnum.DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY;
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(getImageUrl, null)
             .headers(headers)
             .inlineVariables(
@@ -938,7 +941,7 @@ public class AcsResources {
     public ActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> paramsForUrl) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ACTIVE_DIMENSIONS, ActiveDimensionsResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -961,7 +964,7 @@ public class AcsResources {
     public ActiveAxesByScenarioIterationKeyResponse getActiveAxesByScenarioIterationKey(List<String> paramsForUrl) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ACTIVE_AXES, ActiveAxesByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -983,7 +986,7 @@ public class AcsResources {
     public ArtifactTableInfoResponse getArtifactTableInfo() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ARTIFACT_TABLE_INFO, ArtifactTableInfoResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -1002,7 +1005,7 @@ public class AcsResources {
     public GenericErrorResponse getArtifactTableInfoInvalidProcessGroup() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ARTIFACT_TABLE_INFO, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -1022,7 +1025,7 @@ public class AcsResources {
     public GcdMappingResponse getGcdMapping(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.GCD_IMAGE_MAPPING, GcdMappingResponse.class)
             .headers(headers)
             .inlineVariables(
@@ -1049,7 +1052,7 @@ public class AcsResources {
         String displayNameOne = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(0).getKey().getDisplayName();
         String displayNameTwo = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(1).getKey().getDisplayName();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.ARTIFACT_PROPERTIES, ArtifactPropertiesResponse.class)
             .headers(headers)
             .customBody(
@@ -1079,7 +1082,7 @@ public class AcsResources {
      * @return CostResultsResponse object
      */
     public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
+        FileUploadResources fileUploadResources = new FileUploadResources(requestEntityUtil);
 
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
@@ -1104,18 +1107,6 @@ public class AcsResources {
     }
 
     /**
-     * Sets up header with content type and token
-     */
-    private void setupHeader() {
-        String defaultString = "default";
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "*/*");
-        headers.put("apriori.tenantgroup", defaultString);
-        headers.put("apriori.tenant", defaultString);
-        headers.put("Authorization", "Bearer " + token);
-    }
-
-    /**
      * Reset All User Preferences
      *
      * @return GenericResourceCreatedResponse instance
@@ -1123,7 +1114,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse resetSettings() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(UserPreferencesInputs.builder()
@@ -1172,7 +1163,7 @@ public class AcsResources {
     public GenericResourceCreatedResponse resetDisplayUnits() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(AcsApiEnum.DISPLAY_UNITS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(DisplayUnitsInputs.builder()
@@ -1193,6 +1184,18 @@ public class AcsResources {
             .inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Sets up header with content type and token
+     */
+    private void setupHeader() {
+        String defaultString = "default";
+        headers.put("Content-Type", "application/json");
+        headers.put("Accept", "*/*");
+        headers.put("apriori.tenantgroup", defaultString);
+        headers.put("apriori.tenant", defaultString);
+        headers.put("Authorization", "Bearer " + token);
     }
 
 }
