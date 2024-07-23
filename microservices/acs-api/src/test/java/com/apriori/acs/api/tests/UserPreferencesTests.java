@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,8 +12,8 @@ import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorRespon
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.models.response.acs.userpreferences.UserPreferencesResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -23,16 +22,22 @@ import io.qameta.allure.Description;
 import io.restassured.http.Header;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanup() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         acsResources.resetSettings();
         acsResources.resetDisplayUnits();
     }
@@ -41,7 +46,6 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10759)
     @Description("Verify Get User Preferences Endpoint")
     public void testGetUserPreferencesEndpoint() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
 
         assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), either(is("3")).or(is("2")));
@@ -56,7 +60,6 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10796)
     @Description("Get User Preferences Negative Test - Invalid Username")
     public void testGetUserPreferencesInvalidUser() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.USER_PREFERENCES);
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -66,7 +69,6 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10842)
     @Description("Validate Set User Preferences Endpoint")
     public void testSetUserPreferencesEndpoint() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
         String costTableDecimalPlaces = getUserPreferencesResponse.getCostTableDecimalPlaces();
         String useVpeForAllProcesses = getUserPreferencesResponse.getProdInfoDefaultUseVpeForAllProcesses();
@@ -95,7 +97,6 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10844)
     @Description("Validate Set User Preferences Endpoint - Negative - Invalid User")
     public void testSetUserPreferencesEndpointInvalidUser() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setUserPreferencesInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -105,7 +106,6 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 21727)
     @Description("Verify that header -apriori-version is returned")
     public void testCorrectHeaderIsReturned() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         Header header = acsResources.getUserPreferencesHeaders()
             .get("X-aPriori-Version");
 

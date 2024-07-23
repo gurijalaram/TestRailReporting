@@ -29,7 +29,7 @@ public class FileUploadAPI {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @ParameterizedTest
-    @CsvFileSource(files = "src/test/resources/auto_api_upload.csv")
+    @CsvFileSource(resources = "/auto_api_upload.csv")
     @Description("Upload, cost and publish a part")
     public void uploadCostPublish(String componentName, String processGroup) {
 

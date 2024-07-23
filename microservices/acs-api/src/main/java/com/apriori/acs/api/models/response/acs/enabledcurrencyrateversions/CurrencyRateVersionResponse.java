@@ -9,4 +9,5 @@ import lombok.Data;
 public class CurrencyRateVersionResponse {
     private CurrencyRateVersionItemOne abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq;
     private CurrencyRateVersionItemTwo abaairabiriririqiraajraiyrabiriqirbaizqbirjriyzrajzrizyq;
+    private CurrencyRateVersionItemTwo abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyqiraajqbjqjzrizyrirjqjzriyzraiyqbabjqjzqi;
 }
