@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.help.HelpPage;
@@ -29,6 +30,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
 
     @FindBy(xpath = "//button[.='Comparisons']")
     private WebElement compareButton;
+
+    @FindBy(xpath = "//button[.='Bulk Analysis']")
+    private WebElement bulkAnalysisButton;
 
     @FindBy(css = "[id='qa-header-preferences-button'] button")
     private WebElement settingsButton;
@@ -135,6 +139,16 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public <T> T clickCompare(Class<T> klass) {
         pageUtils.waitForElementAndClick(compareButton);
         return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Navigates to the bulk analysis page
+     *
+     * @return new page object
+     */
+    public BulkAnalysisPage clickBulkAnalysis() {
+        pageUtils.waitForElementAndClick(bulkAnalysisButton);
+        return new BulkAnalysisPage(driver);
     }
 
     /**

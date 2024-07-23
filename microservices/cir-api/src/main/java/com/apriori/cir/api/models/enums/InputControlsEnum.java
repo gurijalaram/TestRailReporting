@@ -35,6 +35,7 @@ public enum InputControlsEnum {
     PERCENT_DIFFERENCE_THRESHOLD("percentDifferenceThreshold"),
     PROCESS_GROUP("processGroup"),
     PROJECT_ROLLUP("projectRollup"),
+    PROJECT_NAME("projectName"),
     SCENARIO_NAME("scenarioName"),
     SCENARIOS_TO_COMPARE_IDS("scenarioToCompareIDs"),
     SORT_ORDER("sortOrder"),

@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
@@ -37,7 +38,6 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
@@ -145,12 +145,15 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15817, 15817, 15820})
     @Description("Validate routings availability in regards to scenario cost status")
     public void costStatusAndRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .openMaterialSelectorTable()
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -179,7 +182,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         evaluatePage.goToAdvancedTab();
 
-        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -270,8 +273,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Incomplete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.63")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.94")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage.selectRoutingPreferenceByName("Gravity Die Cast");
@@ -283,8 +286,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Incomplete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$3.96")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$7.12")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -420,13 +423,13 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openMaterialProcess()
             .selectBarChart("Band Saw");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("52.50%");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("23.55%");
         materialProcessPage.selectProcessTab();
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("DoAll 3613-1 Vert");
         materialProcessPage.selectBarChart("2 Axis Lathe");
 
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(15.99), Offset.offset(5.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(52.66), Offset.offset(5.0));
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("Virtual 2 Axis Lathe - Small");
 
         routingSelectionPage = materialProcessPage.closePanel()
@@ -489,27 +492,24 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2757")
     @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .selectProcessGroup(CASTING)
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("SandCasting", "DieCasting", "Permanent Mold");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("PM Molding");
 
@@ -607,20 +607,18 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("3D Printing", "Selective Laser Sintering", "Stereolithography");
 
-        routingSelectionPage.selectRoutingPreferenceByName("3D Printing")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("3D Printing")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("Printing");
 
@@ -693,24 +691,23 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14997, 15811})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Hydroforming",ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing",
             "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("Laser Cut");
 
@@ -751,7 +748,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15001, 15815})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("5d51749fig01", ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -850,7 +847,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry",
-            "Trim", "Cleaning", "Finishing", "Visual Inspection", "3 Axis Mill", "Drill Press");
+            "Trim", "Cleaning", "Finishing", "Visual Inspection", "5 Axis Mill", "Drill Press");
         softAssertions.assertAll();
     }
 
@@ -940,6 +937,7 @@ public class ProcessRoutingTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();
@@ -953,7 +951,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.83841")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$26.47")).isTrue();
         softAssertions.assertAll();
     }
 

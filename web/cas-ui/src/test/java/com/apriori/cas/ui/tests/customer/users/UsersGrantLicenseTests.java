@@ -8,11 +8,16 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.cds.api.utils.CdsUserUtil;
+import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.LicenseUtil;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
@@ -33,6 +38,9 @@ import java.util.UUID;
 public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
+    private LicenseUtil licenseUtil;
+    private SiteUtil siteUtil;
     private Customer targetCustomer;
     private String customerIdentity;
     private String customerName;
@@ -49,22 +57,28 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private String subLicenseName;
     private UserProfilePage userProfilePage;
     private UsersListPage usersListPage;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        licenseUtil = new LicenseUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
+
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         userName = generateStringUtil.generateUserName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-        user = cdsTestUtil.addUser(customerIdentity, userName, email).getResponseEntity();
+        user = cdsUserUtil.addUser(customerIdentity, userName, email).getResponseEntity();
         userIdentity = user.getIdentity();
         siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         licenseId = UUID.randomUUID().toString();
         subLicenseId = UUID.randomUUID().toString();
@@ -93,7 +107,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     @Description("Grant sublicense to a customer user")
     @TestRail(id = {16825, 16815, 16816, 16817, 16818, 16819, 16821, 16823, 16824, 16827})
     public void grantLicenseToAUser() {
-        license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
+        license = licenseUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
         licenseName = license.getResponseEntity().getDescription();
         subLicenseName = license.getResponseEntity().getSubLicenses().get(0).getName();
 

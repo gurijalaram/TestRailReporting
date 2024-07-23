@@ -1,15 +1,13 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -25,14 +23,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
-public class CasUsersTests extends TestUtil {
+public class CasUsersTests {
     private SoftAssertions soft = new SoftAssertions();
-    private String userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
+    private RequestEntityUtil requestEntityUtil;
 
-    // TODO z: fix it threads
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil_Old.useTokenForRequests(userToken);
+        requestEntityUtil = TestHelper.initUser()
+            .useTokenInRequests();
     }
 
     @Test
@@ -40,9 +38,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(id = {5666})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        RequestEntity request = new RequestEntity().endpoint(CASAPIEnum.CURRENT_USER)
-            .returnType(User.class)
-            .token(userToken)
+        RequestEntity request = requestEntityUtil.init(CASAPIEnum.CURRENT_USER, User.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<User> user = HTTPRequest.build(request).get();

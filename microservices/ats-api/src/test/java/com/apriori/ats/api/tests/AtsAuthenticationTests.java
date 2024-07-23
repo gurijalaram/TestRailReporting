@@ -1,13 +1,14 @@
 package com.apriori.ats.api.tests;
 
-import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.cds.api.utils.SamlUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -27,23 +28,31 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    private AtsUtil atsUtil;
     private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private SamlUtil samlUtil;
+    private CustomerUtil customerUtil;
+    private CdsUserUtil cdsUserUtil;
     private ResponseWrapper<User> user;
     private ResponseWrapper<IdentityProviderResponse> identityProvider;
     private String customerIdentity;
     private String customerName;
     private String userIdentity;
     private String idpIdentity;
+    private RequestEntityUtil requestEntityUtil;
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+        atsUtil = new AtsUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -64,10 +73,9 @@ public class AtsAuthenticationTests extends TestUtil {
     @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
-        UserCredentials userCredentials = UserUtil.getUser();
-        String userEmail = userCredentials.getEmail();
-        String userPassword = userCredentials.getPassword();
-        ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
+        String userEmail = requestEntityUtil.getEmbeddedUser().getEmail();
+        String userPassword = requestEntityUtil.getEmbeddedUser().getPassword();
+        ResponseWrapper<User> authenticate = atsUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);
         soft.assertAll();
@@ -78,10 +86,10 @@ public class AtsAuthenticationTests extends TestUtil {
     @Description("Creates a user for SAML federated providers")
     public void createUserForSaml() {
         setCustomerData();
-        identityProvider = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        identityProvider = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = identityProvider.getResponseEntity().getIdentity();
 
-        ResponseWrapper<User> createSamlUser = atsTestUtil.putSAMLProviders(customerName);
+        ResponseWrapper<User> createSamlUser = atsUtil.samlProviders(customerName);
 
         soft.assertThat(createSamlUser.getResponseEntity().getIdentity()).isNotEmpty();
         soft.assertThat(createSamlUser.getResponseEntity().getUserType()).isEqualTo("AP_SAML_USER");
@@ -90,14 +98,14 @@ public class AtsAuthenticationTests extends TestUtil {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerName = customer.getResponseEntity().getName();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

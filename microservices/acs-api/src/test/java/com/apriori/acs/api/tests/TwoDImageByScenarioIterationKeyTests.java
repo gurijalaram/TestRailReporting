@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,31 +9,36 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.commons.codec.binary.Base64;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
+    private FileUploadResources fileUploadResources;
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = 10902)
     @Description("Validate Get 2D Image by Scenario Iteration Key Endpoint")
     public void testGet2DImageByScenarioIterationKey() {
-        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-        AcsResources acsResources = new AcsResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 

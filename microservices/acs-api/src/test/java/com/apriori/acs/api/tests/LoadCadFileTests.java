@@ -1,32 +1,35 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class LoadCadFileTests {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    private FileUploadResources fileUploadResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = 16515)
     @Description("Test LOADCADFILE API with keepFreeBodies set to False")
     public void testLoadCadFileKeepFreeBodiesFalse() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -54,8 +57,6 @@ public class LoadCadFileTests {
     @TestRail(id = 16516)
     @Description("Test LOADCADFILE API with keepFreeBodies set to True")
     public void testLoadCadFileKeepFreeBodiesTrue() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -82,9 +83,7 @@ public class LoadCadFileTests {
     @Test
     @TestRail(id = 16517)
     @Description("Test LOADCADFILE API with freeBodiesPreserveCad set to True")
-    public void testLoadCadFilefreeBodiesPreserveCadTrue() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
+    public void testLoadCadFileFreeBodiesPreserveCadTrue() {
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -112,8 +111,6 @@ public class LoadCadFileTests {
     @TestRail(id = 16518)
     @Description("Test LOADCADFILE API with freeBodiesPreserveCad set to False")
     public void testLoadCadFilefreeBodiesPreserveCadFalse() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -141,8 +138,6 @@ public class LoadCadFileTests {
     @TestRail(id = 16519)
     @Description("Test LOADCADFILE API with freeBodiesIgnoreMissingComponents set to False")
     public void testLoadCadFileFreeBodiesIgnoreMissingComponentsFalse() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -170,8 +165,6 @@ public class LoadCadFileTests {
     @TestRail(id = 16520)
     @Description("Test LOADCADFILE API with freeBodiesIgnoreMissingComponents set to True")
     public void testLoadCadFilefreeBodiesIgnoreMissingComponentsTrue() {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();

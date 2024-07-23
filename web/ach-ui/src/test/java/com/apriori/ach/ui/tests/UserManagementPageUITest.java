@@ -1,7 +1,7 @@
 package com.apriori.ach.ui.tests;
 
 import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
-import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.AtsUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -12,30 +12,34 @@ import com.apriori.qa.ach.ui.utils.enums.AdditionalProperties;
 import com.apriori.qa.ach.ui.utils.enums.Roles;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.login.LoginService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserManagementPageUITest extends AchEnvironmentUIUtil {
-
-    private AchEnvironmentAPIUtil achEnvironmentAPIUtil = new AchEnvironmentAPIUtil();
-    private final UserCredentials userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
+    private RequestEntityUtil requestEntityUtil;
+    private UserCredentials userCredentials;
     private CloudHomePage cloudHomePage;
     private UserManagementPage userManagementPage;
     private LoginService aprioriLoginService;
-    private AtsTestUtil atsTestUtil = new AtsTestUtil();
 
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        userCredentials = new AchEnvironmentAPIUtil(requestEntityUtil).getAwsCustomerUserCredentials();
+    }
 
     @Test
     @TestRail(id = {28492, 28502})
@@ -113,7 +117,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
         userManagementPage.findUser(username);
 
-        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);;
+        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);
 
         userManagementPage.clickOnThreeDotsUserRowAndHitDelete();
 
@@ -170,8 +174,9 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     }
 
     private void deleteCreatedUser(String email) {
-        CdsTestUtil cdsTestUtil = new CdsTestUtil();
-        ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
+        AtsUtil atsUtil = new AtsUtil(requestEntityUtil);
+        CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        ResponseWrapper<User> response = atsUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
 
         String customerIdentity = response.getResponseEntity().getCustomerIdentity();
         String userIdentity = response.getResponseEntity().getIdentity();

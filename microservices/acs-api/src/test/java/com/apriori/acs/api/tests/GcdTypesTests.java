@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesAdditiveManufacturingResponse;
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesAssemblyResponse;
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesBarAndTubeFabResponse;
@@ -22,33 +20,33 @@ import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesTwoModelMachinin
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class GcdTypesTests {
-
     private final SoftAssertions softAssertions = new SoftAssertions();
-    private final AcsResources acsResources;
+    private AcsResources acsResources;
 
-    public GcdTypesTests() {
-        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-        acsResources = new AcsResources(userCredentials);
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
     }
 
     @Test
     @TestRail(id = 17181)
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGcdTypesSheetMetal() {
-
         GcdTypesResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL.getProcessGroup(), GcdTypesResponse.class).getResponseEntity();
 
@@ -64,7 +62,6 @@ public class GcdTypesTests {
     @TestRail(id = 17169)
     @Description("Run API for Assembly Process Group")
     public void testGetGcdTypesAssembly() {
-
         GcdTypesAssemblyResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(), GcdTypesAssemblyResponse.class).getResponseEntity();
 
@@ -80,7 +77,6 @@ public class GcdTypesTests {
     @TestRail(id = 17170)
     @Description("Run API for 2-Model Machining Process Group")
     public void testGetGcdTypesTwoModelMachining() {
-
         GcdTypesTwoModelMachiningResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup(), GcdTypesTwoModelMachiningResponse.class).getResponseEntity();
 
@@ -96,7 +92,6 @@ public class GcdTypesTests {
     @TestRail(id = 17171)
     @Description("Run API for Additive Manufacturing Process Group")
     public void testGetGcdTypesAdditiveManufacturing() {
-
         GcdTypesAdditiveManufacturingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup(), GcdTypesAdditiveManufacturingResponse.class).getResponseEntity();
 
@@ -112,7 +107,6 @@ public class GcdTypesTests {
     @TestRail(id = 17172)
     @Description("Run API for Bar & Tube Fab Process Group")
     public void testGetGcdTypesBarAndTubeFab() {
-
         GcdTypesBarAndTubeFabResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup(), GcdTypesBarAndTubeFabResponse.class).getResponseEntity();
 
@@ -128,7 +122,6 @@ public class GcdTypesTests {
     @TestRail(id = 17173)
     @Description("Run API for Casting - Die Process Group")
     public void testGetGcdTypesCastingDie() {
-
         GcdTypesCastingDieResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.CASTING_DIE.getProcessGroup(), GcdTypesCastingDieResponse.class).getResponseEntity();
 
@@ -144,7 +137,6 @@ public class GcdTypesTests {
     @TestRail(id = 17174)
     @Description("Run API for Casting - Sand Process Group")
     public void testGetGcdTypesCastingSand() {
-
         GcdTypesCastingSandResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.CASTING_SAND.getProcessGroup(), GcdTypesCastingSandResponse.class).getResponseEntity();
 
@@ -160,7 +152,6 @@ public class GcdTypesTests {
     @TestRail(id = 17175)
     @Description("Run API for Casting - Investment Process Group")
     public void testGetGcdTypesCastingInvestment() {
-
         GcdTypesCastingInvestmentResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup(), GcdTypesCastingInvestmentResponse.class).getResponseEntity();
 
@@ -176,7 +167,6 @@ public class GcdTypesTests {
     @TestRail(id = 17176)
     @Description("Run API for Forging Process Group")
     public void testGetGcdTypesForging() {
-
         GcdTypesForgingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.FORGING.getProcessGroup(), GcdTypesForgingResponse.class).getResponseEntity();
 
@@ -192,7 +182,6 @@ public class GcdTypesTests {
     @TestRail(id = 17177)
     @Description("Run API for Plastic Molding Process Group")
     public void testGetGcdTypesPlasticMolding() {
-
         GcdTypesPlasticMoldingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup(), GcdTypesPlasticMoldingResponse.class).getResponseEntity();
 
@@ -208,7 +197,6 @@ public class GcdTypesTests {
     @TestRail(id = 17178)
     @Description("Run API for Powder Metal Process Group")
     public void testGetGcdTypesPowderMetal() {
-
         GcdTypesForgingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.POWDER_METAL.getProcessGroup(), GcdTypesForgingResponse.class).getResponseEntity();
 
@@ -224,7 +212,6 @@ public class GcdTypesTests {
     @TestRail(id = 17179)
     @Description("Run API for Rapid Prototyping Process Group")
     public void testGetGcdTypesRapidPrototyping() {
-
         GcdTypesRapidPrototypingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup(), GcdTypesRapidPrototypingResponse.class).getResponseEntity();
 
@@ -240,7 +227,6 @@ public class GcdTypesTests {
     @TestRail(id = 17180)
     @Description("Run API for Roto & Blow Molding Process Group")
     public void testGetGcdTypesRotoAndBlowMolding() {
-
         GcdTypesRotoAndBlowMoldingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup(), GcdTypesRotoAndBlowMoldingResponse.class).getResponseEntity();
 
@@ -256,7 +242,6 @@ public class GcdTypesTests {
     @TestRail(id = 17182)
     @Description("Run API for Sheet Metal - Transfer Die Process Group")
     public void testGetGcdTypesSheetMetalTransferDie() {
-
         GcdTypesSheetMetalTransferDieResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class).getResponseEntity();
 
@@ -272,7 +257,6 @@ public class GcdTypesTests {
     @TestRail(id = 17183)
     @Description("Run API for Sheet Metal - Hydroforming Process Group")
     public void testGetGcdTypesSheetMetalHydroforming() {
-
         GcdTypesSheetMetalHydroformingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup(), GcdTypesSheetMetalHydroformingResponse.class).getResponseEntity();
 
@@ -288,7 +272,6 @@ public class GcdTypesTests {
     @TestRail(id = 17184)
     @Description("Run API for Sheet Metal - Roll Forming Process Group")
     public void testGetGcdTypesSheetMetalRollForming() {
-
         GcdTypesSheetMetalRollFormingResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup(), GcdTypesSheetMetalRollFormingResponse.class).getResponseEntity();
 
@@ -304,7 +287,6 @@ public class GcdTypesTests {
     @TestRail(id = 17185)
     @Description("Run API for Sheet Metal - Stretch Forming Process Group")
     public void testGetGcdTypesSheetMetalStretchForming() {
-
         GcdTypesSheetMetalTransferDieResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class).getResponseEntity();
 
@@ -320,7 +302,6 @@ public class GcdTypesTests {
     @TestRail(id = 17186)
     @Description("Run API for Sheet Plastic Process Group")
     public void testGetGcdTypesSheetPlastic() {
-
         GcdTypesSheetPlasticResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup(), GcdTypesSheetPlasticResponse.class).getResponseEntity();
 
@@ -336,7 +317,6 @@ public class GcdTypesTests {
     @TestRail(id = 17187)
     @Description("Run API for Stock Machining Process Group")
     public void testGetGcdTypesStockMachining() {
-
         GcdTypesStockMachiningResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(), GcdTypesStockMachiningResponse.class).getResponseEntity();
 

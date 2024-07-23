@@ -5,32 +5,43 @@ import com.apriori.ach.api.dto.ApplicationDTO;
 import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.shared.util.SharedCustomerUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.testrail.TestRail;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class AchMainPageAPITestAPI extends AchEnvironmentAPIUtil {
+public class AchMainPageAPITests {
+    private AchEnvironmentAPIUtil achEnvironmentAPIUtil;
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        achEnvironmentAPIUtil = new AchEnvironmentAPIUtil(requestEntityUtil);
+    }
+
     @Test
     @TestRail(id = {27011})
     public void validateCustomerApplicationsByAPI() {
 
         final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
-        final User customerUser = AchEnvironmentAPIUtil.getCustomerUserDataByEmail(userCredentials.getEmail(), customerIdentity);
+        final User customerUser = achEnvironmentAPIUtil.getCustomerUserDataByEmail(requestEntityUtil.getEmbeddedUser().getEmail(), customerIdentity);
 
-        Deployment deployment = getCustomerDeploymentInformation(customerIdentity);
-        List<String> customerReferences = mapCustomerDeploymentDataToDTO(deployment)
+        Deployment deployment = achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity);
+        List<String> customerReferences = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(deployment)
                 .stream()
                 .map(ApplicationDTO::getIdentitiesHierarchy)
-                .collect(Collectors.toList());
+                .toList();
 
-        List<AccessControlResponse> userAccessControls = getUserAccessControls(customerUser.getIdentity(), customerIdentity);
+        List<AccessControlResponse> userAccessControls = achEnvironmentAPIUtil.getUserAccessControls(customerUser.getIdentity(), customerIdentity);
         List<String> userReferences = this.filterAccessForDeploymentAndConcatIdentities(userAccessControls, deployment.getIdentity());
 
         userReferences.removeAll(customerReferences);
@@ -53,9 +64,9 @@ public class AchMainPageAPITestAPI extends AchEnvironmentAPIUtil {
                 if (userAccessControl.getDeploymentIdentity().equals(deploymentIdentity)) {
                     userReferences.add(
                             new StringBuilder("customerId:" + userAccessControl.getCustomerIdentity())
-                                    .append(identitiesDelimiter + "deploymentId:" + userAccessControl.getDeploymentIdentity())
-                                    .append(identitiesDelimiter + "installationId:" + userAccessControl.getInstallationIdentity())
-                                    .append(identitiesDelimiter + "applicationId:" + userAccessControl.getApplicationIdentity())
+                                    .append(achEnvironmentAPIUtil.identitiesDelimiter + "deploymentId:" + userAccessControl.getDeploymentIdentity())
+                                    .append(achEnvironmentAPIUtil.identitiesDelimiter + "installationId:" + userAccessControl.getInstallationIdentity())
+                                    .append(achEnvironmentAPIUtil.identitiesDelimiter + "applicationId:" + userAccessControl.getApplicationIdentity())
                                     .toString()
                     );
                 }

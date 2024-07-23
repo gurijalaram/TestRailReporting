@@ -4,7 +4,9 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SAN
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -14,13 +16,22 @@ import com.apriori.vds.api.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class DigitalFactoriesTest extends VDSTestUtil {
+public class DigitalFactoriesTest {
+    private RequestEntityUtil requestEntityUtil;
+    private VDSTestUtil vdsTestUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        vdsTestUtil = new VDSTestUtil(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {8034})
@@ -34,15 +45,15 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(id = {8030})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getDigitalFactories() {
-        VDSTestUtil.getDigitalFactoriesResponse();
+        vdsTestUtil.getDigitalFactories();
     }
 
     @Test
     @TestRail(id = {8031})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(VDSTestUtil.getDigitalFactoriesResponse().getIdentity())
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
+            .inlineVariables(vdsTestUtil.getDigitalFactories().getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
@@ -66,7 +77,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(id = {8033})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getVPEsByIdentity() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES_BY_IDENTITY, DigitalFactory.class)
             .inlineVariables(this.getVPEsResponse().getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -74,7 +85,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     }
 
     private DigitalFactory getVPEsResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES, DigitalFactoriesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTPRequest.build(requestEntity).get();

@@ -31,7 +31,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeAll
     public static void getAuthorizationToken() {
-        userCredentials = UserUtil.getUserWithCloudContext();
+        userCredentials = UserUtil.getUser();
     }
 
     @Test

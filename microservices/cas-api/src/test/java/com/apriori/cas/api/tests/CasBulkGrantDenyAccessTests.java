@@ -12,11 +12,15 @@ import com.apriori.cas.api.models.response.AccessControls;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Sites;
 import com.apriori.cas.api.utils.CasTestUtil;
+import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.DeploymentUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -38,8 +42,8 @@ import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
@@ -47,6 +51,9 @@ public class CasBulkGrantDenyAccessTests {
     private CasTestUtil casTestUtil;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
+    private SiteUtil siteUtil;
+    private DeploymentUtil deploymentUtil;
     private String acsIdentity;
     private String ciaIdentity;
     private String appIdentity;
@@ -66,7 +73,7 @@ public class CasBulkGrantDenyAccessTests {
     private String licensedCiaIdentity;
     private String licensedCirIdentity;
     private String licensedAcsIdentity;
-    private String apWIdentity;
+    private String apwIdentity;
 
     @BeforeEach
     public void setup() {
@@ -74,15 +81,20 @@ public class CasBulkGrantDenyAccessTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         casTestUtil = new CasTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
+        deploymentUtil = new DeploymentUtil(requestEntityUtil);
 
-        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
-        ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
-        cirIdentity = applicationUtil.getApplicationIdentity(CIR);
-        acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        achIdentity = applicationUtil.getApplicationIdentity(CLOUD_HOME);
-        apWIdentity = applicationUtil.getApplicationIdentity(CIS);
+        appIdentity = getApplicationIdentity(AP_PRO);
+        ciaIdentity = getApplicationIdentity(CIA);
+        cirIdentity = getApplicationIdentity(CIR);
+        acsIdentity = getApplicationIdentity(ACS);
+        achIdentity = getApplicationIdentity(CLOUD_HOME);
+        apwIdentity = getApplicationIdentity(CIS);
+
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
+        apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream()
+            .filter(site -> site.getName().contains("Internal")).toList().get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");
         apInstallationIdentity = PropertiesContext.get("cds.apriori_core_services_installation_identity");
     }
@@ -93,18 +105,12 @@ public class CasBulkGrantDenyAccessTests {
         if (installationIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
         }
-        if (licensedApProIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
-        }
-        if (licensedCiaIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
-        }
-        if (licensedCirIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
-        }
-        if (licensedAcsIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
-        }
+
+        Arrays.asList(licensedApProIdentity, licensedCiaIdentity, licensedCirIdentity, licensedAcsIdentity).forEach(identity -> {
+            if (identity != null) {
+                cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, identity);
+            }
+        });
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
@@ -116,7 +122,7 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "grant-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "grant-all", customerIdentity);
 
         ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
@@ -142,9 +148,9 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "grant-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "grant-all", customerIdentity);
 
-        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apWIdentity, "deny-all", customerIdentity);
+        casTestUtil.grantDenyAll(aprioriIdentity, apSiteIdentity, apDeploymentIdentity, apInstallationIdentity, apwIdentity, "deny-all", customerIdentity);
 
         ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
@@ -194,13 +200,15 @@ public class CasBulkGrantDenyAccessTests {
         Customer sourceCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = sourceCustomer.getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        ResponseWrapper<Deployment> response = deploymentUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity,
+            "Automation Installation",
+            rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
@@ -212,13 +220,15 @@ public class CasBulkGrantDenyAccessTests {
         ResponseWrapper<LicensedApplications> acsLicensed = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
         licensedAcsIdentity = acsLicensed.getResponseEntity().getIdentity();
 
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
-        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+        Arrays.asList(appIdentity, ciaIdentity, cirIdentity, acsIdentity).forEach(identity ->
+            applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, identity, siteIdentity));
 
         sourceUsers = new ArrayList<>();
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
+    }
+
+    private String getApplicationIdentity(ApplicationEnum identity) {
+        return applicationUtil.getApplicationIdentity(identity);
     }
 }

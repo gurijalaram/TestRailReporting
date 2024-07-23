@@ -32,7 +32,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
-    @FindBy(xpath = "//button[@class='transparent dropdown-toggle btn btn-secondary']")
+    @FindBy(css = "div.user-dropdown.dropdown button.transparent.dropdown-toggle.btn.btn-secondary")
     private WebElement userElement;
 
     @FindBy(xpath = "//div[@class='deployment-connection-info']/h5[3]")
