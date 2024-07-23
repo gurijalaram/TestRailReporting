@@ -411,7 +411,7 @@ public class RoutingsTests {
     @DisplayName("testAvailableRoutings")
     @ParameterizedTest(name = "{displayName}_{0}")
     @MethodSource("expectedRoutings")
-    @TestRail(id = {1234})
+    @TestRail(id = {14965, 14966, 14967, 14969, 14970,14972, 14973, 14974, 14975, 14977, 14979, 14980})
     public void testAvailableRoutings(ProcessGroupEnum processGroupEnum, EnumSet<RoutingsEnum> expectedRoutings) {
         component = new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum);
 
