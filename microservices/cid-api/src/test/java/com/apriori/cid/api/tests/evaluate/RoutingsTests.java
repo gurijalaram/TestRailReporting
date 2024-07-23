@@ -2,6 +2,7 @@ package com.apriori.cid.api.tests.evaluate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.apriori.cid.api.models.response.scenarios.Routing;
 import com.apriori.cid.api.models.response.scenarios.Routings;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
@@ -25,11 +26,17 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 @ExtendWith(TestRulesAPI.class)
 public class RoutingsTests {
@@ -401,6 +408,30 @@ public class RoutingsTests {
         softAssertions.assertAll();
     }
 
+    @DisplayName("testAvailableRoutings")
+    @ParameterizedTest(name = "{displayName}_{0}")
+    @MethodSource("expectedRoutings")
+    @TestRail(id = {1234})
+    public void testAvailableRoutings(ProcessGroupEnum processGroupEnum, EnumSet<RoutingsEnum> expectedRoutings) {
+        component = new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum);
+
+        componentsUtil.postComponent(component);
+        List<Routing> routings = scenariosUtil.getRoutings(
+            component.getUser(), Routings.class, component.getComponentIdentity(), component.getScenarioIdentity(),
+            DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(), processGroupEnum.getProcessGroup()).getResponseEntity().getItems();
+
+        List<String> routingsNames = routings.stream().map(Routing::getDisplayName).toList();
+
+        softAssertions.assertThat(routings.size()).as("Verify number of Routings returned matches expected").isEqualTo(expectedRoutings.size());
+
+        expectedRoutings.forEach(expectedRouting ->
+            softAssertions.assertThat(expectedRouting.getRouting())
+                .as("Verify routing '%s' presented".formatted(expectedRouting.getRouting())).isIn(routingsNames));
+
+        softAssertions.assertAll();
+    }
+
+
     private Routings getRoutings(ComponentInfoBuilder component) {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(ComponentInfoBuilder.builder()
@@ -438,5 +469,21 @@ public class RoutingsTests {
         softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(costingLabel.name());
 
         return iterationsUtil.getComponentIterationLatest(componentResponse);
+    }
+
+    static Stream<Arguments> expectedRoutings() {
+        return Stream.of(
+            Arguments.of(ProcessGroupEnum.CASTING, RoutingsEnum.casting),
+            Arguments.of(ProcessGroupEnum.CASTING_DIE, RoutingsEnum.castingDie),
+            Arguments.of(ProcessGroupEnum.CASTING_INVESTMENT, RoutingsEnum.castingInvestment),
+            Arguments.of(ProcessGroupEnum.FORGING, RoutingsEnum.forging),
+            Arguments.of(ProcessGroupEnum.PLASTIC_MOLDING, RoutingsEnum.plasticMolding),
+            Arguments.of(ProcessGroupEnum.RAPID_PROTOTYPING, RoutingsEnum.rapidPrototyping),
+            Arguments.of(ProcessGroupEnum.ROTO_BLOW_MOLDING, RoutingsEnum.rotoBlowMolding),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL, RoutingsEnum.sheetMetal),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL_HYDROFORMING, RoutingsEnum.sheetMetalHydroforming),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING, RoutingsEnum.sheetMetalStretchForming),
+            Arguments.of(ProcessGroupEnum.SHEET_PLASTIC, RoutingsEnum.sheetPlastic),
+            Arguments.of(ProcessGroupEnum.STOCK_MACHINING, RoutingsEnum.stockMachining));
     }
 }
