@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class MappingObject {
-    private double capitalInvestment;
-    private int level;
-    private int occurrences;
-    private double totalCost;
+    private Double capitalInvestment;
+    private Integer level;
+    private Integer occurrences;
+    private Double totalCost;
 }

@@ -1,11 +1,5 @@
 package com.apriori.acs.api.tests.workorders;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringStartsWith.startsWith;
-
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.api.models.request.workorders.assemblyobjects.AssemblyInfoComponent;
@@ -31,6 +25,7 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.json.JsonManager;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,13 +38,15 @@ public class WorkorderApiUtils {
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
     private final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
     private FileUploadResources fileUploadResources;
-    private AcsResources acsResources;
     private RequestEntityUtil requestEntityUtil;
+    private final SoftAssertions softAssertions;
+    private AcsResources acsResources;
 
     public WorkorderApiUtils(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
         this.fileUploadResources = new FileUploadResources(this.requestEntityUtil);
         this.acsResources = new AcsResources(this.requestEntityUtil);
+        this.softAssertions = new SoftAssertions();
     }
 
     /**
@@ -102,18 +99,14 @@ public class WorkorderApiUtils {
         ScenarioKey scenarioKeyToAssertOn = costOutputs.getScenarioIterationKey().getScenarioKey();
         ScenarioKey postEditScenarioKey = editScenarioOutputs.getScenarioIterationKey().getScenarioKey();
 
-        assertThat(postEditScenarioKey.getStateName(), is(not(equalTo(scenarioKeyToAssertOn.getStateName()))));
-        assertThat(postEditScenarioKey.getMasterName(), is(equalTo(scenarioKeyToAssertOn.getMasterName())));
-        assertThat(postEditScenarioKey.getTypeName(), is(equalTo(scenarioKeyToAssertOn.getTypeName())));
-        assertThat(postEditScenarioKey.getWorkspaceId(), is(not(equalTo(0))));
+        softAssertions.assertThat(postEditScenarioKey.getStateName()).isNotEqualTo(scenarioKeyToAssertOn.getStateName());
+        softAssertions.assertThat(postEditScenarioKey.getMasterName()).isEqualTo(scenarioKeyToAssertOn.getMasterName());
+        softAssertions.assertThat(postEditScenarioKey.getTypeName()).isEqualTo(scenarioKeyToAssertOn.getTypeName());
+        softAssertions.assertThat(postEditScenarioKey.getWorkspaceId()).isNotEqualTo(0);
 
-        assertThat(acsResources
-                .getScenarioInfoByScenarioIterationKey(
-                    editScenarioOutputs
-                        .getScenarioIterationKey()
-                ).getScenarioName(),
-            is(equalTo("Test"))
-        );
+        softAssertions.assertThat(acsResources.getScenarioInfoByScenarioIterationKey(editScenarioOutputs.getScenarioIterationKey())
+            .getScenarioName()).isEqualTo("Test");
+        softAssertions.assertAll();
     }
 
     /**
@@ -139,8 +132,6 @@ public class WorkorderApiUtils {
             scenarioName
         );
     }
-
-
 
     /**
      * Initialize and upload an assembly file
@@ -256,23 +247,15 @@ public class WorkorderApiUtils {
      *
      * @param scenarioIterationKey - info to use to get image
      */
-    /*public void bomLoaderManualCost(ScenarioIterationKey scenarioIterationKey) {
-        BomLoaderResponse bomLoaderResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
-    }*/
-
-    /**
-     * Gets image info and validates it
-     *
-     * @param scenarioIterationKey - info to use to get image
-     */
     public void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
         ImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
-        assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
-        assertThat(imageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
+        softAssertions.assertThat(imageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(imageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
+        softAssertions.assertThat(imageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssertions.assertThat(imageInfoResponse.getWebImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(imageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
+        softAssertions.assertAll();
     }
 
     /**
@@ -304,10 +287,11 @@ public class WorkorderApiUtils {
      * @param notExpectedIteration - Integer
      */
     public void performUploadCostPublishAssemblyComponentAssertions(ScenarioIterationKey scenarioIterationKey, Integer notExpectedIteration) {
-        assertThat(scenarioIterationKey.getScenarioKey().getMasterName(), is(startsWith("3574")));
-        assertThat(scenarioIterationKey.getScenarioKey().getTypeName(), is(equalTo("partState")));
-        assertThat(scenarioIterationKey.getScenarioKey().getWorkspaceId(), is(equalTo(0)));
-        assertThat(scenarioIterationKey.getIteration(), is(not(notExpectedIteration)));
+        softAssertions.assertThat(scenarioIterationKey.getScenarioKey().getMasterName()).startsWith("3574");
+        softAssertions.assertThat(scenarioIterationKey.getScenarioKey().getTypeName()).isEqualTo("partState");
+        softAssertions.assertThat(scenarioIterationKey.getScenarioKey().getWorkspaceId()).isEqualTo(0);
+        softAssertions.assertThat(scenarioIterationKey.getIteration()).isNotEqualTo(notExpectedIteration);
+        softAssertions.assertAll();
     }
 
     /**

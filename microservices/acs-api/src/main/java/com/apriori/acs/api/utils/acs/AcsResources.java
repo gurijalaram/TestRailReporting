@@ -1114,7 +1114,7 @@ public class AcsResources {
      * @param processGroup         - the process group
      * @param fileName             - the filename
      * @param productionInfoInputs - the production information
-     * @return CostResultsResponse object
+     * @return CostResultsResponse instance
      */
     public CostOrderStatusOutputs bomLoadManual(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
