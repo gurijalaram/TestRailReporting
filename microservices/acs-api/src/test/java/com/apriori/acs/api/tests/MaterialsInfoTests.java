@@ -38,8 +38,8 @@ public class MaterialsInfoTests {
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
-        softAssertions = new SoftAssertions();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
