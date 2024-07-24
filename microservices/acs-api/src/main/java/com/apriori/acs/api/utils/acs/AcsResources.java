@@ -71,12 +71,14 @@ public class AcsResources {
     private final UserCredentials userCredentials;
     private static final HashMap<String, String> headers = new HashMap<>();
     private RequestEntityUtil requestEntityUtil;
+    private FileUploadResources fileUploadResources;
     private final String validUsername;
     private final String invalidUsername;
 
     public AcsResources(RequestEntityUtil requestEntityUtil) {
         this.userCredentials = requestEntityUtil.getEmbeddedUser();
         this.requestEntityUtil = requestEntityUtil;
+        this.fileUploadResources = new FileUploadResources(this.requestEntityUtil);
         token = new OldAuthorizationUtil().getTokenAsString(userCredentials);
         validUsername = userCredentials.getEmail().split("@")[0];
         invalidUsername = userCredentials.getUsername().split("@")[0].concat("41");
@@ -1115,9 +1117,7 @@ public class AcsResources {
      * @return CostResultsResponse object
      */
     public CostOrderStatusOutputs bomLoadManual(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
-        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -1131,24 +1131,11 @@ public class AcsResources {
             testScenarioName
         );
 
-        return fileUploadResources.costAssemblyOrPart(
+        return fileUploadResources.costPartManualBomLoader(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup,
-            false
+            processGroup
         );
-    }
-
-    /**
-     * Sets up header with content type and token
-     */
-    private void setupHeader() {
-        String defaultString = "default";
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "*/*");
-        headers.put("apriori.tenantgroup", defaultString);
-        headers.put("apriori.tenant", defaultString);
-        headers.put("Authorization", "Bearer " + token);
     }
 
     /**

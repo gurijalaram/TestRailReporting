@@ -256,9 +256,9 @@ public class WorkorderApiUtils {
      *
      * @param scenarioIterationKey - info to use to get image
      */
-    public void bomLoaderManualCost(ScenarioIterationKey scenarioIterationKey) {
+    /*public void bomLoaderManualCost(ScenarioIterationKey scenarioIterationKey) {
         BomLoaderResponse bomLoaderResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
-    }
+    }*/
 
     /**
      * Gets image info and validates it

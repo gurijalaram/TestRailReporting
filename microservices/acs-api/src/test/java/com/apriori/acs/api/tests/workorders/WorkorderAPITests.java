@@ -456,14 +456,10 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12047)
     @Description("Test the BOM Loader with Manual Inputs")
     public void testBomLoaderManualCosting() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
-
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "Casting.prt",
             castingProcessGroup,
             false
         );
-
-
     }
 }

@@ -92,4 +92,29 @@ public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(id = 01234)
+    @Description("BOM Loader manual costing work in progress")
+    public void testStuff() {
+        String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+        String partName = "Casting.prt";
+
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "CreatePartData.json"
+            ).getPath(), NewPartRequest.class
+        );
+
+        CostOrderStatusOutputs response = acsResources.bomLoadManual(processGroup, partName, productionInfoInputs);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response).isEqualTo(null);
+        softAssertions.assertAll();
+
+        /*
+        TODO:
+        Tidy up code, push, PR then Steve to check (add him as reviewer).
+         */
+    }
 }
