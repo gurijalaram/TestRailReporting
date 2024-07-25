@@ -417,7 +417,7 @@ public class ManualCostingTests  extends TestBaseUI {
         Double componentTCI = 59.87;
         Double totalCapitalInvestmentDifference = 16.54;
 
-        ComponentInfoBuilder assemblyScenario = new AssemblyRequestUtil().getAssembly("FLANGE C");
+        ComponentInfoBuilder assemblyScenario = new AssemblyRequestUtil().getAssembly();
         ComponentInfoBuilder manuallyCostedComponent = assemblyScenario.getSubComponents().get(0);
 
         assemblyUtils.uploadSubComponents(assemblyScenario)
