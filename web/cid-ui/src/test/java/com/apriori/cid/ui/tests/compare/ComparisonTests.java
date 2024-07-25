@@ -449,12 +449,12 @@ public class ComparisonTests extends TestBaseUI {
             .selectManualComparison();
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Results");
+            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Results");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Results");
+            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Results");
 
         softAssertions.assertAll();
     }

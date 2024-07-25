@@ -427,7 +427,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement getByParentLocator(String componentName, String scenarioName) {
-        return pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
+        return pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/parent::div//span[text()='%s']/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
     }
 
     /**
