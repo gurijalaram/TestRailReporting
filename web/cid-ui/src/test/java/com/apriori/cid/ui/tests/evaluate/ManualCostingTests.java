@@ -409,7 +409,7 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31224, 31259, 31261})
+    @TestRail(id = {31224, 31259, 31261, 31432})
     @Description("Verify Manually Costed Scenario can be used in Assembly")
     public void testManuallyCostedSubComponent() {
         Double componentPPC = 0.39;
@@ -435,7 +435,8 @@ public class ManualCostingTests  extends TestBaseUI {
             .login(assemblyScenario.getUser());
 
         softAssertions.assertThat(explorePage.getScenarioState(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
-            .as("Verify Scenario displays as Manually Costed").isEqualTo("money-check-dollar-pen");
+            .as("Verify Scenario (%s - %s) displays as Manually Costed".formatted(manuallyCostedComponent.getComponentName(), manuallyCostedComponent.getScenarioName()))
+            .isEqualTo("money-check-dollar-pen");
 
         ComponentsTreePage componentsTreePage = explorePage.openScenario(assemblyScenario.getComponentName(), assemblyScenario.getScenarioName())
             .openComponents();
@@ -463,7 +464,15 @@ public class ManualCostingTests  extends TestBaseUI {
         Double manualTCIValue = costDetailsPage.getCostContributionValue("Manual Investment");
 
         softAssertions.assertThat(manualPPCValue).as("Verify Piece Part Cost Total").isEqualTo(componentPPC * manualScenarioQuantity);
-        softAssertions.assertThat(manualTCIValue).as("Verify Total Capital Investment Total").isEqualTo(componentTCI * manualScenarioQuantity);
+        softAssertions.assertThat(manualTCIValue).as("Verify Total Capital Investment Total").isEqualTo(componentTCI);
+
+        costDetailsPage.selectDropdown("Total Cost");
+        softAssertions.assertThat(costDetailsPage.getBarValue("Manual"))
+            .as("Verify Manual PPC in chart").isEqualTo(componentPPC * manualScenarioQuantity);
+
+        costDetailsPage.selectDropdown("Total Investment");
+        softAssertions.assertThat(costDetailsPage.getBarValue("Manual"))
+            .as("Verify Manual TCI in chart").isEqualTo(componentTCI);
 
         assemblyScenario.getSubComponents().get(0).setCostingTemplate(CostingTemplate.builder()
             .costMode("MANUAL")
@@ -485,7 +494,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify change in manual PPC").isEqualTo((componentPPC + piecePartCostDifference) * manualScenarioQuantity);
         costDetailsPage.expandDropDown("Total Capital Investment");
         softAssertions.assertThat(costDetailsPage.getCostContributionValue("Manual Investment"))
-            .as("Verify change to manual TCI").isEqualTo((componentTCI - totalCapitalInvestmentDifference) * manualScenarioQuantity);
+            .as("Verify change to manual TCI").isEqualTo(componentTCI - totalCapitalInvestmentDifference);
 
         softAssertions.assertAll();
     }
