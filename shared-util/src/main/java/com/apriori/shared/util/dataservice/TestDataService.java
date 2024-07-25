@@ -1,5 +1,6 @@
 package com.apriori.shared.util.dataservice;
 
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.part.PartUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * deserialize the test data json file to page data class objects.
@@ -70,6 +72,26 @@ public class TestDataService {
             PartData partData = PartUtil.getPartDataWithFile();
             partDataList.add(partData);
         }
+        return partDataList;
+    }
+
+    /**
+     * Get part test data from css-test-parts.csv file AWS S3 bucket
+     *
+     * @return PartData class object
+     */
+    public List<PartData> getPartsData(String inputJsonFile) {
+        List<PartData> partDataList = JsonManager.readItemsFromFile("testdata/" + inputJsonFile, PartData.class);
+
+        partDataList = partDataList.stream()
+            .map(partData -> {
+                partData.setFile(
+                    FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFilename())
+                );
+                return partData;
+            })
+            .collect(Collectors.toList());
+
         return partDataList;
     }
 
@@ -164,6 +186,4 @@ public class TestDataService {
         }
         return fileToExport;
     }
-
-
 }
