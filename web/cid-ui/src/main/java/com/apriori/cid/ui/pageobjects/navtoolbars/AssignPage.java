@@ -52,8 +52,24 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, "qa-assign-scenario-select-field", assignee);
+        typeAheadSelectAssignee(assigneeDropdown, "qa-assign-scenario-select-field", assignee);
         return this;
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param root             - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    private void typeAheadSelectAssignee(WebElement dropdownSelector, String root, String locatorValue) {
+        if (!pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
+            pageUtils.waitForElementAndClick(dropdownSelector);
+            pageUtils.waitForElementToAppear(By.cssSelector(".assign-scenario-form .apriori-select div input")).sendKeys(locatorValue.split(" ")[0]);
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
+        }
     }
 
     /**
