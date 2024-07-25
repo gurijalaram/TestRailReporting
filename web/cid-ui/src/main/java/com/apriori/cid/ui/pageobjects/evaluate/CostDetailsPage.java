@@ -13,6 +13,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 /**
  * @author cfrith
  */
@@ -23,6 +26,15 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     @FindBy(css = "g[class='recharts-cartesian-grid']")
     private WebElement costResultChart;
+
+    @FindBy(id = "qa-cost-result-chart-option-select")
+    private WebElement costResultDropdown;
+
+    @FindBy(css = ".yAxis g[class='recharts-layer recharts-cartesian-axis-tick'] [orientation='left']")
+    private List<WebElement> exAxisLabel;
+
+    @FindBy(css = ".recharts-bar g[class='recharts-layer recharts-label-list'] tspan")
+    private List<WebElement> barValues;
 
     @FindBy(css = "div[class='cost-result-list']")
     private WebElement costResults;
@@ -141,6 +153,29 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     public String getCostContribution(String label) {
         By costResult = By.xpath(String.format("//div[@class='collapse show']//span[normalize-space(text())='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
+    }
+
+    /**
+     * Selects the Cost Result dropdown
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public CostDetailsPage selectDropdown(String filter) {
+        pageUtils.typeAheadSelect(costResultDropdown, filter);
+        pageUtils.waitForElementsToAppear(barValues);
+        return this;
+    }
+
+    /**
+     * Gets the value of the Bar
+     *
+     * @param axisLabel - the labels on the bar chart
+     * @return list string
+     */
+    public Double getBarValue(String axisLabel) {
+        int position = IntStream.range(0, exAxisLabel.size()).filter(x -> exAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        return Double.parseDouble(pageUtils.waitForElementToAppear(barValues.get(position)).getAttribute("textContent"));
     }
 
     /**
