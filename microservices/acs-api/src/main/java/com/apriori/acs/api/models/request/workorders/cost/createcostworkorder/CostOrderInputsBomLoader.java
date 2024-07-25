@@ -8,9 +8,9 @@ import lombok.Data;
 public class CostOrderInputsBomLoader {
     private Integer inputSetId;
     private CostOrderScenarioIteration scenarioIterationKey;
-    private boolean keepFreeBodies;
-    private boolean freeBodiesPreserveCad;
-    private boolean freeBodiesIgnoreMissingComponents;
+    private Boolean keepFreeBodies;
+    private Boolean freeBodiesPreserveCad;
+    private Boolean freeBodiesIgnoreMissingComponents;
     private String defaultScenarioProcessingRule;
     private MappingObject mapping;
 }

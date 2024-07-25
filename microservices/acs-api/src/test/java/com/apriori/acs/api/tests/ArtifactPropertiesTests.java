@@ -75,5 +75,6 @@ public class ArtifactPropertiesTests extends TestUtil {
         softAssertions.assertThat(listItemToUse.getArtifactKey().getDisplayName()).isEqualTo(valueToAssertOn);
         softAssertions.assertThat(listItemToUse.getName()).isEqualTo(valueToAssertOn);
         softAssertions.assertThat(listItemToUse.getArtifactData().getPropertyValueMap().getArtifactKey().getDisplayName()).isEqualTo(valueToAssertOn);
+        softAssertions.assertAll();
     }
 }
