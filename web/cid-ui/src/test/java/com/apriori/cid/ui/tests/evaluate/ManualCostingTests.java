@@ -466,7 +466,6 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(manualPPCValue).as("Verify Piece Part Cost Total").isEqualTo(componentPPC * manualScenarioQuantity);
         softAssertions.assertThat(manualTCIValue).as("Verify Total Capital Investment Total").isEqualTo(componentTCI);
 
-        //ToDo:- Check if we can grab the labels and/or values from the graph in Cost Results Drawer
         costDetailsPage.selectDropdown("Total Cost");
         softAssertions.assertThat(costDetailsPage.getBarValue("Manual"))
             .as("Verify Manual PPC in chart").isEqualTo(componentPPC * manualScenarioQuantity);
