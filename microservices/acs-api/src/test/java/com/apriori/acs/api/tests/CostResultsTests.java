@@ -23,14 +23,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CostResultsTests {
-    private AcsResources acsResources;
     private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -226,8 +228,6 @@ public class CostResultsTests {
     }
 
     private void performCostResultsAssertions(CostResultsRootResponse costResultsRootItems, String processGroupName) {
-        SoftAssertions softAssertions = new SoftAssertions();
-
         CostResultsRootItem costResultsRootItem = costResultsRootItems.get(0);
         ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
         ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();

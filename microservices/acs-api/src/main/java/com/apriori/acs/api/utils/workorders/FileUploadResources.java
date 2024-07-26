@@ -9,8 +9,10 @@ import com.apriori.acs.api.enums.workorders.CidWorkorderApiEnum;
 import com.apriori.acs.api.enums.workorders.WorkorderStatusEnum;
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.request.workorders.cost.createcostworkorder.CostOrderInputs;
+import com.apriori.acs.api.models.request.workorders.cost.createcostworkorder.CostOrderInputsBomLoader;
 import com.apriori.acs.api.models.request.workorders.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.acs.api.models.request.workorders.cost.createcostworkorder.CostOrderScenarioIteration;
+import com.apriori.acs.api.models.request.workorders.cost.createcostworkorder.MappingObject;
 import com.apriori.acs.api.models.request.workorders.cost.productioninfo.ProductionInfo;
 import com.apriori.acs.api.models.request.workorders.cost.productioninfo.ProductionInfoMaterial;
 import com.apriori.acs.api.models.request.workorders.cost.productioninfo.ProductionInfoScenario;
@@ -342,7 +344,7 @@ public class FileUploadResources {
      * @param processGroup         - process group
      * @return CostOrderStatusOutputs
      */
-    public CostOrderStatusOutputs costPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
+    public CostOrderStatusOutputs costPartManualBomLoader(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
         int inputSetId = initializeCostScenario(
             productionInfoInputs,
             fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
@@ -350,15 +352,22 @@ public class FileUploadResources {
         );
 
         String costWorkorderId = createWorkorder(
-            WorkorderCommands.COSTING.getWorkorderCommand(),
-            CostOrderInputs.builder()
-                .keepFreeBodies(false)
-                .freeBodiesPreserveCad(false)
-                .freeBodiesIgnoreMissingComponents(true)
-                .inputSetId(inputSetId)
+            WorkorderCommands.BOM_LOADER.getWorkorderCommand(),
+            CostOrderInputsBomLoader.builder()
                 .scenarioIterationKey(
                     setCostOrderScenarioIteration(
-                        fileUploadOutputs.getScenarioIterationKey().getScenarioKey()))
+                        fileUploadOutputs.getScenarioIterationKey().getScenarioKey()
+                    )
+                )
+                .defaultScenarioProcessingRule("update")
+                .mapping(
+                    MappingObject.builder()
+                        .capitalInvestment(500.00)
+                        .level(1)
+                        .occurrences(1)
+                        .totalCost(667.00)
+                        .build()
+                )
                 .build(),
             false
         );
