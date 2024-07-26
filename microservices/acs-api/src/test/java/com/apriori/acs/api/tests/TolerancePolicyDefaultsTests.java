@@ -1,11 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-
 import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
@@ -21,18 +15,21 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class TolerancePolicyDefaultsTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -43,15 +40,16 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
 
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), anyOf((equalTo("SYSTEMDEFAULT")), equalTo("PARTOVERRIDE")));
-        assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
+        softAssertions.assertThat(propertyValueMap.getTotalRunoutOverride()).isNotNull();
+        softAssertions.assertThat(propertyValueMap.getToleranceMode()).containsAnyOf("SYSTEMDEFAULT", "PARTOVERRIDE");
+        softAssertions.assertThat(propertyValueMap.isUseCadToleranceThreshhold()).isEqualTo(false);
 
         GenericExtendedPropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
 
-        assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
-        assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
-        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), anyOf(equalTo("DOUBLE"), equalTo("OBJECT")));
+        softAssertions.assertThat(totalRunoutOverrideItem.getName()).isEqualTo("totalRunoutOverride");
+        softAssertions.assertThat(totalRunoutOverrideItem.getUnitTypeName()).containsAnyOf("mm", "in");
+        softAssertions.assertThat(totalRunoutOverrideItem.getSupportedSerializedType()).containsAnyOf("DOUBLE", "OBJECT");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -77,14 +75,15 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
             useCadToleranceThreshold
         );
 
-        assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated()).isEqualTo("false");
 
         TolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), is(equalTo("PARTOVERRIDE")));
-        assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
+        softAssertions.assertThat(propertyValueMap.getTotalRunoutOverride()).isNotNull();
+        softAssertions.assertThat(propertyValueMap.getToleranceMode()).isEqualTo("PARTOVERRIDE");
+        softAssertions.assertThat(propertyValueMap.isUseCadToleranceThreshhold()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -97,7 +96,8 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).isEqualTo("User is not found");
+        softAssertions.assertAll();
     }
 }

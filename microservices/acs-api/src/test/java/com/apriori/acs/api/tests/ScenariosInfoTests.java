@@ -30,6 +30,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class ScenariosInfoTests extends TestUtil {
     private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -37,6 +38,7 @@ public class ScenariosInfoTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -79,7 +81,6 @@ public class ScenariosInfoTests extends TestUtil {
             keyTwo
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getResponseEntity().isEmpty()).isEqualTo(true);
         softAssertions.assertAll();
 
@@ -91,7 +92,6 @@ public class ScenariosInfoTests extends TestUtil {
     public void negativeGetScenariosInfoEmptyBodyTest() {
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(response.getBody().contains("The request should not be null")).isEqualTo(true);
         softAssertions.assertAll();
@@ -152,8 +152,6 @@ public class ScenariosInfoTests extends TestUtil {
         String userToExpect = "qa-automation";
         String componentTypeToExpect = "PART";
         String typeNameToExpect = "partState";
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         for (int i = 0; i < scenarioItemsResponse.size(); i++) {
             ScenariosInfoItem scenariosInfoItem = scenarioItemsResponse.get(i);
