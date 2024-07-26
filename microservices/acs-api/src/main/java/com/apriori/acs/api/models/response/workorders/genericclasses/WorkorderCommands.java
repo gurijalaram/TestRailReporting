@@ -2,7 +2,9 @@ package com.apriori.acs.api.models.response.workorders.genericclasses;
 
 public enum WorkorderCommands {
 
+    BOM_LOADER("BOM_LOADER"),
     COSTING("COSTING"),
+    DELETE("DELETE"),
     EDIT("EDIT"),
     GENERATE_ALL_IMAGES("GENERATEALLIMAGESDATACOMMAND"),
     GENERATE_ASSEMBLY_IMAGES("GENERATE_ASSEMBLY_IMAGES"),
@@ -10,8 +12,7 @@ public enum WorkorderCommands {
     GENERATE_SIMPLE_IMAGE_DATA("GENERATESIMPLEIMAGEDATA"),
     LOAD_CAD_FILE("LOADCADFILE"),
     LOAD_CAD_METADATA("LOAD_CAD_METADATA"),
-    PUBLISH("PUBLISH"),
-    DELETE("DELETE");
+    PUBLISH("PUBLISH");
 
     private final String workorderCommand;
 

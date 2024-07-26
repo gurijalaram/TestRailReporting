@@ -1,11 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.either;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.StringContains.containsString;
-
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
@@ -17,6 +11,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,12 +19,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferenceByNameTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @AfterEach
@@ -45,9 +42,9 @@ public class UserPreferenceByNameTests extends TestUtil {
         String annualVolumeResponse = acsResources.getUserPreferenceByName("prod.info.default.annual.volume");
         String toleranceModeResponse = acsResources.getUserPreferenceByName("TolerancePolicyDefaults.toleranceMode");
 
-        assertThat(annualVolumeResponse, is(equalTo("5500")));
-        assertThat(toleranceModeResponse, either(is(containsString("CAD")))
-            .or(is(containsString("PARTOVERRIDE"))).or(is(containsString("SYSTEMDEFAULT"))));
+        softAssertions.assertThat(annualVolumeResponse).isEqualTo("5500");
+        softAssertions.assertThat(toleranceModeResponse).containsAnyOf("CAD", "PARTOVERRIDE", "SYSTEMDEFAULT");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -74,11 +71,12 @@ public class UserPreferenceByNameTests extends TestUtil {
         GenericResourceCreatedResponse setPrefResponseOne = acsResources.setUserPreferenceByName(useVpeKey, useVpeValueToSet);
         GenericResourceCreatedResponse setPrefResponseTwo = acsResources.setUserPreferenceByName(toleranceModeKey, toleranceModeValueToSet);
 
-        assertThat(setPrefResponseOne.getResourceCreated(), is(equalTo("false")));
-        assertThat(setPrefResponseTwo.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setPrefResponseOne.getResourceCreated()).isEqualTo("false");
+        softAssertions.assertThat(setPrefResponseTwo.getResourceCreated()).isEqualTo("false");
 
-        assertThat(acsResources.getUserPreferenceByName(useVpeKey), is(containsString(useVpeValueToSet)));
-        assertThat(acsResources.getUserPreferenceByName(toleranceModeKey), is(containsString(toleranceModeValueToSet)));
+        softAssertions.assertThat(acsResources.getUserPreferenceByName(useVpeKey)).contains(useVpeValueToSet);
+        softAssertions.assertThat(acsResources.getUserPreferenceByName(toleranceModeKey)).contains(toleranceModeValueToSet);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -91,7 +89,8 @@ public class UserPreferenceByNameTests extends TestUtil {
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).isEqualTo("User is not found");
+        softAssertions.assertAll();
     }
 }
