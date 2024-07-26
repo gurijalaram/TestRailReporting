@@ -7,6 +7,8 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
+import java.util.HashMap;
+
 public class DigitalFactoryUtil {
     private RequestEntityUtil requestEntityUtil;
 
@@ -127,7 +129,11 @@ public class DigitalFactoryUtil {
             .expectedResponseCode(expectedResponseCode);
 
         if (contentType != null) {
-            requestEntity.headers().put("Content-Type", contentType);
+            requestEntity.headers(new HashMap<>() {
+                {
+                    put("Content-Type", contentType);
+                }
+            });
         }
 
         return HTTPRequest.build(requestEntity).post();
