@@ -1,9 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
@@ -18,6 +14,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.commons.codec.binary.Base64;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
     private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -32,6 +30,7 @@ public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -51,6 +50,7 @@ public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
 
         String base64Image = acsResources.get2DImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey());
 
-        assertThat(Base64.isBase64(base64Image), is(equalTo(true)));
+        softAssertions.assertThat(Base64.isBase64(base64Image)).isEqualTo(true);
+        softAssertions.assertAll();
     }
 }

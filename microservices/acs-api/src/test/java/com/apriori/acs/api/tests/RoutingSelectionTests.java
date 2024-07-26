@@ -1,10 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -22,6 +17,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class RoutingSelectionTests extends TestUtil {
     private FileUploadResources fileUploadResources;
     private NewPartRequest productionInfoInputs;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
     private String testScenarioName;
 
@@ -40,6 +37,7 @@ public class RoutingSelectionTests extends TestUtil {
         fileUploadResources = new FileUploadResources(requestEntityUtil);
         productionInfoInputs = new WorkorderApiUtils(requestEntityUtil).setupProductionInfoInputs();
         testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -73,8 +71,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -108,8 +105,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Additive Manufacturing"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -143,8 +139,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Bar & Tube Fab"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -178,8 +173,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Casting - Die"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -213,8 +207,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Casting - Investment"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -248,8 +241,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Casting - Sand"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -283,8 +275,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Forging"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -318,8 +309,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Plastic Molding"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -353,8 +343,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Powder Metal"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -388,8 +377,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Rapid Prototyping"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -423,8 +411,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Roto & Blow Molding"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -458,8 +445,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -493,8 +479,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal - Hydroforming"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -528,8 +513,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal - Roll Forming"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -563,8 +547,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal - Stretch Forming"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -598,8 +581,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Metal - Transfer Die"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -633,8 +615,7 @@ public class RoutingSelectionTests extends TestUtil {
             "Sheet Plastic"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
     }
 
     @Test
@@ -668,7 +649,12 @@ public class RoutingSelectionTests extends TestUtil {
             "Stock Machining"
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        performRoutingSelectionAssertions(response);
+    }
+
+    private void performRoutingSelectionAssertions(GenericResourceCreatedIdResponse response) {
+        softAssertions.assertThat(response.getId()).isNotNull();
+        softAssertions.assertThat(response.getResourceCreated()).isEqualTo("true");
+        softAssertions.assertAll();
     }
 }
