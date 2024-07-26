@@ -21,12 +21,14 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class UnitVariantSettingsTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -38,7 +40,6 @@ public class UnitVariantSettingsTests extends TestUtil {
         ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
 
         for (UnitVariantSetting item : allItems) {
-            SoftAssertions softAssertions = new SoftAssertions();
             softAssertions.assertThat(item.getType()).isEqualTo("simple");
             softAssertions.assertThat(item.getDecimalPlaces()).isEqualTo(2.0);
             softAssertions.assertThat(item.isSystem()).isEqualTo(true);
@@ -53,7 +54,6 @@ public class UnitVariantSettingsTests extends TestUtil {
     public void testGetCustomUnitVariantSettings() {
         UnitVariantSetting getCustomUnitVariantSettingsResponse = acsResources.getCustomUnitVariantSettings();
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getType()).isEqualTo("simple");
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getName()).isEqualTo("CUSTOM");
 
