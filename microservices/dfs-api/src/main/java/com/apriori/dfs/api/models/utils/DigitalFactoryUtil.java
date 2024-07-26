@@ -49,11 +49,6 @@ public class DigitalFactoryUtil {
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
-        if (requestEntityUtil.getEmbeddedUser() != null) {
-            requestEntityUtil.useTokenInRequests()
-                .useApUserContextInRequests();
-        }
-
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -162,15 +157,8 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
 
-        RequestEntity requestEntity = requestEntityUtil.init(path, expectedType)
+        return requestEntityUtil.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
-
-        if (requestEntityUtil.getEmbeddedUser() != null) {
-            requestEntityUtil.useTokenInRequests()
-                .useApUserContextInRequests();
-        }
-
-        return requestEntity;
     }
 }
