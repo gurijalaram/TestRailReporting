@@ -1,11 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.hamcrest.core.StringStartsWith.startsWith;
-
 import com.apriori.acs.api.models.response.acs.missingscenario.MissingScenarioResponse;
 import com.apriori.acs.api.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.api.utils.Constants;
@@ -17,6 +11,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,12 +21,14 @@ import java.time.ZoneOffset;
 
 @ExtendWith(TestRulesAPI.class)
 public class CreateMissingScenarioTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -40,28 +37,30 @@ public class CreateMissingScenarioTests extends TestUtil {
     public void testCreateMissingScenario() {
         MissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
 
-        assertThat(createMissingScenarioResponse.isResourceCreated(), is(equalTo(true)));
-        assertThat(createMissingScenarioResponse.isMissing(), is(equalTo(true)));
+        softAssertions.assertThat(createMissingScenarioResponse.isResourceCreated()).isEqualTo(true);
+        softAssertions.assertThat(createMissingScenarioResponse.isMissing()).isEqualTo(true);
 
-        ScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources.getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
+        ScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources
+            .getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.isInitialized(), is(equalTo(false)));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.isVirtual(), is(equalTo(true)));
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.isInitialized()).isEqualTo(false);
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.isVirtual()).isEqualTo(true);
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getComponentType(), is(equalTo(Constants.PART_COMPONENT_TYPE)));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getConfigurationName(), is(equalTo(Constants.PART_CONFIG_NAME)));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getLocked(), is(equalTo("false")));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getFileName(), is(equalTo(Constants.PART_FILE_NAME)));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedBy(), is(containsString("qa-automation")));
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getComponentType()).isEqualTo(Constants.PART_COMPONENT_TYPE);
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getConfigurationName()).isEqualTo(Constants.PART_CONFIG_NAME);
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getLocked()).isEqualTo("false");
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getFileName()).isEqualTo(Constants.PART_FILE_NAME);
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedBy()).contains("qa-automation");
 
         String currentDate = LocalDateTime.now(ZoneOffset.UTC).withNano(0).toString().substring(0, 10);
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), startsWith(currentDate));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), containsString("qa-automation"));
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), startsWith(currentDate));
-        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName(),
-            is(equalTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName())));
-        assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName(),
-            startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName()));
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt()).startsWith(currentDate);
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy()).contains("qa-automation");
+        softAssertions.assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt()).startsWith(currentDate);
+        softAssertions.assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName())
+            .isEqualTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName());
+        softAssertions.assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName())
+            .startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName());
+        softAssertions.assertAll();
     }
 }

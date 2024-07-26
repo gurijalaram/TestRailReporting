@@ -38,4 +38,14 @@ public class TestHelper {
             .useCustomUser(userCredentials)
             .useApUserContextInRequests();
     }
+
+    /**
+     * Initializes a custom user without user context or token
+     *
+     * @return RequestEntityUtil object
+     */
+    public static RequestEntityUtil initCustomUserNoContext(UserCredentials userCredentials) {
+        return RequestEntityUtilBuilder
+            .useCustomUser(userCredentials);
+    }
 }
