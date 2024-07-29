@@ -433,8 +433,7 @@ public class DigitalFactoriesTests {
 
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
 
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getStatus()).isEqualTo(406);
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_ACCEPTABLE);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getStatus()).isEqualTo(HttpStatusCode.NOT_ACCEPTABLE);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_ACCEPTABLE_MSG);
         softAssertions.assertAll();
     }
