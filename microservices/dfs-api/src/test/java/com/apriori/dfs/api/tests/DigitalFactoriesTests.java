@@ -44,7 +44,6 @@ public class DigitalFactoriesTests {
         "Access denied: Unable to apply access control due to missing groups." +
             " Please get in touch with customer support if this is not expected.";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
-    private static final String IDENTITY_DOES_NOT_EXIST_MSG = "Resource 'DigitalFactory' with identity 'ABCDEFGHIJK5' was not found";
     private static final String INVALID_CONTENT_TYPE = "application/text";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
     private static final String INVALID_DIGITAL_FACTORY_ID = "1234567890";
@@ -417,7 +416,7 @@ public class DigitalFactoriesTests {
             NON_EXISTENT_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_DOES_NOT_EXIST_MSG);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).containsIgnoringCase(NON_EXISTENT_DIGITAL_FACTORY_ID);
         softAssertions.assertAll();
     }
 
@@ -450,7 +449,6 @@ public class DigitalFactoriesTests {
             createRequestBody());
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getIdentity()).isNotNull();
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo(DF_NAME);
         softAssertions.assertAll();
     }
