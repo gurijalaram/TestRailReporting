@@ -9,7 +9,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.URLFileUtil;
 import com.apriori.shared.util.json.JsonManager;
@@ -23,13 +23,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class ReportReplicaController {
-
-    final String token = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/token");
-    final String apikey = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/api-key");
-    ReportRequest reportRequest = JsonManager.deserializeJsonFromFile(
+public class ReportReplicaUtil {
+    private static final String TOKEN = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/token");
+    private static final String API_KEY = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/api-key");
+    private final ReportRequest reportRequest = JsonManager.deserializeJsonFromFile(
         FileResourceUtil.getResourceAsFile("ExecuteRequest.json").getPath(), ReportRequest.class);
+    private RequestEntityUtil requestEntityUtil;
 
+    public ReportReplicaUtil(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
+    }
 
     /**
      * Calls an API with GET verb
@@ -46,11 +49,11 @@ public class ReportReplicaController {
                 int pollTime = 3;
                 TimeUnit.SECONDS.sleep(pollTime);
 
-                final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_STATUS, Report.class)
+                final RequestEntity requestEntity = requestEntityUtil.init(ReportAPIEnum.REPORT_STATUS, Report.class)
                     .inlineVariables(customerId, executionId)
                     .expectedResponseCode(HttpStatus.SC_OK)
-                    .headers(new QueryParams().use("x-token", token)
-                        .use("x-api-key", apikey));
+                    .headers(new QueryParams().use("x-token", TOKEN)
+                        .use("x-api-key", API_KEY));
 
                 reportResponse = HTTPRequest.build(requestEntity).get();
 
@@ -73,10 +76,10 @@ public class ReportReplicaController {
      * @return report object
      */
     public Report postExecuteReport(String customerId) {
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_EXECUTE, Report.class)
+        final RequestEntity requestEntity = requestEntityUtil.init(ReportAPIEnum.REPORT_EXECUTE, Report.class)
             .inlineVariables(customerId)
-            .headers(new QueryParams().use("x-token", token)
-                .use("x-api-key", apikey))
+            .headers(new QueryParams().use("x-token", TOKEN)
+                .use("x-api-key", API_KEY))
             .body(reportRequest)
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
 

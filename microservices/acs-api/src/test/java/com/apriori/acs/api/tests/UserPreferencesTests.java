@@ -1,12 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.either;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.StringContains.containsString;
-
 import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
@@ -21,6 +14,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.restassured.http.Header;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,12 +22,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @AfterEach
@@ -48,12 +44,13 @@ public class UserPreferencesTests extends TestUtil {
     public void testGetUserPreferencesEndpoint() {
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
 
-        assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), either(is("3")).or(is("2")));
-        assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
-        assertThat(getUserPreferencesResponse.getProdInfoDefaultAnnualVolume(), is(equalTo("5500")));
-        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(),
-            either(containsString("CAD")).or(is(containsString("PARTOVERRIDE"))).or(is("SYSTEMDEFAULT")));
-        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold(), is(equalTo("false")));
+        softAssertions.assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces()).containsAnyOf("3", "2");
+        softAssertions.assertThat(getUserPreferencesResponse.getDefaultScenarioName()).isEqualTo("Initial");
+        softAssertions.assertThat(getUserPreferencesResponse.getProdInfoDefaultAnnualVolume()).isEqualTo("5500");
+        softAssertions.assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode())
+            .containsAnyOf("CAD", "PARTOVERRIDE", "SYSTEMDEFAULT");
+        softAssertions.assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold()).isEqualTo("false");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -84,13 +81,14 @@ public class UserPreferencesTests extends TestUtil {
             toleranceModeValueToSet
         );
 
-        assertThat(genericResourceCreatedResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(genericResourceCreatedResponse.getResourceCreated()).isEqualTo("false");
 
         UserPreferencesResponse getUserPreferencesResponsePostChanges = acsResources.getUserPreferences();
 
-        assertThat(getUserPreferencesResponsePostChanges.getCostTableDecimalPlaces(), is(equalTo(costTableDecimalPlacesValueToSet)));
-        assertThat(getUserPreferencesResponsePostChanges.getProdInfoDefaultUseVpeForAllProcesses(), is(equalTo(useVpeForAllProcessValueToSet)));
-        assertThat(getUserPreferencesResponsePostChanges.getTolerancePolicyDefaultsToleranceMode(), is(equalTo(toleranceModeValueToSet)));
+        softAssertions.assertThat(getUserPreferencesResponsePostChanges.getCostTableDecimalPlaces()).isEqualTo(costTableDecimalPlacesValueToSet);
+        softAssertions.assertThat(getUserPreferencesResponsePostChanges.getProdInfoDefaultUseVpeForAllProcesses()).isEqualTo(useVpeForAllProcessValueToSet);
+        softAssertions.assertThat(getUserPreferencesResponsePostChanges.getTolerancePolicyDefaultsToleranceMode()).isEqualTo(toleranceModeValueToSet);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -109,12 +107,14 @@ public class UserPreferencesTests extends TestUtil {
         Header header = acsResources.getUserPreferencesHeaders()
             .get("X-aPriori-Version");
 
-        assertThat(header.getName(), equalTo("X-aPriori-Version"));
-        assertThat(header.getValue(), notNullValue());
+        softAssertions.assertThat(header).isNotNull();
+        softAssertions.assertThat(header.getName()).isEqualTo("X-aPriori-Version");
+        softAssertions.assertAll();
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).isEqualTo("User is not found");
+        softAssertions.assertAll();
     }
 }

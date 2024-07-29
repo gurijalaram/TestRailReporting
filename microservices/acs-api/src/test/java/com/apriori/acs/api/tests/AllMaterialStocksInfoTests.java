@@ -18,12 +18,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AllMaterialStocksInfoTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -36,8 +38,6 @@ public class AllMaterialStocksInfoTests extends TestUtil {
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup(),
                 "Steel, Cold Worked, AISI 1020"
             );
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(allMaterialStocksInfoResponse.getPropertyValuesList().size()).isGreaterThan(0);
 

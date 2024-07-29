@@ -30,6 +30,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
     private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -37,6 +38,7 @@ public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -77,7 +79,6 @@ public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
 
         ActiveDimensionsResponse getActiveDimensionsResponse = acsResources.getActiveDimensionsByScenarioIterationKeyEndpoint(infoToGetDimensions);
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getLength()).isEqualTo(51.5405);
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getName()).isEqualTo("length");
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getUnitTypeName()).isEqualTo("mm");

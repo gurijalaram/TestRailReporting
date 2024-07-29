@@ -25,6 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class AvailableRoutingsTests {
     private FileUploadResources fileUploadResources;
     private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -33,6 +34,7 @@ public class AvailableRoutingsTests {
         acsResources = new AcsResources(requestEntityUtil);
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -69,7 +71,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -103,7 +104,6 @@ public class AvailableRoutingsTests {
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -146,7 +146,6 @@ public class AvailableRoutingsTests {
                 ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -189,7 +188,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -232,7 +230,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -275,7 +272,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -318,7 +314,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.CASTING_SAND.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -361,7 +356,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.FORGING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -404,7 +398,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -447,7 +440,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.POWDER_METAL.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -489,7 +481,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -532,7 +523,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -575,7 +565,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -618,7 +607,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -661,7 +649,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -703,7 +690,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -746,7 +732,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -788,7 +773,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
@@ -831,7 +815,6 @@ public class AvailableRoutingsTests {
             ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getName()).isNotNull();
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();

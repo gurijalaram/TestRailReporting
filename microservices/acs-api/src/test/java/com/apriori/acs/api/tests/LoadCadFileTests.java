@@ -19,11 +19,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class LoadCadFileTests {
     private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -48,7 +50,6 @@ public class LoadCadFileTests {
             true
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
@@ -75,7 +76,6 @@ public class LoadCadFileTests {
             true
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
@@ -102,7 +102,6 @@ public class LoadCadFileTests {
             true
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
@@ -129,7 +128,6 @@ public class LoadCadFileTests {
             true
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
@@ -156,7 +154,6 @@ public class LoadCadFileTests {
             false
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
@@ -183,7 +180,6 @@ public class LoadCadFileTests {
             true
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(response.getScenarioIterationKey()).isNotNull();
         softAssertions.assertAll();
     }
