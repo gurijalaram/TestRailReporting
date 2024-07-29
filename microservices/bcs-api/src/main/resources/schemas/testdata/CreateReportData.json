@@ -6,6 +6,10 @@
   "scopedIdentity": "",
   "reportParameters": {
     "roundToDollar": true,
-    "currencyCode": "USD"
+    "currencyCode": "USD",
+    "riskRating": ["All"],
+    "costMetric": "Fully Burdened Cost",
+    "massMetric": "Finish Mass",
+    "sortMetric": "Part Number"
   }
 }
