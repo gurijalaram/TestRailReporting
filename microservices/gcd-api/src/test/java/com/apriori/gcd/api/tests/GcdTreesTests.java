@@ -6,9 +6,9 @@ import com.apriori.gcd.api.controller.GcdTreeController;
 import com.apriori.gcd.api.models.response.GcdTree;
 import com.apriori.gcd.api.models.response.GcdsAdded;
 import com.apriori.gcd.api.models.response.GcdsRemoved;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -16,6 +16,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,18 +27,23 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class GcdTreesTests {
-    private GcdTreeController gcdTreeController = new GcdTreeController();
+    private GcdTreeController gcdTreeController;
     private SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useApUserContextInRequests();
+        gcdTreeController = new GcdTreeController(requestEntityUtil);
+    }
 
     @Test
     @Tag(API_SANITY)
     @TestRail(id = {24114})
     @Description("Validate difference is returned when different trees are submitted in request")
     public void testDifferentGcdTrees() {
-        UserCredentials currentUser = UserUtil.getUser();
         String gcdJson = FileResourceUtil.readFileToString("DifferentTrees.json");
 
-        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
+        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
 
         List<String> addedNames = Arrays.asList("SharpEdge:5", "SimpleHole:3");
         String removedName = "PlanarFace:4";
@@ -77,9 +83,8 @@ public class GcdTreesTests {
     }
 
     public void validateGCDTrees(final String fileName) {
-        UserCredentials currentUser = UserUtil.getUser();
         String gcdJson = FileResourceUtil.readFileToString(fileName);
-        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
+        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
         soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).isEmpty();
         soft.assertThat(gcdTree.getGcdsRemoved().stream().map(GcdsRemoved::getGcdName).collect(Collectors.toList())).isEmpty();
 
@@ -87,9 +92,8 @@ public class GcdTreesTests {
     }
 
     public void validateGCDTreeMissing(final String fileName) {
-        UserCredentials currentUser = UserUtil.getUser();
         String gcdJson = FileResourceUtil.readFileToString(fileName);
-        ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
+        ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
         assert (gcdTree.getMessage()).contains("should not be null");
     }
 }
