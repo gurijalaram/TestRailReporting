@@ -1,10 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
@@ -18,18 +13,21 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class ProductionDefaultsTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -38,7 +36,8 @@ public class ProductionDefaultsTests extends TestUtil {
     public void testGetProductionDefaultsEndpoint() {
         ProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
-        assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses(), anyOf(equalTo(true), equalTo(false)));
+        softAssertions.assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses()).isIn(true, false);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -56,16 +55,17 @@ public class ProductionDefaultsTests extends TestUtil {
     public void testSetProductionDetailsEndpoint() {
         GenericResourceCreatedResponse setProductionDefaultsResponse = acsResources.setProductionDefaults();
 
-        assertThat(setProductionDefaultsResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setProductionDefaultsResponse.getResourceCreated()).isEqualTo("false");
 
         ProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
-        assertThat(getProductionDefaultsResponse.getMaterial(), is(equalTo("Accura 10")));
-        assertThat(getProductionDefaultsResponse.getAnnualVolume(), is(equalTo("5500")));
-        assertThat(getProductionDefaultsResponse.getProductionLife(), is(equalTo(5.0)));
-        assertThat(getProductionDefaultsResponse.getBatchSize(), is(equalTo(458)));
-        assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses(), is(equalTo(false)));
-        assertThat(getProductionDefaultsResponse.isBatchSizeMode(), is(equalTo(false)));
+        softAssertions.assertThat(getProductionDefaultsResponse.getMaterial()).isEqualTo("Accura 10");
+        softAssertions.assertThat(getProductionDefaultsResponse.getAnnualVolume()).isEqualTo("5500");
+        softAssertions.assertThat(getProductionDefaultsResponse.getProductionLife()).isEqualTo(5.0);
+        softAssertions.assertThat(getProductionDefaultsResponse.getBatchSize()).isEqualTo(458);
+        softAssertions.assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses()).isEqualTo(false);
+        softAssertions.assertThat(getProductionDefaultsResponse.isBatchSizeMode()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ProductionDefaultsTests extends TestUtil {
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).isEqualTo("User is not found");
     }
 }

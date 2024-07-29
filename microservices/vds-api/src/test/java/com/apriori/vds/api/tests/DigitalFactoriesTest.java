@@ -1,26 +1,23 @@
 package com.apriori.vds.api.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.shared.util.http.models.entity.RequestEntity;
-import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
-import com.apriori.vds.api.enums.VDSAPIEnum;
-import com.apriori.vds.api.models.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.api.models.response.digital.factories.DigitalFactory;
 import com.apriori.vds.api.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class DigitalFactoriesTest {
@@ -52,11 +49,9 @@ public class DigitalFactoriesTest {
     @TestRail(id = {8031})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(vdsTestUtil.getDigitalFactories().getIdentity())
-            .expectedResponseCode(HttpStatus.SC_OK);
+        DigitalFactory digitalFactories = vdsTestUtil.getDigitalFactoryById();
 
-        HTTPRequest.build(requestEntity).get();
+        assertThat(digitalFactories).isNotNull();
     }
 
     @Test
@@ -70,26 +65,17 @@ public class DigitalFactoriesTest {
     @TestRail(id = {8032})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getVPEs() {
-        this.getVPEsResponse();
+        List<DigitalFactory> vpes = vdsTestUtil.getVpes();
+
+        assertThat(vpes).isNotEmpty();
     }
 
     @Test
     @TestRail(id = {8033})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
-    public void getVPEsByIdentity() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(this.getVPEsResponse().getIdentity())
-            .expectedResponseCode(HttpStatus.SC_OK);
+    public void getVPEByIdentity() {
+        DigitalFactory vpeId = vdsTestUtil.getVpeById();
 
-        HTTPRequest.build(requestEntity).get();
-    }
-
-    private DigitalFactory getVPEsResponse() {
-        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES, DigitalFactoriesItems.class)
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTPRequest.build(requestEntity).get();
-
-        return vpEsItemsResponse.getResponseEntity().getItems().get(0);
+        assertThat(vpeId.getIdentity()).isNotEmpty();
     }
 }
