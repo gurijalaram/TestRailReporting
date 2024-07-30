@@ -296,7 +296,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
 
             if (propertyEnum == PropertyEnum.ASSIGNEE) {
-                pageUtils.waitForElementToAppear(By.cssSelector("[id='qa-searchCriterion[0].target'] .apriori-select div input")).sendKeys(value.split(" ")[0]);
+                pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] .apriori-select div input", index))).sendKeys(value.split(" ")[0]);
                 pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value)));
             } else {
                 pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
