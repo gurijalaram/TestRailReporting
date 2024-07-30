@@ -18,6 +18,7 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
+import com.apriori.cid.ui.pageobjects.settings.DisplayPreferencesPage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -130,10 +131,12 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30106, 30598, 30591})
+    @TestRail(id = {30106, 30598, 30591, 30994})
     @Description("Test Validation of Cost Mode toggle and Manual Cost Inputs")
     public void testValidations() {
         String negativeNumberError = "Must be greater than or equal to 0.";
+        Double validPPC = 1.23;
+        Double validTCI = 4.56;
         component = new ComponentRequestUtil().getComponent();
 
         evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
@@ -153,7 +156,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         ChangeSummaryPage changeSummary = evaluatePage.changeSummaryManual();
 
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("APRIORI");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
 
         evaluatePage = changeSummary.close(EvaluatePage.class);
@@ -179,29 +182,34 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify non numerical values not accepted").isEqualTo("");
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify non numerical values not accepted").isEqualTo("");
 
-        evaluatePage.enterPiecePartCost("1.23");
-        evaluatePage.enterTotalCapitalInvestment("4.56");
+        evaluatePage.enterPiecePartCost(validPPC.toString());
+        evaluatePage.enterTotalCapitalInvestment(validTCI.toString());
 
         changeSummary = evaluatePage.changeSummaryManual();
 
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("APRIORI");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Results-piecePartCost"))
+        softAssertions.assertThat(changeSummary.getChangedFrom("Manual Inputs-piecePartCost"))
             .as("Verify Piece Part Cost in Change Summary").isEqualTo("-");
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Results-totalCapitalInvestment"))
+        softAssertions.assertThat(changeSummary.getChangedFrom("Manual Inputs-totalCapitalInvestment"))
             .as("Verify Cost Mode in Change Summary").isEqualTo("-");
-        softAssertions.assertThat(changeSummary.getChangedTo("Cost Results-piecePartCost"))
-            .as("Verify Piece Part Cost in Change Summary").isEqualTo("1.23");
-        softAssertions.assertThat(changeSummary.getChangedTo("Cost Results-totalCapitalInvestment"))
-            .as("Verify Cost Mode in Change Summary").isEqualTo("4.56");
+        softAssertions.assertThat(changeSummary.getChangedTo("Manual Inputs-piecePartCost"))
+            .as("Verify Piece Part Cost in Change Summary").isEqualTo(validPPC.toString());
+        softAssertions.assertThat(changeSummary.getChangedTo("Manual Inputs-totalCapitalInvestment"))
+            .as("Verify Cost Mode in Change Summary").isEqualTo(validTCI.toString());
 
-        evaluatePage = changeSummary.close(EvaluatePage.class)
+        DisplayPreferencesPage displayPreferencesPage = changeSummary.close(EvaluatePage.class)
             .openSettings()
-            .selectCurrency(CurrencyEnum.EUR)
-            .submit(EvaluatePage.class);
+            .selectCurrency(CurrencyEnum.EUR);
 
-        softAssertions.assertThat(evaluatePage.getPiecePartCostLabelText())
-            .as("Verify Currency updates to that set in Preferences").contains(CurrencyEnum.EUR.getCurrency().split(" ")[0]);
+        Double exchangeRate = displayPreferencesPage.getExchangeRateForCurrency(CurrencyEnum.EUR.getCurrency().split(" ")[0]);
+
+        evaluatePage = displayPreferencesPage.submit(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+            .as("Verify PPC value automatically converts to new currency").isEqualTo(String.format("%.2f", validPPC * exchangeRate));
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
+            .as("Verify TCI value automatically converts to new currency").isEqualTo(String.format("%.2f", validTCI * exchangeRate));
 
         softAssertions.assertAll();
     }
