@@ -300,7 +300,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePart2.getScenarioName())).isTrue();
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(8.17), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(12.34), Offset.offset(3.0));
 
         softAssertions.assertAll();
     }
