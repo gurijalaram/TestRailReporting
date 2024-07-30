@@ -23,6 +23,7 @@ import java.util.Collections;
 @ExtendWith(TestRulesAPI.class)
 public class GcdPropertiesTests {
     private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -30,6 +31,7 @@ public class GcdPropertiesTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -396,8 +398,6 @@ public class GcdPropertiesTests {
     }
 
     private void saveGcdPropertiesAssertion(GcdPropertiesResponse gcdPropertiesResponse) {
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(gcdPropertiesResponse.getScenarioInputSet()).isNotNull();
         softAssertions.assertThat(gcdPropertiesResponse.getSuccesses()).isNotNull();
         softAssertions.assertThat(gcdPropertiesResponse.getFailures()).isNull();

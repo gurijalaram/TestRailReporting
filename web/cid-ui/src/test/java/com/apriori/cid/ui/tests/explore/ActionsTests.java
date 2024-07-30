@@ -351,18 +351,23 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
-        explorePage = new CidAppLoginPage(driver)
+
+
+        evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario(PublishPage.class)
+            .costScenario();
+
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
+        explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectStatus("New")
             .selectCostMaturity("Low")
-            .selectAssignee(component.getUser())
+            .selectAssignee(scenarioCreatedByName)
             .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -577,7 +582,7 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponentWithProcessGroup("RAPID PROTOTYPING", ProcessGroupEnum.RAPID_PROTOTYPING);
 
-        explorePage = new CidAppLoginPage(driver)
+        evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
@@ -588,11 +593,14 @@ public class ActionsTests extends TestBaseUI {
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Stereolithography")
             .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario(PublishPage.class)
+            .costScenario();
+
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
+        explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
-            .selectAssignee(component.getUser())
+            .selectAssignee(scenarioCreatedByName)
             .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()

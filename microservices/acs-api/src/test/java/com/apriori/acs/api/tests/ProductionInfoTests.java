@@ -1,10 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.api.models.response.acs.productioninfo.ProductionInfoResponse;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
@@ -20,6 +15,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class ProductionInfoTests extends TestUtil {
     private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
@@ -34,6 +31,7 @@ public class ProductionInfoTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -69,14 +67,16 @@ public class ProductionInfoTests extends TestUtil {
             productionInfoPreChanges,
             fileUploadOutputs.getScenarioIterationKey()
         );
-        assertThat(genericResourceCreatedIdResponse.getId(), is(notNullValue()));
-        assertThat(genericResourceCreatedIdResponse.getResourceCreated(), is(equalTo("true")));
+
+        softAssertions.assertThat(genericResourceCreatedIdResponse.getId()).isNotNull();
+        softAssertions.assertThat(genericResourceCreatedIdResponse.getResourceCreated()).isEqualTo("true");
 
         ProductionInfoResponse productionInfoPostChanges = acsResources.getProductionInfo(
             fileUploadOutputs.getScenarioIterationKey()
         );
 
-        assertThat(productionInfoPostChanges.getAnnualVolume(), is(equalTo(newAnnualVolume)));
-        assertThat(productionInfoPostChanges.getMachiningMode(), is(equalTo(newMachiningMode)));
+        softAssertions.assertThat(productionInfoPostChanges.getAnnualVolume()).isEqualTo(newAnnualVolume);
+        softAssertions.assertThat(productionInfoPostChanges.getMachiningMode()).isEqualTo(newMachiningMode);
+        softAssertions.assertAll();
     }
 }

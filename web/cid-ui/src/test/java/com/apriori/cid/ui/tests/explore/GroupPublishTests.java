@@ -252,6 +252,8 @@ public class GroupPublishTests extends TestBaseUI {
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
         componentB.setUser(componentA.getUser());
+        String scenarioACreatedByName = scenariosUtil.getScenarioCompleted(componentA).getCreatedByName();
+
 
         loginPage = new CidAppLoginPage(driver);
 
@@ -268,7 +270,7 @@ public class GroupPublishTests extends TestBaseUI {
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(componentA.getUser())
+            .selectAssignee(scenarioACreatedByName)
             .publish(PublishPage.class);
 
         explorePage = publishPage.close(ExplorePage.class);
