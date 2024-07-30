@@ -212,7 +212,7 @@ pipeline {
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS="${javaOpts}" \
-                            --build-arg TESTS=${testSuite} \
+                            --build-arg TESTS="${testSuite}" \
                             .
                     """
                 }

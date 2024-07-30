@@ -34,13 +34,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ReportResourcesTest extends TestUtil {
 
-    private Part part;
-    private Batch batch;
-    private Report report;
+    private static Part part;
+    private static Batch batch;
+    private static Report report;
     private SoftAssertions softAssertions;
 
     @BeforeAll
-    public void beforeClass() {
+    public static void beforeClass() {
         batch = BatchResources.createBatch().getResponseEntity();
         part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
         report = ReportResources.createReport().getResponseEntity();
@@ -120,7 +120,7 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @AfterAll
-    public void afterClass() {
+    public static void afterClass() {
         BatchResources.checkAndCancelBatch(batch);
     }
 }
