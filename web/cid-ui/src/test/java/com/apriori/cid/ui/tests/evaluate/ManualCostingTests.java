@@ -354,7 +354,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(componentBasicPage.getAlertMessage())
             .as("Verify warning that Manually Costed scenario included in selection")
-            .isEqualTo("One or more of the selected components were last costed in Manual mode. If you choose to continue, they will be recosted in Simulate mode.");
+            .isEqualTo("One or more of the selected components were last costed in Manual mode. If you choose to continue, they will be recosted in aPriori mode.");
 
         explorePage = componentBasicPage.applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
@@ -365,7 +365,7 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage = explorePage.openScenario(component.getComponentName(), component.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
-            .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
+            .as("Verify Manually Costed scenario switched to aPriori on Group Cost").isTrue();
 
         explorePage = evaluatePage.clickExplore()
             .refresh()
@@ -385,7 +385,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .openScenario(copiedScenario.getComponentName(), copiedScenario.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
-            .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
+            .as("Verify Manually Costed scenario switched to aPriori on Group Cost").isTrue();
         softAssertions.assertThat(evaluatePage.getDigitalFactory())
             .as("Verify previously selected Digital Factory used").isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
 
