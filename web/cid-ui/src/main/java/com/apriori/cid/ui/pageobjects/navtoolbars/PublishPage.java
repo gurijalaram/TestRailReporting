@@ -139,7 +139,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         }
     }
 
-        /**
+    /**
          * Click locked tick box
          *
          * @return current page object
