@@ -238,7 +238,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         ScenarioItem scenarioCreated = cssComponent.findFirst(component.getComponentName(), component.getScenarioName(), component.getUser());
 
-        explorePage = filterPage.addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName().split(" ")[0])
+        explorePage = filterPage.addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(component.getComponentName(), component.getScenarioName())
@@ -249,7 +249,7 @@ public class FilterCriteriaTests extends TestBaseUI {
             .inputName(filterName2)
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName().split(" ")[0])
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
