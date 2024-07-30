@@ -364,7 +364,7 @@ public class ActionsTests extends TestBaseUI {
 
         String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
 
-            explorePage = evaluatePage.publishScenario(PublishPage.class)
+        explorePage = evaluatePage.publishScenario(PublishPage.class)
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee(scenarioCreatedByName)
