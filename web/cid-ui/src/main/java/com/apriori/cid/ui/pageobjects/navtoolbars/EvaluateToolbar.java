@@ -38,7 +38,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
-    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='SIMULATE']")
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='APRIORI']")
     private WebElement aprioriCostModeButton;
 
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
@@ -252,6 +252,16 @@ public class EvaluateToolbar extends ExploreToolbar {
     public Boolean isCostModeToggleEnabled() {
         pageUtils.waitForElementToAppear(aprioriCostModeButton);
         return aprioriCostModeButton.isEnabled() && manualCostModeButton.isEnabled();
+    }
+
+    /**
+     * Check if Manual Mode Toggle button is enabled
+     *
+     * @return - Boolean of enabled state for manual mode toggle button
+     */
+    public Boolean isManualModeToggleEnabled() {
+        pageUtils.waitForElementToAppear(manualCostModeButton);
+        return manualCostModeButton.isEnabled();
     }
 
     /**

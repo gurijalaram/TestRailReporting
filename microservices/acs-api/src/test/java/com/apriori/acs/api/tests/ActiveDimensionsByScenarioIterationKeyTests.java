@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -11,10 +9,10 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -22,6 +20,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,15 +29,22 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
-    private final UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
+    private FileUploadResources fileUploadResources;
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @TestRail(id = 10941)
     @Description("Validate Get Active Dimensions by Scenario Iteration Key Endpoint")
     public void testGetActiveDimensionsByScenarioIterationKeyEndpoint() {
-        FileUploadResources fileUploadResources = new FileUploadResources(user);
-        AcsResources acsResources = new AcsResources(user);
-
         String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
@@ -73,7 +79,6 @@ public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
 
         ActiveDimensionsResponse getActiveDimensionsResponse = acsResources.getActiveDimensionsByScenarioIterationKeyEndpoint(infoToGetDimensions);
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getLength()).isEqualTo(51.5405);
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getName()).isEqualTo("length");
         softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getUnitTypeName()).isEqualTo("mm");

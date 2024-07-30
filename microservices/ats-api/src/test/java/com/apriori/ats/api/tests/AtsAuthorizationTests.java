@@ -63,7 +63,7 @@ public class AtsAuthorizationTests {
     @Description("Get a Cloud Context identified by a cloud context string")
     public void getCloudContextTest() {
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
-        String contextString = requestEntityUtil.getEmbeddedUser().generateCloudContext().getCloudContext();
+        String contextString = requestEntityUtil.getEmbeddedUser().getUserDetails().getCustomerData().getCloudContext();
         ResponseWrapper<CloudContextResponse> getCloudContext = atsUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
 
         soft.assertThat(getCloudContext.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);

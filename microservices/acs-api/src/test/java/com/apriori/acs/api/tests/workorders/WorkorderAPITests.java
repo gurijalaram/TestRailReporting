@@ -1,14 +1,5 @@
 package com.apriori.acs.api.tests.workorders;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.hamcrest.core.StringStartsWith.startsWith;
-
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.workorders.allimages.AllImagesOutputs;
@@ -30,10 +21,12 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -42,6 +35,7 @@ import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -52,12 +46,22 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-    private final FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
-    private final AcsResources acsResources = new AcsResources(userCredentials);
+    private FileUploadResources fileUploadResources;
+    private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String sheetMetalProcessGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
+        fileUploadResources = new FileUploadResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @Issue("AP-69600")
@@ -93,7 +97,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7697})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(castingProcessGroup);
@@ -124,7 +127,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11974)
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
@@ -150,10 +152,11 @@ public class WorkorderAPITests extends TestUtil {
             )
         );
 
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(startsWith("PATTERNTHREADHOLES")));
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId(), is(equalTo(0)));
-        assertThat(publishResultOutputs.getScenarioIterationKey().getIteration(), is(not(costOutputs.getScenarioIterationKey().getIteration())));
+        softAssertions.assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName()).startsWith("PATTERNTHREADHOLES");
+        softAssertions.assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName()).isEqualTo("assemblyState");
+        softAssertions.assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(0);
+        softAssertions.assertThat(publishResultOutputs.getScenarioIterationKey().getIteration()).isNotEqualTo(costOutputs.getScenarioIterationKey().getIteration());
+        softAssertions.assertAll();
 
         List<AssemblyComponent> publishedComponentsList = Arrays.asList(
             publishResultOutputs.getSubComponents().get(0),
@@ -175,7 +178,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7710})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
         FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
@@ -199,7 +201,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8681})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         Object productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -221,11 +222,12 @@ public class WorkorderAPITests extends TestUtil {
         AdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
-        assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
-        assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
-        assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
-        assertThat(getAdminInfoResponse.getLocked(), is(equalTo("false")));
-        assertThat(getAdminInfoResponse.getActive(), is(equalTo("true")));
+        softAssertions.assertThat(getAdminInfoResponse.getLastSavedTime()).isNotNull();
+        softAssertions.assertThat(getAdminInfoResponse.getComments()).isEqualTo("Comments go here...");
+        softAssertions.assertThat(getAdminInfoResponse.getDescription()).isEqualTo("Description goes here...");
+        softAssertions.assertThat(getAdminInfoResponse.getLocked()).isEqualTo("false");
+        softAssertions.assertThat(getAdminInfoResponse.getActive()).isEqualTo("true");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -245,16 +247,17 @@ public class WorkorderAPITests extends TestUtil {
         CadMetadataResponse getCadMetadataResponse = fileUploadResources
                 .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
 
-        assertThat(getCadMetadataResponse.getFileMetadataIdentity(), is(equalTo(fileResponse.getIdentity())));
-        assertThat(getCadMetadataResponse.getCadType(), is(equalTo("PART")));
-        assertThat(getCadMetadataResponse.getKeepFreeBodies(), is(equalTo("false")));
-        assertThat(getCadMetadataResponse.getFreeBodiesPreserveCad(), is(equalTo("false")));
-        assertThat(getCadMetadataResponse.getFreeBodiesIgnoreMissingComponents(), is(equalTo("true")));
-        assertThat(getCadMetadataResponse.getLengthUnit(), is(equalTo("MM")));
-        assertThat(getCadMetadataResponse.getVendor(), is(equalTo("PROE")));
-        assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(3)));
-        assertThat(getCadMetadataResponse.getCreatedAt(), is(notNullValue()));
-        assertThat(getCadMetadataResponse.getCreatedBy(), is(notNullValue()));
+        softAssertions.assertThat(getCadMetadataResponse.getFileMetadataIdentity()).isEqualTo(fileResponse.getIdentity());
+        softAssertions.assertThat(getCadMetadataResponse.getCadType()).isEqualTo("PART");
+        softAssertions.assertThat(getCadMetadataResponse.getKeepFreeBodies()).isEqualTo("false");
+        softAssertions.assertThat(getCadMetadataResponse.getFreeBodiesPreserveCad()).isEqualTo("false");
+        softAssertions.assertThat(getCadMetadataResponse.getFreeBodiesIgnoreMissingComponents()).isEqualTo("false");
+        softAssertions.assertThat(getCadMetadataResponse.getLengthUnit()).isEqualTo("MM");
+        softAssertions.assertThat(getCadMetadataResponse.getVendor()).isEqualTo("PROE");
+        softAssertions.assertThat(getCadMetadataResponse.getPmi().size()).isEqualTo(3);
+        softAssertions.assertThat(getCadMetadataResponse.getCreatedAt()).isNotNull();
+        softAssertions.assertThat(getCadMetadataResponse.getCreatedBy()).isNotNull();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -262,7 +265,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8689})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
         FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
@@ -275,13 +277,14 @@ public class WorkorderAPITests extends TestUtil {
         CadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
                 generateAssemblyImagesOutputs.getCadMetadataIdentity());
 
-        assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(39)));
-        assertThat(getCadMetadataResponse.getManifest(), is(notNullValue()));
-        assertThat(getCadMetadataResponse.getManifest().size(), is(equalTo(2)));
+        softAssertions.assertThat(getCadMetadataResponse.getPmi().size()).isEqualTo(39);
+        softAssertions.assertThat(getCadMetadataResponse.getManifest()).isNotNull();
+        softAssertions.assertThat(getCadMetadataResponse.getManifest().size()).isEqualTo(2);
 
         for (int i = 0; i < getCadMetadataResponse.getManifest().size(); i++) {
-            assertThat(getCadMetadataResponse.getManifest().get(i).getOccurrences(), is(equalTo("1")));
+            softAssertions.assertThat(getCadMetadataResponse.getManifest().get(i).getOccurrences()).isEqualTo("1");
         }
+        softAssertions.assertAll();
     }
 
     @Test
@@ -289,7 +292,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -307,17 +309,14 @@ public class WorkorderAPITests extends TestUtil {
             false
         );
 
-        ImageInfoResponse getImageInfoResponse = fileUploadResources
-                .getImageInfo(costOutputs.getScenarioIterationKey());
+        ImageInfoResponse getImageInfoResponse = fileUploadResources.getImageInfo(costOutputs.getScenarioIterationKey());
 
-        SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
-        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
-
-        softAssert.assertAll();
+        softAssertions.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssertions.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -326,7 +325,6 @@ public class WorkorderAPITests extends TestUtil {
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
         String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -351,21 +349,18 @@ public class WorkorderAPITests extends TestUtil {
         ImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
-        SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
-        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
-        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
-
-        softAssert.assertAll();
+        softAssertions.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssertions.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
+        softAssertions.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 11981)
     @Description("Delete Scenario")
     public void testDeleteScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
@@ -377,25 +372,25 @@ public class WorkorderAPITests extends TestUtil {
         DeleteScenarioOutputs deleteScenarioOutputs = fileUploadResources.createDeleteScenarioWorkorderSuppressError(fileUploadOutputs);
 
         ScenarioKey scenarioKeyToAssertOn = fileUploadOutputs.getScenarioIterationKey().getScenarioKey();
-        assertThat(deleteScenarioOutputs.getScenarioKey().getStateName(), is(equalTo(scenarioKeyToAssertOn.getStateName())));
-        assertThat(deleteScenarioOutputs.getScenarioKey().getMasterName(), is(equalTo(scenarioKeyToAssertOn.getMasterName())));
-        assertThat(deleteScenarioOutputs.getScenarioKey().getTypeName(), is(equalTo(scenarioKeyToAssertOn.getTypeName())));
-        assertThat(deleteScenarioOutputs.getScenarioKey().getWorkspaceId(), is(equalTo(scenarioKeyToAssertOn.getWorkspaceId())));
+        softAssertions.assertThat(deleteScenarioOutputs.getScenarioKey().getStateName()).isEqualTo(scenarioKeyToAssertOn.getStateName());
+        softAssertions.assertThat(deleteScenarioOutputs.getScenarioKey().getMasterName()).isEqualTo(scenarioKeyToAssertOn.getMasterName());
+        softAssertions.assertThat(deleteScenarioOutputs.getScenarioKey().getTypeName()).isEqualTo(scenarioKeyToAssertOn.getTypeName());
+        softAssertions.assertThat(deleteScenarioOutputs.getScenarioKey().getWorkspaceId()).isEqualTo(scenarioKeyToAssertOn.getWorkspaceId());
 
         String iteration = ((LinkedHashMap<?, ?>) fileUploadResources.getDeleteScenarioWorkorderDetails()).get("iteration").toString();
         ScenarioIterationKey scenarioIterationKey = workorderApiUtils.setupScenarioIterationKey(deleteScenarioOutputs, iteration);
 
         GenericErrorResponse genericErrorResponse = acsResources.getScenarioInfoByScenarioIterationKeyNegative(scenarioIterationKey);
 
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(containsString("No scenario found for key: ")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).contains("No scenario found for key: ");
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 11990)
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         workorderApiUtils.testShallowEditOfScenario(
             "Casting.prt",
             false
@@ -406,7 +401,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11991)
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         workorderApiUtils.testShallowEditOfScenario(
             "PatternThreadHoles.asm",
             true
@@ -417,7 +411,6 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12044)
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
@@ -426,21 +419,19 @@ public class WorkorderAPITests extends TestUtil {
 
         AllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
 
-        assertThat(Base64.isBase64(
-            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), true)),
-            is(equalTo(true))
-        );
-        assertThat(Base64.isBase64(
-            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), false)),
-            is(equalTo(true))
-        );
+        softAssertions.assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), true)))
+            .isEqualTo(true);
+        softAssertions.assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), false)))
+            .isEqualTo(false);
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 12047)
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
-        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
@@ -450,9 +441,28 @@ public class WorkorderAPITests extends TestUtil {
         SimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
             .createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
 
-        assertThat(Base64.isBase64(
-            acsResources.getImageByScenarioIterationKey(generateSimpleImageDataOutputs.getScenarioIterationKey(), false)),
-            is(equalTo(true))
+        softAssertions.assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateSimpleImageDataOutputs.getScenarioIterationKey(), false)))
+            .isEqualTo(true);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 12047)
+    @Description("Test the BOM Loader with Manual Inputs")
+    public void testBomLoaderWithManualInputs() {
+        String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+        String partName = "Casting.prt";
+
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "CreatePartData.json"
+            ).getPath(), NewPartRequest.class
         );
+
+        CostOrderStatusOutputs response = acsResources.bomLoadManual(processGroup, partName, productionInfoInputs);
+
+        softAssertions.assertThat(response).isNotEqualTo(null);
+        softAssertions.assertAll();
     }
 }

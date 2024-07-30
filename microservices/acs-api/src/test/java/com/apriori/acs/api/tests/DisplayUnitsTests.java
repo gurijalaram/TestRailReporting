@@ -1,46 +1,48 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.CurrencyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class DisplayUnitsTests extends TestUtil {
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
 
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @TestRail(id = 8769)
     @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
-        assertThat(getDisplayUnitsResponse, is(notNullValue()));
+        softAssertions.assertThat(getDisplayUnitsResponse).isNotNull();
+        softAssertions.assertThat(getDisplayUnitsResponse.getCurrencyLabel())
+            .isEqualTo("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq");
 
-        assertThat(getDisplayUnitsResponse.getCurrencyLabel(), is(equalTo("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
-
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType(), is(equalTo("simple")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), anyOf(equalTo("MMKS"), equalTo("CUSTOM")));
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType())
+            .isEqualTo("simple");
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName()).containsAnyOf("MMKS", "CUSTOM");
 
         if (getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("false")) {
             getDisplayUnitsAssertions(getDisplayUnitsResponse, "in", "lb");
@@ -48,16 +50,16 @@ public class DisplayUnitsTests extends TestUtil {
             getDisplayUnitsAssertions(getDisplayUnitsResponse, "mm", "kg");
         }
 
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces(), is(equalTo(2)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem(), is(notNullValue()));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom(), is(notNullValue()));
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces()).isEqualTo(2);
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem()).isNotNull();
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom()).isNotNull();
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 8770)
     @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
         String currencyCodeToCheck = getDisplayUnitsResponse.getCurrencyCode().equals(CurrencyEnum.USD.getCurrency()) ? CurrencyEnum.GBP.getCurrency() : CurrencyEnum.USD.getCurrency();
@@ -80,17 +82,17 @@ public class DisplayUnitsTests extends TestUtil {
                             .build())
                 .build());
 
-        assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setDisplayUnitsResponse.getResourceCreated()).isEqualTo("false");
 
         DisplayUnitsResponse getDisplayUnitsResponsePostChanges = acsResources.getDisplayUnits();
-        assertThat(getDisplayUnitsResponsePostChanges.getCurrencyCode(), is(equalTo(currencyCodeToCheck)));
+        softAssertions.assertThat(getDisplayUnitsResponsePostChanges.getCurrencyCode()).isEqualTo(currencyCodeToCheck);
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 8771)
     @Description("Test Set Length and Mass Display Unit")
     public void setLengthAndMassDisplayUnitTest() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
         String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm") ? "in" : "mm";
@@ -114,19 +116,21 @@ public class DisplayUnitsTests extends TestUtil {
                             .build())
                 .build());
 
-        assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setDisplayUnitsResponse.getResourceCreated()).isEqualTo("false");
 
         DisplayUnitsResponse getDisplayUnitResponsePostChanges = acsResources.getDisplayUnits();
         String isMetric = lengthToSet.equals("mm") ? "true" : "false";
 
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMetric(), is(equalTo(isMetric)));
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getLength(), is(equalTo(lengthToSet)));
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass(), is(equalTo(massToSet)));
+        softAssertions.assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMetric()).isEqualTo(isMetric);
+        softAssertions.assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getLength()).isEqualTo(lengthToSet);
+        softAssertions.assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass()).isEqualTo(massToSet);
+        softAssertions.assertAll();
     }
 
     private void getDisplayUnitsAssertions(DisplayUnitsResponse getDisplayUnitsResponse, String length, String mass) {
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength(), is(equalTo(length)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass(), is(equalTo(mass)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime(), is(equalTo("s")));
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength()).isEqualTo(length);
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass()).isEqualTo(mass);
+        softAssertions.assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime()).isEqualTo("s");
+        softAssertions.assertAll();
     }
 }

@@ -1,15 +1,13 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.materialmetadata.MaterialMetadataResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -17,20 +15,27 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class MaterialMetadataTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-    private final SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @TestRail(id = {31138})
     @Description("Test Get Material Metadata")
     public void testGetMaterialMetadata() {
-        AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_METADATA,
             MaterialMetadataResponse.class,
             "aPriori Canada",
@@ -47,8 +52,7 @@ public class MaterialMetadataTests extends TestUtil {
     @TestRail(id = {31139})
     @Description("Test Get Material Metadata endpoint with Revision")
     public void testGetMaterialMetadataWithRevision() {
-        AcsResources acsResources = new AcsResources(userCredentials);
-        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialMetadata(
+        MaterialMetadataResponse materialMetadataResponse = acsResources.getMaterialOrStockMetadata(
             AcsApiEnum.MATERIAL_METADATA_REVISION,
             MaterialMetadataResponse.class,
             "aPriori USA",
@@ -66,7 +70,6 @@ public class MaterialMetadataTests extends TestUtil {
     @TestRail(id = {31140})
     @Description("Get Material Metadata endpoint with Invalid Digital Factory")
     public void testGetMaterialMetadataWithInvalidDF() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
             AcsApiEnum.MATERIAL_METADATA,
             "aPriori Fake",
@@ -80,7 +83,6 @@ public class MaterialMetadataTests extends TestUtil {
     @TestRail(id = {31141})
     @Description("Get Material Metadata endpoint with Invalid Process Group")
     public void testGetMaterialMetadataWithInvalidPG() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidParameter(
             AcsApiEnum.MATERIAL_METADATA,
             DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(),

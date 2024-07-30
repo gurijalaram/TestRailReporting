@@ -56,7 +56,7 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "div[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
-    @FindBy(css = "div[data-testid='comparison-nav-bar'] h3")
+    @FindBy(css = "h3.MuiTypography-h3.secondary-nav-bar-title")
     private WebElement comparisonName;
 
     @FindBy(css = ".secondary-nav-bar button")

@@ -15,6 +15,8 @@ public class CurrencyRateVersionItem {
     public double cny;
     @JsonProperty("CZK")
     public double czk;
+    @JsonProperty("DKK")
+    public double dkk;
     @JsonProperty("EUR")
     public double eur;
     @JsonProperty("GBP")
@@ -33,6 +35,8 @@ public class CurrencyRateVersionItem {
     public double mxn;
     @JsonProperty("TWD")
     public double twd;
+    @JsonProperty("TRY")
+    public double tr;
     @JsonProperty("UAH")
     public double uah;
     @JsonProperty("USD")

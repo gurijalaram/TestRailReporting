@@ -1,12 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-
 import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
@@ -14,46 +7,55 @@ import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCre
 import com.apriori.acs.api.models.response.acs.tolerancepolicydefaults.PropertyValueMap;
 import com.apriori.acs.api.models.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class TolerancePolicyDefaultsTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @TestRail(id = 10473)
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         TolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
 
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), anyOf((equalTo("SYSTEMDEFAULT")), equalTo("PARTOVERRIDE")));
-        assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
+        softAssertions.assertThat(propertyValueMap.getTotalRunoutOverride()).isNotNull();
+        softAssertions.assertThat(propertyValueMap.getToleranceMode()).containsAnyOf("SYSTEMDEFAULT", "PARTOVERRIDE");
+        softAssertions.assertThat(propertyValueMap.isUseCadToleranceThreshhold()).isEqualTo(false);
 
         GenericExtendedPropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
 
-        assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
-        assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
-        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), anyOf(equalTo("DOUBLE"), equalTo("OBJECT")));
+        softAssertions.assertThat(totalRunoutOverrideItem.getName()).isEqualTo("totalRunoutOverride");
+        softAssertions.assertThat(totalRunoutOverrideItem.getUnitTypeName()).containsAnyOf("mm", "in");
+        softAssertions.assertThat(totalRunoutOverrideItem.getSupportedSerializedType()).containsAnyOf("DOUBLE", "OBJECT");
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 10555)
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS);
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -67,35 +69,35 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
         String toleranceMode = "PARTOVERRIDE";
         boolean useCadToleranceThreshold = false;
 
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericResourceCreatedResponse setTolerancePolicyDefaultsResponse = acsResources.setTolerancePolicyDefaults(
             totalRunoutOverrride,
             toleranceMode,
             useCadToleranceThreshold
         );
 
-        assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated(), is(equalTo("false")));
+        softAssertions.assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated()).isEqualTo("false");
 
         TolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), is(equalTo("PARTOVERRIDE")));
-        assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
+        softAssertions.assertThat(propertyValueMap.getTotalRunoutOverride()).isNotNull();
+        softAssertions.assertThat(propertyValueMap.getToleranceMode()).isEqualTo("PARTOVERRIDE");
+        softAssertions.assertThat(propertyValueMap.isUseCadToleranceThreshhold()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = 10557)
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
-        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
 
         assertOnInvalidResponse(genericErrorResponse);
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+        softAssertions.assertThat(genericErrorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(genericErrorResponse.getErrorMessage()).isEqualTo("User is not found");
+        softAssertions.assertAll();
     }
 }

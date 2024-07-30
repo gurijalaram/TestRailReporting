@@ -1,40 +1,33 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.acs.api.models.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderApiUtils;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class DesignGuidanceTests {
-    private final AcsResources acsResources;
-    private final WorkorderApiUtils workorderApiUtils;
+    private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
 
-    public DesignGuidanceTests() {
-        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
-        acsResources = new AcsResources(userCredentials);
-        workorderApiUtils = new WorkorderApiUtils(userCredentials);
-    }
-
-    private void designGuidanceAssertion(DesignGuidanceResponse designGuidanceResponse, String guidanceTopics) {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(designGuidanceResponse.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(designGuidanceResponse.getInfosByTopics().toString().contains(guidanceTopics)).isEqualTo(true);
-        softAssertions.assertAll();
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        acsResources = new AcsResources(requestEntityUtil);
+        workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -43,10 +36,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "DTCCastingIssues.catpart", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "DTCCastingIssues.catpart",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -55,10 +55,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceCastingSand() {
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "DTCCastingIssues.catpart", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "DTCCastingIssues.catpart",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -67,10 +74,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "piston_model1.prt",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -79,10 +93,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "flanged_hole.prt", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "flanged_hole.prt",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -91,10 +112,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetalHydroforming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "FlangedRound.SLDPRT",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -103,10 +131,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetalTransferDie() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SheetMetal.prt", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "SheetMetal.prt",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -115,10 +150,17 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetalRollForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "z_purlin.prt.2", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "z_purlin.prt.2",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
     }
 
     @Test
@@ -127,9 +169,22 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetalStretchForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", workorderApiUtils.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(
+            processGroup,
+            "Hydroforming.stp",
+            workorderApiUtils.setupProductionInfoInputs()
+        );
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
+            costOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
+        );
 
-        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
+        designGuidanceAssertion(designGuidanceResponse);
+    }
+
+    private void designGuidanceAssertion(DesignGuidanceResponse designGuidanceResponse) {
+        softAssertions.assertThat(designGuidanceResponse.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(designGuidanceResponse.getInfosByTopics().toString().contains("dtcMessages")).isEqualTo(true);
+        softAssertions.assertAll();
     }
 }
