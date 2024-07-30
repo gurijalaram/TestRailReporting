@@ -215,7 +215,7 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31058, 31059, 31060, 31062, 31064})
+    @TestRail(id = {31058, 31059, 31060, 31062, 31064, 31076, 31077})
     @Description("Test Scenario can be Manually Costed via UI")
     public void testPerformManualCost() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
@@ -255,6 +255,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         evaluatePage.clickSimulateModeButton()
             .clickContinue()
+            .costScenario()
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
@@ -279,11 +280,30 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
             .as("Verify value for Total Capital Investment is as set").isEqualTo("103.97");
 
+        evaluatePage.clickSimulateModeButton()
+            .clickContinue()
+            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING)
+            .tickDoNotMachinePart()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).as("Verify Cost Incomplete").isTrue();
+
+        evaluatePage.clickManualModeButton()
+            .clickContinue()
+            .enterPiecePartCost("5.63")
+            .enterTotalCapitalInvestment("6428.13")
+            .clickSaveButton();
+
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+            .as("Verify value for Piece Part Cost is as set").isEqualTo("5.63");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
+            .as("Verify value for Total Capital Investment is as set").isEqualTo("6428.13");
+
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022, 30649})
+    @TestRail(id = {30100, 31009, 31010, 31017, 31018, 31019, 31020, 31021, 31022, 30649})
     @Description("Verify all actions can be performed on Manually Costed Scenario")
     public void testActionsForManuallyCostedScenarios() {
         String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
@@ -322,6 +342,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).as("Verify scenario is now Public").isTrue();
         softAssertions.assertThat(evaluatePage.isEditButtonEnabled()).as("Verify Edit button is displayed and enabled").isTrue();
+        softAssertions.assertThat(evaluatePage.isCostModeToggleEnabled()).as("Verify Cost Mode toggle is disabled").isFalse();
 
         evaluatePage = evaluatePage.editScenario(EditScenarioStatusPage.class)
             .clickHere();
@@ -362,7 +383,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(componentBasicPage.getAlertMessage())
             .as("Verify warning that Manually Costed scenario included in selection")
-            .isEqualTo("One or more of the selected components were last costed in Manual mode. If you choose to continue, they will be recosted in Simulate mode.");
+            .isEqualTo("One or more of the selected components were last costed in Manual mode. If you choose to continue, they will be recosted in aPriori mode.");
 
         explorePage = componentBasicPage.applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
@@ -403,11 +424,18 @@ public class ManualCostingTests  extends TestBaseUI {
             .enterTotalCapitalInvestment("64.31")
             .clickSaveButton();
 
+        evaluatePage.generateReport(EvaluatePage.class);
+
+        evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 2)
+            .clickReportDropdown();
+
+        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).as("Verify Download Report button is enabled").isTrue();
+
         explorePage = evaluatePage.clickExplore()
             .multiSelectScenarios(copiedScenario.getComponentName() + "," + copiedScenario.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-            .checkComponentDelete(copiedScenario)
+//            .checkComponentDelete(copiedScenario)
             .refresh();
 
         softAssertions.assertThat(explorePage.getListOfScenarios(copiedScenario.getComponentName(), copiedScenario.getScenarioName()))
