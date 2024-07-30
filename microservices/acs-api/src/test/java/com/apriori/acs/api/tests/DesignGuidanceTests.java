@@ -18,14 +18,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class DesignGuidanceTests {
-    private AcsResources acsResources;
     private WorkorderApiUtils workorderApiUtils;
+    private SoftAssertions softAssertions;
+    private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
         workorderApiUtils = new WorkorderApiUtils(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -181,9 +183,6 @@ public class DesignGuidanceTests {
     }
 
     private void designGuidanceAssertion(DesignGuidanceResponse designGuidanceResponse) {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(designGuidanceResponse.getCostingFailed()).isEqualTo(false);
         softAssertions.assertThat(designGuidanceResponse.getInfosByTopics().toString().contains("dtcMessages")).isEqualTo(true);
         softAssertions.assertAll();

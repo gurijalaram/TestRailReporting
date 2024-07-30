@@ -38,7 +38,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
-    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='SIMULATE']")
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='APRIORI']")
     private WebElement aprioriCostModeButton;
 
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")

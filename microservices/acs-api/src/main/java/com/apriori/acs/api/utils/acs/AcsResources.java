@@ -71,12 +71,14 @@ public class AcsResources {
     private final UserCredentials userCredentials;
     private static final HashMap<String, String> headers = new HashMap<>();
     private RequestEntityUtil requestEntityUtil;
+    private FileUploadResources fileUploadResources;
     private final String validUsername;
     private final String invalidUsername;
 
     public AcsResources(RequestEntityUtil requestEntityUtil) {
         this.userCredentials = requestEntityUtil.getEmbeddedUser();
         this.requestEntityUtil = requestEntityUtil;
+        this.fileUploadResources = new FileUploadResources(this.requestEntityUtil);
         token = new OldAuthorizationUtil().getTokenAsString(userCredentials);
         validUsername = userCredentials.getEmail().split("@")[0];
         invalidUsername = userCredentials.getUsername().split("@")[0].concat("41");
@@ -1103,6 +1105,36 @@ public class AcsResources {
             fileUploadOutputs,
             processGroup,
             false
+        );
+    }
+
+    /**
+     * Upload and use BOM Loader for Manual Costs of part
+     *
+     * @param processGroup         - the process group
+     * @param fileName             - the filename
+     * @param productionInfoInputs - the production information
+     * @return CostResultsResponse instance
+     */
+    public CostOrderStatusOutputs bomLoadManual(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            fileName,
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        return fileUploadResources.costPartManualBomLoader(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup
         );
     }
 

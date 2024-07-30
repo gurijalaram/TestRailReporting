@@ -1,9 +1,6 @@
 package com.apriori.acs.api.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.api.models.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
@@ -15,6 +12,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -26,12 +24,14 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class PartPrimaryProcessGroupsTests extends TestUtil {
+    private SoftAssertions softAssertions;
     private AcsResources acsResources;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         acsResources = new AcsResources(requestEntityUtil);
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -48,7 +48,8 @@ public class PartPrimaryProcessGroupsTests extends TestUtil {
         processGroupValues.remove(ProcessGroupEnum.WITHOUT_PG.getProcessGroup());
         processGroupValues.remove(ProcessGroupEnum.INVALID_PG.getProcessGroup());
 
-        assertThat(getPartPrimaryProcessGroupsResponse.size(), is(equalTo(22)));
-        assertThat(getPartPrimaryProcessGroupsResponse.containsAll(processGroupValues), is(true));
+        softAssertions.assertThat(getPartPrimaryProcessGroupsResponse.size()).isEqualTo(22);
+        softAssertions.assertThat(getPartPrimaryProcessGroupsResponse.containsAll(processGroupValues)).isEqualTo(true);
+        softAssertions.assertAll();
     }
 }
