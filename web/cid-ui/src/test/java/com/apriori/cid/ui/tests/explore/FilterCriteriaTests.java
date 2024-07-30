@@ -226,7 +226,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
 
-            filterPage = evaluatePage.publishScenario(PublishPage.class)
+        filterPage = evaluatePage.publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
             .selectAssignee(scenarioCreatedByName)

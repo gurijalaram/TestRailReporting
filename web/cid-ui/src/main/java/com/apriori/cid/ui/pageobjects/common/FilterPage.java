@@ -249,8 +249,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     /**
      * Add further Criteria
      *
-     * @param propertyEnum  - property from the enum
-     * @param value         - the value
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
      * @return current page object
      */
     public FilterPage includeCriteria(final PropertyEnum propertyEnum, final String value) {
@@ -287,13 +287,20 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value        - the value
      * @return current page object
      */
+    //todo cn - review and optimize this method where possible especially for 'assignee'
     private FilterPage inputValue(int index, final PropertyEnum propertyEnum, final String value) {
         if (PropertyEnum.inputGroup.contains(propertyEnum)) {
             pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).sendKeys(value);
         }
         if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
-            pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
+
+            if (propertyEnum == PropertyEnum.ASSIGNEE) {
+                pageUtils.waitForElementToAppear(By.cssSelector("[id='qa-searchCriterion[0].target'] .apriori-select div input")).sendKeys(value.split(" ")[0]);
+                pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value)));
+            } else {
+                pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
+            }
             //click the dropdown again to remove it and unhide the submit button
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target'] svg[data-icon='chevron-down']", index)));
         }
