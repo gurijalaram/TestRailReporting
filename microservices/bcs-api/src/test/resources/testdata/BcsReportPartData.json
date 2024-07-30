@@ -1,0 +1,35 @@
+[
+  {
+    "filename": "socket weld flange.sldprt",
+    "externalId": "Auto-123456",
+    "annualVolume": 5000,
+    "batchSize": 100,
+    "description": "Socket weld flange",
+    "material": "Steel, Cold Worked, AISI 1020",
+    "pinnedRouting": "Material Stock / Laser Cut",
+    "processGroup": "Casting - Die",
+    "productionLife": "3.45",
+    "scenarioName": "Unique",
+    "digitalFactory": "aPriori USA",
+    "generateWatchPointReport": "true",
+    "years": 5.0,
+    "secondaryDigitalFactory": ""
+  },
+  {
+    "filename": "Carb.ipt",
+    "externalId": "Auto-123456",
+    "annualVolume": 5000,
+    "batchSize": 100,
+    "description": "Carb ipt",
+    "material": "Steel, Cold Worked, AISI 1020",
+    "pinnedRouting": "Material Stock / Laser Cut",
+    "processGroup": "Casting - Sand",
+    "productionLife": "3.45",
+    "scenarioName": "Unique",
+    "digitalFactory": "aPriori USA",
+    "generateWatchPointReport": "true",
+    "years": 5.0,
+    "secondaryDigitalFactory": ""
+  }
+]
+
