@@ -47,6 +47,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder component;
@@ -54,6 +55,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     private FilterPage filterPage;
     private SoftAssertions softAssertion = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     public FilterCriteriaTests() {
         super();
@@ -219,12 +221,15 @@ public class FilterCriteriaTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        filterPage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .publishScenario(PublishPage.class)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component);
+
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
+        filterPage = evaluatePage.publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .selectAssignee(component.getUser())
+            .selectAssignee(scenarioCreatedByName)
             .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()

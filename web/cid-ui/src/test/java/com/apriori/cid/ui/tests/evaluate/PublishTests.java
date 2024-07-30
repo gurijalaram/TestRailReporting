@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
@@ -34,6 +35,7 @@ public class PublishTests extends TestBaseUI {
     private PublishPage publishPage;
     private ComponentInfoBuilder component;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     public PublishTests() {
         super();
@@ -84,11 +86,13 @@ public class PublishTests extends TestBaseUI {
             .costScenario()
             .publishScenario(PublishPage.class);
 
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
         softAssertions.assertThat(publishPage.getAssociationAlert()).contains("High maturity and complete status scenarios can be prioritized to make more accurate associations when uploading new assemblies.");
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(component.getUser());
+            .selectAssignee(scenarioCreatedByName);
 
         explorePage = publishPage.publish(component, EvaluatePage.class).clickExplore()
             .filter()
