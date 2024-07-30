@@ -96,8 +96,7 @@ public class MaterialsInfoTests {
         GenericExtendedPropertyInfoItem costPerKG = materialsInfoCastingDieResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
-        //softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
-        softAssertions.assertThat(costPerKG.getUnitTypeName()).containsAnyOf("USD / kg", "GBP / kg");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
         softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
         softAssertions.assertAll();
     }
