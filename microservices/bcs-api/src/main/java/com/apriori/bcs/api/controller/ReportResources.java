@@ -2,15 +2,18 @@ package com.apriori.bcs.api.controller;
 
 import com.apriori.bcs.api.enums.BCSAPIEnum;
 import com.apriori.bcs.api.enums.BCSState;
+import com.apriori.bcs.api.enums.ReportTypeEnum;
 import com.apriori.bcs.api.models.request.reports.ReportRequest;
 import com.apriori.bcs.api.models.response.Batch;
 import com.apriori.bcs.api.models.response.Part;
 import com.apriori.bcs.api.models.response.Report;
 import com.apriori.bcs.api.models.response.ReportError;
 import com.apriori.bcs.api.models.response.ReportExport;
+import com.apriori.bcs.api.models.response.ReportTemplate;
 import com.apriori.bcs.api.models.response.ReportTemplates;
 import com.apriori.bcs.api.models.response.Reports;
 import com.apriori.shared.util.SharedCustomerUtil;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -22,6 +25,7 @@ import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 // TODO ALL: test it
@@ -160,6 +164,39 @@ public class ReportResources {
             return part;
         }
         return null;
+    }
+
+    /**
+     * submit get part report template and returns template id
+     *
+     * @return report Template ID
+     */
+    public static String getReportTemplateId(ReportTypeEnum reportType) {
+        ReportTemplates reportTemplates = getReportTemplates().getResponseEntity();
+        return reportTemplates.getItems().stream()
+            .filter(reportTemplate -> reportTemplate.getName().equals(reportType.getReportName()))
+            .map(ReportTemplate::getIdentity)
+            .findFirst()
+            .orElse("");
+    }
+
+    /**
+     * Create, export and download report
+     *
+     * @param reportRequest - ReportRequest Data object
+     * @return PDFDocument
+     */
+    public static PDFDocument createAndDownloadReport(ReportRequest reportRequest) {
+        Report report = ReportResources.createReport(reportRequest).getResponseEntity();
+        Report reportResult = ReportResources.getReportRepresentation(report.getIdentity()).getResponseEntity();
+        if (reportResult.getState().equals("ERRORED")) {
+            throw new RuntimeException("FAILED TO CREATE REPORT ! " + reportResult.getErrors());
+        }
+        ReportExport reportExport = ReportResources.exportReport(report.getIdentity()).getResponseEntity();
+        File downloadedFile = FileResourceUtil.copyIntoTempFile(reportExport.getEncodedContent().toString(),
+            "reports",
+            reportExport.getReportIdentity() + "_" + reportExport.getFileName());
+        return new PDFDocument(String.valueOf(downloadedFile));
     }
 
     /**

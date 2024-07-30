@@ -1,5 +1,6 @@
 package com.apriori.shared.util.json;
 
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,5 +92,15 @@ public class JsonManager {
                 JsonParser.parseString(
                     response.getBody()).getAsJsonObject().getAsJsonObject("response")),
             klass);
+    }
+
+    public static <T> ArrayList<T> readItemsFromFile(String jsonFile, Class<T> klass) {
+        ArrayList<T> itemsList = new ArrayList<T>();
+        try {
+            itemsList = mapper.readValue(FileResourceUtil.getResourceFileStream(jsonFile), mapper.getTypeFactory().constructCollectionType(ArrayList.class, klass));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return itemsList;
     }
 }
