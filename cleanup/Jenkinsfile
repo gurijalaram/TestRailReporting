@@ -40,15 +40,14 @@
 //}
 
 pipeline {
-    agent {
-        none
+    agent         none
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
 //                "walqsdocker06 && " +
 //                "walqsdocker07 && " +
 //                "walqsdocker08 && "
-    }
+
 
     stages {
         stage("Cleanup") {
