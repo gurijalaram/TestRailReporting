@@ -161,9 +161,8 @@ class ConnectionManager<T> {
         final Headers responseHeaders = response.extract().headers();
         T responseEntity;
 
-        //todo cn - revert to throwing an exception when deployed to staging and other envs
         if (responseHeaders.getValue(X_FORWARDED_FOR) == null) {
-            log.error("Response header '" + X_FORWARDED_FOR + "' is empty.");
+            throw new RuntimeException("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
         }
         if (returnType != null) {
             Class<InputStream> testClass = InputStream.class;
