@@ -42,7 +42,7 @@ def NODES = 'WALQSDOCKER01, WALQSDOCKER02'
 
 pipeline {
     agent {
-        label ${NODES}
+        label "${NODES}"
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
