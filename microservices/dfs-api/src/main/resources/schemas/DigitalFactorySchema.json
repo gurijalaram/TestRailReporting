@@ -1,12 +1,14 @@
 {
   "type": "object",
   "required": [
-    "annualVolume",
-    "batchesPerYear",
     "createdAt",
     "createdBy",
     "identity",
-    "name",
+    "name"
+  ],
+  "optional": [
+    "annualVolume",
+    "batchesPerYear",
     "productionLife"
   ],
   "properties": {
