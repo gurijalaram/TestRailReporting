@@ -38,11 +38,12 @@
 //        ).trim()
 //    }
 //}
-def NODES = 'WALQSDOCKER01, WALQSDOCKER02'
+def nodes = ['WALQSDOCKER01, WALQSDOCKER02']
 
-pipeline {
+nodes.forEach { noder ->
+    pipeline {
     agent {
-        label "${NODES}"
+        label noder
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
@@ -265,3 +266,4 @@ pipeline {
 //        }
 //    }
 }
+    }
