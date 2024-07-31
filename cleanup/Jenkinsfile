@@ -40,10 +40,10 @@
 //}
 def nodes = ['WALQSDOCKER01, WALQSDOCKER02']
 
-nodes.forEach { noder ->
+nodes.each { noder ->
     pipeline {
     agent {
-        label noder
+        label ${noder}
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
