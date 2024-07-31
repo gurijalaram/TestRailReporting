@@ -41,7 +41,7 @@
 
 pipeline {
     agent {
-        label ('WALQSDOCKER01 && WALQSDOCKER02')
+        none
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
@@ -52,6 +52,7 @@ pipeline {
 
     stages {
         stage("Cleanup") {
+            agent {label ('WALQSDOCKER01 && WALQSDOCKER02')}
             steps {
                 echo "Cleaning up docker volumes on VMs..."
                 script {
