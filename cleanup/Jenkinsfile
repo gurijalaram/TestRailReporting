@@ -38,7 +38,7 @@
 //        ).trim()
 //    }
 //}
-def agents = ['WALQSDOCKER01, WALQSDOCKER02']
+def agents = ['WALQSDOCKER01', 'WALQSDOCKER02']
 
 def generateStage(nodeLabel) {
     return {
