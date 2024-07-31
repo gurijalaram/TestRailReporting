@@ -38,7 +38,7 @@
 //        ).trim()
 //    }
 //}
-def agents = ['WALQSDOCKER01, WALQSDOCKER02']
+def agents = ['WALQSDOCKER01', 'WALQSDOCKER02','WALQSDOCKER03','WALQSDOCKER04','WALQSDOCKER05','WALQSDOCKER06','WALQSDOCKER07','WALQSDOCKER08']
 
 def generateStage(nodeLabel) {
     return {
@@ -46,9 +46,7 @@ def generateStage(nodeLabel) {
             node(nodeLabel) {
                 script {
                     echo "Running on ${nodeLabel}"
-                    echo '************************'
-                    echo '*****BUILDING JOBS******'
-                    echo '************************'
+                    sh 'docker images'
                 }
             }
         }
@@ -62,11 +60,11 @@ def parallelStagesMap = agents.collectEntries {
 pipeline {
     agent none
     stages {
-        stage('non-parallel stage') {
-            steps {
-                echo 'This stage will be executed first.'
-            }
-        }
+//        stage('non-parallel stage') {
+//            steps {
+//                echo 'This stage will be executed first.'
+//            }
+//        }
         stage('parallel stage') {
             steps {
                 script {
