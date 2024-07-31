@@ -47,11 +47,11 @@ import java.util.Map;
  */
 @Slf4j
 class ConnectionManager<T> {
-    private Class<T> returnType;
-    private RequestEntity requestEntity;
     private static final String X_FORWARDED_FOR = "X-Forwarded-For";
     private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null && !System.getProperty("mode").equals("PROD");
     private static final boolean SKIP_SCHEMA_BODY_EXCEPTION_LOGGING = Boolean.parseBoolean(PropertiesContext.get("global.skip_schema_body_exception_logging"));
+    private Class<T> returnType;
+    private RequestEntity requestEntity;
 
     public ConnectionManager(RequestEntity requestEntity, Class<T> returnType) {
         this.requestEntity = requestEntity;
@@ -161,7 +161,7 @@ class ConnectionManager<T> {
         final Headers responseHeaders = response.extract().headers();
         T responseEntity;
 
-        if (responseHeaders.getValue(X_FORWARDED_FOR).isEmpty()) {
+        if (responseHeaders.getValue(X_FORWARDED_FOR) == null) {
             throw new RuntimeException("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
         }
         if (returnType != null) {
