@@ -55,7 +55,7 @@ pipeline {
             steps {
                 echo "Initializing.."
                 script {
-                    sh echo "Hello world!"
+                    echo "Hello world!"
                     sh "docker images"
 //                    // Read file.
 //                    buildInfo = readYaml file: buildInfoFile
