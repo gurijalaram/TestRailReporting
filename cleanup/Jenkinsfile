@@ -52,12 +52,12 @@ nodes.each { noder ->
 //                "walqsdocker08 && "
     }
 
-    stages {
-        stage("Cleaning") {
-            steps {
-                echo "Cleaning up docker volumes on VMs..."
-                script {
-                    sh "docker images"
+//    stages {
+//        stage("Cleaning") {
+//            steps {
+//                echo "Cleaning up docker volumes on VMs..."
+//                script {
+//                    sh "docker images"
 //                    // Read file.
 //                    buildInfo = readYaml file: buildInfoFile
 //                    sh "rm ${buildInfoFile}"
@@ -177,9 +177,9 @@ nodes.each { noder ->
 //                    }
 //
 //                    echo "${javaOpts}"
-                }
-            }
-        }
+//                }
+//            }
+//        }
 
 //        stage("Build") {
 //            steps {
@@ -248,7 +248,7 @@ nodes.each { noder ->
 //                ])
 //            }
 //        }
-    }
+//    }
 
 //    post {
 //        always {
