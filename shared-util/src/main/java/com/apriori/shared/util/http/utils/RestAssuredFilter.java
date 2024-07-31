@@ -23,7 +23,7 @@ public class RestAssuredFilter implements Filter {
             log.error("Request Method:- {} \n Request URI:- {} \n Request Body:- {} \n Response Status:- {} \n Response Line:- {} \n Response Body:- {}",
                 requestSpec.getMethod(), requestSpec.getURI(), requestSpec.getBody(), response.getStatusCode(), response.getStatusLine(), response.getBody().asPrettyString());
         }
-        log.debug("Request Method:- {} \n Request URI:- {} \n Request Body:- {} \n Response Status:- {} \n Response Line:- {} \n Response Body:- {}",
+        log.info("Request Method:- {} \n Request URI:- {} \n Request Body:- {} \n Response Status:- {} \n Response Line:- {} \n Response Body:- {}",
             requestSpec.getMethod(), requestSpec.getURI(), requestSpec.getBody(), response.getStatusCode(), response.getStatusLine(), response.getBody().asPrettyString());
 
         return response;
