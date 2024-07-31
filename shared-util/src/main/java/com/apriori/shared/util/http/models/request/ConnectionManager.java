@@ -163,7 +163,7 @@ class ConnectionManager<T> {
 
         if (responseHeaders.getValue(X_FORWARDED_FOR) == null) {
             log.error("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
-           // throw new RuntimeException("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
+            // throw new RuntimeException("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
         }
         if (returnType != null) {
             Class<InputStream> testClass = InputStream.class;
