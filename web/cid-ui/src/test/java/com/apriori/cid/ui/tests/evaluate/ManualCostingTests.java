@@ -436,7 +436,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .multiSelectScenarios(copiedScenario.getComponentName() + "," + copiedScenario.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-//            .checkComponentDelete(copiedScenario)
+            .checkComponentDelete(copiedScenario)
             .refresh();
 
         softAssertions.assertThat(explorePage.getListOfScenarios(copiedScenario.getComponentName(), copiedScenario.getScenarioName()))
