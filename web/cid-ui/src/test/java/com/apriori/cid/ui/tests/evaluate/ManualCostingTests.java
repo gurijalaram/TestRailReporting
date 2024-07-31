@@ -28,7 +28,6 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.CostRollupOverrides;
@@ -42,8 +41,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class ManualCostingTests  extends TestBaseUI {
 
@@ -68,7 +65,7 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
+    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112, 31079})
     @Description("Verify Cost Mode can be toggled")
     public void testToggleCostingModes() {
         component = new ComponentRequestUtil().getComponent();
@@ -76,7 +73,7 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
             .uploadComponentAndOpen(component);
 
-        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify Cost Mode is aPriori by default").isTrue();
+        softAssertions.assertThat(evaluatePage.isAprioriCostModeSelected()).as("Verify Cost Mode is aPriori by default").isTrue();
 
         evaluatePage.clickManualModeButtonWhileUncosted()
             .enterPiecePartCost("42")
@@ -86,18 +83,18 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isSaveButtonEnabled()).as("Verify Save button currently disabled").isTrue();
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNSAVED)).isEqualTo(true);
 
-        evaluatePage.clickSimulateModeButton()
+        evaluatePage.clickAprioriModeButton()
             .clickCancel();
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify cancel returns to manual mode").isTrue();
 
-        switchCostModePage = evaluatePage.clickSimulateModeButton();
+        switchCostModePage = evaluatePage.clickAprioriModeButton();
 
         softAssertions.assertThat(switchCostModePage.continueButtonText())
             .as("Verify Continue to aPriori Mode button text").isEqualTo("CONTINUE TO APRIORI MODE");
 
         evaluatePage = switchCostModePage.clickContinue();
-        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify Cost Mode is toggled back to aPriori").isTrue();
+        softAssertions.assertThat(evaluatePage.isAprioriCostModeSelected()).as("Verify Cost Mode is toggled back to aPriori").isTrue();
 
         switchCostModePage = evaluatePage.enterAnnualVolume("5501")
                 .clickManualModeButton();
@@ -105,8 +102,12 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(switchCostModePage.continueButtonText())
             .as("Verify Continue to aPriori Mode button text").isEqualTo("CONTINUE TO MANUAL MODE");
 
-        evaluatePage = switchCostModePage.clickContinue()
-                .clickSimulateModeButton()
+        evaluatePage = switchCostModePage.clickContinue();
+
+        softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify previous values not persisted after mode switch").isEqualTo("");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify previous values not persisted after mode switch").isEqualTo("");
+
+        evaluatePage = evaluatePage.clickAprioriModeButton()
                 .clickContinue();
 
         softAssertions.assertThat(evaluatePage.getAnnualVolume()).as("Verify uncosted changes not retained").isNotEqualTo("5501");
@@ -121,7 +122,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         evaluatePage = switchCostModePage.clickCancel();
 
-        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify cancel returns to aPriori mode").isTrue();
+        softAssertions.assertThat(evaluatePage.isAprioriCostModeSelected()).as("Verify cancel returns to aPriori mode").isTrue();
         softAssertions.assertThat(evaluatePage.getDigitalFactory())
             .as("Verify uncosted changes retained after cancel").isEqualTo(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
         softAssertions.assertThat(evaluatePage.getAnnualVolume())
@@ -253,7 +254,7 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(results.getResponseEntity().getCostingInput().getCostRollupOverrides().getTotalCapitalInvestment())
             .as("Verify that value for Total Capital Investment saved").isEqualTo(480.31);
 
-        evaluatePage.clickSimulateModeButton()
+        evaluatePage.clickAprioriModeButton()
             .clickContinue()
             .costScenario()
             .openMaterialSelectorTable()
@@ -280,7 +281,7 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
             .as("Verify value for Total Capital Investment is as set").isEqualTo("103.97");
 
-        evaluatePage.clickSimulateModeButton()
+        evaluatePage.clickAprioriModeButton()
             .clickContinue()
             .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING)
             .tickDoNotMachinePart()
@@ -393,7 +394,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         evaluatePage = explorePage.openScenario(component.getComponentName(), component.getScenarioName());
 
-        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
+        softAssertions.assertThat(evaluatePage.isAprioriCostModeSelected())
             .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
 
         explorePage = evaluatePage.clickExplore()
@@ -413,7 +414,7 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage = explorePage.refresh()
             .openScenario(copiedScenario.getComponentName(), copiedScenario.getScenarioName());
 
-        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
+        softAssertions.assertThat(evaluatePage.isAprioriCostModeSelected())
             .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
         softAssertions.assertThat(evaluatePage.getDigitalFactory())
             .as("Verify previously selected Digital Factory used").isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
