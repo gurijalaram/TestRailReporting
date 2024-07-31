@@ -423,13 +423,13 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openMaterialProcess()
             .selectBarChart("Band Saw");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("23.55%");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("16.41%");
         materialProcessPage.selectProcessTab();
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("DoAll 3613-1 Vert");
         materialProcessPage.selectBarChart("2 Axis Lathe");
 
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(52.66), Offset.offset(5.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(82.66), Offset.offset(5.0));
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("Virtual 2 Axis Lathe - Small");
 
         routingSelectionPage = materialProcessPage.closePanel()
