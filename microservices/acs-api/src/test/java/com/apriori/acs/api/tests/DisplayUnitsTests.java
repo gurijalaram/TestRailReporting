@@ -87,6 +87,8 @@ public class DisplayUnitsTests extends TestUtil {
         DisplayUnitsResponse getDisplayUnitsResponsePostChanges = acsResources.getDisplayUnits();
         softAssertions.assertThat(getDisplayUnitsResponsePostChanges.getCurrencyCode()).isEqualTo(currencyCodeToCheck);
         softAssertions.assertAll();
+
+        acsResources.resetDisplayUnits();
     }
 
     @Test
