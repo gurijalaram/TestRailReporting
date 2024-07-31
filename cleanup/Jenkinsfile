@@ -41,7 +41,7 @@
 
 pipeline {
     agent {
-        label ('WALQSDOCKER01')
+        label ('WALQSDOCKER01 && WALQSDOCKER02')
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
@@ -51,11 +51,10 @@ pipeline {
     }
 
     stages {
-        stage("Initialize") {
+        stage("Cleanup") {
             steps {
-                echo "Initializing.."
+                echo "Cleaning up docker volumes on VMs..."
                 script {
-                    echo "Hello world!"
                     sh "docker images"
 //                    // Read file.
 //                    buildInfo = readYaml file: buildInfoFile
