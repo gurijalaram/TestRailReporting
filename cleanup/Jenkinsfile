@@ -41,7 +41,7 @@
 
 pipeline {
     agent {
-        label 'WALQSDOCKER01 && WALQSDOCKER02'
+        label ("WALQSDOCKER01 && WALQSDOCKER02")
 //                "walqsdocker03 && " +
 //                "walqsdocker04 && " +
 //                "walqsdocker05 && " +
