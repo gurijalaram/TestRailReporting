@@ -14,7 +14,6 @@ import com.apriori.vds.api.models.response.digital.factories.DigitalFactoriesIte
 import com.apriori.vds.api.models.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
 
@@ -32,35 +31,38 @@ public class VDSTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public DigitalFactory getDigitalFactories() {
+    public List<DigitalFactory> getDigitalFactories() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES, DigitalFactoriesItems.class)
-            .queryParams(new QueryParams().use("pageSize", "100"))
+            .queryParams(new QueryParams().use("pageSize", "100").use("name[EQ]", "aPriori USA"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
 
-        List<DigitalFactory> digitalFactories = digitalFactoriesItemsResponseWrapper.getResponseEntity().getItems();
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(digitalFactories.size()).isNotZero();
-
-        return findDigitalFactoryByName(digitalFactories, "aPriori USA");
+        return digitalFactoriesItemsResponseWrapper.getResponseEntity().getItems();
     }
 
     /**
-     * Find digital factory by name
+     * Calls an API with GET verb
      *
-     * @param digitalFactories - digital factories
-     * @param name             - the name
      * @return new object
      */
-    public DigitalFactory findDigitalFactoryByName(List<DigitalFactory> digitalFactories, final String name) {
-        return digitalFactories.stream()
-            .filter(digitalFactory -> name.equals(digitalFactory.getName()))
-            .findFirst()
-            .orElseThrow(
-                () -> new IllegalArgumentException(String.format("Digital Factory with location: %s, was not found.", name))
-            );
+    public DigitalFactory getFirstDigitalFactory() {
+        return getDigitalFactories().stream().findFirst().get();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @return new object
+     */
+    public DigitalFactory getDigitalFactoryById() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
+            .inlineVariables(getFirstDigitalFactory().getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<DigitalFactory> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
+
+        return digitalFactoriesItemsResponseWrapper.getResponseEntity();
     }
 
     /**
@@ -75,5 +77,33 @@ public class VDSTestUtil extends TestUtil {
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();
 
         return accessControlGroupsResponse.getResponseEntity().getItems();
+    }
+
+    /**
+     * Calls an API with GET verb
+     * @return new object
+     */
+    public List<DigitalFactory> getVpes() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES, DigitalFactoriesItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTPRequest.build(requestEntity).get();
+
+        return vpEsItemsResponse.getResponseEntity().getItems();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @return new object
+     */
+    public DigitalFactory getVpeById() {
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.VPES_BY_IDENTITY, DigitalFactory.class)
+            .inlineVariables(getVpes().stream().findFirst().get().getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<DigitalFactory> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity();
     }
 }

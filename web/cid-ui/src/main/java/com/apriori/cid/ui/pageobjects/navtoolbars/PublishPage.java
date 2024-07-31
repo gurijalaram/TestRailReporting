@@ -118,17 +118,32 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public PublishPage selectAssignee(UserCredentials assignee) {
-        PersonResponse currentPerson = peopleUtil.getCurrentPerson(assignee);
-        pageUtils.typeAheadSelect(assigneeDropdown, "qa-publish-form-assigned-to-select", currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+    public PublishPage selectAssignee(String assignee) {
+        typeAheadSelectAssignee(assigneeDropdown, "qa-publish-form-assigned-to-select", assignee);
         return this;
     }
 
     /**
-     * Click locked tick box
+     * Interacts with a dropdown and input the relevant info
      *
+     * @param assigneeDropdown - the selector
+     * @param root             - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
+     * @param assignee     - the locator value
      * @return current page object
      */
+    private void typeAheadSelectAssignee(WebElement assigneeDropdown, String root, String assignee) {
+        if (!pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(assignee)) {
+            pageUtils.waitForElementAndClick(assigneeDropdown);
+            pageUtils.waitForElementToAppear(By.cssSelector("[id='qa-publish-form-assigned-to-select'] .apriori-select input")).sendKeys(assignee.split(" ")[0]);
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, assignee)));
+        }
+    }
+
+    /**
+         * Click locked tick box
+         *
+         * @return current page object
+         */
     public PublishPage lock() {
         pageUtils.waitForElementToAppear(lockTickBox).click();
         return this;
