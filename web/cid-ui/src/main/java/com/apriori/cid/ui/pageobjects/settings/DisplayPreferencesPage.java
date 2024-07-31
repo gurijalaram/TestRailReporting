@@ -20,6 +20,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
@@ -55,6 +60,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     @FindBy(css = ".exchange-rate-table-select .apriori-select")
     private WebElement ertDropdown;
+
+    @FindBy(css = "div[data-testid='exchange-rate-summary'] p")
+    private List<WebElement> exchangeRates;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -275,6 +283,21 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      */
     public String getERT() {
         return pageUtils.waitForElementToAppear(ertDropdown).getAttribute("textContent");
+    }
+
+    /**
+     * Get current rate of exchange for currency based on comparison against 1 USD
+     *
+     * @param currencyCode - The currency to compare against 1 USD
+     * @return Double of exchange rate value
+     */
+    public Double getExchangeRateForCurrency(String currencyCode) {
+        List<String> rates = exchangeRates.stream().map(WebElement::getText).toList();
+        Pattern pattern = Pattern.compile("1 USD = (\\d*\\.\\d*) .{3}");
+        String exchangeRate = rates.stream().filter(rate -> rate.contains(currencyCode)).findFirst().get();
+        Matcher matcher = pattern.matcher(exchangeRate);
+        matcher.find();
+        return Double.parseDouble(matcher.group(1));
     }
 
     /**
