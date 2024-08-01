@@ -199,7 +199,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - New EvaluatePage PO
      */
-    public SwitchCostModePage clickSimulateModeButton() {
+    public SwitchCostModePage clickAprioriModeButton() {
         pageUtils.waitForElementAndClick(aprioriCostModeButton);
         return new SwitchCostModePage(driver);
     }
@@ -209,7 +209,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - Boolean of mode state
      */
-    public Boolean isSimulateCostModeSelected() {
+    public Boolean isAprioriCostModeSelected() {
         pageUtils.waitForElementToAppear(aprioriCostModeButton);
         return Boolean.parseBoolean(aprioriCostModeButton.getAttribute("aria-pressed"));
     }

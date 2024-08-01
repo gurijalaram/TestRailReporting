@@ -1,61 +1,55 @@
 package com.apriori.dfs.api.models.utils;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
-
 import com.apriori.dfs.api.enums.DFSApiEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
+import java.util.HashMap;
+
 public class DigitalFactoryUtil {
+    private RequestEntityUtil requestEntityUtil;
+
+    public DigitalFactoryUtil(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
+    }
 
     /**
      * FIND digital factories
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType - Expected type from body of HTTP response
-     * @param userCredentials - Specified user credentials
-     * @param inlineVariables - secret
+     * @param expectedType         - Expected type from body of HTTP response
+     * @param inlineVariables      - secret
      * @return Response object
      */
     public <T> ResponseWrapper<T> findDigitalFactories(Integer expectedResponseCode,
                                                        Class<T> expectedType,
-                                                       UserCredentials userCredentials,
                                                        String... inlineVariables) {
 
         DFSApiEnum path = inlineVariables.length == 0
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-        return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, userCredentials, inlineVariables);
+        return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, inlineVariables);
     }
 
     /**
      * FIND digital factories page
      *
-     * @param endpoint - Target endpoint
+     * @param endpoint             - Target endpoint
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
+     * @param expectedType         Expected type from body of HTTP response
      * @return Response object
      */
     public <T> ResponseWrapper<T> findDigitalFactoriesPage(EndpointEnum endpoint,
                                                            Integer expectedResponseCode,
                                                            Class<T> expectedType,
-                                                           UserCredentials userCredentials,
                                                            String... inlineVariables) {
 
-        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
+        final RequestEntity requestEntity = requestEntityUtil.init(endpoint, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
-
-        if (userCredentials != null) {
-            requestEntity.token(userCredentials.getToken())
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
-        }
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -64,17 +58,15 @@ public class DigitalFactoryUtil {
      * GET digital factory
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
-     * @param userCredentials Specified user credentials
-     * @param inlineVariables - identity or identity/secret
+     * @param expectedType         Expected type from body of HTTP response
+     * @param inlineVariables      - identity or identity/secret
      * @return Response object
      */
     public <T> ResponseWrapper<T> getDigitalFactory(Integer expectedResponseCode,
                                                     Class<T> expectedType,
-                                                    UserCredentials userCredentials,
                                                     String... inlineVariables) {
 
-        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, userCredentials, inlineVariables))
+        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables))
             .get();
     }
 
@@ -82,16 +74,16 @@ public class DigitalFactoryUtil {
      * GET digital factory
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
-     * @param identity - identity
+     * @param expectedType         Expected type from body of HTTP response
+     * @param identity             - identity
      * @return Response object
      */
     public <T> ResponseWrapper<T> getDigitalFactoryWithoutKeyParameter(Integer expectedResponseCode,
                                                                        Class<T> expectedType,
                                                                        String identity) {
 
-        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
-            .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
+        final RequestEntity requestEntity = requestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+            .inlineVariables(new String[] {identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
             .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();
@@ -102,8 +94,8 @@ public class DigitalFactoryUtil {
      * Update or Insert a DigitalFactory
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType - Expected type from body of HTTP response
-     * @param requestBody - Request body
+     * @param expectedType         - Expected type from body of HTTP response
+     * @param requestBody          - Request body
      * @return Response object
      */
     public <T> ResponseWrapper<T> upsertDigitalFactory(Integer expectedResponseCode,
@@ -117,9 +109,9 @@ public class DigitalFactoryUtil {
      * Update or Insert a DigitalFactory
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType - Expected type from body of HTTP response
-     * @param requestBody - Request body
-     * @param contentType - Content type
+     * @param expectedType         - Expected type from body of HTTP response
+     * @param requestBody          - Request body
+     * @param contentType          - Content type
      * @return Response object
      */
     public <T> ResponseWrapper<T> upsertDigitalFactory(Integer expectedResponseCode,
@@ -131,13 +123,17 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 0
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
-                .body(requestBody)
-                .inlineVariables(inlineVariables)
-                .expectedResponseCode(expectedResponseCode);
+        final RequestEntity requestEntity = requestEntityUtil.init(path, expectedType)
+            .body(requestBody)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
 
         if (contentType != null) {
-            requestEntity.headers().put("Content-Type", contentType);
+            requestEntity.headers(new HashMap<>() {
+                {
+                    put("Content-Type", contentType);
+                }
+            });
         }
 
         return HTTPRequest.build(requestEntity).post();
@@ -147,8 +143,8 @@ public class DigitalFactoryUtil {
      * DELETE digital factory by identity
      *
      * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType - Expected type from body of HTTP response
-     * @param inlineVariables - identity or identity/secret
+     * @param expectedType         - Expected type from body of HTTP response
+     * @param inlineVariables      - identity or identity/secret
      * @return Response object
      */
     public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode,
@@ -156,27 +152,19 @@ public class DigitalFactoryUtil {
                                                        String... inlineVariables) {
 
         return HTTPRequest.build(
-            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser(APRIORI_DESIGNER), inlineVariables))
+                getRequestEntity(expectedResponseCode, expectedType, inlineVariables))
             .delete();
     }
 
     private <T> RequestEntity getRequestEntity(Integer expectedResponseCode,
                                                Class<T> expectedType,
-                                               UserCredentials userCredentials,
                                                String... inlineVariables) {
 
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
+        return requestEntityUtil.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
-
-        if (userCredentials != null) {
-            requestEntity.token(userCredentials.getToken())
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
-        }
-
-        return requestEntity;
     }
 }
