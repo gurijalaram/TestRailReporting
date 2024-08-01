@@ -46,16 +46,20 @@ public class CostHistoryTests extends TestBaseUI {
     public static void createMultiCostedScenario() {
         castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
+        // Iteration 1
         componentsUtil.postComponent(castingPart);
 
+        // Iteration 2
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        //Iteration 3
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        //Iteration 4
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
@@ -63,12 +67,14 @@ public class CostHistoryTests extends TestBaseUI {
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        // Iteration 5
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .materialName(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        // Iteration 6
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .secondaryProcesses(SecondaryProcesses.builder()
@@ -81,34 +87,32 @@ public class CostHistoryTests extends TestBaseUI {
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        //Iteration 7
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .vpeName(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
-        castingPart.setCostingTemplate(
-            CostingTemplate.builder()
-                .vpeName(DigitalFactoryEnum.APRIORI_WESTERN_EUROPE.getDigitalFactory())
-                .build());
-        scenariosUtil.postGroupCostScenarios(castingPart);
-
+        // Iteration 8
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .annualVolume(289)
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        // Iteration 9
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .batchSize(275)
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        // Iteration 10
         SecondaryDigitalFactories secondaryDF = new SecondaryDigitalFactories();
         secondaryDF.setHeatTreatment(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
         secondaryDF.setMachining(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
-        secondaryDF.setSurfaceTreatment(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
+        secondaryDF.setSurfaceTreatment(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
         secondaryDF.setOtherSecondaryProcesses(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory());
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
@@ -117,6 +121,7 @@ public class CostHistoryTests extends TestBaseUI {
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
 
+        // Iteration 11
         castingPart.setCostingTemplate(CostingTemplate.builder()
             .costMode("MANUAL")
             .costRollupOverrides(CostRollupOverrides.builder()
@@ -128,7 +133,7 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     private final List<String> defaultGraphIterationNames = Arrays.asList("Iteration 2", "Iteration 3", "Iteration 4", "Iteration 5",
-        "Iteration 6", "Iteration 7", "Iteration 8", "Iteration 9", "Iteration 10", "Iteration 11", "Iteration 12");
+        "Iteration 6", "Iteration 7", "Iteration 8", "Iteration 9", "Iteration 10", "Iteration 11");
 
     @Test
     @TestRail(id = {28442, 28443, 28444, 28447, 31031})
@@ -186,7 +191,7 @@ public class CostHistoryTests extends TestBaseUI {
             .as("Verify changed to in Digital Factory").isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
 
         changeSummary = changeSummary.close(CostHistoryPage.class)
-            .openChangeSummary(11);
+            .openChangeSummary(10);
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Batch Size")).as("Verify changed from in Batch Size").isEqualTo("275");
         softAssertions.assertThat(changeSummary.getChangedTo("Batch Size")).as("Verify changed to in Batch Size").isEqualTo("458");
@@ -209,13 +214,13 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Digital Factories-Surface Treatment"))
             .as("Verify changed from in Secondary Digital Factories-Surface Treatment").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Surface Treatment"))
-            .as("Verify changed to in Secondary Digital Factories-Surface Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
+            .as("Verify changed to in Secondary Digital Factories-Surface Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
 
         changeSummary = changeSummary.close(CostHistoryPage.class)
-            .openChangeSummary(12);
+            .openChangeSummary(11);
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode"))
-            .as("Verify changed from in Cost Mode").isEqualTo("SIMULATE");
+            .as("Verify changed from in Cost Mode").isEqualTo("APRIORI");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode"))
             .as("Verify changed to in Cost Mode").isEqualTo("MANUAL");
 
@@ -294,7 +299,7 @@ public class CostHistoryTests extends TestBaseUI {
             .isEqualTo(defaultGraphIterationNames.size() - 1);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 4 removed").doesNotContain("Iteration 4");
 
-        costHistoryPage.showHideIteration(8);
+        costHistoryPage.showHideIteration(7);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify only 8 iterations displayed")
             .isEqualTo(defaultGraphIterationNames.size() - 2);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 removed")
@@ -307,7 +312,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 4 displayed").contains("Iteration 4");
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 remains removed").doesNotContain("Iteration 8");
 
-        costHistoryPage.showHideIteration(8);
+        costHistoryPage.showHideIteration(7);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify all 10 expected iterations displayed")
             .isEqualTo(defaultGraphIterationNames.size());
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify all iterations displayed").isEqualTo(defaultGraphIterationNames);
