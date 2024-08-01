@@ -28,6 +28,7 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.HttpStatus;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -161,8 +162,8 @@ class ConnectionManager<T> {
         final Headers responseHeaders = response.extract().headers();
         T responseEntity;
 
-        if (responseHeaders.getValue(X_FORWARDED_FOR) == null) {
-            log.error("Exception has been thrown because response header '" + X_FORWARDED_FOR + "' is empty.");
+        if (responseCode < HttpStatus.SC_BAD_REQUEST && responseHeaders.getValue(X_FORWARDED_FOR) == null) {
+            log.error("Error:- Response header '" + X_FORWARDED_FOR + "' is empty.");
         }
         if (returnType != null) {
             Class<InputStream> testClass = InputStream.class;
