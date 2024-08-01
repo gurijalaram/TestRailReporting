@@ -57,6 +57,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".table-head [role='columnheader']")
     private List<WebElement> columnHeader;
 
+    @FindBy(css = "[data-testid='apriori-card'] .table-body label")
+    private List<WebElement> checkboxes;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ComponentTableActions componentTableActions;
@@ -492,6 +495,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             String[] scenario = componentScenario.split(",");
             findScenarioCheckbox(scenario[0], scenario[1]).click();
         });
+        return this;
+    }
+
+    /**
+     * Select x amount of scenarios from the table
+     *
+     * @param noOfScenarios - the no. of scenarios to select
+     * @return current page object
+     */
+    public ScenarioTableController selectNoOfScenarios(int noOfScenarios) {
+        IntStream.range(0, noOfScenarios).forEach(index -> pageUtils.waitForElementsToAppear(checkboxes).get(index).click());
         return this;
     }
 
