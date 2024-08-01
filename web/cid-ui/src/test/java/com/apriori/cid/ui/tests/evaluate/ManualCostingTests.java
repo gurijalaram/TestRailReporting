@@ -153,7 +153,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         ChangeSummaryPage changeSummary = evaluatePage.changeSummaryManual();
 
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("APRIORI");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
 
         evaluatePage = changeSummary.close(EvaluatePage.class);
@@ -186,13 +186,13 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Results-piecePartCost"))
+        softAssertions.assertThat(changeSummary.getChangedFrom("Manual Inputs-piecePartCost"))
             .as("Verify Piece Part Cost in Change Summary").isEqualTo("-");
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Results-totalCapitalInvestment"))
+        softAssertions.assertThat(changeSummary.getChangedFrom("Manual Inputs-totalCapitalInvestment"))
             .as("Verify Cost Mode in Change Summary").isEqualTo("-");
-        softAssertions.assertThat(changeSummary.getChangedTo("Cost Results-piecePartCost"))
+        softAssertions.assertThat(changeSummary.getChangedTo("Manual Inputs-piecePartCost"))
             .as("Verify Piece Part Cost in Change Summary").isEqualTo("1.23");
-        softAssertions.assertThat(changeSummary.getChangedTo("Cost Results-totalCapitalInvestment"))
+        softAssertions.assertThat(changeSummary.getChangedTo("Manual Inputs-totalCapitalInvestment"))
             .as("Verify Cost Mode in Change Summary").isEqualTo("4.56");
 
         evaluatePage = changeSummary.close(EvaluatePage.class)
