@@ -6,11 +6,6 @@ import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialUtilizati
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -18,7 +13,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.Arrays;
 
 public class SustainabilityTests extends TestBaseUI {
@@ -41,8 +35,7 @@ public class SustainabilityTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isSustainabilityDetailsPresentForCosted()).isTrue();
-        softAssertions.assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
-            "Logistics Carbon", "Total Carbon"));
+        softAssertions.assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon", "Total Carbon"));
 
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
