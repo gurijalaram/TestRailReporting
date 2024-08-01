@@ -61,7 +61,7 @@ public class GroupEditTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Public")
             .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName(),
-                componentC.getComponentName() + ", " + componentB.getScenarioName())
+                componentC.getComponentName() + ", " + componentC.getScenarioName())
             .editScenario(EditComponentsPage.class);
 
         softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("If you wish to retain existing private scenarios, change the scenario name, otherwise they will be overridden.");
@@ -76,7 +76,7 @@ public class GroupEditTests extends TestBaseUI {
 
         explorePage.selectFilter("Public")
             .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName(),
-                componentC.getComponentName() + ", " + componentB.getScenarioName())
+                componentC.getComponentName() + ", " + componentC.getScenarioName())
             .editScenario(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(scenarioName)
