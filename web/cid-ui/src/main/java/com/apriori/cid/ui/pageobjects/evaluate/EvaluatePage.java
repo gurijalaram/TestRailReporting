@@ -171,10 +171,13 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] label")
     private WebElement piecePartCostLabel;
 
+    @FindBy(css = ".append-text.input-group-text")
+    private WebElement manualCurrencyLabel;
+
     @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] input")
     private WebElement piecePartCostInput;
 
-    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] span")
+    @FindBy(css = ".invalid-feedback.invalid-feedback-for-cost-rollup-overrides-piece-part-cost")
     private WebElement piecePartCostError;
 
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] label")
@@ -183,8 +186,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] input")
     private WebElement totalCapitalInvestmentInput;
 
-    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
+    @FindBy(css = ".invalid-feedback.invalid-feedback-for-cost-rollup-overrides-total-capital-investment")
     private WebElement totalCapitalInvestmentError;
+
     @FindBy(xpath = "div[id = 'qa-total-capital-investment-input-field'] span")
     private WebElement evaluateTabActive;
 
@@ -1019,6 +1023,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getPiecePartCostLabelText() {
         pageUtils.waitForElementToAppear(piecePartCostLabel);
         return piecePartCostLabel.getText();
+    }
+
+    /**
+     * Get Manual Costing Currency
+     *
+     * @return - String of Currency
+     */
+    public String getCurrencyText() {
+        pageUtils.waitForElementToAppear(manualCurrencyLabel);
+        return manualCurrencyLabel.getText();
     }
 
     /**

@@ -184,7 +184,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         changeSummary = evaluatePage.changeSummaryManual();
 
-        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("APRIORI");
         softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
         softAssertions.assertThat(changeSummary.getChangedFrom("Manual Inputs-piecePartCost"))
             .as("Verify Piece Part Cost in Change Summary").isEqualTo("-");
@@ -200,7 +200,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .selectCurrency(CurrencyEnum.EUR)
             .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getPiecePartCostLabelText())
+        softAssertions.assertThat(evaluatePage.getCurrencyText())
             .as("Verify Currency updates to that set in Preferences").contains(CurrencyEnum.EUR.getCurrency().split(" ")[0]);
 
         softAssertions.assertAll();
