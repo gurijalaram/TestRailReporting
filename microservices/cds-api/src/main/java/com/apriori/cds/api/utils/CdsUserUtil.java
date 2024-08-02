@@ -84,7 +84,7 @@ public class CdsUserUtil {
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
 
-        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
+        RequestEntity requestEntity = getUser(User.class, customerIdentity, requestBody, HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -104,10 +104,7 @@ public class CdsUserUtil {
         requestBody.setEmail(userEmail + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
 
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, ErrorResponse.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body("user", requestBody);
+        RequestEntity requestEntity = getUser(ErrorResponse.class, customerIdentity, requestBody, HttpStatus.SC_BAD_REQUEST);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -128,15 +125,15 @@ public class CdsUserUtil {
         requestBody.getUserProfile().setGivenName(userName);
         requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
 
-        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
+        RequestEntity requestEntity = getUser(User.class, customerIdentity, requestBody, HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
 
-    private RequestEntity getUser(String customerIdentity, User requestBody) {
-        return requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+    private <T> RequestEntity getUser(Class<T> klass, String customerIdentity, User requestBody, Integer expectedResponseCode) {
+        return requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, klass)
             .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .expectedResponseCode(expectedResponseCode)
             .body("user", requestBody);
     }
 
