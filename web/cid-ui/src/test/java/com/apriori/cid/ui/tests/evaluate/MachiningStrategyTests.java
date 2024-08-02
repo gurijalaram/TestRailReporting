@@ -24,7 +24,7 @@ public class MachiningStrategyTests extends TestBaseUI {
     @TestRail(id = {14210, 14211, 14212, 14213, 14214, 14937, 14938, 14936})
     @Description("Verify Machining Strategy option made available when suitable Process Group selected")
     public void testMachiningStrategyOptionAvailable() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -59,7 +59,7 @@ public class MachiningStrategyTests extends TestBaseUI {
         evaluatePage.selectProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxSelected()).isEqualTo(false);
+        softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxSelected()).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 

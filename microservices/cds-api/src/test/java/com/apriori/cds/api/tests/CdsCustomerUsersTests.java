@@ -3,6 +3,7 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.RolesEnum;
 import com.apriori.cds.api.models.response.CredentialsItems;
+import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.UserProperties;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CdsUserUtil;
@@ -75,6 +76,19 @@ public class CdsCustomerUsersTests {
 
         soft.assertThat(user.getResponseEntity().getUsername()).isEqualTo(userName);
         soft.assertThat(user.getResponseEntity().getEnablements()).isNotNull();
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {31576})
+    @Description("Negative test - set username different than user email")
+    public void setDifferentUsernameThanEmail() {
+        setCustomerData();
+        String userName = generateStringUtil.generateUserName();
+        String userEmail = generateStringUtil.generateAlphabeticString("email", 4);
+        ErrorResponse user = cdsUserUtil.addUserWithDifferentEmailAndUsername(customerIdentity, userName, userEmail, customerName).getResponseEntity();
+
+        soft.assertThat(user.getMessage()).isEqualTo(String.format("'username' should be equal to '%s'.", userEmail));
         soft.assertAll();
     }
 
