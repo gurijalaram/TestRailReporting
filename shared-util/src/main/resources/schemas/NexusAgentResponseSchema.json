@@ -54,11 +54,21 @@
                         },
                         "md5": {
                           "type": "string"
+                        },
+                        "sha256": {
+                          "type": "string"
+                        },
+                        "sha512": {
+                          "type": "string"
                         }
                       },
                       "required": [
                         "sha1",
                         "md5"
+                      ],
+                      "optional": [
+                        "sha256",
+                        "sha512"
                       ]
                     },
                     "contentType": {

@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NexusCheckSum {
     private String sha1;
+    private String sha256;
+    private String sha512;
     private String md5;
 }

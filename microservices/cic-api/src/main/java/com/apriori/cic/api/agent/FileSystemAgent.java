@@ -69,7 +69,7 @@ public class FileSystemAgent extends Agent {
     @SneakyThrows
     public void uploadInputFileToRemoteWorkflowFolder(String workflowName, String inputFileName) {
         try {
-            String workflowFolder = String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
+            String workflowFolder = String.format(AgentConstants.REMOTE_FS_WF_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
             File testDataInputFile = FileResourceUtil.getLocalResourceFile("testdata/" + inputFileName + ".xlsx");
             String destinationFolder = workflowFolder + File.separator + "inputs";
             String cadFilesFolder = destinationFolder + File.separator + "cad-files";
@@ -95,24 +95,31 @@ public class FileSystemAgent extends Agent {
     public Boolean verifyReports(String inputFile, String workflowName, String jobId) {
         String outputFolder = getWorkflowOutputFolder(workflowName, jobId);
         List<PartData> partDataList = getInputFileData(inputFile);
+        Boolean isReportsGenerated = false;
         try {
-            String workflowFolder = String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
+            String workflowFolder = String.format(AgentConstants.REMOTE_FS_WF_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
             String reportsFolder = workflowFolder + File.separator + "outputs" + File.separator + outputFolder + File.separator + "reports";
-            return ftpClient.getFilesList(reportsFolder).stream()
-                .anyMatch(file ->
-                    partDataList.stream()
-                        .peek(partData -> {
-                            if (!file.getFilename().contains(partData.getPartName().split("\\.")[0])) {
-                                log.debug(String.format("ACTUAL Document content : (%s) <=> EXPECTED PART NAME : (%s)", file.getFilename(), partData.getPartName()));
-                            }
-                        })
-                        .anyMatch(partData ->
-                            file.getFilename().contains(partData.getPartName().split("\\.")[0])
-                        )
-                );
+            if (ftpClient.getFilesList(reportsFolder).size() > 0) {
+                isReportsGenerated = ftpClient.getFilesList(reportsFolder).stream()
+                    .anyMatch(file ->
+                        partDataList.stream()
+                            .peek(partData -> {
+                                if (!file.getFilename().contains(partData.getPartName().split("\\.")[0])) {
+                                    log.debug(String.format("ACTUAL Document content : (%s) <=> EXPECTED PART NAME : (%s)", file.getFilename(), partData.getPartName()));
+                                }
+                            })
+                            .anyMatch(partData ->
+                                file.getFilename().contains(partData.getPartName().split("\\.")[0])
+                            )
+                    );
+            } else {
+                log.error("REPORTS ARE NOT GENERATED IN REPORTS FOLDER!!!{}", reportsFolder);
+            }
+
         } catch (Exception e) {
             throw new IllegalArgumentException("REPORTS FOLDER NOT FOUND!!!");
         }
+        return isReportsGenerated;
     }
 
     /**
@@ -127,7 +134,7 @@ public class FileSystemAgent extends Agent {
         String workflowFolder;
         Boolean isOutFileExists = false;
         try {
-            workflowFolder = String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
+            workflowFolder = String.format(AgentConstants.REMOTE_FS_WF_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
             String destinationFolder = workflowFolder + File.separator + "outputs" + File.separator + outputFolder;
             isOutFileExists = ftpClient.getFilesList(destinationFolder).stream().filter(file -> file.getFilename().equals("cig-output.xlsx"))
                 .findFirst().isPresent();
@@ -144,7 +151,7 @@ public class FileSystemAgent extends Agent {
      * @return true or false
      */
     public Boolean deleteWorkflowFromAgent(String workflowName) {
-        return ftpClient.recursiveFolderDelete(String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName));
+        return ftpClient.recursiveFolderDelete(String.format(AgentConstants.REMOTE_FS_WF_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName));
     }
 
     /**
@@ -172,15 +179,16 @@ public class FileSystemAgent extends Agent {
 
     /**
      * get workflow output folder from Agent
+     *
      * @param workflowName - workflow name
-     * @param jobId - job id
+     * @param jobId        - job id
      * @return - folder name
      */
     private String getWorkflowOutputFolder(String workflowName, String jobId) {
         String workflowFolder = StringUtils.EMPTY;
         String outputFolder = StringUtils.EMPTY;
         try {
-            workflowFolder = String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
+            workflowFolder = String.format(AgentConstants.REMOTE_FS_WF_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName);
             String destinationFolder = workflowFolder + File.separator + "outputs";
             String searchForRemoteFolder = jobId.split("-")[jobId.split("-").length - 1];
             return ftpClient.getMatchedFolder(destinationFolder, searchForRemoteFolder);
@@ -195,9 +203,10 @@ public class FileSystemAgent extends Agent {
 
     /**
      * get file name from s3 bucket
+     *
      * @param s3ComponentName - component name
-     * @param processGroup - ProcessGroupEnum
-     * @param newFileName - file name to be saved
+     * @param processGroup    - ProcessGroupEnum
+     * @param newFileName     - file name to be saved
      * @return File
      */
     @SneakyThrows

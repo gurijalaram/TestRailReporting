@@ -142,10 +142,10 @@ public class FileSystemSmokeTests extends CicGuiTestUtil {
     }
 
     @AfterEach
-    public void cleanup() {
-        softAssertions.assertAll();
+    public void cleanUp() {
         fileSystemAgent.deleteWorkflowFromAgent(workflowRequestDataBuilder.getName());
         CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()));
         fileSystemAgent.closeConnection();
+        softAssertions.assertAll();
     }
 }
