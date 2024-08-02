@@ -252,8 +252,6 @@ public class GroupPublishTests extends TestBaseUI {
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
         componentB.setUser(componentA.getUser());
-        String scenarioACreatedByName = scenariosUtil.getScenarioCompleted(componentA).getCreatedByName();
-
 
         loginPage = new CidAppLoginPage(driver);
 
@@ -267,6 +265,8 @@ public class GroupPublishTests extends TestBaseUI {
             .clickContinue(PublishPage.class);
 
         softAssertions.assertThat(publishPage.getAssociationAlert()).contains("High maturity and complete status scenarios can be prioritized to make more accurate associations when uploading new assemblies.");
+
+        String scenarioACreatedByName = scenariosUtil.getScenarioCompleted(componentA).getCreatedByName();
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
