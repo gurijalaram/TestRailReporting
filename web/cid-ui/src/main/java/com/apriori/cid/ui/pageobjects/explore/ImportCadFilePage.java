@@ -50,7 +50,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "[data-testid='assembly-association-strategy-message']")
     private WebElement associationAlert;
 
-    @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
+    @FindBy(css = ".Mui-required.feedback-field-error.invalid-feedback-for-primary-scenario-name")
     private WebElement scenarioNameWarning;
 
     @FindBy(css = ".form-action-buttons [type='submit']")
