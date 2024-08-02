@@ -84,7 +84,27 @@ public class CdsUserUtil {
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
 
-        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
+        RequestEntity requestEntity = getUser(User.class, customerIdentity, requestBody, HttpStatus.SC_CREATED);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Adds user with email that doesn't mach the username
+     *
+     * @param customerIdentity - the customer id
+     * @param userName - the username
+     * @param userEmail - user email
+     * @param domain - the customer name
+     * @return new object
+     */
+    public ResponseWrapper<ErrorResponse> addUserWithDifferentEmailAndUsername(String customerIdentity, String userName, String userEmail, String domain) {
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userEmail + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
+
+        RequestEntity requestEntity = getUser(ErrorResponse.class, customerIdentity, requestBody, HttpStatus.SC_BAD_REQUEST);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -105,15 +125,15 @@ public class CdsUserUtil {
         requestBody.getUserProfile().setGivenName(userName);
         requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
 
-        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
+        RequestEntity requestEntity = getUser(User.class, customerIdentity, requestBody, HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
 
-    private RequestEntity getUser(String customerIdentity, User requestBody) {
-        return requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+    private <T> RequestEntity getUser(Class<T> klass, String customerIdentity, User requestBody, Integer expectedResponseCode) {
+        return requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, klass)
             .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .expectedResponseCode(expectedResponseCode)
             .body("user", requestBody);
     }
 
