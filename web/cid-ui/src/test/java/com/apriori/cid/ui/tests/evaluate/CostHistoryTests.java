@@ -302,15 +302,15 @@ public class CostHistoryTests extends TestBaseUI {
         costHistoryPage.showHideIteration(7);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify only 8 iterations displayed")
             .isEqualTo(defaultGraphIterationNames.size() - 2);
-        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 removed")
-            .doesNotContain("Iteration 4", "Iteration 8");
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 7 removed")
+            .doesNotContain("Iteration 4", "Iteration 7");
 
         costHistoryPage.showHideIteration(4);
         softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify hide iteration icon updated").isEqualTo("eye");
         softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify 9 iterations displayed")
             .isEqualTo(defaultGraphIterationNames.size() - 1);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 4 displayed").contains("Iteration 4");
-        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 remains removed").doesNotContain("Iteration 8");
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 7 remains removed").doesNotContain("Iteration 7");
 
         costHistoryPage.showHideIteration(7);
         softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify all 10 expected iterations displayed")
