@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 public abstract class EagerPageComponent<T extends LoadableComponent<T>> extends LoadableComponent<T> {
     private final WebDriver driver;
     private final PageUtils pageUtils;
+    protected final static Integer TIME_OUT = 30;
 
     /**
      * Initializes a new instance of this object.

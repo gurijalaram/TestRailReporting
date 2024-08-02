@@ -499,7 +499,8 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return current page object
      */
     public MessagesPage clickOnUnAssignToOption() {
-        getPageUtils().waitForElementAndClick(unAssignToOption);
+        getPageUtils().waitForElementToAppear(unAssignToOption);
+        getPageUtils().javaScriptClick(unAssignToOption);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }

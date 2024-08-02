@@ -500,9 +500,9 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public void waitForCADViewerLoad() {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"));
-        getPageUtils().waitForElementToAppear(By.xpath("//div[@id='card-1']"), Duration.ofSeconds(20));
-        getPageUtils().waitForElementToAppear(By.xpath("//button[@aria-label='Apply basic measurements to the model']"), Duration.ofSeconds(20));
-        getPageUtils().waitForElementToAppear(By.xpath("//div[@data-testid='comments-expanded']"), Duration.ofSeconds(20));
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@id='card-1']"), Duration.ofSeconds(TIME_OUT));
+        getPageUtils().waitForElementToAppear(By.xpath("//button[@aria-label='Apply basic measurements to the model']"), Duration.ofSeconds(TIME_OUT));
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@data-testid='comments-expanded']"), Duration.ofSeconds(TIME_OUT));
     }
 
     /**
@@ -2305,6 +2305,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage shareScenario() {
         getPageUtils().waitForElementAndClick(costIcon);
         getPageUtils().waitForElementAndClick(btnShare);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"));
         return this;
     }
 
