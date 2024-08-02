@@ -295,7 +295,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
 
-            if (propertyEnum == PropertyEnum.ASSIGNEE) {
+            if (propertyEnum.equals(PropertyEnum.ASSIGNEE)) {
                 pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] .apriori-select div input", index))).sendKeys(value.split(" ")[0]);
                 pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value)));
             } else {

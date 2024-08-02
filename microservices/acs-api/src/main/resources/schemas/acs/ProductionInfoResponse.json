@@ -811,7 +811,6 @@
     "annualVolumeOverridden",
     "productionLife",
     "productionLifeOverridden",
-    "batchSizeOverride",
     "computedBatchSize",
     "batchSizeOverridden",
     "componentsPerProduct",

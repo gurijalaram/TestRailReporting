@@ -11,6 +11,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -264,6 +265,35 @@ public class QuickComparisonTests extends TestBaseUI {
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30608, 31088})
+    @Description("Validate manually costed component can be used as Basis for Quick Comparison")
+    public void testManualCostBasisQuickComparison() {
+        component = new ComponentRequestUtil().getComponentByExtension("step");
+
+        componentsUtil.postComponent(component);
+        component.setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(8.88)
+                .totalCapitalInvestment(1675.31)
+                .build())
+            .build());
+        scenarioUtil.postCostScenario(component);
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(component.getUser())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
+            .createComparison()
+            .selectQuickComparison();
+
+        softAssertions.assertThat(comparePage.getBasis())
+            .as("Verify manually costed scenario used as basis")
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
 
         softAssertions.assertAll();
     }
