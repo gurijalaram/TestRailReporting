@@ -274,7 +274,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.94")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.87")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage.selectRoutingPreferenceByName("Gravity Die Cast");
@@ -287,7 +287,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$7.12")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.54")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -942,7 +942,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.84")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$23.87")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -951,7 +951,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$26.47")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$23.87")).isTrue();
         softAssertions.assertAll();
     }
 

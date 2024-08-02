@@ -47,4 +47,6 @@ public class ProductionInfoResponse {
     private Boolean xsltFileVisible;
     private Boolean manualCurrencyCodeVisible;
     private List<ProcessGroupItem> availableProcessGroupSelections;
+    private String costed;
+    private List<ProcessGroupItemTypeTwo> availableProcessGroups;
 }

@@ -257,6 +257,17 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Select x amount of scenarios from the table
+     *
+     * @param noOfScenarios - the no. of scenarios to select
+     * @return current page object
+     */
+    public ExplorePage selectNoOfScenarios(int noOfScenarios) {
+        scenarioTableController.selectNoOfScenarios(noOfScenarios);
+        return this;
+    }
+
+    /**
      * Highlights the scenario in the table using the keyboard control key
      *
      * @param componentName - component name

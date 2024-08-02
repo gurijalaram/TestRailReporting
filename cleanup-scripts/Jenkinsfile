@@ -1,0 +1,31 @@
+def agents = ['WALQSDOCKER01', 'WALQSDOCKER02','WALQSDOCKER03','WALQSDOCKER04','WALQSDOCKER05','WALQSDOCKER06','WALQSDOCKER07','WALQSDOCKER08']
+
+def generateStage(nodeLabel) {
+    return {
+        stage("Runs on ${nodeLabel}") {
+            node(nodeLabel) {
+                script {
+                    echo "Running on ${nodeLabel}"
+                    sh 'docker volume rm $(docker volume ls -qf dangling=true)'
+                }
+            }
+        }
+    }
+}
+
+def parallelStagesMap = agents.collectEntries {
+    ["${it}" : generateStage(it)]
+}
+
+pipeline {
+    agent none
+    stages {
+        stage('Parallel stage') {
+            steps {
+                script {
+                    parallel parallelStagesMap
+                }
+            }
+        }
+    }
+}

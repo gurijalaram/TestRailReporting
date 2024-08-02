@@ -1,19 +1,23 @@
 package com.apriori.dfs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.ProcessGroup;
 import com.apriori.dfs.api.models.response.ProcessGroups;
 import com.apriori.dfs.api.models.utils.ProcessGroupsUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,11 +28,9 @@ import software.amazon.awssdk.http.HttpStatusCode;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class ProcessGroupsTests {
-
     private static final String BAD_REQUEST_ERROR = "Bad Request";
     private static final String PG_NAME = "Stock Machining";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
@@ -45,7 +47,15 @@ public class ProcessGroupsTests {
         "Both pageNumber and pageSize must be greater than 0";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
-    private final ProcessGroupsUtil processGroupsUtil = new ProcessGroupsUtil();
+    private ProcessGroupsUtil processGroupsUtil;
+
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser(APRIORI_DESIGNER);
+        processGroupsUtil = new ProcessGroupsUtil(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {29414, 31126})
@@ -117,9 +127,9 @@ public class ProcessGroupsTests {
             HttpStatusCode.OK, ProcessGroups.class).getResponseEntity();
 
         softAssertions.assertThat(responseWrapper.getItems()).isNotNull();
-        softAssertions.assertThat(responseWrapper.getItems().stream().filter(o -> o.getDescription().contains("2-Model Machining")).collect(Collectors.toList())
+        softAssertions.assertThat(responseWrapper.getItems().stream().filter(o -> o.getDescription().contains("2-Model Machining")).toList()
             .stream().findFirst().get().getSupportsMaterials()).isEqualTo(false);
-        softAssertions.assertThat(responseWrapper.getItems().stream().filter(o -> o.getDescription().contains("Bar & Tube Fab")).collect(Collectors.toList())
+        softAssertions.assertThat(responseWrapper.getItems().stream().filter(o -> o.getDescription().contains("Bar & Tube Fab")).toList()
             .stream().findFirst().get().getSupportsMaterialStocks()).isEqualTo(true);
         softAssertions.assertAll();
     }
@@ -152,7 +162,7 @@ public class ProcessGroupsTests {
     @TestRail(id = {29556})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findProcessGroupWithIncorrectAcceptHeader() {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.PROCESS_GROUPS, ErrorMessage.class)
+        RequestEntity requestEntity = requestEntityUtil.init(DFSApiEnum.PROCESS_GROUPS, ErrorMessage.class)
             .headers(new HashMap<>() {
                 {
                     put("Accept", "application/javascript");
@@ -204,7 +214,7 @@ public class ProcessGroupsTests {
     @TestRail(id = {29647})
     @Description("Find all Process Groups sorted by name")
     @ParameterizedTest
-    @ValueSource(strings = { "ASC", "DESC" })
+    @ValueSource(strings = {"ASC", "DESC"})
     public void findProcessGroupsPageSortedByName(String sort) {
         int pageSize = 100;
         int pageNumber = 1;

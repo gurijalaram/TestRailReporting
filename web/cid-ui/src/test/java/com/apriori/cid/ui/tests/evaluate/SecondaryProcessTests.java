@@ -454,7 +454,7 @@ public class SecondaryProcessTests extends TestBaseUI {
             .inputName(filterName)
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, component.getScenarioName())
             .submit(ExplorePage.class)
-            .openScenario("SheetMetal", component.getScenarioName())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .goToAdvancedTab();
 
         softAssertions.assertThat(evaluatePage.isSecondaryProcessButtonEnabled()).isEqualTo(false);

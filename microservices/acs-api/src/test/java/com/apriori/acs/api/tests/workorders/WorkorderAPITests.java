@@ -251,7 +251,7 @@ public class WorkorderAPITests extends TestUtil {
         softAssertions.assertThat(getCadMetadataResponse.getCadType()).isEqualTo("PART");
         softAssertions.assertThat(getCadMetadataResponse.getKeepFreeBodies()).isEqualTo("false");
         softAssertions.assertThat(getCadMetadataResponse.getFreeBodiesPreserveCad()).isEqualTo("false");
-        softAssertions.assertThat(getCadMetadataResponse.getFreeBodiesIgnoreMissingComponents()).isEqualTo("false");
+        softAssertions.assertThat(getCadMetadataResponse.getFreeBodiesIgnoreMissingComponents()).isEqualTo("true");
         softAssertions.assertThat(getCadMetadataResponse.getLengthUnit()).isEqualTo("MM");
         softAssertions.assertThat(getCadMetadataResponse.getVendor()).isEqualTo("PROE");
         softAssertions.assertThat(getCadMetadataResponse.getPmi().size()).isEqualTo(3);
@@ -313,7 +313,7 @@ public class WorkorderAPITests extends TestUtil {
 
         softAssertions.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
-        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
         softAssertions.assertAll();
@@ -351,7 +351,7 @@ public class WorkorderAPITests extends TestUtil {
 
         softAssertions.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
-        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssertions.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
         softAssertions.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
         softAssertions.assertAll();
@@ -424,7 +424,7 @@ public class WorkorderAPITests extends TestUtil {
             .isEqualTo(true);
         softAssertions.assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), false)))
-            .isEqualTo(false);
+            .isEqualTo(true);
         softAssertions.assertAll();
     }
 

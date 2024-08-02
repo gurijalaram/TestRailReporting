@@ -174,7 +174,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] input")
     private WebElement piecePartCostInput;
 
-    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] span")
+    @FindBy(css = "span[class='invalid-feedback invalid-feedback-for-cost-rollup-overrides-piece-part-cost']")
     private WebElement piecePartCostError;
 
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] label")
@@ -183,8 +183,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] input")
     private WebElement totalCapitalInvestmentInput;
 
-    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
+    @FindBy(css = "span[class='invalid-feedback invalid-feedback-for-cost-rollup-overrides-total-capital-investment']")
     private WebElement totalCapitalInvestmentError;
+
     @FindBy(xpath = "div[id = 'qa-total-capital-investment-input-field'] span")
     private WebElement evaluateTabActive;
 
