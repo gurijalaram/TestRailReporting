@@ -250,6 +250,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
+            .costScenario()
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
