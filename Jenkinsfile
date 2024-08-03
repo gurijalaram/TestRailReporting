@@ -62,5 +62,3 @@ pipeline {
             echo "Cleaning up.."
             }
         }
-    }
-}
