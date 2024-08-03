@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 public class SampleTest {
 
     @Test
-    public void testDemo() {
+    public void testDemo(){
         try (PrintWriter writer = new PrintWriter(new FileWriter("test-report.html"))) {
             writer.println("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -74,28 +74,10 @@ public class SampleTest {
                 "                <td>Row 1, Cell 3</td>\n" +
                 "                <td>Row 1, Cell 4</td>\n" +
                 "            </tr>\n" +
-                "            <tr>\n" +
-                "                <td>Row 2, Cell 1</td>\n" +
-                "                <td>Row 2, Cell 2</td>\n" +
-                "                <td>Row 2, Cell 3</td>\n" +
-                "                <td>Row 2, Cell 4</td>\n" +
-                "            </tr>\n" +
-                "            <tr>\n" +
-                "                <td>Row 3, Cell 1</td>\n" +
-                "                <td>Row 3, Cell 2</td>\n" +
-                "                <td>Row 3, Cell 3</td>\n" +
-                "                <td>Row 3, Cell 4</td>\n" +
-                "            </tr>\n" +
-                "            <tr>\n" +
-                "                <td>Row 4, Cell 1</td>\n" +
-                "                <td>Row 4, Cell 2</td>\n" +
-                "                <td>Row 4, Cell 3</td>\n" +
-                "                <td>Row 4, Cell 4</td>\n" +
-                "            </tr>\n" +
                 "        </tbody>\n" +
                 "    </table>\n" +
                 "</body>\n" +
-                "</html>\n");
+                "</html>");
         } catch (IOException e) {
             e.printStackTrace();
         }
