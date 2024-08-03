@@ -24,9 +24,9 @@ def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa
 pipeline {
     agent any
     stages {
-        stage("Display Html content") {
+        stage("Initialize") {
             steps {
-                sh 'cat test-report.html'
+                echo "Initializing.."
             }
         }
 
@@ -51,8 +51,8 @@ pipeline {
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
                         reportDir            : '',
-                        reportFiles          : 'index.html',
-                        reportName           : "test-report.html"
+                        reportFiles          : 'test-report.html',
+                        reportName           : "TestRailReport"
                 ])
             }
         }
