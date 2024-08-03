@@ -36,21 +36,6 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                script {
-                    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                    sh """
-                         docker build \
-                             --no-cache \
-                             --target build \
-                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                             --label \"build-date=${timeStamp}\" \
-                             --label qa-automation \
-                             --build-arg FOLDER=${folder} \
-                             --build-arg MODULE=${MODULE} \
-                             .
-                     """
-                }
             }
         }
 
