@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 public class SampleTest {
 
     @Test
-    public void testDemo(){
+    public void testDemo() {
         try (PrintWriter writer = new PrintWriter(new FileWriter("test-report.html"))) {
             writer.println("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
