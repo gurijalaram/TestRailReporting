@@ -1,0 +1,4 @@
+Install the CheckStyle-IDEA plugin (https://plugins.jetbrains.com/plugin/1065-checkstyle-idea) via plugin manager.
+In Settings -> Editor -> Code Style -> Java import the schema from codestyle.xml
+In Settings -> Other Settings -> Checkstyle add the checkstyle.xml file
+Open the Checkstyle view in View -> Tool Windows -> Checkstyle or use the shortcuts to run the scan
