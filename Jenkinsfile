@@ -32,10 +32,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git(
-                        url: 'git@github.com:gurijalaram/TestRailReporting.git',
-                        credentialsId: 'github-ssh'
-                    )
+                    echo "The GitHub secret is ${env.GIT_SSH_KEY}"
                 }
             }
         }
