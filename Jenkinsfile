@@ -23,41 +23,19 @@ def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa
 
 pipeline {
     agent any
-    stages {
-        stage("Initialize") {
-            steps {
-                echo "Initializing.."
-            }
+     environment {
+            GITHUB_SECRET = credentials('RAM_GURIJALA_SECRET')
         }
 
-        stage("Build") {
-            steps {
-                echo "Building..."
+        stages {
+            stage('Example') {
+                steps {
+                    script {
+                        // Use the secret in your script
+                        echo "The GitHub secret is ${env.RAM_GURIJALA_SECRET}"
+                    }
+                }
             }
-        }
-
-        stage("Test") {
-            steps {
-                echo "Testing..."
-            }
-        }
-
-        stage("Extract Test Results") {
-            steps {
-                // Copy out build/test artifacts.
-                echo "Extract Test Results.."
-                publishHTML(target: [
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll              : true,
-                        reportDir            : '',
-                        reportFiles          : 'test-report.html',
-                        reportName           : "TestRailReport"
-                ])
-            }
-        }
-    }
-
 
     post {
         always {
