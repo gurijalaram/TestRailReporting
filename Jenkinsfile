@@ -29,7 +29,7 @@ pipeline {
                 script {
                     git(
                          url: 'git@github.com:gurijalaram/TestRailReporting.git',
-                         credentialsId: 'gurijalaram'
+                         credentialsId: 'github-token'
                        )
                 }
             }
