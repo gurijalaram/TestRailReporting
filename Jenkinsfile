@@ -25,14 +25,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                     steps {
-                          git branch: 'develop', url: 'https://github-token@github.com/gurijalaram/TestRailReporting.git'
-                         }
+    stage('Checkout') {
+                steps {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/develop']], userRemoteConfigs: [[url: 'https://github.com/gurijalaram/TestRailReporting.git']]])
+                    //git 'https://github.com/rajrules21/Jenkins-Projects'
                 }
-            }
-        }
     }
 }
