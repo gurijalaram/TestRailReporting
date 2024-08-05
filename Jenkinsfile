@@ -23,6 +23,7 @@ def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa
 def GIT_SSH_KEY
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
