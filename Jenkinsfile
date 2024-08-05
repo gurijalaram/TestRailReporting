@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     git(
-                         url: 'git@github.com:gurijalaram/TestRailReporting.git',
+                         url: 'https://github.com/gurijalaram/TestRailReporting.git',
                          credentialsId: 'github-token'
                        )
                 }
