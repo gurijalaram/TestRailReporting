@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                      steps {
-                          git branch: 'develop', url: 'https://github-token@github.com/gurijalaram/TestRailReporting.git
+                          git branch: 'develop', url: 'https://github-token@github.com/gurijalaram/TestRailReporting.git'
                          }
                 }
             }
