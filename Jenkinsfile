@@ -28,10 +28,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    git(
-                         url: 'https://github.com/gurijalaram/TestRailReporting.git',
-                         credentialsId: 'github-token'
-                       )
+                     steps {
+                          git branch: 'develop', url: 'https://github-token@github.com/gurijalaram/TestRailReporting.git
+                         }
                 }
             }
         }
