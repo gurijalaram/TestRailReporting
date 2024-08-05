@@ -25,15 +25,17 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_SECRET = credentials('github-secret')
+        GIT_SSH_KEY = credentials('github-ssh')
     }
 
     stages {
-        stage('Example') {
+        stage('Checkout') {
             steps {
                 script {
-                    // Use the secret in your script
-                    echo "The GitHub secret is ${env.GITHUB_SECRET}"
+                    git(
+                        url: 'git@github.com:gurijalaram/TestRailReporting.git',
+                        credentialsId: 'github-ssh'
+                    )
                 }
             }
         }
