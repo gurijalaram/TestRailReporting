@@ -23,16 +23,14 @@ def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa
 def GIT_SSH_KEY
 pipeline {
     agent any
-
-    environment {
-        GIT_SSH_KEY = credentials('github-ssh')
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    echo "The GitHub secret is ${env.GIT_SSH_KEY}"
+                    git(
+                         url: 'git@github.com:gurijalaram/TestRailReporting.git',
+                         credentialsId: 'github-ssh'
+                       )
                 }
             }
         }
