@@ -23,18 +23,19 @@ def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa
 
 pipeline {
     agent any
-     environment {
-            GITHUB_SECRET = credentials('RAM_GURIJALA_SECRET')
-        }
 
-        stages {
-            stage('Example') {
-                steps {
-                    script {
-                        // Use the secret in your script
-                        echo "The GitHub secret is ${env.RAM_GURIJALA_SECRET}"
-                    }
+    environment {
+        GITHUB_SECRET = credentials('github-secret')
+    }
+
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    // Use the secret in your script
+                    echo "The GitHub secret is ${env.GITHUB_SECRET}"
                 }
             }
         }
-        }
+    }
+}
