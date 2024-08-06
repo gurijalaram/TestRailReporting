@@ -1,9 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "and": [
-        {"between": {"property": "iteration", "min": 1 ,"max": "2" }}
-      ]
-    }
-  }
-}

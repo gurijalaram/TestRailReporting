@@ -1,9 +1,0 @@
-{
-  "outputFormat": "html",
-  "pages": 1,
-  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
-  "allowInlineScripts": false,
-  "markupType": "embeddable",
-  "baseUrl": "/jasperserver-pro",
-  "clearContextCache": false
-}

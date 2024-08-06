@@ -1,8 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "not":
-      {"equals": {"property": "componentName", "value": "bracket_basic"}}
-    }
-  }
-}

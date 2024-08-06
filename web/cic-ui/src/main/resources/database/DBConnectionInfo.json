@@ -1,7 +1,0 @@
-{
-  "connectionString": "jdbc:mysql://conqsmysql57-02.fbc.com:3306/cid_perf",
-  "serverName": "conqsmysql57-02.fbc.com",
-  "databaseName": "cid_perf",
-  "username": "qa-user",
-  "password": "1NhSRrkIEWW0JK0XwAOJ"
-}

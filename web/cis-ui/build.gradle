@@ -1,8 +1,0 @@
-dependencies {
-    implementation project(':shared-util')
-    implementation project(':microservices:css-api')
-    implementation project(':microservices:cis-api')
-    implementation project(':microservices:cid-api')
-    implementation project(':web-app-util')
-    implementation project(':serialization-util')
-}

@@ -1,5 +1,0 @@
-dependencies {
-    implementation project(':shared-util')
-    implementation project(':microservices:cds-api')
-    implementation project(':serialization-util')
-}

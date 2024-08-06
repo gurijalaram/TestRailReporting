@@ -1,4 +1,0 @@
-dependencies {
-    implementation project(':shared-util')
-    implementation project(':microservices:fms-api')
-}

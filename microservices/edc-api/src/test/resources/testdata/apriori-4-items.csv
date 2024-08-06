@@ -1,5 +1,0 @@
-Level,Customer Part Number,Quantity,Manufacturer,Manufacturer Part Number
-1    ,Test BOM 1          ,1       ,            ,
-2    ,ABC123              ,1       ,NATIONAL/TI ,BAV99
-2    ,ABC123              ,1       ,            ,BAV99
-2    ,ABC124              ,1       ,            ,LM317

@@ -1,5 +1,0 @@
-This ia an NTS Attachment text file.
-
-It contains plain text and nothing more.
-
-It should be attached to an email sent by NTS.

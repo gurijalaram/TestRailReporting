@@ -1,9 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "and": [
-        {"isNull": {}}
-      ]
-    }
-  }
-}

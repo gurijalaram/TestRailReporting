@@ -43,40 +43,11 @@ subprojects {
         duplicatesStrategy 'include'
     }
 
-    // Copy allure properties into each module test resources
-    processTestResources {
-        from project(":shared-util").projectDir.path + "/src/test/resources/allure.properties"
-    }
-
     repositories {
         mavenLocal()
         mavenCentral()
 
         maven { url "https://plugins.gradle.org/m2/" }
-
-        maven {
-            credentials {
-                username = "deployment"
-                password = "deployment123"
-            }
-            url = 'https://nexus.apriori.com/content/repositories/apriori-snapshots'
-        }
-
-        maven {
-            credentials {
-                username = "deployment"
-                password = "deployment123"
-            }
-            url = 'https://nexus.apriori.com/content/repositories/apriori-releases'
-        }
-
-        maven {
-            credentials {
-                username = "deployment"
-                password = "deployment123"
-            }
-            url = 'https://nexus.apriori.com/content/repositories/thirdparty'
-        }
     }
 
     tasks.withType(JavaCompile) {
@@ -84,11 +55,11 @@ subprojects {
     }
 
     //set project name and jar name
-    project.ext.set('jar_name', 'automation-qa')
+    project.ext.set('jar_name', 'TestRailReport')
 
     //compile jar file
     task fatJar(type: Jar) {
-        archiveBaseName.set 'automation-qa'
+        archiveBaseName.set 'TestRailReport'
         zip64 = true
 
         manifest {
@@ -171,5 +142,6 @@ subprojects {
         testImplementation 'org.hamcrest:hamcrest:2.2'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.15.4'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.15.4'
+        implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
     }
 }
