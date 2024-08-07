@@ -1,15 +1,23 @@
 package com.apriori.trr.api.tests;
 
-import com.apriori.trr.api.utils.TestRailConfig;
-import com.apriori.trr.api.utils.TestRailUtil;
+import com.apriori.trr.api.testrail.TestRail;
+import com.apriori.trr.api.testrail.TestRailConfig;
+import com.apriori.trr.api.testrail.TestRailRule;
+import com.apriori.trr.api.testrail.TestRailUtil;
+import com.apriori.trr.api.testrail.controller.ProjectTestCase;
+import com.apriori.trr.api.testrail.model.Case;
+import com.apriori.trr.api.testrail.model.CaseField;
+import com.apriori.trr.api.testrail.model.Project;
+import com.apriori.trr.api.testrail.rules.TestRulesAPI;
 
-import com.codepine.api.testrail.TestRail;
-import com.codepine.api.testrail.model.Project;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class AchCustomersTests {
     private TestRailUtil testRailUtil;
 
@@ -18,22 +26,45 @@ public class AchCustomersTests {
     }
 
     @Test
-    public void getProjects(){
+    @TestRailRule(id = 1)
+    public void getProjects() {
         TestRailConfig testRailConfig = new TestRailConfig();
         TestRail testRail = TestRail.builder(testRailConfig.getBaseApiUrl(),
             testRailConfig.getUsername(), testRailConfig.getPassword()).build();
 
-        List<Project> pl= testRail.projects().list().execute();
+        List<Project> pl = testRail.projects().list().execute();
         System.out.println(pl.get(0));
     }
 
     @Test
-    public void testCoverageReport(){
+    public void testCoverageReport() {
         TestRailConfig testRailConfig = new TestRailConfig();
         TestRail testRail = TestRail.builder(testRailConfig.getBaseApiUrl(),
             testRailConfig.getUsername(), testRailConfig.getPassword()).build();
 
-        List<Project> pl= testRail.projects().list().execute();
+        List<Project> pl = testRail.projects().list().execute();
         System.out.println(pl.get(0));
+    }
+
+    @Test
+    public void getCases() {
+        TestRailConfig testRailConfig = new TestRailConfig();
+        TestRail testRail = TestRail.builder(testRailConfig.getBaseApiUrl(),
+            testRailConfig.getUsername(), testRailConfig.getPassword()).build();
+        List<CaseField> caseFields = testRail.caseFields().list().execute();
+
+        List<CaseField> caseFieldList = caseFields.stream().filter(caseField -> caseField.getId() == 14).collect(Collectors.toList());
+
+        List<Case> testCases = testRail.cases().list(1, caseFieldList).execute();
+        testCases.stream().forEach(System.out::println);
+    }
+
+    @Test
+    public void getTestCases() {
+        List<Project> projectList = new TestRailUtil().getProjects().stream().filter(p -> p.getId()!=10).collect(Collectors.toList());
+           projectList.stream() .forEach(p -> {
+            new TestRailUtil().getTestCases(p.getId(), p.getName());
+        });
+
     }
 }
