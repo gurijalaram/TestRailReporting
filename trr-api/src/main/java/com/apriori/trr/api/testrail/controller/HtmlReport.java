@@ -16,7 +16,7 @@ public class HtmlReport {
 
     private final static String htmlReportTemplate = "report-template.html";
 
-    public void generateTestReport(ProjectTestCase ptc) {
+    public void generateTestReport(List<ProjectTestCase> ptcs) {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         File file = FileResourceUtil.getLocalResourceFile(htmlReportTemplate);
         templateResolver.setPrefix(file.getParent());
@@ -31,11 +31,12 @@ public class HtmlReport {
         context.setVariable("title", "Report Title");
 
         List<List<String>> rows = new ArrayList<>();
-        rows.add(List.of(ptc.getProjectID().toString(),ptc.getProjectName().toString(),
-            ptc.getTotalCases().toString(), ptc.getAutomatable().toString(), ptc.getAutomated().toString(),
-            ptc.calculatePercentage().toString()));
+        ptcs.stream().forEach( ptc -> {
+            rows.add(List.of(ptc.getProjectID().toString(),ptc.getProjectName().toString(),
+                ptc.getTotalCases().toString(), ptc.getAutomatable().toString(), ptc.getAutomated().toString(),
+                ptc.calculatePercentage().toString()));
+        });
         context.setVariable("rows", rows);
-
         // Generate HTML content
         String htmlContent = templateEngine.process("/" + htmlReportTemplate, context);
 

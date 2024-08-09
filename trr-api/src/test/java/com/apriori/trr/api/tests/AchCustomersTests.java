@@ -4,6 +4,7 @@ import com.apriori.trr.api.testrail.TestRail;
 import com.apriori.trr.api.testrail.TestRailConfig;
 import com.apriori.trr.api.testrail.TestRailRule;
 import com.apriori.trr.api.testrail.TestRailUtil;
+import com.apriori.trr.api.testrail.controller.HtmlReport;
 import com.apriori.trr.api.testrail.controller.ProjectTestCase;
 import com.apriori.trr.api.testrail.model.Case;
 import com.apriori.trr.api.testrail.model.CaseField;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,10 +63,19 @@ public class AchCustomersTests {
 
     @Test
     public void getTestCases() {
-        List<Project> projectList = new TestRailUtil().getProjects().stream().filter(p -> p.getId()!=10).collect(Collectors.toList());
+        List<ProjectTestCase> projectTestCases = new ArrayList<>();
+        HtmlReport htmlReport = new HtmlReport();
+        List<Project> projectList = new TestRailUtil().getProjects().stream()
+            .filter(p -> !p.getName().contains("Inactive"))
+            .filter(p -> !p.getName().contains("Cloud Futures"))
+            .filter(p -> !p.getName().contains("Cloud Migration"))
+            .filter(p -> p.getId()!=10).collect(Collectors.toList());
+        
            projectList.stream() .forEach(p -> {
-            new TestRailUtil().getTestCases(p.getId(), p.getName());
+            projectTestCases.add(new TestRailUtil().getTestCases(p.getId(), p.getName()));
         });
+
+        htmlReport.generateTestReport(projectTestCases);
 
     }
 }
