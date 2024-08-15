@@ -1,0 +1,8 @@
+---
+name: apriori-qa
+title: aPriori QA
+version: 1.0.0-snapshot
+description: This is the QA Project
+buildNumber:
+buildTimestamp:
+commitHash:

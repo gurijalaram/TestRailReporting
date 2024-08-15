@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf Example</title>
+</head>
+<body>
+<h1>Example Page</h1>
+
+<!-- Context-relative URL for a static resource -->
+<img th:src="'data:image/jpeg;base64,' + ${chart}" alt="Embedded Image"/>
+</body>
+</html>

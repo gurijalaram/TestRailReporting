@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/TestRailConfig.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/enums/CustomAutomationType.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/enums/ReportType.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/UnixTimestampModule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/CaseModule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/BooleanToIntSerializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/FieldModule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/UrlConnectionFactory.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/PageDeserializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/CsvToListDeserializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/IntToBooleanDeserializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/QueryParameterString.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/ResultModule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/PlanModule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/StringToMapDeserializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/internal/ListToCsvSerializer.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/utils/TestRailUtil.java">
+<error line="42" severity="warning" message="Javadoc comment at column 20 has parse error. Missed HTML close tag &apos;Suite&apos;. Sometimes it means that close tag missed for one of previous tags." source="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck"/>
+<error line="53" severity="warning" message="Javadoc comment at column 20 has parse error. Missed HTML close tag &apos;Case&apos;. Sometimes it means that close tag missed for one of previous tags." source="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck"/>
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/utils/EncryptionUtil.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/utils/GenerateStringUtil.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/utils/DateUtil.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/utils/FileResourceUtil.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/exceptions/TestRailException.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/exceptions/ResourceLoadException.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/controller/ProjectTestCases.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/controller/TestRailReport.java">
+<error line="33" severity="warning" message="Javadoc comment at column 107 has parse error. Details: no viable alternative at input &apos;&lt;/&gt;&apos; while parsing HTML_ELEMENT" source="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck"/>
+<error line="41" column="19" severity="warning" message="&apos;static&apos; modifier out of order with the JLS suggestions." source="com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck"/>
+<error line="42" column="19" severity="warning" message="&apos;static&apos; modifier out of order with the JLS suggestions." source="com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck"/>
+<error line="43" column="19" severity="warning" message="&apos;static&apos; modifier out of order with the JLS suggestions." source="com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck"/>
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/controller/ProjectTestCase.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/TestRailStatus.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/properties/LoadProperties.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/properties/PropertiesContext.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/CaseType.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Case.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Page.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Status.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Run.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/CaseField.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Configuration.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/User.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Suite.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Test.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/ResultField.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Links.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Section.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Project.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Field.java">
+<error line="59" severity="warning" message="Javadoc comment at column 43 has parse error. Missed HTML close tag &apos;String&apos;. Sometimes it means that close tag missed for one of previous tags." source="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck"/>
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Result.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Plan.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Milestone.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/model/Priority.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/rules/TestRulesAPI.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/TestRail.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/TestRailRule.java">
+</file>
+<file name="/Users/rgurijala/Documents/GitHub/TestRailReporting/trr-api/src/main/java/com/apriori/trr/api/testrail/Request.java">
+</file>
+</checkstyle>
