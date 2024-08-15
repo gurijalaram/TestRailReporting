@@ -1,6 +1,6 @@
 package com.apriori.trr.api.testrail.properties;
 
-import com.apriori.trr.api.testrail.http.utils.FileResourceUtil;
+import com.apriori.trr.api.testrail.utils.FileResourceUtil;
 
 import lombok.SneakyThrows;
 

@@ -1,4 +1,4 @@
-package com.apriori.trr.api.testrail.http.utils;
+package com.apriori.trr.api.testrail.utils;
 
 import io.qameta.allure.Attachment;
 import org.apache.commons.lang3.RandomStringUtils;

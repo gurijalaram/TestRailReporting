@@ -7,6 +7,7 @@ import com.apriori.trr.api.testrail.TestRail;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -63,7 +64,8 @@ public class Case {
 
     private String estimateForecast;
 
-    private String custom_automation_type;
+    @JsonProperty(value = "custom_automation_type")
+    private String customAutomationType;
 
     private int suiteId;
 

@@ -1,4 +1,4 @@
-package com.apriori.trr.api.testrail.http.utils;
+package com.apriori.trr.api.testrail.utils;
 
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;

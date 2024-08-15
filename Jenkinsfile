@@ -67,99 +67,16 @@ pipeline {
                         root_log_level = "INFO"
                     }
 
-                    // Set run time parameters
-                    javaOpts = javaOpts + " -Dmode=${params.TEST_MODE}"
-                    javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
                     javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
-
-                    username = params.USERNAME
-                    password = params.PASSWORD
-
-                    if (username != null && password != null) {
-                        javaOpts = javaOpts + " -Dglobal_use_default_user=true"
-                        javaOpts = javaOpts + " -Dglobal_default_user_name=${username}"
-                        javaOpts = javaOpts + " -Dglobal_default_password=${password}"
-                    }
-
-                    folder = params.MODULE_TYPE
-                    if (!folder && "${MODULE}".contains("-ui")) {
-                        folder = "web"
-                    } else if (!folder && "${MODULE}".contains("-api")) {
-                        folder = "microservices"
-                    } else if (!folder && "${MODULE}".contains("-agent")) {
-                        folder = "agent"
-                    } else {
-                        folder = "integrate"
-                    }
-
-                    url = params.TARGET_URL
-                    if (url && url != "none") {
-                        javaOpts = javaOpts + " -Durl=${params.TARGET_URL}"
-                    }
-
-                    threadCount = params.THREAD_COUNT
-                    if (threadCount && threadCount.isInteger() && threadCount.toInteger() > 0) {
-                        javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.max-pool-size'=${threadCount}"
-                        javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.parallelism'=${threadCount}"
-                    }
-
-                    browser = params.BROWSER
-                    if (browser && browser != "none") {
-                        javaOpts = javaOpts + " -Dbrowser=${browser}"
-                    }
-
-                    if (params.HEADLESS) {
-                        javaOpts = javaOpts + " -Dheadless=true"
-                    }
 
                     testSuite = params.TEST_SUITE
                     if (params.TEST_SUITE == "Other") {
                         testSuite = params.OTHER_TEST
                     }
 
-                    users_csv_file = params.CSV_FILE
-                    if (users_csv_file && users_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dusers_csv_file=${params.CSV_FILE}"
-                    }
-
-                    customer = params.CUSTOMER
-                    if (customer && customer != "none") {
-                        javaOpts = javaOpts + " \'-Dcustomer=${params.CUSTOMER}\'"
-                    }
-
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
                         javaOpts = javaOpts + " \'-Ddefault_aws_region=${params.REGION}\'"
-                    }
-
-                    number_of_parts = params.NUMBER_OF_PARTS
-                    if (number_of_parts && number_of_parts != "none") {
-                        javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
-                    }
-
-                    parts_csv_file = params.PARTS_CSV_FILE
-                    if (parts_csv_file && parts_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
-                    }
-
-                    agent_type = params.AGENT_TYPE
-                    if (agent_type && agent_type != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
-                    }
-
-                    nexus_repository = params.NEXUS_REPOSITORY
-                    if (nexus_repository && nexus_repository != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
-                    }
-
-                    nexus_version = params.NEXUS_VERSION
-                    if (nexus_version && nexus_version != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
-                    }
-
-                    custom_install = params.CUSTOM_INSTALL
-                    if (custom_install && custom_install != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
                     }
 
                     addJavaOpts = params.JAVAOPTS
@@ -185,7 +102,6 @@ pipeline {
                              --tag ${buildInfo.name}-test-${timeStamp}:latest \
                              --label \"build-date=${timeStamp}\" \
                              --label qa-automation \
-                             --build-arg FOLDER=${folder} \
                              --build-arg MODULE=${MODULE} \
                              .
                      """
@@ -209,7 +125,6 @@ pipeline {
                             --label qa-automation \
                             --secret id=aws_config,src=\"${AWS_CONFIG_SECRET_TXT}\" \
                             --secret id=aws_creds,src=\"${AWS_CREDENTIALS_SECRET_TXT}\" \
-                            --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS="${javaOpts}" \
                             --build-arg TESTS="${testSuite}" \
@@ -224,7 +139,7 @@ pipeline {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
                 sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
@@ -233,7 +148,7 @@ pipeline {
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : 'build/reports/tests/test',
+                        reportDir            : 'Reports',
                         reportFiles          : 'index.html',
                         reportName           : "${buildInfo.name} Test Report"
                 ])

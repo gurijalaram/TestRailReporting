@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class ProjectTestCases {
-   List<ProjectTestCase> projectTestCase;
+    List<ProjectTestCase> projectTestCase;
 }

@@ -1,6 +1,6 @@
 package com.apriori.trr.api.testsuites;
 
-import com.apriori.trr.api.tests.AchCustomersTests;
+import com.apriori.trr.api.tests.TestRailTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;
@@ -9,7 +9,7 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectPackages("com.apriori")
 @SelectClasses({
-    AchCustomersTests.class,
+    TestRailTests.class,
 })
-public class AchApiRegressionSuite {
+public class TestRailApiSuite {
 }

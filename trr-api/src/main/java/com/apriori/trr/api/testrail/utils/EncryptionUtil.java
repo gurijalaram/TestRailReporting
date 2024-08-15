@@ -1,4 +1,4 @@
-package com.apriori.trr.api.testrail.http.utils;
+package com.apriori.trr.api.testrail.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.apriori.trr.api.testrail.http.utils;
+package com.apriori.trr.api.testrail.utils;
 
 import com.apriori.trr.api.testrail.exceptions.ResourceLoadException;
 
@@ -6,7 +6,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +22,7 @@ import java.util.Base64;
 import java.util.stream.Stream;
 
 @Slf4j
-public class FileResourceUtil extends AwsUtil {
+public class FileResourceUtil {
 
     private static final int TEMP_DIR_ATTEMPTS = 50;
 
@@ -54,18 +56,6 @@ public class FileResourceUtil extends AwsUtil {
         }
     }
 
-    /**
-     * Gets resource file from specified path
-     * <p>
-     * Subfolders should be separated by a comma eg. a folder structure of [cad-file > multipartfiles > files] would be represented as "cad-files, multipartfiles, files"
-     *
-     * @param fileName - the file name
-     * @return file object
-     */
-    @Deprecated
-    public static File getResourceCadFile(String fileName) {
-        return getResourceAsFile("cad-files", fileName);
-    }
 
     /**
      * Get file from resource folder
@@ -224,5 +214,23 @@ public class FileResourceUtil extends AwsUtil {
             log.error("FILE NOT FOUND!!");
         }
         return fileWithExtension;
+    }
+
+    public static String encodeImageToBase64(String imagePath) throws IOException {
+        File file = new File(imagePath);
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        baos.close();
+
+        byte[] imageBytes = baos.toByteArray();
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 public class TestMain {
-    public static Class defaultTest = AchApiRegressionSuite.class;
+    public static Class defaultTest = TestRailApiSuite.class;
 
     public static void main(String[] args) {
 

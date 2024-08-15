@@ -1,12 +1,8 @@
-package com.apriori.trr.api.testrail;
+package com.apriori.trr.api.testrail.exceptions;
 
 import com.google.common.base.Preconditions;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 /**
  * Exception representing error returned by TestRail API.
@@ -23,7 +19,7 @@ public class TestRailException extends RuntimeException {
      * @param responseCode the HTTP response code from the TestRail server
      * @param error        the error message from TestRail service
      */
-    TestRailException(int responseCode, String error) {
+    public TestRailException(int responseCode, String error) {
         super(responseCode + " - " + error);
         this.responseCode = responseCode;
     }

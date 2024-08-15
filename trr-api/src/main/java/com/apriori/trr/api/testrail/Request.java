@@ -1,5 +1,6 @@
 package com.apriori.trr.api.testrail;
 
+import com.apriori.trr.api.testrail.exceptions.TestRailException;
 import com.apriori.trr.api.testrail.internal.CaseModule;
 import com.apriori.trr.api.testrail.internal.FieldModule;
 import com.apriori.trr.api.testrail.internal.PageDeserializer;
