@@ -1,4 +1,7 @@
- stages {
+pipeline {
+    agent any
+
+    stages {
     stage('Checkout') {
                 steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/develop']], userRemoteConfigs: [[url: 'https://github.com/gurijalaram/TestRailReporting.git']]])
@@ -13,9 +16,9 @@
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : 'trr-api/Reports',
-                        reportFiles          : 'TestCoverageReport.html',
-                        reportName           : "TestCoverageReport"
+                        reportDir            : '',
+                        reportFiles          : 'test-report.html',
+                        reportName           : "TestRailReport"
                 ])
             }
             }
