@@ -134,7 +134,7 @@ pipeline {
             }
         }
 
-        stage("Extract Test Results") {
+        stage("Extract Test Result") {
             steps {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
