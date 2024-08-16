@@ -16,9 +16,9 @@ pipeline {
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : '',
-                        reportFiles          : 'test-report.html',
-                        reportName           : "TestRailReport"
+                        reportDir            : 'trr-api/Reports',
+                        reportFiles          : 'TestCoverageReport.html',
+                        reportName           : "TestCoverageReport"
                 ])
             }
             }
