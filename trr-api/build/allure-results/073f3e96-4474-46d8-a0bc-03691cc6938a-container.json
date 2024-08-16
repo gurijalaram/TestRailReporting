@@ -1,1 +1,0 @@
-{"uuid":"073f3e96-4474-46d8-a0bc-03691cc6938a","name":"generateTestCoverageReport()","children":["0b58a0ba-d668-47b2-88a8-43670facc12d"],"befores":[{"name":"init","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1723734725622,"stop":1723734725636}],"afters":[],"start":1723734725568,"stop":1723734783593}

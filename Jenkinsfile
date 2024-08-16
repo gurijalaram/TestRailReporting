@@ -40,109 +40,37 @@ def registry_password(profile = '', region = '') {
 }
 
 pipeline {
-    agent {
-        label "automation"
-    }
+    agent any
 
     stages {
         stage("Initialize") {
             steps {
                 echo "Initializing.."
-                script {
-                    // Read file.
-                    buildInfo = readYaml file: buildInfoFile
-                    sh "rm ${buildInfoFile}"
-
-                    // Write file.
-                    buildInfo.buildNumber = env.BUILD_TAG
-                    buildInfo.buildTimestamp = timeStamp
-                    buildInfo.commitHash = env.GIT_COMMIT
-                    writeYaml file: buildInfoFile, data: buildInfo
-
-                    // Log file.
-                    sh "cat ${buildInfoFile}"
-
-                    root_log_level = params.ROOT_LOG_LEVEL
-                    if (root_log_level == null || root_log_level == "none") {
-                        root_log_level = "INFO"
-                    }
-
-                    javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
-
-                    testSuite = params.TEST_SUITE
-                    if (params.TEST_SUITE == "Other") {
-                        testSuite = params.OTHER_TEST
-                    }
-
-                    default_aws_region = params.REGION
-                    if (default_aws_region && default_aws_region != "none") {
-                        javaOpts = javaOpts + " \'-Ddefault_aws_region=${params.REGION}\'"
-                    }
-
-                    addJavaOpts = params.JAVAOPTS
-                    if (addJavaOpts && addJavaOpts != "none") {
-                        javaOpts = javaOpts + "  ${params.JAVAOPTS}"
-                    }
-
-                    echo "${javaOpts}"
-                }
             }
         }
 
         stage("Build") {
             steps {
                 echo "Building..."
-                script {
-                    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                    sh """
-                         docker build \
-                             --no-cache \
-                             --target build \
-                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                             --label \"build-date=${timeStamp}\" \
-                             --label qa-automation \
-                             --build-arg MODULE=${MODULE} \
-                             .
-                     """
-                }
             }
         }
 
         stage("Test") {
             steps {
                 echo "Testing..."
-                withCredentials([
-                    file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
-                    file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
-
-                    sh """
-                        docker build \
-                            --target test \
-                            --progress=plain \
-                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                            --label \"build-date=${timeStamp}\" \
-                            --label qa-automation \
-                            --secret id=aws_config,src=\"${AWS_CONFIG_SECRET_TXT}\" \
-                            --secret id=aws_creds,src=\"${AWS_CREDENTIALS_SECRET_TXT}\" \
-                            --build-arg MODULE=${MODULE} \
-                            --build-arg JAVAOPTS="${javaOpts}" \
-                            --build-arg TESTS="${testSuite}" \
-                            .
-                    """
-                }
             }
         }
+
+        stage('Checkout') {
+                        steps {
+                            checkout([$class: 'GitSCM', branches: [[name: '*/develop']], userRemoteConfigs: [[url: 'https://github.com/gurijalaram/TestRailReporting.git']]])
+                        }
+            }
 
         stage("Extract Test Result") {
             steps {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
-                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${MODULE}/build ."
-                echo "Publishing Results"
-                allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
-                junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
 
                 publishHTML(target: [
                         allowMissing         : false,
@@ -159,15 +87,6 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-
-            sh "docker system prune --filter \"label=qa-automation\" -f -a"
-            sh "docker system prune --filter \"label=amazon-cli\" -f -a"
-            cleanWs()
-
-            script {
-                if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                    error("Build failed because of Response contains MappingException. Please check Test logs for text: Response contains MappingException.")
-                }
             }
         }
     }
