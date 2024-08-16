@@ -148,9 +148,9 @@ pipeline {
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : 'Reports',
+                        reportDir            : '',
                         reportFiles          : 'index.html',
-                        reportName           : "${buildInfo.name} Test Report"
+                        reportName           : "${buildInfo.name} Test Coverage Report"
                 ])
             }
         }
